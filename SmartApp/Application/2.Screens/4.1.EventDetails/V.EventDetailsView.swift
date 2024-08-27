@@ -124,38 +124,38 @@ struct EventDetailsView: View, ViewProtocol {
             ScrollView {
                 LazyVStack(spacing: 0) {
                     detailsView
-                    SwiftUIUtils.FixedVerticalSpacer(height: SizeNames.defaultMargin)
-                    Divider()
-                    SwiftUIUtils.FixedVerticalSpacer(height: SizeNames.defaultMargin)
-                    archivedAndDeleteView
-                    SwiftUIUtils.FixedVerticalSpacer(height: SizeNames.defaultMargin)
-                    Divider()
-                    SwiftUIUtils.FixedVerticalSpacer(height: SizeNames.defaultMargin)
+                    SwiftUIUtils.FixedVerticalSpacer(height: SizeNames.defaultMarginSmall)
                     addNewView
-                    SwiftUIUtils.FixedVerticalSpacer(height: SizeNames.defaultMargin)
+                    SwiftUIUtils.FixedVerticalSpacer(height: SizeNames.defaultMarginSmall)
+                    Divider()
+                    SwiftUIUtils.FixedVerticalSpacer(height: SizeNames.defaultMarginSmall)
+                    archivedAndDeleteView
+                    SwiftUIUtils.FixedVerticalSpacer(height: SizeNames.defaultMarginSmall)
                     listView
                 }
-                .paddingRight(SizeNames.size_1.cgFloat)
-                .paddingLeft(SizeNames.size_1.cgFloat)
-            }.padding(SizeNames.defaultMargin)
+            }
             if viewModel.confirmationSheetType != nil {
                 confirmationSheet
             }
-            VStack(spacing: 0) {
-                Text(viewModel.userMessage.text)
-                    .multilineTextAlignment(.center)
-                    .textColor(viewModel.userMessage.color.color)
-                    .fontSemantic(.body)
-                    .shadow(radius: SizeNames.shadowRadiusRegular)
-                    .animation(.linear(duration: Common.Constants.defaultAnimationsTime), value: viewModel.userMessage.text)
-                    .onTapGesture {
-                        viewModel.userMessage.text = ""
-                    }
-                Spacer()
-            }
+            userMessageView
         }
     }
 
+    var userMessageView: some View {
+        VStack(spacing: 0) {
+            Text(viewModel.userMessage.text)
+                .multilineTextAlignment(.center)
+                .textColor(viewModel.userMessage.color.color)
+                .fontSemantic(.body)
+                .shadow(radius: SizeNames.shadowRadiusRegular)
+                .animation(.linear(duration: Common.Constants.defaultAnimationsTime), value: viewModel.userMessage.text)
+                .onTapGesture {
+                    viewModel.userMessage.text = ""
+                }
+            Spacer()
+        }
+    }
+    
     var detailsView: some View {
         LazyVStack(spacing: 0) {
             CustomTitleAndCustomTextFieldWithBinding(
@@ -244,6 +244,8 @@ struct EventDetailsView: View, ViewProtocol {
                 background: .danger,
                 accessibility: .undefined)
         }
+        .paddingRight(SizeNames.size_1.cgFloat)
+        .paddingLeft(SizeNames.size_1.cgFloat)
     }
 
     var listView: some View {

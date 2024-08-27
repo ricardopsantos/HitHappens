@@ -107,7 +107,8 @@ struct EventsMapView: View, ViewProtocol {
             LazyVStack(spacing: 0) {
                 GenericMapView(items: $viewModel.mapItems, onRegionChanged: { region in
                     viewModel.send(.loadEvents(region: region))
-                }).frame(screenSize.width - 2 * SizeNames.defaultMarginSmall)
+                })
+                .frame(height: screenSize.width - 2 * SizeNames.defaultMarginSmall)
                 Divider().padding(.vertical, SizeNames.defaultMarginSmall)
                 listTitle
                 SwiftUIUtils.FixedVerticalSpacer(height: SizeNames.defaultMarginSmall)

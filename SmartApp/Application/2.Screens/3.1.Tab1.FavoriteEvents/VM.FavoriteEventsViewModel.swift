@@ -83,7 +83,7 @@ class FavoriteEventsViewModel: BaseViewModel {
                     trackedEntityId = favorits.first?.id.description ?? ""
                 }
                 let locationRelevant = favorits.filter { $0.id == trackedEntityId }.first?.locationRelevant ?? false
-                let location = Common.BasicLocationManagerViewModel.lastKnowLocation?.coordinates
+                let location = Common.SharedLocationManager.shared.lastKnowLocation?.location.coordinate
                 if locationRelevant, let location = location {
                     Common.LocationUtils.getAddressFrom(
                         latitude: location.latitude,

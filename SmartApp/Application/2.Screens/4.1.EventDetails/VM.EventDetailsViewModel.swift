@@ -246,7 +246,7 @@ class EventDetailsViewModel: BaseViewModel {
                 guard let self = self else { return }
                 let trackedEntityId = event?.id ?? ""
                 let locationRelevant = event?.locationRelevant ?? false
-                let location = Common.BasicLocationManagerViewModel.lastKnowLocation?.coordinates
+                let location = Common.SharedLocationManager.shared.lastKnowLocation?.location.coordinate
                 if locationRelevant, let location = location {
                     Common.LocationUtils.getAddressFrom(
                         latitude: location.latitude,

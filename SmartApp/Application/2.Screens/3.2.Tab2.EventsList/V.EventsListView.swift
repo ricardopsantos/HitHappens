@@ -132,7 +132,6 @@ struct EventsListView: View, ViewProtocol {
                     .opacity(0.5)
                 Spacer().padding(.vertical, SizeNames.defaultMargin)
             }
-            // .padding(SizeNames.defaultMargin)
         }
     }
 

@@ -102,9 +102,9 @@ struct EventLogDetailsView: View, ViewProtocol {
 
     var content: some View {
         ZStack {
-            ScrollView {
+           // ScrollView {
                 Header(text: "Details")
-                LazyVStack(spacing: 0) {
+                VStack(spacing: 0) {
                     CustomTitleAndCustomTextFieldWithBinding(
                         title: "Note".localizedMissing,
                         placeholder: "Add a note".localizedMissing,
@@ -112,47 +112,52 @@ struct EventLogDetailsView: View, ViewProtocol {
                         accessibility: .undefined) { newValue in
                             viewModel.send(.userDidChangedNote(value: newValue))
                         }
-                    SwiftUIUtils.FixedVerticalSpacer(height: SizeNames.defaultMargin)
+                    SwiftUIUtils.FixedVerticalSpacer(height: SizeNames.defaultMarginSmall)
                     mapView
-                        .cornerRadius2(SizeNames.cornerRadius)
-                    SwiftUIUtils.FixedVerticalSpacer(height: SizeNames.defaultMargin)
-                    TextButton(
-                        onClick: {
-                            AnalyticsManager.shared.handleButtonClickEvent(
-                                buttonType: .primary,
-                                label: "Delete",
-                                sender: "\(Self.self)")
-                            viewModel.send(.delete(confirmed: false))
-                        },
-                        text: "Delete event".localizedMissing,
-                        alignment: .center,
-                        style: .secondary,
-                        background: .danger,
-                        accessibility: .undefined)
+                    SwiftUIUtils.FixedVerticalSpacer(height: SizeNames.defaultMarginSmall)
+                    Spacer()
+                    deleteView
                     SwiftUIUtils.FixedVerticalSpacer(height: SizeNames.defaultMarginSmall)
                 }
-                .paddingRight(SizeNames.size_1.cgFloat)
-                .paddingLeft(SizeNames.size_1.cgFloat)
-            }.padding(SizeNames.defaultMargin)
             if viewModel.confirmationSheetType != nil {
                 confirmationSheet
             }
-            VStack {
-                Spacer()
-                Text(viewModel.userMessage.text)
-                    .multilineTextAlignment(.center)
-                    .textColor(viewModel.userMessage.color.color)
-                    .fontSemantic(.body)
-                    .shadow(radius: SizeNames.shadowRadiusRegular)
-                    .animation(.linear(duration: Common.Constants.defaultAnimationsTime), value: viewModel.userMessage.text)
-                    .onTapGesture {
-                        viewModel.userMessage.text = ""
-                    }
-                Spacer()
-            }
+            userMessageView
         }
     }
 
+    var userMessageView: some View {
+        VStack {
+            Spacer()
+            Text(viewModel.userMessage.text)
+                .multilineTextAlignment(.center)
+                .textColor(viewModel.userMessage.color.color)
+                .fontSemantic(.body)
+                .shadow(radius: SizeNames.shadowRadiusRegular)
+                .animation(.linear(duration: Common.Constants.defaultAnimationsTime), value: viewModel.userMessage.text)
+                .onTapGesture {
+                    viewModel.userMessage.text = ""
+                }
+            Spacer()
+        }
+    }
+    
+    var deleteView: some View {
+        TextButton(
+            onClick: {
+                AnalyticsManager.shared.handleButtonClickEvent(
+                    buttonType: .primary,
+                    label: "Delete",
+                    sender: "\(Self.self)")
+                viewModel.send(.delete(confirmed: false))
+            },
+            text: "Delete event".localizedMissing,
+            alignment: .center,
+            style: .secondary,
+            background: .danger,
+            accessibility: .undefined)
+    }
+    
     var confirmationSheet: some View {
         @State var isOpen = Binding<Bool>(
             get: { viewModel.confirmationSheetType != nil },
@@ -179,7 +184,7 @@ struct EventLogDetailsView: View, ViewProtocol {
     var mapView: some View {
         if !viewModel.mapItems.isEmpty {
             GenericMapView(items: $viewModel.mapItems, onRegionChanged: { _ in })
-                .frame(screenWidth - (2 * SizeNames.defaultMargin))
+                .frame(height: screenWidth - (2 * SizeNames.defaultMargin))
         } else {
             EmptyView()
         }

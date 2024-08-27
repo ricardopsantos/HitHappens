@@ -7,8 +7,8 @@
 #
 
 SmartApp/_Documents/GitIgnored/*
-#SmartApp/Application/GoogleService*.plist
-#SmartApp/Application/GoogleServices/GoogleService*.plist
+SmartApp/Application/GoogleService*.plist
+SmartApp/Application/GoogleServices/GoogleService*.plist
 
 #
 # Build generated

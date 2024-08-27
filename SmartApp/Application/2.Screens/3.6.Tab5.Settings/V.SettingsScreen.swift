@@ -106,7 +106,7 @@ struct SettingsScreen: View, ViewProtocol {
                 .fontSemantic(.callout)
                 .foregroundColorSemantic(.labelPrimary)
             SwiftUIUtils.FixedVerticalSpacer(height: SizeNames.defaultMargin)
-        }.paddingHorizontal(SizeNames.defaultMargin)
+        }.paddingHorizontal(SizeNames.defaultMarginSmall)
     }
 }
 
