@@ -29,7 +29,6 @@ public enum AppScreen: Hashable, Identifiable, Sendable {
     case login
     case onboarding
     case settings
-    case termsAndConditions
     public var id: String {
         String(describing: self)
     }

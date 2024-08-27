@@ -14,16 +14,13 @@ import Core
 
 struct RootModel: Equatable, Hashable, Sendable {
     let isAppStartCompleted: Bool
-    let isTermsAndConditionsAccepted: Bool
     let isOnboardingCompleted: Bool
 
     init(
         isAppStartCompleted: Bool = false,
-        isTermsAndConditionsAccepted: Bool = false,
         isOnboardingCompleted: Bool = false
     ) {
         self.isAppStartCompleted = isAppStartCompleted
-        self.isTermsAndConditionsAccepted = isTermsAndConditionsAccepted
         self.isOnboardingCompleted = isOnboardingCompleted
     }
 }
@@ -31,8 +28,6 @@ struct RootModel: Equatable, Hashable, Sendable {
 extension RootViewModel {
     enum Actions {
         case start
-        case termsAndConditionsAccepted
-        case termsAndConditionsNotAccepted
         case onboardingCompleted
     }
 
@@ -47,7 +42,6 @@ class RootViewModel: ObservableObject {
     // MARK: - Usage/Auxiliar Attributes
     @Published private(set) var alertModel: Model.AlertModel?
     @Published private(set) var isAppStartCompleted: Bool = false
-    @Published private(set) var isTermsAndConditionsAccepted: Bool = false
     @Published private(set) var isOnboardingCompleted: Bool = false
     @Published private(set) var preferencesChanged: Date = .now
     private var cancelBag = CancelBag()
@@ -55,7 +49,6 @@ class RootViewModel: ObservableObject {
     public init(dependencies: Dependencies) {
         self.nonSecureAppPreferences = dependencies.nonSecureAppPreferences
         self.isAppStartCompleted = dependencies.model.isAppStartCompleted
-        self.isTermsAndConditionsAccepted = dependencies.model.isTermsAndConditionsAccepted
         self.isOnboardingCompleted = dependencies.model.isOnboardingCompleted
         dependencies.nonSecureAppPreferences.output([]).sinkToReceiveValue { [weak self] _ in
             self?.preferencesChanged = .now
@@ -69,14 +62,6 @@ class RootViewModel: ObservableObject {
         case .start:
             guard !isAppStartCompleted else { return }
             isAppStartCompleted = true
-        case .termsAndConditionsAccepted:
-            guard !isTermsAndConditionsAccepted else { return }
-            nonSecureAppPreferences?.isPrivacyPolicyAccepted = true
-            isTermsAndConditionsAccepted = true
-        case .termsAndConditionsNotAccepted:
-            guard isTermsAndConditionsAccepted else { return }
-            isTermsAndConditionsAccepted = false
-
         case .onboardingCompleted:
             guard !isOnboardingCompleted else { return }
             nonSecureAppPreferences?.isOnboardingCompleted = true

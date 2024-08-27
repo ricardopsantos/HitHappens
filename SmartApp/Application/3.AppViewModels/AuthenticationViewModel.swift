@@ -19,7 +19,7 @@ class AuthenticationViewModel: ObservableObject {
     private var userRepository: UserRepositoryProtocol
 
     // MARK: - Usage/Auxiliar Attributes
-    @Published var isAuthenticated = false
+    @Published var isAuthenticated = true
     private var cancelBag: CancelBag = .init()
 
     // MARK: - Constructor

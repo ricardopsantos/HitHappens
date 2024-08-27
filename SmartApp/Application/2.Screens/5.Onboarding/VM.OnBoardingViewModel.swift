@@ -46,6 +46,6 @@ class OnboardingViewModel: BaseViewModel {
 
 #if canImport(SwiftUI) && DEBUG
 #Preview {
-    OnboardingScreen(onCompletion: { _ in }, onBackPressed: {})
+    OnboardingScreen(onCompletion: { _ in })
 }
 #endif

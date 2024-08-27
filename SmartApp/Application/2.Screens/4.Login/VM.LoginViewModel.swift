@@ -67,6 +67,7 @@ class LoginViewModel: BaseViewModel {
     func send(action: Actions) {
         switch action {
         case .didAppear:
+            send(action: .doLogin(email: "mail@gmail.com", password: "123"))
             alertModel = .init(
                 type: .warning,
                 message: "Tap to Autofill",

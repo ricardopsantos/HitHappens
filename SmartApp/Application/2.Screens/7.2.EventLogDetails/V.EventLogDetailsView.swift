@@ -103,8 +103,8 @@ struct EventLogDetailsView: View, ViewProtocol {
     var content: some View {
         ZStack {
            // ScrollView {
-                Header(text: "Details")
                 VStack(spacing: 0) {
+                    Header(text: "Details")
                     CustomTitleAndCustomTextFieldWithBinding(
                         title: "Note".localizedMissing,
                         placeholder: "Add a note".localizedMissing,

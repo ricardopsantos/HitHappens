@@ -19,7 +19,6 @@ struct OnboardingScreen: View {
         Image(.onboarding2)
     ]
     let onCompletion: (String) -> Void
-    let onBackPressed: () -> Void
 
     @State private var selectedTab = 0
 
@@ -51,21 +50,11 @@ struct OnboardingScreen: View {
     var content: some View {
         ZStack {
             VStack {
-                Header(
-                    text: "Onboarding".localizedMissing,
-                    hasBackButton: true,
-                    onBackOrCloseClick: {
-                        AnalyticsManager.shared.handleButtonClickEvent(
-                            buttonType: .back,
-                            label: "Back",
-                            sender: "\(Self.self)"
-                        )
-                        onBackPressed() }
-                )
-
+                Header(text: "Onboarding".localizedMissing)
                 pageView
-
-                TextButton(onClick: onNextButtonPressed, text: buttonText, accessibility: .fwdButton)
+                TextButton(onClick: onNextButtonPressed, 
+                           text: buttonText,
+                           accessibility: .fwdButton)
             }
             .padding()
         }
@@ -118,6 +107,6 @@ fileprivate extension OnboardingScreen {
 
 #if canImport(SwiftUI) && DEBUG
 #Preview {
-    OnboardingScreen(onCompletion: { _ in }, onBackPressed: {})
+    OnboardingScreen(onCompletion: { _ in })
 }
 #endif

@@ -11,19 +11,6 @@ import Domain
 import Common
 import DesignSystem
 
-func selectedApp() -> AppTarget {
-    AppTarget.selected
-}
-
-enum AppTarget {
-    case hitHappens
-    case template
-
-    static var selected: Self {
-        .hitHappens
-    }
-}
-
 // @main
 struct SmartApp: App {
     @UIApplicationDelegateAdaptor(AppDelegate.self) var delegate
