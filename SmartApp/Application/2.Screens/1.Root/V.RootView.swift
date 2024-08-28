@@ -62,18 +62,7 @@ struct RootView: View, ViewProtocol {
     // MARK: - Usage/Auxiliar Attributes
     @Environment(\.dismiss) var dismiss
     @EnvironmentObject private var authenticationViewModel: AuthenticationViewModel
-    @State private var root: AppScreen = .splash {
-        didSet {
-            DevTools.Log.debug(
-                .valueChanged(
-                    "\(Self.self)",
-                    "root",
-                    "\(root)"
-                ),
-                .business
-            )
-        }
-    }
+    @State private var root: AppScreen = .splash
 
     // MARK: - Body & View
     var body: some View {
@@ -125,18 +114,17 @@ fileprivate extension RootView {}
 //
 fileprivate extension RootView {
     func updateRoot() {
-            //root = .mainApp
-            if !viewModel.isAppStartCompleted {
-                root = .splash
-            } else if !authenticationViewModel.isAuthenticated {
-                root = .login
-            } else if authenticationViewModel.isAuthenticated {
-                if !viewModel.isOnboardingCompleted {
-                    root = .onboarding
-                } else {
-                    root = .mainApp
-                }
+        if !viewModel.isAppStartCompleted {
+            root = .splash
+        } else if !authenticationViewModel.isAuthenticated {
+            root = .login
+        } else if authenticationViewModel.isAuthenticated {
+            if !viewModel.isOnboardingCompleted {
+                root = .onboarding
+            } else {
+                root = .mainApp
             }
+        }
     }
 }
 

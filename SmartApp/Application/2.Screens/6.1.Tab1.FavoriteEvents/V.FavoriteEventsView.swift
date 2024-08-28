@@ -52,9 +52,7 @@ struct FavoriteEventsViewCoordinator: View, ViewCoordinatorProtocol {
             FavoriteEventsView(dependencies: dependencies)
         case .eventLogDetails(model: let model):
             let dependencies: EventLogDetailsViewModel.Dependencies = .init(
-                model: model, onCompletion: { _ in
-
-                }, onRouteBack: {},
+                model: model, onPerformRouteBack: {},
                 dataBaseRepository: configuration.dataBaseRepository)
             EventLogDetailsView(dependencies: dependencies)
         default:
@@ -101,9 +99,8 @@ struct FavoriteEventsView: View, ViewProtocol {
                 viewModel.send(.didDisappear)
                 locationViewModel.stop(sender: "\(Self.self)")
             }
-            .onChange(of: viewModel.favorits) { _ in
-                DevTools.Log.debug(.valueChanged("\(Self.self)", "favorits", nil), .view)
-                let locationRelevant = !viewModel.favorits.filter(\.locationRelevant).isEmpty
+            .onChange(of: viewModel.favorits) { value in
+                let locationRelevant = !value.filter(\.locationRelevant).isEmpty
                 if locationRelevant {
                     locationViewModel.start(sender: "\(Self.self)")
                 }
@@ -115,9 +112,8 @@ struct FavoriteEventsView: View, ViewProtocol {
 
     var content: some View {
         ScrollView {
-            Header(text: "Favorites events".localizedMissing)
-            Spacer()
-            LazyVStack(spacing: SizeNames.defaultMarginSmall) {
+            LazyVStack(spacing: 0) {
+                Header(text: "Favorites events".localizedMissing)
                 Spacer()
                 ForEach(viewModel.favorits, id: \.self) { model in
                     CounterView(
@@ -128,8 +124,8 @@ struct FavoriteEventsView: View, ViewProtocol {
                         onTapGesture: {
                             viewModel.send(.addNewEvent(trackedEntityId: model.id))
                         })
+                        .padding(.vertical, SizeNames.defaultMargin)
                 }
-                .padding(.horizontal, SizeNames.defaultMargin)
                 Spacer()
             }
         }

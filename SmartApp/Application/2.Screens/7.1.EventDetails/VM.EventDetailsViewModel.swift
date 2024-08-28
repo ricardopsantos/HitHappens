@@ -78,9 +78,9 @@ extension EventDetailsViewModel {
     }
 
     struct Dependencies {
-        let model: EventDetailsModel
+        let model: EventDetailsModel?
         let onCompletion: (String) -> Void
-        let onRouteBack: () -> Void
+        let onPerformRouteBack: () -> Void
         let onTrackedLogTapped: (Model.TrackedLog) -> Void
         let dataBaseRepository: DataBaseRepositoryProtocol
     }
@@ -103,14 +103,14 @@ class EventDetailsViewModel: BaseViewModel {
     @Published var userMessage: (text: String, color: ColorSemantic) = ("", .clear)
     private let cancelBag = CancelBag()
     private let dataBaseRepository: DataBaseRepositoryProtocol?
-    private let onRouteBack: () -> Void
+    private let onPerformRouteBack: () -> Void
     private let onTrackedLogTapped: (Model.TrackedLog) -> Void
     @Published var confirmationSheetType: ConfirmationSheet?
 
     public init(dependencies: Dependencies) {
         self.dataBaseRepository = dependencies.dataBaseRepository
-        self.event = dependencies.model.event
-        self.onRouteBack = dependencies.onRouteBack
+        self.event = dependencies.model?.event
+        self.onPerformRouteBack = dependencies.onPerformRouteBack
         self.onTrackedLogTapped = dependencies.onTrackedLogTapped
         super.init()
         startListeningDBChanges()
@@ -309,7 +309,7 @@ fileprivate extension EventDetailsViewModel {
                 case .databaseDidDeletedContentOn(let table, let id):
                     // Record deleted! Route back
                     if table == "\(CDataTrackedEntity.self)", id == self?.event?.id {
-                        self?.onRouteBack()
+                        self?.onPerformRouteBack()
                     }
                 case .databaseDidChangedContentItemOn: break
                 case .databaseDidFinishChangeContentItemsOn(let table):

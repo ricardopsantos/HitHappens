@@ -94,7 +94,9 @@ struct ___Template___View: View, ViewProtocol {
 
     var content: some View {
         VStack {
-            SwiftUIUtils.RenderedView("\(Self.self).\(#function)")
+            SwiftUIUtils.RenderedView(
+                "\(Self.self).\(#function)",
+                visible: AppFeaturesManager.Debug.canDisplayRenderedView)
             Text(viewModel.message)
             Button("Inc V1") {
                 viewModel.send(.increment)
@@ -133,7 +135,9 @@ struct ___Template___AuxiliarAuthView: View {
     @EnvironmentObject var authenticationViewModel: AuthenticationViewModel
     var body: some View {
         VStack {
-            SwiftUIUtils.RenderedView("\(Self.self).\(#function)")
+            SwiftUIUtils.RenderedView(
+                "\(Self.self).\(#function)",
+                visible: AppFeaturesManager.Debug.canDisplayRenderedView)
             Text(authenticationViewModel.isAuthenticated ? "Auth" : "Not Auth")
             Button("Toggle auth") {
                 authenticationViewModel.isAuthenticated.toggle()
@@ -148,7 +152,9 @@ struct ___Template___CounterDisplayView: View {
     var onTap: () -> Void
     var body: some View {
         VStack {
-            SwiftUIUtils.RenderedView("\(Self.self).\(#function)")
+            SwiftUIUtils.RenderedView(
+                "\(Self.self).\(#function)",
+                visible: AppFeaturesManager.Debug.canDisplayRenderedView)
             Text("___Template___Auxiliar.counterDisplayView")
             HStack {
                 Button("Inc V.onTap", action: { onTap() })

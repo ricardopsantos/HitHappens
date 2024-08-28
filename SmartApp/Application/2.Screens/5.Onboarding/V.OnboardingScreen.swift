@@ -52,9 +52,12 @@ struct OnboardingScreen: View {
             VStack {
                 Header(text: "Onboarding".localizedMissing)
                 pageView
-                TextButton(onClick: onNextButtonPressed, 
-                           text: buttonText,
-                           accessibility: .fwdButton)
+                TextButton(
+                    onClick: onNextButtonPressed,
+
+                    text: buttonText,
+                    accessibility: .fwdButton
+                )
             }
             .padding()
         }

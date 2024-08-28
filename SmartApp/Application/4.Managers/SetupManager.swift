@@ -19,17 +19,16 @@ public class SetupManager {
     private init() {}
     static let shared = SetupManager()
     func setup(dataBaseRepository: DataBaseRepositoryProtocol) {
-            
         CPPWrapper.disable_gdb() // Security: Detach debugger for real device
         CPPWrapper.crash_if_debugged() // Security: Crash app if debugger Detach failed
         DevTools.Log.setup()
-        
+
         if FirebaseApp.configIsValidAndAvailable {
             FirebaseApp.configure()
         } else {
             DevTools.Log.debug(.log("Firebase config not available or invalid"), .business)
         }
-        
+
         UITestingManager.setup()
         FontsName.setup()
         if Common_Utils.onDebug, Common_Utils.false {
@@ -41,12 +40,10 @@ public class SetupManager {
         }
         dataBaseRepository.initDataBase()
     }
-    
-
 }
 
-extension FirebaseApp {
-    public static var configIsValidAndAvailable: Bool {
+public extension FirebaseApp {
+    static var configIsValidAndAvailable: Bool {
         let plistPath = "GoogleService-Info-" + Common.AppInfo.bundleIdentifier
         if let path = Bundle.main.path(forResource: plistPath, ofType: "plist") {
             if let plist = NSDictionary(contentsOfFile: path) {

@@ -22,7 +22,7 @@ struct EventDetailsViewCoordinator: View, ViewCoordinatorProtocol {
     // MARK: - Usage/Auxiliar Attributes
     @EnvironmentObject var coordinatorTab2: RouterViewModel
     @Environment(\.dismiss) var dismiss
-    let model: EventDetailsModel
+    let model: EventDetailsModel?
     let haveNavigationStack: Bool
 
     // MARK: - Body & View
@@ -46,7 +46,7 @@ struct EventDetailsViewCoordinator: View, ViewCoordinatorProtocol {
         switch screen {
         case .eventDetails(model: let model):
             let dependencies: EventDetailsViewModel.Dependencies = .init(
-                model: model, onCompletion: { _ in }, onRouteBack: {
+                model: model, onCompletion: { _ in }, onPerformRouteBack: {
                     coordinatorTab2.navigateBack()
                 }, onTrackedLogTapped: { trackedLog in
                     coordinator.sheetLink = .eventLogDetails(model: .init(trackedLog: trackedLog))
@@ -55,9 +55,7 @@ struct EventDetailsViewCoordinator: View, ViewCoordinatorProtocol {
             EventDetailsView(dependencies: dependencies)
         case .eventLogDetails(model: let model):
             let dependencies: EventLogDetailsViewModel.Dependencies = .init(
-                model: model, onCompletion: { _ in
-
-                }, onRouteBack: {},
+                model: model, onPerformRouteBack: {},
                 dataBaseRepository: configuration.dataBaseRepository)
             EventLogDetailsView(dependencies: dependencies)
         default:
@@ -79,12 +77,12 @@ struct EventDetailsView: View, ViewProtocol {
     public init(dependencies: EventDetailsViewModel.Dependencies) {
         DevTools.Log.debug(.viewInit("\(Self.self)"), .view)
         _viewModel = StateObject(wrappedValue: .init(dependencies: dependencies))
-        self.onRouteBack = dependencies.onRouteBack
+        self.onPerformRouteBack = dependencies.onPerformRouteBack
     }
 
     // MARK: - Usage/Auxiliar Attributes
     @Environment(\.dismiss) var dismiss
-    private let onRouteBack: () -> Void
+    private let onPerformRouteBack: () -> Void
     @State var locationSwitchIsOn: Bool = false
     private let cancelBag: CancelBag = .init()
     @StateObject var locationViewModel: Common.SharedLocationManagerViewModel = .shared
@@ -95,7 +93,7 @@ struct EventDetailsView: View, ViewProtocol {
             sender: "\(Self.self)",
             appScreen: .eventDetails(model: .init(event: .random(cascadeEvents: []))),
             navigationViewModel: .custom(onBackButtonTap: {
-                onRouteBack()
+                onPerformRouteBack()
             }, title: "Event Details".localizedMissing),
             ignoresSafeArea: false,
             background: .defaultBackground,
@@ -155,7 +153,7 @@ struct EventDetailsView: View, ViewProtocol {
             Spacer()
         }
     }
-    
+
     var detailsView: some View {
         LazyVStack(spacing: 0) {
             CustomTitleAndCustomTextFieldWithBinding(

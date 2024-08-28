@@ -67,15 +67,22 @@ class LoginViewModel: BaseViewModel {
     func send(action: Actions) {
         switch action {
         case .didAppear:
-            send(action: .doLogin(email: "mail@gmail.com", password: "123"))
-            alertModel = .init(
-                type: .warning,
-                message: "Tap to Autofill",
-                onUserTapGesture: { [weak self] in
-                    self?.email = "mail@gmail.com"
-                    self?.password = "123"
-                }
-            )
+            if AppFeaturesManager.AppHave.loginEnabled {
+                send(action: .doLogin(
+                    email: AuthenticationViewModel.mockUserName,
+                    password: AuthenticationViewModel.mockPassword
+                ))
+            } else {
+                alertModel = .init(
+                    type: .warning,
+                    message: "Tap to Autofill",
+                    onUserTapGesture: { [weak self] in
+                        self?.email = AuthenticationViewModel.mockUserName
+                        self?.password = AuthenticationViewModel.mockPassword
+                    }
+                )
+            }
+
         case .didDisappear: ()
         case .doLogin(email: let email, password: let password):
             Task {

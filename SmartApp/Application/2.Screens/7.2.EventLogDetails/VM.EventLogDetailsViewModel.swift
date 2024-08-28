@@ -60,8 +60,7 @@ extension EventLogDetailsViewModel {
 
     struct Dependencies {
         let model: EventLogDetailsModel
-        let onCompletion: (String) -> Void
-        let onRouteBack: () -> Void
+        let onPerformRouteBack: () -> Void
         let dataBaseRepository: DataBaseRepositoryProtocol
     }
 }
@@ -78,11 +77,11 @@ class EventLogDetailsViewModel: BaseViewModel {
     @Published var mapItems: [GenericMapView.ModelItem] = []
     private let cancelBag = CancelBag()
     private let dataBaseRepository: DataBaseRepositoryProtocol?
-    private let onRouteBack: () -> Void
+    private let onPerformRouteBack: () -> Void
     public init(dependencies: Dependencies) {
         self.dataBaseRepository = dependencies.dataBaseRepository
         self.trackedLog = dependencies.model.trackedLog
-        self.onRouteBack = dependencies.onRouteBack
+        self.onPerformRouteBack = dependencies.onPerformRouteBack
         super.init()
         startListeningDBChanges()
     }
@@ -178,7 +177,7 @@ fileprivate extension EventLogDetailsViewModel {
                 case .databaseDidDeletedContentOn(let table, let id):
                     // Record deleted! Route back
                     if table == "\(CDataTrackedLog.self)", id == self?.trackedLog?.id {
-                        self?.onRouteBack()
+                        self?.onPerformRouteBack()
                     }
                 case .databaseDidChangedContentItemOn: break
                 case .databaseDidFinishChangeContentItemsOn: break

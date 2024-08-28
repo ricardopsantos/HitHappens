@@ -11,6 +11,11 @@ import Common
 import Domain
 import Core
 
+extension AuthenticationViewModel {
+    static var mockUserName = "mail@gmail.com"
+    static var mockPassword = "123"
+}
+
 @MainActor
 class AuthenticationViewModel: ObservableObject {
     // MARK: - Dependency Attributes
@@ -42,7 +47,7 @@ class AuthenticationViewModel: ObservableObject {
     // MARK: - Functions
 
     func login(user: Model.User) async throws {
-        guard user.password == "123" else {
+        guard user.password == AuthenticationViewModel.mockPassword else {
             throw AppErrors.invalidPassword
         }
         userRepository.saveUser(user: Model.User(email: user.email, password: user.password))

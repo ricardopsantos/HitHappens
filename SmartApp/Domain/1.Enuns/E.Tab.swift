@@ -16,7 +16,13 @@ public enum Tab: String, CaseIterable, Equatable, Sendable {
     case tab5
 
     public var title: String {
-        rawValue.capitalised
+        switch self {
+        case .tab1: return "Favs."
+        case .tab2: return "List"
+        case .tab3: return "Cal."
+        case .tab4: return "Map"
+        case .tab5: return "Sets."
+        }
     }
 
     public var icon: String {

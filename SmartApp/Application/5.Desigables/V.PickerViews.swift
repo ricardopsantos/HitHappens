@@ -66,22 +66,6 @@ public struct SoundPickerView: View {
     }
 }
 
-public struct CountryPickerView: View {
-    @Environment(\.colorScheme) var colorScheme
-    @Binding var selected: String
-    public init(
-        selected: Binding<String>) {
-        self._selected = selected
-    }
-
-    public var body: some View {
-        DefaultPickerView(
-            title: "Country",
-            options: AppConstants.countriesOptions,
-            selectedOption: $selected)
-    }
-}
-
 struct GenderPickerView: View {
     @Binding var selected: Gender
     var options: [DefaultSegmentedPickerView.Option] {
@@ -141,8 +125,6 @@ public struct AppearancePickerView: View {
 #if canImport(SwiftUI) && DEBUG
 #Preview {
     VStack {
-        CountryPickerView(
-            selected: .constant("Portugal"))
         GenderPickerView(selected: .constant(.female))
         AppearancePickerView(selected: .constant(.dark))
         CategoryPickerView(

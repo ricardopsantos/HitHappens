@@ -25,7 +25,7 @@ enum BaseView {
         ignoresSafeArea: Bool,
         dismissKeyboardOnTap: Bool = false,
         background: BackgroundView.Background,
-        displayRenderedView: Bool = Common_Utils.onSimulator,
+        displayRenderedView: Bool = AppFeaturesManager.Debug.canDisplayRenderedView,
         loadingModel: Model.LoadingModel?,
         alertModel: Model.AlertModel?,
         networkStatus: CommonNetworking.NetworkStatus?,
@@ -43,7 +43,7 @@ enum BaseView {
                     .doIf(displayRenderedView) {
                         $0.overlay {
                             VStack(spacing: 0) {
-                                SwiftUIUtils.RenderedView("\(sender)")
+                                SwiftUIUtils.RenderedView("\(sender)", visible: true)
                                     .offset(.init(width: 0, height: -12))
                                     .opacity(displayRenderedView ? 1 : 0)
                                 Spacer()

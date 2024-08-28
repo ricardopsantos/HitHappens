@@ -20,7 +20,7 @@ public struct CommonLearnings {
 #Preview {
     ScrollView {
         VStack {
-            SwiftUIUtils.RenderedView("\(#function)")
+            SwiftUIUtils.RenderedView("\(#function)", visible: true)
             CommonLearnings.UseDrawingGroupToSpeedUpView(
                 useCompositingGroup: false,
                 useDrawingGroup: false

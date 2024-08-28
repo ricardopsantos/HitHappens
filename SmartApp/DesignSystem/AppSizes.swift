@@ -83,7 +83,7 @@ public enum SizesNamesButton: Int, Codable, CaseIterable {
     }
 
     private var ratioChange: CGFloat {
-        0.75
+        0.6
     }
 
     private var primarySize: CGSize {

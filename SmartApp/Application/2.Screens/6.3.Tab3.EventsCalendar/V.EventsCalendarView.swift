@@ -52,7 +52,7 @@ struct EventsCalendarViewCoordinator: View, ViewCoordinatorProtocol {
             EventsCalendarView(dependencies: dependencies)
         case .eventLogDetails(model: let model):
             let dependencies: EventLogDetailsViewModel.Dependencies = .init(
-                model: model, onCompletion: { _ in }, onRouteBack: {
+                model: model, onPerformRouteBack: {
                     coordinatorTab3.navigateBack()
                 },
                 dataBaseRepository: configuration.dataBaseRepository)
@@ -107,7 +107,7 @@ struct EventsCalendarView: View, ViewProtocol {
             LazyVStack(spacing: 0) {
                 CalendarView(
                     currentDate: $viewModel.selectedMonth,
-                    selectedDay: $viewModel.selectedDay, 
+                    selectedDay: $viewModel.selectedDay,
                     eventsForDay: $viewModel.eventsForDay,
                     onSelectedDay: { day in
                         viewModel.send(.loadEvents(fullMonth: false, value: day))

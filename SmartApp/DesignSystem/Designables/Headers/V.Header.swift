@@ -37,15 +37,14 @@ public struct Header: View {
         ZStack {
             if hasBackButton {
                 HStack {
-                    Button(action: onBackOrCloseClick) {
-                        AppImages.arrowBackward.image
-                            .resizable()
-                            .scaledToFit()
-                            .frame(SizeNames.defaultMarginSmall)
-                            .tint(Color(Header.defaultColor))
-                        Spacer()
-                    }
-                    .accessibilityIdentifier(Accessibility.backButton.identifier)
+                    ImageButton(
+                        image:AppImages.arrowBackward.image,
+                        imageSize: SizeNames.defaultButtonTertiaryDefaultHeight,
+                        onClick: onBackOrCloseClick,
+                        style: .tertiary,
+                        accessibility: .backButton
+                    )
+                    Spacer()
                 }
             }
             Text(text)
@@ -58,13 +57,13 @@ public struct Header: View {
             if hasCloseButton {
                 HStack {
                     Spacer()
-                    Button(action: onBackOrCloseClick) {
-                        AppImages.close.image
-                            .resizable()
-                            .scaledToFit()
-                            .frame(SizeNames.defaultMarginSmall)
-                            .tint(Color(Header.defaultColor))
-                    }
+                    ImageButton(
+                        image:AppImages.close.image,
+                        imageSize: SizeNames.defaultButtonTertiaryDefaultHeight,
+                        onClick: onBackOrCloseClick,
+                        style: .tertiary,
+                        accessibility: .backButton
+                    )
                 }
             }
         }

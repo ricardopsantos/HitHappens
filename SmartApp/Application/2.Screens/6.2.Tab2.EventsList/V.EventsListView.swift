@@ -104,7 +104,16 @@ struct EventsListView: View, ViewProtocol {
         let sectionB = viewModel.events.filter { !$0.favorite && !$0.archived }
         let sectionC = viewModel.events.filter(\.archived)
         ScrollView {
-            Header(text: "All events".localizedMissing)
+            ZStack {
+                HStack {
+                    Header(text: "All events".localizedMissing)
+                    ImageButton(systemImageName: "plus",
+                                imageSize: SizeNames.defaultButtonTertiaryDefaultHeight,
+                                onClick: {
+
+                    }, style: .tertiary, accessibility: .addButton)
+                }
+            }
             LazyVStack(spacing: 0) {
                 HStack(spacing: 0) {
                     Text("Favorits".localizedMissing)

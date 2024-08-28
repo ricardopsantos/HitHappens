@@ -45,7 +45,7 @@ struct EventLogDetailsViewCoordinator: View, ViewCoordinatorProtocol {
         switch screen {
         case .eventLogDetails(model: let model):
             let dependencies: EventLogDetailsViewModel.Dependencies = .init(
-                model: model, onCompletion: { _ in }, onRouteBack: {
+                model: model, onPerformRouteBack: {
                     coordinatorTab2.navigateBack()
                 },
                 dataBaseRepository: configuration.dataBaseRepository)
@@ -69,12 +69,12 @@ struct EventLogDetailsView: View, ViewProtocol {
     public init(dependencies: EventLogDetailsViewModel.Dependencies) {
         DevTools.Log.debug(.viewInit("\(Self.self)"), .view)
         _viewModel = StateObject(wrappedValue: .init(dependencies: dependencies))
-        self.onRouteBack = dependencies.onRouteBack
+        self.onPerformRouteBack = dependencies.onPerformRouteBack
     }
 
     // MARK: - Usage/Auxiliar Attributes
     @Environment(\.dismiss) var dismiss
-    private let onRouteBack: () -> Void
+    private let onPerformRouteBack: () -> Void
     @State var locationSwitchIsOn: Bool = false
     private let cancelBag: CancelBag = .init()
     @StateObject var locationViewModel: Common.SharedLocationManagerViewModel = .shared
@@ -85,7 +85,7 @@ struct EventLogDetailsView: View, ViewProtocol {
             sender: "\(Self.self)",
             appScreen: .eventLogDetails(model: .init(trackedLog: .random)),
             navigationViewModel: .custom(onBackButtonTap: {
-                onRouteBack()
+                onPerformRouteBack()
             }, title: "Event Details".localizedMissing),
             ignoresSafeArea: false,
             background: .defaultBackground,
@@ -102,23 +102,23 @@ struct EventLogDetailsView: View, ViewProtocol {
 
     var content: some View {
         ZStack {
-           // ScrollView {
-                VStack(spacing: 0) {
-                    Header(text: "Details")
-                    CustomTitleAndCustomTextFieldWithBinding(
-                        title: "Note".localizedMissing,
-                        placeholder: "Add a note".localizedMissing,
-                        inputText: $viewModel.note,
-                        accessibility: .undefined) { newValue in
-                            viewModel.send(.userDidChangedNote(value: newValue))
-                        }
-                    SwiftUIUtils.FixedVerticalSpacer(height: SizeNames.defaultMarginSmall)
-                    mapView
-                    SwiftUIUtils.FixedVerticalSpacer(height: SizeNames.defaultMarginSmall)
-                    Spacer()
-                    deleteView
-                    SwiftUIUtils.FixedVerticalSpacer(height: SizeNames.defaultMarginSmall)
-                }
+            // ScrollView {
+            VStack(spacing: 0) {
+                Header(text: "Details")
+                CustomTitleAndCustomTextFieldWithBinding(
+                    title: "Note".localizedMissing,
+                    placeholder: "Add a note".localizedMissing,
+                    inputText: $viewModel.note,
+                    accessibility: .undefined) { newValue in
+                        viewModel.send(.userDidChangedNote(value: newValue))
+                    }
+                SwiftUIUtils.FixedVerticalSpacer(height: SizeNames.defaultMarginSmall)
+                mapView
+                SwiftUIUtils.FixedVerticalSpacer(height: SizeNames.defaultMarginSmall)
+                Spacer()
+                deleteView
+                SwiftUIUtils.FixedVerticalSpacer(height: SizeNames.defaultMarginSmall)
+            }
             if viewModel.confirmationSheetType != nil {
                 confirmationSheet
             }
@@ -141,7 +141,7 @@ struct EventLogDetailsView: View, ViewProtocol {
             Spacer()
         }
     }
-    
+
     var deleteView: some View {
         TextButton(
             onClick: {
@@ -157,7 +157,7 @@ struct EventLogDetailsView: View, ViewProtocol {
             background: .danger,
             accessibility: .undefined)
     }
-    
+
     var confirmationSheet: some View {
         @State var isOpen = Binding<Bool>(
             get: { viewModel.confirmationSheetType != nil },
