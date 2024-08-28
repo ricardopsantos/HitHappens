@@ -60,8 +60,8 @@ struct FavoriteEventsViewCoordinator: View, ViewCoordinatorProtocol {
                 .textColor(ColorSemantic.danger.color)
                 .multilineTextAlignment(.center)
                 .onAppear(perform: {
-                DevTools.assert(false, message: "Not predicted \(screen)")
-            })
+                    DevTools.assert(false, message: "Not predicted \(screen)")
+                })
         }
     }
 }

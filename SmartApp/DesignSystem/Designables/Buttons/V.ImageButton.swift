@@ -29,7 +29,7 @@ public struct ImageButton: View {
     private let image: Image
     private let style: ImageButton.Style
     private let imageSize: CGFloat
-    
+
     public init(
         image: Image,
         imageColor: ColorSemantic = .primary,
@@ -49,7 +49,7 @@ public struct ImageButton: View {
         self.image = image
         self.style = style
     }
-    
+
     public init(
         systemImageName: String,
         imageColor: ColorSemantic = .primary,
@@ -147,9 +147,9 @@ public struct ImageButton: View {
             .fill(.red)
             .frame(SizeNames.defaultMarginSmall)
         ImageButton(
-            image:AppImages.arrowBackward.image,
+            image: AppImages.arrowBackward.image,
             imageSize: SizeNames.defaultMarginSmall,
-            onClick: { },
+            onClick: {},
             style: .tertiary,
             accessibility: .backButton
         )
@@ -157,7 +157,7 @@ public struct ImageButton: View {
             VStack {
                 ImageButton(
                     systemImageName: "heart.fill",
-                    //imageSize: SizeNames.defaultButtonPrimaryHeight,
+                    // imageSize: SizeNames.defaultButtonPrimaryHeight,
                     onClick: {},
                     style: style,
                     accessibility: .undefined

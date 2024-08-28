@@ -36,6 +36,7 @@ public struct DefaultPickerView: View {
                         Text(option)
                     }
                 }
+                .tint(ColorSemantic.primary.color)
                 .pickerStyle(DefaultPickerStyle())
             }
         } // .debugBackground()

@@ -59,4 +59,18 @@ public extension Model.TrackedEntity {
             cascadeEvents: cascadeEvents
         )
     }
+
+    static var new: Self {
+        Model.TrackedEntity(
+            id: "",
+            name: "",
+            info: "",
+            archived: false,
+            favorite: false,
+            locationRelevant: false,
+            category: .none,
+            sound: .none,
+            cascadeEvents: []
+        )
+    }
 }

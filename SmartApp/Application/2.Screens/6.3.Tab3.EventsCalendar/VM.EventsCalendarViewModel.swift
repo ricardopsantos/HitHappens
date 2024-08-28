@@ -146,7 +146,7 @@ fileprivate extension EventsCalendarViewModel {
                 case .databaseDidFinishChangeContentItemsOn(let table):
                     if table == "\(CDataTrackedLog.self)" {
                         Common.ExecutionControlManager.debounce(operationId: "\(Self.self)|\(#function)") { [weak self] in
-                            // self?.send(.loadEvents)
+                            self?.send(.loadEvents(fullMonth: true, value: Date()))
                         }
                     }
                 }

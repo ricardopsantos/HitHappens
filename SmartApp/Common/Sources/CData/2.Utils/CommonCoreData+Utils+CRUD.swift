@@ -87,7 +87,7 @@ public extension CommonCoreData.Utils {
             ()
         }
         if logsEnabled, !changes.isEmpty, !Common.Utils.onUITests /* , !Common.Utils.onUnitTests */ {
-            Common_Logs.debug(" 💾 \(changes) @ \(threadInfo)")        }
+            Common_Logs.debug(" 💾 \(changes) @ \(threadInfo)") }
         return saveSuccess
     }
 }

@@ -68,8 +68,8 @@ struct EventsListViewCoordinator: View, ViewCoordinatorProtocol {
                 .textColor(ColorSemantic.danger.color)
                 .multilineTextAlignment(.center)
                 .onAppear(perform: {
-                DevTools.assert(false, message: "Not predicted \(screen)")
-            })
+                    DevTools.assert(false, message: "Not predicted \(screen)")
+                })
         }
     }
 }
@@ -123,9 +123,12 @@ struct EventsListView: View, ViewProtocol {
             ZStack {
                 HStack {
                     Header(text: "All events".localizedMissing)
-                    ImageButton(systemImageName: "plus",
-                                imageSize: SizeNames.defaultButtonTertiaryDefaultHeight,
-                                onClick: onShouldDisplayNewTrackedEntity, style: .tertiary, accessibility: .addButton)
+                    ImageButton(
+                        systemImageName: "plus",
+                        imageSize: SizeNames.defaultButtonTertiaryDefaultHeight,
+                        onClick: onShouldDisplayNewTrackedEntity,
+                        style: .tertiary,
+                        accessibility: .addButton)
                 }
             }
             LazyVStack(spacing: 0) {

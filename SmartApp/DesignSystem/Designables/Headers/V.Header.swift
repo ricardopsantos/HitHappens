@@ -38,7 +38,7 @@ public struct Header: View {
             if hasBackButton {
                 HStack {
                     ImageButton(
-                        image:AppImages.arrowBackward.image,
+                        image: AppImages.arrowBackward.image,
                         imageSize: SizeNames.defaultButtonTertiaryDefaultHeight,
                         onClick: onBackOrCloseClick,
                         style: .tertiary,
@@ -58,7 +58,7 @@ public struct Header: View {
                 HStack {
                     Spacer()
                     ImageButton(
-                        image:AppImages.close.image,
+                        image: AppImages.close.image,
                         imageSize: SizeNames.defaultButtonTertiaryDefaultHeight,
                         onClick: onBackOrCloseClick,
                         style: .tertiary,

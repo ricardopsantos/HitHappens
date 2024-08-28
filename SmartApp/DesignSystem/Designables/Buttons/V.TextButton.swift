@@ -74,6 +74,7 @@ public struct TextButton: View {
 
     var contentView: some View {
         Text(text)
+            //.foregroundColor(.white)
             .fontSemantic(.bodyBold)
             .doIf(enabled, transform: {
                 switch style {

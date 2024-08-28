@@ -64,8 +64,8 @@ struct EventDetailsViewCoordinator: View, ViewCoordinatorProtocol {
                 .textColor(ColorSemantic.danger.color)
                 .multilineTextAlignment(.center)
                 .onAppear(perform: {
-                DevTools.assert(false, message: "Not predicted \(screen)")
-            })
+                    DevTools.assert(false, message: "Not predicted \(screen)")
+                })
         }
     }
 }
@@ -127,13 +127,18 @@ struct EventDetailsView: View, ViewProtocol {
                 LazyVStack(spacing: 0) {
                     detailsView
                     SwiftUIUtils.FixedVerticalSpacer(height: SizeNames.defaultMarginSmall)
-                    addNewView
-                    SwiftUIUtils.FixedVerticalSpacer(height: SizeNames.defaultMarginSmall)
-                    Divider()
-                    SwiftUIUtils.FixedVerticalSpacer(height: SizeNames.defaultMarginSmall)
-                    archivedAndDeleteView
-                    SwiftUIUtils.FixedVerticalSpacer(height: SizeNames.defaultMarginSmall)
-                    listView
+                    if viewModel.isNewEvent {
+                        SwiftUIUtils.FixedVerticalSpacer(height: SizeNames.defaultMarginSmall)
+                        saveNewView
+                    } else {
+                        addNewView
+                        SwiftUIUtils.FixedVerticalSpacer(height: SizeNames.defaultMarginSmall)
+                        Divider()
+                        SwiftUIUtils.FixedVerticalSpacer(height: SizeNames.defaultMarginSmall)
+                        archivedAndDeleteView
+                        SwiftUIUtils.FixedVerticalSpacer(height: SizeNames.defaultMarginSmall)
+                        listView
+                    }
                 }
             }
             if viewModel.confirmationSheetType != nil {
@@ -207,6 +212,23 @@ struct EventDetailsView: View, ViewProtocol {
         .paddingLeft(SizeNames.size_1.cgFloat)
     }
 
+    var saveNewView: some View {
+        TextButton(
+            onClick: {
+                AnalyticsManager.shared.handleButtonClickEvent(
+                    buttonType: .primary,
+                    label: "Save event",
+                    sender: "\(Self.self)")
+                viewModel.send(.saveNewEvent(confirmed: false))
+            },
+            text: "Save event".localizedMissing,
+            alignment: .center,
+            style: .secondary,
+            background: .primary,
+            enabled: viewModel.canSaveNewEvent,
+            accessibility: .saveButton)
+    }
+
     var addNewView: some View {
         TextButton(
             onClick: {
@@ -214,7 +236,7 @@ struct EventDetailsView: View, ViewProtocol {
                     buttonType: .primary,
                     label: "Add new",
                     sender: "\(Self.self)")
-                viewModel.send(.addNew)
+                viewModel.send(.addNewLog)
             },
             text: "Add new".localizedMissing,
             alignment: .center,
@@ -238,7 +260,7 @@ struct EventDetailsView: View, ViewProtocol {
                         buttonType: .primary,
                         label: "Delete",
                         sender: "\(Self.self)")
-                    viewModel.send(.delete(confirmed: false))
+                    viewModel.send(.deleteEvent(confirmed: false))
                 },
                 text: "Delete Event".localizedMissing,
                 alignment: .center,
@@ -284,7 +306,9 @@ struct EventDetailsView: View, ViewProtocol {
                 }
                 switch sheetType {
                 case .delete:
-                    viewModel.send(.delete(confirmed: true))
+                    viewModel.send(.deleteEvent(confirmed: true))
+                case .save:
+                    viewModel.send(.saveNewEvent(confirmed: true))
                 }
             })
     }
@@ -295,12 +319,19 @@ struct EventDetailsView: View, ViewProtocol {
 //
 
 #if canImport(SwiftUI) && DEBUG
-#Preview {
+#Preview("Edit") {
     EventDetailsViewCoordinator(
         model: .init(event: .random(cascadeEvents: [
             .random,
             .random
         ])), haveNavigationStack: false)
+        .environmentObject(AppStateViewModel.defaultForPreviews)
+        .environmentObject(ConfigurationViewModel.defaultForPreviews)
+        .environmentObject(AuthenticationViewModel.defaultForPreviews)
+}
+
+#Preview("New") {
+    EventDetailsViewCoordinator(model: nil, haveNavigationStack: false)
         .environmentObject(AppStateViewModel.defaultForPreviews)
         .environmentObject(ConfigurationViewModel.defaultForPreviews)
         .environmentObject(AuthenticationViewModel.defaultForPreviews)
