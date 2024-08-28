@@ -23,21 +23,11 @@ struct EventsListViewCoordinator: View, ViewCoordinatorProtocol {
     @StateObject var coordinator = RouterViewModel()
     // MARK: - Usage/Auxiliar Attributes
     @Environment(\.dismiss) var dismiss
-    let haveNavigationStack: Bool
     // MARK: - Body & View
     var body: some View {
-        if haveNavigationStack {
-            NavigationStack(path: $coordinator.navPath) {
-                buildScreen(.eventsList)
-                    .navigationDestination(for: AppScreen.self, destination: buildScreen)
-                    .sheet(item: $coordinator.sheetLink, content: buildScreen)
-                    .fullScreenCover(item: $coordinator.coverLink, content: buildScreen)
-            }
-        } else {
-            buildScreen(.eventsList)
-                .sheet(item: $coordinator.sheetLink, content: buildScreen)
-                .fullScreenCover(item: $coordinator.coverLink, content: buildScreen)
-        }
+        buildScreen(.eventsList)
+            .sheet(item: $coordinator.sheetLink, content: buildScreen)
+            .fullScreenCover(item: $coordinator.coverLink, content: buildScreen)
     }
 
     @ViewBuilder
@@ -58,18 +48,13 @@ struct EventsListViewCoordinator: View, ViewCoordinatorProtocol {
                 model: model, onPerformRouteBack: {
                     coordinatorTab2.navigateBack()
                 }, onShouldDisplayTrackedLog: { trackedLog in
-                    coordinator.sheetLink = .eventLogDetails(model: .init(trackedLog: trackedLog))
+                    coordinatorTab2.sheetLink = .eventLogDetails(model: .init(trackedLog: trackedLog))
                 },
                 dataBaseRepository: configuration.dataBaseRepository)
             EventDetailsView(dependencies: dependencies)
         default:
-            Text("Not implemented [\(AppScreen.self).\(screen)]\nat [\(Self.self)|\(#function)]")
-                .fontSemantic(.callout)
-                .textColor(ColorSemantic.danger.color)
-                .multilineTextAlignment(.center)
-                .onAppear(perform: {
-                    DevTools.assert(false, message: "Not predicted \(screen)")
-                })
+            NotImplementedView(screen: screen)
+
         }
     }
 }
@@ -197,7 +182,7 @@ struct EventsListView: View, ViewProtocol {
 
 #if canImport(SwiftUI) && DEBUG
 #Preview {
-    EventsListViewCoordinator(haveNavigationStack: true)
+    EventsListViewCoordinator()
         .environmentObject(AppStateViewModel.defaultForPreviews)
         .environmentObject(ConfigurationViewModel.defaultForPreviews)
 }

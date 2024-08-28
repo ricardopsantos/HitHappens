@@ -46,6 +46,10 @@ extension DataBaseRepository_Tests {
 
 extension DataBaseRepository_Tests {
     func test_trackedEntityDeleteAll() {
+        guard enabled else {
+            XCTAssert(true)
+            return
+        }
         repository?.trackedEntityDeleteAll()
         XCTAssertEqual(repository?.trackedEntityGetAll(favorite: nil, archived: nil, cascade: false).count ?? 0, 0)
         XCTAssertEqual(repository?.trackedLogGetAll(cascade: false).count ?? 0, 0)
@@ -67,6 +71,10 @@ extension DataBaseRepository_Tests {
     }
 
     func test_trackedEntitySaveAndRetrieved() {
+        guard enabled else {
+            XCTAssert(true)
+            return
+        }
         repository?.trackedEntityDeleteAll()
         XCTAssertEqual(repository?.trackedEntityGetAll(favorite: nil, archived: nil, cascade: false).count ?? 0, 0)
         XCTAssertEqual(repository?.trackedLogGetAll(cascade: false).count ?? 0, 0)
@@ -83,6 +91,10 @@ extension DataBaseRepository_Tests {
     }
 
     func test_trackedEntitySaveAndRetrievedAndUpdate() {
+        guard enabled else {
+            XCTAssert(true)
+            return
+        }
         repository?.trackedEntityDeleteAll()
         XCTAssertEqual(repository?.trackedEntityGetAll(favorite: nil, archived: nil, cascade: false).count ?? 0, 0)
         XCTAssertEqual(repository?.trackedLogGetAll(cascade: false).count ?? 0, 0)

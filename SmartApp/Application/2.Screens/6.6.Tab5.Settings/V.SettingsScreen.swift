@@ -21,21 +21,11 @@ struct SettingsViewCoordinator: View, ViewCoordinatorProtocol {
     @EnvironmentObject var configuration: ConfigurationViewModel
     @StateObject var coordinator = RouterViewModel()
     // MARK: - Usage/Auxiliar Attributes
-    let haveNavigationStack: Bool
     // MARK: - Body & View
     var body: some View {
-        if haveNavigationStack {
-            NavigationStack(path: $coordinator.navPath) {
-                buildScreen(.settings)
-                    .navigationDestination(for: AppScreen.self, destination: buildScreen)
-                    .sheet(item: $coordinator.sheetLink, content: buildScreen)
-                    .fullScreenCover(item: $coordinator.coverLink, content: buildScreen)
-            }
-        } else {
-            buildScreen(.settings)
-                .sheet(item: $coordinator.sheetLink, content: buildScreen)
-                .fullScreenCover(item: $coordinator.coverLink, content: buildScreen)
-        }
+        buildScreen(.settings)
+            .sheet(item: $coordinator.sheetLink, content: buildScreen)
+            .fullScreenCover(item: $coordinator.coverLink, content: buildScreen)
     }
 
     @ViewBuilder
@@ -50,13 +40,8 @@ struct SettingsViewCoordinator: View, ViewCoordinatorProtocol {
             )
             SettingsScreen(dependencies: dependencies)
         default:
-            Text("Not implemented [\(AppScreen.self).\(screen)]\nat [\(Self.self)|\(#function)]")
-                .fontSemantic(.callout)
-                .textColor(ColorSemantic.danger.color)
-                .multilineTextAlignment(.center)
-                .onAppear(perform: {
-                    DevTools.assert(false, message: "Not predicted \(screen)")
-                })
+            NotImplementedView(screen: screen)
+
         }
     }
 }
@@ -197,7 +182,7 @@ fileprivate extension SettingsScreen {}
 
 #if canImport(SwiftUI) && DEBUG
 #Preview {
-    SettingsViewCoordinator(haveNavigationStack: false)
+    SettingsViewCoordinator()
         .environmentObject(AppStateViewModel.defaultForPreviews)
         .environmentObject(ConfigurationViewModel.defaultForPreviews)
 }

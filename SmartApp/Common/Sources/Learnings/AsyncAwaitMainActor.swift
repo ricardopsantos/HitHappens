@@ -35,7 +35,8 @@ public extension CommonLearnings.AsyncAwaitMainActorView {
     /**
      Basically opting out of Swift concurrency altogether and falling back on `DispatchQueue.main`
 
-     You can do this, but it suffers from all of the drawbacks of the last two solutions. The generated code size it practically identical to that of the Task mechanism above (933 lines) and it will definitely force an update to occur asynchronously.
+     You can do this, but it suffers from all of the drawbacks of the last two solutions. The generated code size it practically 
+     identical to that of the Task mechanism above (933 lines) and it will definitely force an update to occur asynchronously.
 
      With the problems already discussed, like difficulty in testing.
      */
@@ -231,7 +232,9 @@ public extension CommonLearnings.AsyncAwaitMainActorView {
     }
 
     /**
-     The  code works, but when we run this in the simulator we’ll get one of Xcode’s new purple error messages on the lines marked #1 and #2 in the original view model. The message is _“Publishing changes from background threads is not allowed.”_
+     The  code works, but when we run this in the simulator we’ll get one of Xcode’s new purple 
+     error messages on the lines marked #1 and #2 in the original view model. The message
+     is _“Publishing changes from background threads is not allowed.”_
      */
     class ViewModelV1: ObservableObject {
         @Published var accounts: [Account]

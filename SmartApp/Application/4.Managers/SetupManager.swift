@@ -23,14 +23,12 @@ public class SetupManager {
         CPPWrapper.disable_gdb() // Security: Detach debugger for real device
         CPPWrapper.crash_if_debugged() // Security: Crash app if debugger Detach failed
         DevTools.Log.setup()
-
+        UITestingManager.setup()
         if FirebaseApp.configIsValidAndAvailable {
             FirebaseApp.configure()
         } else {
             DevTools.Log.debug(.log("Firebase config not available or invalid"), .business)
         }
-
-        UITestingManager.setup()
         FontsName.setup()
         if Common_Utils.onDebug, Common_Utils.false {
             UserDefaults.standard.set(true, forKey: "com.apple.CoreData.ConcurrencyDebug")
@@ -43,19 +41,5 @@ public class SetupManager {
             // First login
             dataBaseRepository.initDataBase()
         }
-    }
-}
-
-public extension FirebaseApp {
-    static var configIsValidAndAvailable: Bool {
-        let plistPath = "GoogleService-Info-" + Common.AppInfo.bundleIdentifier
-        if let path = Bundle.main.path(forResource: plistPath, ofType: "plist") {
-            if let plist = NSDictionary(contentsOfFile: path) {
-                if let value = plist["API_KEY"] as? String, !value.isEmpty {
-                    return true
-                }
-            }
-        }
-        return false
     }
 }

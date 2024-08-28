@@ -161,7 +161,7 @@ fileprivate extension EventsCalendarViewModel {
 
 #if canImport(SwiftUI) && DEBUG
 #Preview {
-    EventsCalendarViewCoordinator(haveNavigationStack: false)
+    EventsCalendarViewCoordinator()
         .environmentObject(AppStateViewModel.defaultForPreviews)
         .environmentObject(ConfigurationViewModel.defaultForPreviews)
 }

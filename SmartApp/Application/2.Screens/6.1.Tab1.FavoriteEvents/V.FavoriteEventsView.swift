@@ -55,13 +55,8 @@ struct FavoriteEventsViewCoordinator: View, ViewCoordinatorProtocol {
                 dataBaseRepository: configuration.dataBaseRepository)
             EventLogDetailsView(dependencies: dependencies)
         default:
-            Text("Not implemented [\(AppScreen.self).\(screen)]\nat [\(Self.self)|\(#function)]")
-                .fontSemantic(.callout)
-                .textColor(ColorSemantic.danger.color)
-                .multilineTextAlignment(.center)
-                .onAppear(perform: {
-                    DevTools.assert(false, message: "Not predicted \(screen)")
-                })
+            NotImplementedView(screen: screen)
+
         }
     }
 }
@@ -106,8 +101,7 @@ struct FavoriteEventsView: View, ViewProtocol {
                 let locationRelevant = !value.filter(\.locationRelevant).isEmpty
                 if locationRelevant {
                     locationViewModel.start(sender: "\(Self.self)")
-                }
-                else {
+                } else {
                     locationViewModel.stop(sender: "\(Self.self)")
                 }
             }

@@ -69,7 +69,7 @@ class SettingsViewModel: BaseViewModel {
 
 #if canImport(SwiftUI) && DEBUG
 #Preview {
-    SettingsViewCoordinator(haveNavigationStack: false)
+    SettingsViewCoordinator()
         .environmentObject(AppStateViewModel.defaultForPreviews)
         .environmentObject(ConfigurationViewModel.defaultForPreviews)
 }

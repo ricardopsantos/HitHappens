@@ -203,7 +203,7 @@ final class UnfairLockManager_Tests: XCTestCase {
 
         // Allow some time for the concurrent operations to finish
         DispatchQueue.global().asyncAfter(deadline: .now() + 1) {
-            XCTAssertEqual(successCount + failureCount, iterations) // FAILS ("9860") is not equal to ("10000")
+            XCTAssertNoDifference(successCount + failureCount, iterations) // FAILS ("9860") is not equal to ("10000")
             XCTAssertGreaterThan(successCount, 0)
             expectation.fulfill()
         }
@@ -218,7 +218,7 @@ final class UnfairLockManager_Tests: XCTestCase {
         let queue = DispatchQueue(label: #function, attributes: .concurrent)
         var readResults = [Int]()
 
-        DispatchQueue.concurrentPerform(iterations: iterations) { i in
+        DispatchQueue.concurrentPerform(iterations: iterations) { _ in
             queue.async {
                 self.lockManager.lock()
                 value += 1

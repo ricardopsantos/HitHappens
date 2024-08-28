@@ -16,10 +16,7 @@ struct RootModel: Equatable, Hashable, Sendable {
     let isAppStartCompleted: Bool
     let isOnboardingCompleted: Bool
 
-    init(
-        isAppStartCompleted: Bool = false,
-        isOnboardingCompleted: Bool = false
-    ) {
+    init(isAppStartCompleted: Bool = false, isOnboardingCompleted: Bool = false) {
         self.isAppStartCompleted = isAppStartCompleted
         self.isOnboardingCompleted = isOnboardingCompleted
     }

@@ -40,13 +40,8 @@ struct LoginViewCoordinator: View, ViewCoordinatorProtocol {
             )
             LoginView(dependencies: dependencies)
         default:
-            Text("Not implemented [\(AppScreen.self).\(screen)]\nat [\(Self.self)|\(#function)]")
-                .fontSemantic(.callout)
-                .textColor(ColorSemantic.danger.color)
-                .multilineTextAlignment(.center)
-                .onAppear(perform: {
-                    DevTools.assert(false, message: "Not predicted \(screen)")
-                })
+            NotImplementedView(screen: screen)
+
         }
     }
 }

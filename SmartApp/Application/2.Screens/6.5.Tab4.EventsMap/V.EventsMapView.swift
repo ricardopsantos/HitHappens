@@ -23,21 +23,11 @@ struct EventsMapViewCoordinator: View, ViewCoordinatorProtocol {
     @StateObject var coordinator = RouterViewModel()
     // MARK: - Usage/Auxiliar Attributes
     @Environment(\.dismiss) var dismiss
-    let haveNavigationStack: Bool
     // MARK: - Body & View
     var body: some View {
-        if haveNavigationStack {
-            NavigationStack(path: $coordinator.navPath) {
-                buildScreen(.map)
-                    .navigationDestination(for: AppScreen.self, destination: buildScreen)
-                    .sheet(item: $coordinator.sheetLink, content: buildScreen)
-                    .fullScreenCover(item: $coordinator.coverLink, content: buildScreen)
-            }
-        } else {
-            buildScreen(.map)
-                .sheet(item: $coordinator.sheetLink, content: buildScreen)
-                .fullScreenCover(item: $coordinator.coverLink, content: buildScreen)
-        }
+        buildScreen(.map)
+            .sheet(item: $coordinator.sheetLink, content: buildScreen)
+            .fullScreenCover(item: $coordinator.coverLink, content: buildScreen)
     }
 
     @ViewBuilder
@@ -58,13 +48,8 @@ struct EventsMapViewCoordinator: View, ViewCoordinatorProtocol {
                 dataBaseRepository: configuration.dataBaseRepository)
             EventLogDetailsView(dependencies: dependencies)
         default:
-            Text("Not implemented [\(AppScreen.self).\(screen)]\nat [\(Self.self)|\(#function)]")
-                .fontSemantic(.callout)
-                .textColor(ColorSemantic.danger.color)
-                .multilineTextAlignment(.center)
-                .onAppear(perform: {
-                    DevTools.assert(false, message: "Not predicted \(screen)")
-                })
+            NotImplementedView(screen: screen)
+
         }
     }
 }
@@ -162,7 +147,7 @@ struct EventsMapView: View, ViewProtocol {
 
 #if canImport(SwiftUI) && DEBUG
 #Preview {
-    EventsMapViewCoordinator(haveNavigationStack: true)
+    EventsMapViewCoordinator()
         .environmentObject(AppStateViewModel.defaultForPreviews)
         .environmentObject(ConfigurationViewModel.defaultForPreviews)
 }

@@ -25,11 +25,7 @@ struct MainTabView: View, ViewProtocol {
     // MARK: - ViewProtocol
     @Environment(\.colorScheme) var colorScheme
     @StateObject var viewModel: MainTabViewModel
-    public init(dependencies: MainTabViewModel.Dependencies) {
-        DevTools.Log.debug(.viewInit("\(Self.self)"), .view)
-        _viewModel = StateObject(wrappedValue: .init(dependencies: dependencies))
-    }
-
+    
     // MARK: - Usage/Auxiliar Attributes
     @Environment(\.dismiss) var dismiss
     @EnvironmentObject var configuration: ConfigurationViewModel
@@ -38,6 +34,11 @@ struct MainTabView: View, ViewProtocol {
     @StateObject var tab3Router = RouterViewModel()
     @StateObject var tab4Router = RouterViewModel()
     @StateObject var tab5Router = RouterViewModel()
+    
+    public init(dependencies: MainTabViewModel.Dependencies) {
+        DevTools.Log.debug(.viewInit("\(Self.self)"), .view)
+        _viewModel = StateObject(wrappedValue: .init(dependencies: dependencies))
+    }
 
     // MARK: - Body & View
     var body: some View {
@@ -61,7 +62,7 @@ struct MainTabView: View, ViewProtocol {
             // Tab 2 - Event as List
             //
             NavigationStack(path: $tab2Router.navPath) {
-                EventsListViewCoordinator(haveNavigationStack: false)
+                EventsListViewCoordinator()
                     .navigationDestination(for: AppScreen.self, destination: buildScreen)
                     .environmentObject(tab2Router)
             }
@@ -71,7 +72,7 @@ struct MainTabView: View, ViewProtocol {
             // Tab 3 - Event as Calendar
             //
             NavigationStack(path: $tab3Router.navPath) {
-                EventsCalendarViewCoordinator(haveNavigationStack: false)
+                EventsCalendarViewCoordinator()
                     .navigationDestination(for: AppScreen.self, destination: buildScreen)
                     .environmentObject(tab3Router)
             }
@@ -81,7 +82,7 @@ struct MainTabView: View, ViewProtocol {
             // Tab 4 - Event as Map
             //
             NavigationStack(path: $tab4Router.navPath) {
-                EventsMapViewCoordinator(haveNavigationStack: false)
+                EventsMapViewCoordinator()
                     .navigationDestination(for: AppScreen.self, destination: buildScreen)
                     .environmentObject(tab4Router)
             }
@@ -91,7 +92,7 @@ struct MainTabView: View, ViewProtocol {
             // Tab 5
             //
             NavigationStack(path: $tab5Router.navPath) {
-                SettingsViewCoordinator(haveNavigationStack: false)
+                SettingsViewCoordinator()
                     .navigationDestination(for: AppScreen.self, destination: buildScreen)
                     .environmentObject(tab5Router)
             }
@@ -133,13 +134,8 @@ struct MainTabView: View, ViewProtocol {
             .environmentObject(configuration)
             .environmentObject(tab2Router)
         default:
-            Text("Not implemented [\(AppScreen.self).\(screen)]\nat [\(Self.self)|\(#function)]")
-                .fontSemantic(.callout)
-                .textColor(ColorSemantic.danger.color)
-                .multilineTextAlignment(.center)
-                .onAppear(perform: {
-                    DevTools.assert(false, message: "Not predicted \(screen)")
-                })
+            NotImplementedView(screen: screen)
+
         }
     }
 }
@@ -155,28 +151,23 @@ extension MainTabView {
                 switch viewModel.selectedTab {
                 case .tab1:
                     if !tab1Router.navigateToRoot() {
-                        // Scroll up?
-                        DevTools.Log.debug("Should scroll up?", .view)
+                        // Already at root. Implement Scroll up?
                     }
                 case .tab2:
                     if !tab2Router.navigateToRoot() {
-                        // Scroll up?
-                        DevTools.Log.debug("Should scroll up?", .view)
+                        // Already at root. Implement Scroll up?
                     }
                 case .tab3:
                     if !tab3Router.navigateToRoot() {
-                        // Scroll up?
-                        DevTools.Log.debug("Should scroll up?", .view)
+                        // Already at root. Implement Scroll up?
                     }
                 case .tab4:
                     if !tab4Router.navigateToRoot() {
-                        // Scroll up?
-                        DevTools.Log.debug("Should scroll up?", .view)
+                        // Already at root. Implement Scroll up?
                     }
                 case .tab5:
                     if !tab5Router.navigateToRoot() {
-                        // Scroll up?
-                        DevTools.Log.debug("Should scroll up?", .view)
+                        // Already at root. Implement Scroll up?
                     }
                 }
             } else {

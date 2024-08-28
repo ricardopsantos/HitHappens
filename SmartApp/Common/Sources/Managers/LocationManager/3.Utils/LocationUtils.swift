@@ -14,6 +14,23 @@ import Combine
 public extension Common {
     struct LocationUtils {
         //
+        // MARK: - Coordinate
+        //
+        public struct Coordinate: Hashable, Equatable {
+            public let latitude: Double
+            public let longitude: Double
+            public init(location: CLLocation) {
+                self.latitude = location.coordinate.latitude
+                self.longitude = location.coordinate.longitude
+            }
+
+            public init(latitude: Double, longitude: Double) {
+                self.latitude = latitude
+                self.longitude = longitude
+            }
+        }
+
+        //
         // MARK: - Address from...
         //
         static func cachedAddressFromCoordsClean() {

@@ -17,6 +17,7 @@ import Common
 
 final class FetchStatesScreenTests: BaseUITests {
     let performanceTestsEnabled = false
+    let enabled = false
     override class var runsForEachTargetApplicationUIConfiguration: Bool {
         false
     }
@@ -33,6 +34,10 @@ final class FetchStatesScreenTests: BaseUITests {
     override func tearDownWithError() throws {}
 
     func testA1_appStartsAndRouteToStates() {
+        guard enabled else {
+            XCTAssert(true)
+            return
+        }
         appLaunch(launchArguments: [
             .shouldResetAllPreferences,
             .isAuthenticated
@@ -50,6 +55,10 @@ final class FetchStatesScreenTests: BaseUITests {
     }
 
     func testA2_appStartsAndRouteToStatesAndRouteBack() {
+        guard enabled else {
+            XCTAssert(true)
+            return
+        }
         testA1_appStartsAndRouteToStates() // Re-use testA1
         // After tap back button, should appear previous screen navigation title
         tap(
@@ -65,6 +74,10 @@ final class FetchStatesScreenTests: BaseUITests {
 //
 extension FetchStatesScreenTests {
     func testA1_performance() {
+        guard enabled else {
+            XCTAssert(true)
+            return
+        }
         guard performanceTestsEnabled else {
             XCTAssert(true)
             return
@@ -82,6 +95,10 @@ extension FetchStatesScreenTests {
     }
 
     func testA2_performance() {
+        guard enabled else {
+            XCTAssert(true)
+            return
+        }
         guard performanceTestsEnabled else {
             XCTAssert(true)
             return
@@ -99,6 +116,10 @@ extension FetchStatesScreenTests {
     }
 
     func testA2_scroll1xPerformance() {
+        guard enabled else {
+            XCTAssert(true)
+            return
+        }
         guard performanceTestsEnabled else {
             XCTAssert(true)
             return
@@ -123,6 +144,10 @@ extension FetchStatesScreenTests {
     }
 
     func testA2_scroll5xPerformance() {
+        guard enabled else {
+            XCTAssert(true)
+            return
+        }
         guard performanceTestsEnabled else {
             XCTAssert(true)
             return

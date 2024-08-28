@@ -143,7 +143,7 @@ fileprivate extension EventsMapViewModel {
 
 #if canImport(SwiftUI) && DEBUG
 #Preview {
-    EventsMapViewCoordinator(haveNavigationStack: false)
+    EventsMapViewCoordinator()
         .environmentObject(AppStateViewModel.defaultForPreviews)
         .environmentObject(ConfigurationViewModel.defaultForPreviews)
 }

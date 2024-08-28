@@ -23,21 +23,11 @@ struct EventsCalendarViewCoordinator: View, ViewCoordinatorProtocol {
     @StateObject var coordinator = RouterViewModel()
     // MARK: - Usage/Auxiliar Attributes
     @Environment(\.dismiss) var dismiss
-    let haveNavigationStack: Bool
     // MARK: - Body & View
     var body: some View {
-        if haveNavigationStack {
-            NavigationStack(path: $coordinator.navPath) {
-                buildScreen(.calendar)
-                    .navigationDestination(for: AppScreen.self, destination: buildScreen)
-                    .sheet(item: $coordinator.sheetLink, content: buildScreen)
-                    .fullScreenCover(item: $coordinator.coverLink, content: buildScreen)
-            }
-        } else {
-            buildScreen(.calendar)
-                .sheet(item: $coordinator.sheetLink, content: buildScreen)
-                .fullScreenCover(item: $coordinator.coverLink, content: buildScreen)
-        }
+        buildScreen(.calendar)
+            .sheet(item: $coordinator.sheetLink, content: buildScreen)
+            .fullScreenCover(item: $coordinator.coverLink, content: buildScreen)
     }
 
     @ViewBuilder
@@ -58,13 +48,8 @@ struct EventsCalendarViewCoordinator: View, ViewCoordinatorProtocol {
                 dataBaseRepository: configuration.dataBaseRepository)
             EventLogDetailsView(dependencies: dependencies)
         default:
-            Text("Not implemented [\(AppScreen.self).\(screen)]\nat [\(Self.self)|\(#function)]")
-                .fontSemantic(.callout)
-                .textColor(ColorSemantic.danger.color)
-                .multilineTextAlignment(.center)
-                .onAppear(perform: {
-                    DevTools.assert(false, message: "Not predicted \(screen)")
-                })
+            NotImplementedView(screen: screen)
+
         }
     }
 }
@@ -180,7 +165,7 @@ struct EventsCalendarView: View, ViewProtocol {
 
 #if canImport(SwiftUI) && DEBUG
 #Preview {
-    EventsCalendarViewCoordinator(haveNavigationStack: true)
+    EventsCalendarViewCoordinator()
         .environmentObject(AppStateViewModel.defaultForPreviews)
         .environmentObject(ConfigurationViewModel.defaultForPreviews)
 }

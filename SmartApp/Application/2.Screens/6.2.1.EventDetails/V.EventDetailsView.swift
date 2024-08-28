@@ -59,13 +59,8 @@ struct EventDetailsViewCoordinator: View, ViewCoordinatorProtocol {
                 dataBaseRepository: configuration.dataBaseRepository)
             EventLogDetailsView(dependencies: dependencies)
         default:
-            Text("Not implemented [\(AppScreen.self).\(screen)]\nat [\(Self.self)|\(#function)]")
-                .fontSemantic(.callout)
-                .textColor(ColorSemantic.danger.color)
-                .multilineTextAlignment(.center)
-                .onAppear(perform: {
-                    DevTools.assert(false, message: "Not predicted \(screen)")
-                })
+            NotImplementedView(screen: screen)
+
         }
     }
 }
@@ -114,8 +109,7 @@ struct EventDetailsView: View, ViewProtocol {
                 DevTools.Log.debug(.valueChanged("\(Self.self)", "locationRelevant", locationRelevant.description), .view)
                 if locationRelevant {
                     locationViewModel.start(sender: "\(Self.self)")
-                }
-                else {
+                } else {
                     locationViewModel.stop(sender: "\(Self.self)")
                 }
             }

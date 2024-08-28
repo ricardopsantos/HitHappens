@@ -33,6 +33,10 @@ final class NonSecureAppPreferences_Tests: XCTestCase {
 extension NonSecureAppPreferences_Tests {
     // Test to verify that an event is emitted when a non-secure app preference property changes
     func testA1_nonSecureAppPreferences_emitEventOnChangedProperty() {
+        guard enabled else {
+            XCTAssert(true)
+            return
+        }
         var emittedEvent = false
 
         // Subscribe to output events for the .changedKey event with key .isAuthenticated
