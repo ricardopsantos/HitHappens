@@ -28,6 +28,18 @@ public extension Common {
             let appState = UIApplication.shared.applicationState
             return appState == .background || appState == .inactive
         }
+
+        public static var numberOfLogins: Int {
+            let key = "\(Self.self).numberOfLogins"
+            return Common.userDefaults?.integer(forKey: key) ?? 0
+        }
+        
+        public static func numberOfLoginsIncrement() -> Int {
+            let current = numberOfLogins + 1
+            let key = "\(Self.self).numberOfLogins"
+            Common.userDefaults?.setValue(current, forKey: key)
+            return current
+        }
     }
 
     struct DeviceInfo {

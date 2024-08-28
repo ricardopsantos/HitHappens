@@ -19,6 +19,7 @@ public class SetupManager {
     private init() {}
     static let shared = SetupManager()
     func setup(dataBaseRepository: DataBaseRepositoryProtocol) {
+        let numberOfLogins = Common.AppInfo.numberOfLoginsIncrement()
         CPPWrapper.disable_gdb() // Security: Detach debugger for real device
         CPPWrapper.crash_if_debugged() // Security: Crash app if debugger Detach failed
         DevTools.Log.setup()
@@ -38,7 +39,10 @@ public class SetupManager {
             UserDefaults.standard.set(false, forKey: "com.apple.CoreData.ConcurrencyDebug")
             UserDefaults.standard.set(0, forKey: "com.apple.CoreData.SQLDebug")
         }
-        dataBaseRepository.initDataBase()
+        if numberOfLogins == 1 {
+            // First login
+            dataBaseRepository.initDataBase()
+        }
     }
 }
 

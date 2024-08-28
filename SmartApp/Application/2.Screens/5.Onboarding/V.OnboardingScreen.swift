@@ -8,6 +8,7 @@
 import SwiftUI
 //
 import DesignSystem
+import Common
 
 struct OnboardingScreen: View {
     @Environment(\.colorScheme) var colorScheme
@@ -16,14 +17,22 @@ struct OnboardingScreen: View {
     )
     let images: [Image] = [
         Image(.onboarding1),
-        Image(.onboarding2)
+        Image(.onboarding2),
+        Image(.onboarding3),
+        Image(.onboarding4)
+    ]
+    let text: [String] = [
+        "Keep your favorite events handy for a quick access.",
+        "Browse all events in one list.",
+        "View events by date on the calendar.",
+        "Find event locations on the map."
     ]
     let onCompletion: (String) -> Void
 
     @State private var selectedTab = 0
 
     var buttonText: String {
-        selectedTab == (images.count - 1) ? "GetStarted".localizedMissing : "Next".localizedMissing
+        selectedTab == (images.count - 1) ? "Get Started".localizedMissing : "Next".localizedMissing
     }
 
     // MARK: - Views
@@ -48,18 +57,14 @@ struct OnboardingScreen: View {
     }
 
     var content: some View {
-        ZStack {
-            VStack {
-                Header(text: "Onboarding".localizedMissing)
-                pageView
-                TextButton(
-                    onClick: onNextButtonPressed,
-
-                    text: buttonText,
-                    accessibility: .fwdButton
-                )
-            }
-            .padding()
+        VStack(spacing: 0) {
+            pageView
+            SwiftUIUtils.FixedVerticalSpacer(height: SizeNames.defaultMarginSmall)
+            TextButton(
+                onClick: onNextButtonPressed,
+                text: buttonText,
+                accessibility: .fwdButton
+            )
         }
     }
 }
@@ -68,18 +73,26 @@ struct OnboardingScreen: View {
 // MARK: - Auxiliar Views
 //
 fileprivate extension OnboardingScreen {
+    
     var pageView: some View {
         TabView(selection: $selectedTab) {
             ForEach(0..<images.count, id: \.self) { index in
-                images[index]
-                    .resizable()
-                    .scaledToFit()
-                    .frame(width: 300)
-                    .padding()
-                    .background(Color.blue)
-                    .cornerRadius(10)
+                VStack(spacing: 0) {
+                    images[index]
+                        .resizable()
+                        .scaledToFit()
+                        .frame(width: screenWidth - 2 * SizeNames.defaultMargin)
+                        .padding()
+                    Text(text[index])
+                        .textColor(ColorSemantic.labelPrimary.color)
+                        .fontSemantic(.callout)
+                    SwiftUIUtils.FixedVerticalSpacer(height: SizeNames.defaultMarginSmall)
+                    Divider()
+                    SwiftUIUtils.FixedVerticalSpacer(height: SizeNames.defaultMarginSmall)
+                }
             }
         }
+        .cornerRadius(SizeNames.cornerRadius)
         .tabViewStyle(PageTabViewStyle(indexDisplayMode: .never))
     }
 }
