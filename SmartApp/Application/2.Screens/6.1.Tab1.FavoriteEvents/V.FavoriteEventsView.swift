@@ -117,19 +117,28 @@ struct FavoriteEventsView: View, ViewProtocol {
         ScrollView {
             LazyVStack(spacing: 0) {
                 Header(text: "Favorites events".localizedMissing)
-                Spacer()
-                ForEach(viewModel.favorits, id: \.self) { model in
-                    CounterView(
-                        model: model,
-                        onChange: { number in
-                            Common_Logs.debug(number)
-                        },
-                        onTapGesture: {
-                            viewModel.send(.addNewEvent(trackedEntityId: model.id))
-                        })
-                        .padding(.vertical, SizeNames.defaultMargin)
+                if viewModel.favorits.isEmpty {
+                    Spacer()
+                    Text("No events")
+                        .textColor(ColorSemantic.labelPrimary.color)
+                        .fontSemantic(.largeTitle)
+                    Spacer()
+                } else {
+                    Spacer()
+                    ForEach(viewModel.favorits, id: \.self) { model in
+                        CounterView(
+                            model: model,
+                            onChange: { number in
+                                Common_Logs.debug(number)
+                            },
+                            onTapGesture: {
+                                viewModel.send(.addNewEvent(trackedEntityId: model.id))
+                            })
+                            .padding(.vertical, SizeNames.defaultMargin)
+                    }
+                    Spacer()
                 }
-                Spacer()
+
             }
         }
     }

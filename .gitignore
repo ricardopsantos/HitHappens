@@ -7,6 +7,8 @@
 #
 
 SmartApp/_Documents/GitIgnored/*
+SmartApp/Configuration/GitIgnored/*
+
 SmartApp/Application/GoogleService*.plist
 SmartApp/Application/GoogleServices/GoogleService*.plist
 

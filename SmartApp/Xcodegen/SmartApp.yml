@@ -49,7 +49,7 @@ fileGroups:
   - ../_Documents
   - ../Configuration
   - ../XcodeGen
-     
+
 ####################### CONFIGS #######################
 ####################### CONFIGS #######################
 ####################### CONFIGS #######################
@@ -145,18 +145,18 @@ targets:
     
     postCompileScripts:
       - script: |
-                PATH_TO_CONFIG=$SRCROOT/Application/GoogleServices/GoogleService-Info-$PRODUCT_BUNDLE_IDENTIFIER.plist
+                PATH_TO_CONFIG=$SRCROOT/Application/GoogleService-Info-$PRODUCT_BUNDLE_IDENTIFIER.plist
                 FILENAME_IN_BUNDLE=GoogleService-Info.plist
                 BUILD_APP_DIR=${BUILT_PRODUCTS_DIR}/${PRODUCT_NAME}.app
                 cp $PATH_TO_CONFIG "$BUILD_APP_DIR/$FILENAME_IN_BUNDLE"
         name: FirebasePlistFile
         
-#    postBuildScripts:
-#      - script: |
-#                "${BUILD_DIR%/Build/*}/SourcePackages/checkouts/firebase-ios-sdk/Crashlytics/run"
-#        inputFiles:
-#          - "${DWARF_DSYM_FOLDER_PATH}/${DWARF_DSYM_FILE_NAME}/Contents/Resources/DWARF/${TARGET_NAME}"
-#          - "$(SRCROOT)/$(BUILT_PRODUCTS_DIR)/$(INFOPLIST_PATH)"
+    postBuildScripts:
+      - script: |
+                "${BUILD_DIR%/Build/*}/SourcePackages/checkouts/firebase-ios-sdk/Crashlytics/run"
+        inputFiles:
+          - "${DWARF_DSYM_FOLDER_PATH}/${DWARF_DSYM_FILE_NAME}/Contents/Resources/DWARF/${TARGET_NAME}"
+          - "$(SRCROOT)/$(BUILT_PRODUCTS_DIR)/$(INFOPLIST_PATH)"
           
     # dependencies: ########################
     
