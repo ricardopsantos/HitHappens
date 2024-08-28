@@ -35,14 +35,14 @@ extension EventLogDetailsViewModel {
         var title: String {
             switch self {
             case .delete:
-                "DeleteTitle".localizedMissing
+                "Alert".localizedMissing
             }
         }
 
         var subTitle: String {
             switch self {
             case .delete:
-                "DeleteSubTitle".localizedMissing
+                "Are you sure you want to delete?".localizedMissing
             }
         }
     }

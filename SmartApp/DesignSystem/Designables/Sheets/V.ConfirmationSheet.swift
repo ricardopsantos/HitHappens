@@ -47,14 +47,6 @@ public struct ConfirmationSheetV2: View {
             .padding(SizeNames.defaultMargin)
             Spacer()
         }
-        .background(
-            // Transparent overlay to capture taps
-            Color.black.opacity(0.3)
-                .edgesIgnoringSafeArea(.all)
-                .onTapGesture {
-                    // Do nothing to disable tap outside
-                }
-        )
         .presentationDetents([.fraction(0.25), .medium, .large])
     }
 }

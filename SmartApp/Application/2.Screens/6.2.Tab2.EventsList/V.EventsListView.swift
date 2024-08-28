@@ -132,31 +132,46 @@ struct EventsListView: View, ViewProtocol {
                 }
             }
             LazyVStack(spacing: 0) {
-                HStack(spacing: 0) {
-                    Text("Favorits".localizedMissing)
-                        .textColor(ColorSemantic.labelPrimary.color)
-                        .fontSemantic(.bodyBold)
-                    Spacer()
+                if sectionA.count + sectionB.count + sectionC.count == 0 {
+                    VStack {
+                        Spacer()
+                        Text("No events")
+                            .textColor(ColorSemantic.labelPrimary.color)
+                            .fontSemantic(.largeTitle)
+                        Spacer()
+                    }
                 }
-                buildList(events: sectionA)
-                Divider().padding(.vertical, SizeNames.defaultMarginSmall)
-                HStack(spacing: 0) {
-                    Text("Others".localizedMissing)
-                        .textColor(ColorSemantic.labelPrimary.color)
-                        .fontSemantic(.bodyBold)
-                    Spacer()
+                if !sectionA.isEmpty {
+                    HStack(spacing: 0) {
+                        Text("Favorits".localizedMissing)
+                            .textColor(ColorSemantic.labelPrimary.color)
+                            .fontSemantic(.bodyBold)
+                        Spacer()
+                    }
+                    buildList(events: sectionA)
+                    Divider().padding(.vertical, SizeNames.defaultMarginSmall)
                 }
-                buildList(events: sectionB)
-                Divider().padding(.vertical, SizeNames.defaultMarginSmall)
-                HStack(spacing: 0) {
-                    Text("Archived".localizedMissing)
-                        .textColor(ColorSemantic.labelSecondary.color)
-                        .fontSemantic(.bodyBold)
-                    Spacer()
+                if !sectionB.isEmpty {
+                    HStack(spacing: 0) {
+                        Text("Others".localizedMissing)
+                            .textColor(ColorSemantic.labelPrimary.color)
+                            .fontSemantic(.bodyBold)
+                        Spacer()
+                    }
+                    buildList(events: sectionB)
+                    Divider().padding(.vertical, SizeNames.defaultMarginSmall)
                 }
-                buildList(events: sectionC)
-                    .opacity(0.5)
-                Spacer().padding(.vertical, SizeNames.defaultMargin)
+                if !sectionC.isEmpty {
+                    HStack(spacing: 0) {
+                        Text("Archived".localizedMissing)
+                            .textColor(ColorSemantic.labelSecondary.color)
+                            .fontSemantic(.bodyBold)
+                        Spacer()
+                    }
+                    buildList(events: sectionC)
+                        .opacity(0.5)
+                    Spacer().padding(.vertical, SizeNames.defaultMargin)
+                }
             }
         }
     }
