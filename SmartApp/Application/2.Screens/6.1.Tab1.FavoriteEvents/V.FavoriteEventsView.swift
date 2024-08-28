@@ -138,7 +138,6 @@ struct FavoriteEventsView: View, ViewProtocol {
                     }
                     Spacer()
                 }
-
             }
         }
     }

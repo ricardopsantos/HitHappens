@@ -7,6 +7,7 @@
 
 import SwiftUI
 import Foundation
+import MessageUI
 //
 import DevTools
 import Common
@@ -75,6 +76,8 @@ struct SettingsScreen: View, ViewProtocol {
     }
 
     // MARK: - Usage/Auxiliar Attributes
+    @State private var isShowingMailView = false
+    @State private var showMailError = false
     @Environment(\.dismiss) var dismiss
     @State private var selectedMode: Common.InterfaceStyle? = InterfaceStyleManager.current
     private let cancelBag: CancelBag = .init()
@@ -105,12 +108,76 @@ struct SettingsScreen: View, ViewProtocol {
             Header(text: "Settings".localizedMissing)
             SwiftUIUtils.FixedVerticalSpacer(height: SizeNames.defaultMargin)
             AppearancePickerView(selected: $selectedMode)
+            SwiftUIUtils.FixedVerticalSpacer(height: SizeNames.defaultMargin)
             Spacer()
-            Text("App version: \(Common.AppInfo.version)")
-                .fontSemantic(.callout)
-                .foregroundColorSemantic(.labelPrimary)
+            logoView
+            Spacer()
+            contactSupportView
+            onBoarding
+            SwiftUIUtils.FixedVerticalSpacer(height: SizeNames.defaultMargin)
+            versionView
             SwiftUIUtils.FixedVerticalSpacer(height: SizeNames.defaultMargin)
         }.paddingHorizontal(SizeNames.defaultMarginSmall)
+    }
+
+    @ViewBuilder
+    var logoView: some View {
+        let width = screenWidth * 0.5
+        HStack {
+            Spacer()
+            Image(.logo)
+                .resizable()
+                .scaledToFit()
+                .frame(width: width)
+                .opacity(0.05)
+                .cornerRadius2(width / 2)
+                .blur(radius: 1)
+            Spacer()
+        }
+    }
+
+    var versionView: some View {
+        Text("App version: \(Common.AppInfo.version)")
+            .fontSemantic(.callout)
+            .foregroundColorSemantic(.labelPrimary)
+    }
+
+    var onBoarding: some View {
+        TextButton(
+            onClick: {},
+            text: "See Onboarding".localizedMissing,
+            style: .textOnly,
+            accessibility: .undefined
+        )
+    }
+
+    var contactSupportView: some View {
+        TextButton(
+            onClick: {
+                if MFMailComposeViewController.canSendMail() {
+                    isShowingMailView = true
+                } else {
+                    showMailError = true
+                }
+            },
+            text: "Contact Support".localizedMissing,
+            style: .textOnly,
+            accessibility: .undefined
+        )
+        .alert(isPresented: $showMailError) {
+            Alert(
+                title: Text("Cannot Send Email".localizedMissing),
+                message: Text("Your device is not configured to send emails.".localizedMissing),
+                dismissButton: .default(Text("OK".localizedMissing))
+            )
+        }
+        .sheet(isPresented: $isShowingMailView) {
+            MailViewControllerRepresentable(
+                recipients: [AppConstants.supportEmail.decrypted],
+                subject: "Support \(Common.AppInfo.bundleIdentifier) | \(Common.AppInfo.version)",
+                messageBody: "Hello, I need help with..."
+            )
+        }
     }
 }
 

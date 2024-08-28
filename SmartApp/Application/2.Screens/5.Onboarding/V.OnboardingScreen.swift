@@ -16,16 +16,18 @@ struct OnboardingScreen: View {
         sampleService: DependenciesManager.Services.sampleService
     )
     let images: [Image] = [
+        Image(.logo),
         Image(.onboarding1),
         Image(.onboarding2),
         Image(.onboarding3),
         Image(.onboarding4)
     ]
     let text: [String] = [
-        "Keep your favorite events handy for a quick access.",
-        "Browse all events in one list.",
-        "View events by date on the calendar.",
-        "Find event locations on the map."
+        "Have you ever wondered how many times something happens on your life? Literally how many times...",
+        "Keep your favorite things to track in a handy place. Just tap the number and it will increase.",
+        "All the other tracked events exist organized by type and can have categories, sounds and more.",
+        "On the app calendar you can check whats been going on with the things you track.",
+        "And because some events can have a location associated, you can check them on the map!"
     ]
     let onCompletion: (String) -> Void
 
@@ -73,13 +75,13 @@ struct OnboardingScreen: View {
 // MARK: - Auxiliar Views
 //
 fileprivate extension OnboardingScreen {
-    
     var pageView: some View {
         TabView(selection: $selectedTab) {
             ForEach(0..<images.count, id: \.self) { index in
                 VStack(spacing: 0) {
                     images[index]
                         .resizable()
+                        .cornerRadius(SizeNames.cornerRadius)
                         .scaledToFit()
                         .frame(width: screenWidth - 2 * SizeNames.defaultMargin)
                         .padding()
@@ -92,7 +94,6 @@ fileprivate extension OnboardingScreen {
                 }
             }
         }
-        .cornerRadius(SizeNames.cornerRadius)
         .tabViewStyle(PageTabViewStyle(indexDisplayMode: .never))
     }
 }

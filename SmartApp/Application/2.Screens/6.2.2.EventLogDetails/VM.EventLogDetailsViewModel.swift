@@ -101,8 +101,10 @@ class EventLogDetailsViewModel: BaseViewModel {
             }
             Task { [weak self] in
                 guard let self = self else { return }
-                if let record = dataBaseRepository?.trackedLogGet(trackedLogId: unwrapped.id, 
-                                                                  cascade: true) {
+                if let record = dataBaseRepository?.trackedLogGet(
+                    trackedLogId: unwrapped.id,
+
+                    cascade: true) {
                     updateUI(event: record)
                 }
             }

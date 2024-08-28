@@ -33,7 +33,7 @@ public extension Common {
             let key = "\(Self.self).numberOfLogins"
             return Common.userDefaults?.integer(forKey: key) ?? 0
         }
-        
+
         public static func numberOfLoginsIncrement() -> Int {
             let current = numberOfLogins + 1
             let key = "\(Self.self).numberOfLogins"
