@@ -86,7 +86,7 @@ extension EventDetailsViewModel {
     struct Dependencies {
         let model: EventDetailsModel?
         let onPerformRouteBack: () -> Void
-        let onTrackedLogTapped: (Model.TrackedLog) -> Void
+        let onShouldDisplayTrackedLog: (Model.TrackedLog) -> Void
         let dataBaseRepository: DataBaseRepositoryProtocol
     }
 }
@@ -111,14 +111,14 @@ class EventDetailsViewModel: BaseViewModel {
     private let cancelBag = CancelBag()
     private let dataBaseRepository: DataBaseRepositoryProtocol?
     private let onPerformRouteBack: () -> Void
-    private let onTrackedLogTapped: (Model.TrackedLog) -> Void
+    private let onShouldDisplayTrackedLog: (Model.TrackedLog) -> Void
     @Published var confirmationSheetType: ConfirmationSheet?
 
     public init(dependencies: Dependencies) {
         self.dataBaseRepository = dependencies.dataBaseRepository
         self.event = dependencies.model?.event
         self.onPerformRouteBack = dependencies.onPerformRouteBack
-        self.onTrackedLogTapped = dependencies.onTrackedLogTapped
+        self.onShouldDisplayTrackedLog = dependencies.onShouldDisplayTrackedLog
         super.init()
         startListeningDBChanges()
     }
@@ -267,7 +267,7 @@ class EventDetailsViewModel: BaseViewModel {
             Task { [weak self] in
                 guard let self = self else { return }
                 if let trackedLog = dataBaseRepository?.trackedLogGet(trackedLogId: trackedLogId, cascade: true) {
-                    onTrackedLogTapped(trackedLog)
+                    onShouldDisplayTrackedLog(trackedLog)
                 }
             }
 
@@ -327,7 +327,11 @@ class EventDetailsViewModel: BaseViewModel {
             } else {
                 Task { [weak self] in
                     guard let self = self, let trackedEntity = event else { return }
-                    dataBaseRepository?.trackedEntityInsert(trackedEntity: trackedEntity)
+                    if let trackedEntityId = dataBaseRepository?.trackedEntityInsert(trackedEntity: trackedEntity) {
+                        self.event = dataBaseRepository?.trackedEntityGet(trackedEntityId: trackedEntityId, cascade: true)
+                        self.isNewEvent = false
+                        self.canSaveNewEvent = false
+                    }
                 }
             }
         }
@@ -370,7 +374,22 @@ fileprivate extension EventDetailsViewModel {
             switch some {
             case .generic(let some):
                 switch some {
-                case .databaseDidInsertedContentOn: break
+                case .databaseDidInsertedContentOn(let table, let id):
+                    // New record added
+                    if table == "\(CDataTrackedLog.self)" {
+                        if let trackedEntity = self?.dataBaseRepository?.trackedLogGet(trackedLogId: id, cascade: true) {
+                            Common_Utils.delay(Common.Constants.defaultAnimationsTime) { [weak self] in
+                                // Small delay so that the UI counter animation is viewed
+                                self?.alertModel = .init(
+                                    type: .success,
+                                    location: .bottom,
+                                    message: "Event tracked!\nTap for edit/add details.",
+                                    onUserTapGesture: { [weak self] in
+                                        self?.onShouldDisplayTrackedLog(trackedEntity)
+                                    })
+                            }
+                        }
+                    }
                 case .databaseDidUpdatedContentOn: break
                 case .databaseDidDeletedContentOn(let table, let id):
                     // Record deleted! Route back

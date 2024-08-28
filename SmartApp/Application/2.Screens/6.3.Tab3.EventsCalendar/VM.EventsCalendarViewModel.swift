@@ -38,7 +38,7 @@ extension EventsCalendarViewModel {
 
     struct Dependencies {
         let model: EventsCalendarModel
-        let onTrackedLogTapped: (Model.TrackedLog) -> Void
+        let onShouldDisplayTrackedLog: (Model.TrackedLog) -> Void
         let dataBaseRepository: DataBaseRepositoryProtocol
     }
 }
@@ -56,11 +56,11 @@ class EventsCalendarViewModel: BaseViewModel {
     @Published var eventsForDay: [Date: [Color]] = [:]
     private let cancelBag = CancelBag()
     private let dataBaseRepository: DataBaseRepositoryProtocol?
-    private let onTrackedLogTapped: (Model.TrackedLog) -> Void
+    private let onShouldDisplayTrackedLog: (Model.TrackedLog) -> Void
     public init(dependencies: Dependencies) {
         self.dataBaseRepository = dependencies.dataBaseRepository
         self.message = dependencies.model.message
-        self.onTrackedLogTapped = dependencies.onTrackedLogTapped
+        self.onShouldDisplayTrackedLog = dependencies.onShouldDisplayTrackedLog
         super.init()
         startListeningDBChanges()
     }
@@ -92,7 +92,7 @@ class EventsCalendarViewModel: BaseViewModel {
             Task { [weak self] in
                 guard let self = self else { return }
                 if let trackedLog = dataBaseRepository?.trackedLogGet(trackedLogId: trackedLogId, cascade: true) {
-                    onTrackedLogTapped(trackedLog)
+                    onShouldDisplayTrackedLog(trackedLog)
                 }
             }
         }

@@ -57,7 +57,7 @@ struct EventsListViewCoordinator: View, ViewCoordinatorProtocol {
             let dependencies: EventDetailsViewModel.Dependencies = .init(
                 model: model, onPerformRouteBack: {
                     coordinatorTab2.navigateBack()
-                }, onTrackedLogTapped: { trackedLog in
+                }, onShouldDisplayTrackedLog: { trackedLog in
                     coordinator.sheetLink = .eventLogDetails(model: .init(trackedLog: trackedLog))
                 },
                 dataBaseRepository: configuration.dataBaseRepository)

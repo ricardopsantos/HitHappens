@@ -108,7 +108,11 @@ struct EventLogDetailsView: View, ViewProtocol {
         ZStack {
             // ScrollView {
             VStack(spacing: 0) {
-                Header(text: "Details")
+                Header(text: "Details".localizedMissing)
+                TitleAndValueView(title: "Record Date".localizedMissing,
+                                  value: viewModel.eventDate.dateMediumTimeShort,
+                                  style: .vertical1)
+                SwiftUIUtils.FixedVerticalSpacer(height: SizeNames.defaultMarginSmall)
                 CustomTitleAndCustomTextFieldWithBinding(
                     title: "Note".localizedMissing,
                     placeholder: "Add a note".localizedMissing,

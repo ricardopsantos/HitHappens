@@ -48,7 +48,7 @@ struct EventDetailsViewCoordinator: View, ViewCoordinatorProtocol {
             let dependencies: EventDetailsViewModel.Dependencies = .init(
                 model: model, onPerformRouteBack: {
                     coordinatorTab2.navigateBack()
-                }, onTrackedLogTapped: { trackedLog in
+                }, onShouldDisplayTrackedLog: { trackedLog in
                     coordinator.sheetLink = .eventLogDetails(model: .init(trackedLog: trackedLog))
                 },
                 dataBaseRepository: configuration.dataBaseRepository)
@@ -238,7 +238,7 @@ struct EventDetailsView: View, ViewProtocol {
                     sender: "\(Self.self)")
                 viewModel.send(.addNewLog)
             },
-            text: "Add new".localizedMissing,
+            text: "This happen? Track it!".localizedMissing,
             alignment: .center,
             style: .secondary,
             background: .primary,

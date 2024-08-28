@@ -40,7 +40,7 @@ extension EventsMapViewModel {
 
     struct Dependencies {
         let model: EventsMapModel
-        let onTrackedLogTapped: (Model.TrackedLog) -> Void
+        let onShouldDisplayTrackedLog: (Model.TrackedLog) -> Void
         let dataBaseRepository: DataBaseRepositoryProtocol
     }
 }
@@ -56,11 +56,11 @@ class EventsMapViewModel: BaseViewModel {
     private var lastRegion: MKCoordinateRegion?
     private let cancelBag = CancelBag()
     private let dataBaseRepository: DataBaseRepositoryProtocol?
-    private let onTrackedLogTapped: (Model.TrackedLog) -> Void
+    private let onShouldDisplayTrackedLog: (Model.TrackedLog) -> Void
     public init(dependencies: Dependencies) {
         self.dataBaseRepository = dependencies.dataBaseRepository
         self.message = dependencies.model.message
-        self.onTrackedLogTapped = dependencies.onTrackedLogTapped
+        self.onShouldDisplayTrackedLog = dependencies.onShouldDisplayTrackedLog
         super.init()
         startListeningDBChanges()
     }
@@ -88,7 +88,7 @@ class EventsMapViewModel: BaseViewModel {
             Task { [weak self] in
                 guard let self = self else { return }
                 if let trackedLog = dataBaseRepository?.trackedLogGet(trackedLogId: trackedLogId, cascade: true) {
-                    onTrackedLogTapped(trackedLog)
+                    onShouldDisplayTrackedLog(trackedLog)
                 }
             }
         }

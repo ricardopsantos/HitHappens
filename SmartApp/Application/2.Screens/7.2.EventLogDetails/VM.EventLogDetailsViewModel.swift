@@ -74,6 +74,7 @@ class EventLogDetailsViewModel: BaseViewModel {
     @Published var confirmationSheetType: ConfirmationSheet?
     @Published var userMessage: (text: String, color: ColorSemantic) = ("", .clear)
     @Published var note: String = ""
+    @Published var eventDate: Date = .now
     @Published var mapItems: [GenericMapView.ModelItem] = []
     private let cancelBag = CancelBag()
     private let dataBaseRepository: DataBaseRepositoryProtocol?
@@ -147,6 +148,7 @@ fileprivate extension EventLogDetailsViewModel {
     func updateUI(event model: Model.TrackedLog) {
         trackedLog = model
         note = model.note
+        eventDate = model.recordDate
         if model.latitude != 0, model.longitude != 0, let cascadeEntity = model.cascadeEntity {
             let category = cascadeEntity.category
             mapItems = [GenericMapView.ModelItem.with(

@@ -45,7 +45,7 @@ struct EventsMapViewCoordinator: View, ViewCoordinatorProtocol {
         switch screen {
         case .map:
             let dependencies: EventsMapViewModel.Dependencies = .init(
-                model: .init(), onTrackedLogTapped: { trackedLog in
+                model: .init(), onShouldDisplayTrackedLog: { trackedLog in
                     coordinator.sheetLink = .eventLogDetails(model: .init(trackedLog: trackedLog))
                 },
                 dataBaseRepository: configuration.dataBaseRepository)

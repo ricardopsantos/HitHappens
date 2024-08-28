@@ -45,7 +45,7 @@ struct EventsCalendarViewCoordinator: View, ViewCoordinatorProtocol {
         switch screen {
         case .calendar:
             let dependencies: EventsCalendarViewModel.Dependencies = .init(
-                model: .init(), onTrackedLogTapped: { trackedLog in
+                model: .init(), onShouldDisplayTrackedLog: { trackedLog in
                     coordinator.sheetLink = .eventLogDetails(model: .init(trackedLog: trackedLog))
                 },
                 dataBaseRepository: configuration.dataBaseRepository)
