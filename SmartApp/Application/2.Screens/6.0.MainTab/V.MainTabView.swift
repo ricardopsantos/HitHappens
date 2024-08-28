@@ -25,7 +25,7 @@ struct MainTabView: View, ViewProtocol {
     // MARK: - ViewProtocol
     @Environment(\.colorScheme) var colorScheme
     @StateObject var viewModel: MainTabViewModel
-    
+
     // MARK: - Usage/Auxiliar Attributes
     @Environment(\.dismiss) var dismiss
     @EnvironmentObject var configuration: ConfigurationViewModel
@@ -34,7 +34,7 @@ struct MainTabView: View, ViewProtocol {
     @StateObject var tab3Router = RouterViewModel()
     @StateObject var tab4Router = RouterViewModel()
     @StateObject var tab5Router = RouterViewModel()
-    
+
     public init(dependencies: MainTabViewModel.Dependencies) {
         DevTools.Log.debug(.viewInit("\(Self.self)"), .view)
         _viewModel = StateObject(wrappedValue: .init(dependencies: dependencies))
@@ -135,7 +135,6 @@ struct MainTabView: View, ViewProtocol {
             .environmentObject(tab2Router)
         default:
             NotImplementedView(screen: screen)
-
         }
     }
 }

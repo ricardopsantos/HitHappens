@@ -54,7 +54,6 @@ struct EventsListViewCoordinator: View, ViewCoordinatorProtocol {
             EventDetailsView(dependencies: dependencies)
         default:
             NotImplementedView(screen: screen)
-
         }
     }
 }

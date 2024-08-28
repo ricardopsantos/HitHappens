@@ -56,7 +56,6 @@ struct FavoriteEventsViewCoordinator: View, ViewCoordinatorProtocol {
             EventLogDetailsView(dependencies: dependencies)
         default:
             NotImplementedView(screen: screen)
-
         }
     }
 }

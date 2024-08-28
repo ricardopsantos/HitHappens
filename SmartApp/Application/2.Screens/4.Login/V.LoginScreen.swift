@@ -41,7 +41,6 @@ struct LoginViewCoordinator: View, ViewCoordinatorProtocol {
             LoginView(dependencies: dependencies)
         default:
             NotImplementedView(screen: screen)
-
         }
     }
 }

@@ -14,7 +14,7 @@ import DevTools
 
 struct NotImplementedView: View {
     let screen: AppScreen
-    
+
     var body: some View {
         Text("Not implemented [\(AppScreen.self).\(screen)]\nat [\(Self.self)|\(#function)]")
             .fontSemantic(.callout)

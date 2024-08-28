@@ -430,6 +430,9 @@
 		D5C275BFE0C5507EAF69FC15 /* CDataSong+NSFetchRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B60ECBDBA1CE766E7EF32B7 /* CDataSong+NSFetchRequest.swift */; };
 		D77DFB82549FEC2F91AD6C44 /* LoginAndSessionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAE8869CC081A4CE3C6D6BAC /* LoginAndSessionTests.swift */; };
 		D788201DC937D7CE2C4118C5 /* AnalyticsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 69F3005A989EBA3F790B2FC4 /* AnalyticsManager.swift */; };
+		D789AA372C7FD5BA00235A09 /* ___Template___AuxiliarAuthView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D789AA362C7FD5BA00235A09 /* ___Template___AuxiliarAuthView.swift */; };
+		D789AA3A2C7FD5E600235A09 /* ___Template___CounterDisplayView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D789AA392C7FD5E600235A09 /* ___Template___CounterDisplayView.swift */; };
+		D789AA3C2C7FD60800235A09 /* ___Template___Auxiliar.swift in Sources */ = {isa = PBXBuildFile; fileRef = D789AA3B2C7FD60800235A09 /* ___Template___Auxiliar.swift */; };
 		D88E49AE9344ADEC9BE1BBB6 /* DispatchQueueVsOperationQueue.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60FF13C98F76F1A195728006 /* DispatchQueueVsOperationQueue.swift */; };
 		D8FC857887AF7D20A3D14826 /* ModelDtoProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7505FC51EBEA0E48E01409B /* ModelDtoProtocol.swift */; };
 		D9F004ECD5CB0FD2E87BD627 /* ModelDto+UpdateUserResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6F7ADEDCA2B161252C22CB97 /* ModelDto+UpdateUserResponse.swift */; };
@@ -1176,6 +1179,9 @@
 		D610E9C15F645141AA91565A /* GoogleService-Info-com.ricardo.app.id.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = "GoogleService-Info-com.ricardo.app.id.plist"; sourceTree = "<group>"; };
 		D7505FC51EBEA0E48E01409B /* ModelDtoProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModelDtoProtocol.swift; sourceTree = "<group>"; };
 		D751644E666193B8234B752B /* qa-debug.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = "qa-debug.xcconfig"; sourceTree = "<group>"; };
+		D789AA362C7FD5BA00235A09 /* ___Template___AuxiliarAuthView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "___Template___AuxiliarAuthView.swift"; sourceTree = "<group>"; };
+		D789AA392C7FD5E600235A09 /* ___Template___CounterDisplayView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "___Template___CounterDisplayView.swift"; sourceTree = "<group>"; };
+		D789AA3B2C7FD60800235A09 /* ___Template___Auxiliar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "___Template___Auxiliar.swift"; sourceTree = "<group>"; };
 		D7F63A8944886705347BFA87 /* UIScrollView+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIScrollView+Extensions.swift"; sourceTree = "<group>"; };
 		D970FE1EDEA881819AF775BA /* host.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = host.png; sourceTree = "<group>"; };
 		D9AE59B81096776D491A6ABE /* AppColors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppColors.swift; sourceTree = "<group>"; };
@@ -1497,6 +1503,7 @@
 		201F0BB58C2368D3B8B227F5 /* Template */ = {
 			isa = PBXGroup;
 			children = (
+				D789AA382C7FD5C800235A09 /* Auxiliar */,
 				1A574617235F036CA4AA327E /* V.___Template___View.swift */,
 				22B2FDC6DA0484D1C33E1155 /* VM.___Template___ViewModel.swift */,
 			);
@@ -2951,6 +2958,16 @@
 			path = CDataSongs;
 			sourceTree = "<group>";
 		};
+		D789AA382C7FD5C800235A09 /* Auxiliar */ = {
+			isa = PBXGroup;
+			children = (
+				D789AA362C7FD5BA00235A09 /* ___Template___AuxiliarAuthView.swift */,
+				D789AA392C7FD5E600235A09 /* ___Template___CounterDisplayView.swift */,
+				D789AA3B2C7FD60800235A09 /* ___Template___Auxiliar.swift */,
+			);
+			path = Auxiliar;
+			sourceTree = "<group>";
+		};
 		D7F45A3E0523BE258F0C1742 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
@@ -3705,6 +3722,7 @@
 				905A6EFBAA6B5CCA70B482EA /* BaseView+AlertView.swift in Sources */,
 				E64DCCA312BE0F122F5B4029 /* BaseView+BackgroundView.swift in Sources */,
 				2ACECB36E773A894CA0B7BDF /* BaseView+NavigationModel.swift in Sources */,
+				D789AA3A2C7FD5E600235A09 /* ___Template___CounterDisplayView.swift in Sources */,
 				84453035FA3CF9CFC4E11F5D /* BaseView.swift in Sources */,
 				82A969FE85B7F9299480FB8A /* BaseViewModel.swift in Sources */,
 				C61689C76FC805A41EF6BF49 /* CPPWrapper.mm in Sources */,
@@ -3725,6 +3743,7 @@
 				CCC30B559AB8DAAA9F6542E8 /* SetupManager.swift in Sources */,
 				A12015A6889F802D0F50A392 /* SmartApp.swift in Sources */,
 				5191CC7D0A597904F60A8AE6 /* String+Extensions.swift in Sources */,
+				D789AA3C2C7FD60800235A09 /* ___Template___Auxiliar.swift in Sources */,
 				14EFA1CF13CD527620FFAA7E /* UITestingManager.swift in Sources */,
 				E565E1F376E24DF11B60BEC3 /* V.CounterView.swift in Sources */,
 				4594C9FE7DDB94E54126EFB8 /* V.EventDetailsView.swift in Sources */,
@@ -3744,6 +3763,7 @@
 				2D973FE8C06CC5FC11D09E07 /* V.___Template___View.swift in Sources */,
 				26672B103F4CB6916944587B /* VC.MailViewControllerRepresentable.swift in Sources */,
 				C49DC6E7C8C067F39F9C4515 /* VM.EventDetailsViewModel.swift in Sources */,
+				D789AA372C7FD5BA00235A09 /* ___Template___AuxiliarAuthView.swift in Sources */,
 				DEFDE14A2237530634FBF4FB /* VM.EventLogDetailsViewModel.swift in Sources */,
 				1164BB8F3FD4952885AC6CB5 /* VM.EventsCalendarViewModel.swift in Sources */,
 				77992ECE56D5D8A00299DBF2 /* VM.EventsListViewModel.swift in Sources */,

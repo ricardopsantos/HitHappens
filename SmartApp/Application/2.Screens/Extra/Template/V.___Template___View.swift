@@ -51,7 +51,6 @@ struct ___Template___ViewCoordinator: View, ViewCoordinatorProtocol {
             ___Template___View(dependencies: dependencies)
         default:
             NotImplementedView(screen: screen)
-
         }
     }
 }
@@ -124,59 +123,6 @@ fileprivate extension ___Template___View {
     @ViewBuilder
     var routingView: some View {
         EmptyView()
-    }
-}
-
-//
-// MARK: - View (Auxiliar)
-//
-
-struct ___Template___AuxiliarAuthView: View {
-    @EnvironmentObject var authenticationViewModel: AuthenticationViewModel
-    var body: some View {
-        VStack {
-            SwiftUIUtils.RenderedView(
-                "\(Self.self).\(#function)",
-                visible: AppFeaturesManager.Debug.canDisplayRenderedView)
-            Text(authenticationViewModel.isAuthenticated ? "Auth" : "Not Auth")
-            Button("Toggle auth") {
-                authenticationViewModel.isAuthenticated.toggle()
-            }
-        }
-        .background(Color.red.opacity(0.1))
-    }
-}
-
-struct ___Template___CounterDisplayView: View {
-    var counter: Binding<Int>
-    var onTap: () -> Void
-    var body: some View {
-        VStack {
-            SwiftUIUtils.RenderedView(
-                "\(Self.self).\(#function)",
-                visible: AppFeaturesManager.Debug.canDisplayRenderedView)
-            Text("___Template___Auxiliar.counterDisplayView")
-            HStack {
-                Button("Inc V.onTap", action: { onTap() })
-                Button("Inc V.wrappedValue", action: { counter.wrappedValue += 1 })
-            }
-            Text(counter.wrappedValue.description)
-        }
-        .background(Color.green.opacity(0.1))
-    }
-}
-
-public enum ___Template___Auxiliar {
-    @ViewBuilder
-    static func counterDisplayView(
-        counterValue: Binding<Int>,
-        onTap: @escaping () -> Void) -> some View {
-        VStack {
-            Text("___Template___Auxiliar.counterDisplayView")
-            Button("Action 1", action: { onTap() })
-            Button("Action 2", action: { counterValue.wrappedValue += 1 })
-            Text(counterValue.wrappedValue.description)
-        }
     }
 }
 

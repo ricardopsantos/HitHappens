@@ -43,7 +43,6 @@ struct SplashViewCoordinator: View, ViewCoordinatorProtocol {
             SplashView(dependencies: dependencies)
         default:
             NotImplementedView(screen: screen)
-
         }
     }
 }

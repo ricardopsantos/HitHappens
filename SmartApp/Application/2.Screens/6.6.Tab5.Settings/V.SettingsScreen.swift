@@ -41,7 +41,6 @@ struct SettingsViewCoordinator: View, ViewCoordinatorProtocol {
             SettingsScreen(dependencies: dependencies)
         default:
             NotImplementedView(screen: screen)
-
         }
     }
 }

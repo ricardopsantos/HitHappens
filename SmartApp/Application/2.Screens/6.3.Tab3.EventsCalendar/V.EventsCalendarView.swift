@@ -49,7 +49,6 @@ struct EventsCalendarViewCoordinator: View, ViewCoordinatorProtocol {
             EventLogDetailsView(dependencies: dependencies)
         default:
             NotImplementedView(screen: screen)
-
         }
     }
 }
