@@ -318,12 +318,12 @@ public struct CalendarView: View {
             DaysOfWeekView()
             CalendarMonthlyView(currentDate: $currentDate, selectedDay: $selectedDay, eventsForDay: $eventsForDay)
             Spacer()
-        }.onChange(of: currentDate) { new in
-            DevTools.Log.debug(.valueChanged("\(Self.self)", "currentDate", new.description), .view)
-            onSelectedMonth(new)
-        }.onChange(of: selectedDay) { new in
-            DevTools.Log.debug(.valueChanged("\(Self.self)", "selectedDay", new?.description), .view)
-            onSelectedDay(new)
+        }.onChange(of: currentDate) { value in
+            DevTools.Log.debug(.valueChanged("\(Self.self)", "currentDate", "\(value)"), .view)
+            onSelectedMonth(value)
+        }.onChange(of: selectedDay) { value in
+            DevTools.Log.debug(.valueChanged("\(Self.self)", "selectedDay", "\(value)"), .view)
+            onSelectedDay(value)
         }
     }
 }

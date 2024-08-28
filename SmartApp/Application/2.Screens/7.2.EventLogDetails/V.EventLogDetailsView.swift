@@ -51,7 +51,11 @@ struct EventLogDetailsViewCoordinator: View, ViewCoordinatorProtocol {
                 dataBaseRepository: configuration.dataBaseRepository)
             EventLogDetailsView(dependencies: dependencies)
         default:
-            EmptyView().onAppear(perform: {
+            Text("Not implemented [\(AppScreen.self).\(screen)]\nat [\(Self.self)|\(#function)]")
+                .fontSemantic(.callout)
+                .textColor(ColorSemantic.danger.color)
+                .multilineTextAlignment(.center)
+                .onAppear(perform: {
                 DevTools.assert(false, message: "Not predicted \(screen)")
             })
         }

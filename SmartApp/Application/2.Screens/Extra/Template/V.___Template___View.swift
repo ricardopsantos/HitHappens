@@ -10,6 +10,7 @@ import SwiftUI
 //
 import DevTools
 import Common
+import DesignSystem
 
 //
 // MARK: - Coordinator
@@ -49,7 +50,11 @@ struct ___Template___ViewCoordinator: View, ViewCoordinatorProtocol {
                 sampleService: configuration.sampleService)
             ___Template___View(dependencies: dependencies)
         default:
-            EmptyView().onAppear(perform: {
+            Text("Not implemented [\(AppScreen.self).\(screen)]\nat [\(Self.self)|\(#function)]")
+                .fontSemantic(.callout)
+                .textColor(ColorSemantic.danger.color)
+                .multilineTextAlignment(.center)
+                .onAppear(perform: {
                 DevTools.assert(false, message: "Not predicted \(screen)")
             })
         }

@@ -37,8 +37,7 @@ extension FavoriteEventsViewModel {
 
     struct Dependencies {
         let model: FavoriteEventsModel
-        let onCompletion: (String) -> Void
-        let onNewLog: (Model.TrackedLog) -> Void
+        let onShouldDisplayTrackedLog: (Model.TrackedLog) -> Void
         let dataBaseRepository: DataBaseRepositoryProtocol
     }
 }
@@ -51,11 +50,11 @@ class FavoriteEventsViewModel: BaseViewModel {
     @Published private(set) var favorits: [Model.TrackedEntity] = []
     private let cancelBag = CancelBag()
     private let dataBaseRepository: DataBaseRepositoryProtocol?
-    private let onNewLog: (Model.TrackedLog) -> Void
+    private let onShouldDisplayTrackedLog: (Model.TrackedLog) -> Void
     public init(dependencies: Dependencies) {
         self.dataBaseRepository = dependencies.dataBaseRepository
         self.favorits = dependencies.model.favorits
-        self.onNewLog = dependencies.onNewLog
+        self.onShouldDisplayTrackedLog = dependencies.onShouldDisplayTrackedLog
         super.init()
         startListeningDBChanges()
     }
@@ -125,7 +124,7 @@ fileprivate extension FavoriteEventsViewModel {
                                     location: .bottom,
                                     message: "Event tracked!\nTap for edit/add details.",
                                     onUserTapGesture: { [weak self] in
-                                        self?.onNewLog(trackedEntity)
+                                        self?.onShouldDisplayTrackedLog(trackedEntity)
                                     })
                             }
                         }

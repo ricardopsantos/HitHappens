@@ -44,8 +44,7 @@ struct FavoriteEventsViewCoordinator: View, ViewCoordinatorProtocol {
         switch screen {
         case .favoriteEvents:
             let dependencies: FavoriteEventsViewModel.Dependencies = .init(
-                model: .init(), onCompletion: { _ in
-                }, onNewLog: { trackerLog in
+                model: .init(), onShouldDisplayTrackedLog: { trackerLog in
                     coordinator.sheetLink = .eventLogDetails(model: .init(trackedLog: trackerLog))
                 },
                 dataBaseRepository: configuration.dataBaseRepository)
@@ -56,7 +55,11 @@ struct FavoriteEventsViewCoordinator: View, ViewCoordinatorProtocol {
                 dataBaseRepository: configuration.dataBaseRepository)
             EventLogDetailsView(dependencies: dependencies)
         default:
-            EmptyView().onAppear(perform: {
+            Text("Not implemented [\(AppScreen.self).\(screen)]\nat [\(Self.self)|\(#function)]")
+                .fontSemantic(.callout)
+                .textColor(ColorSemantic.danger.color)
+                .multilineTextAlignment(.center)
+                .onAppear(perform: {
                 DevTools.assert(false, message: "Not predicted \(screen)")
             })
         }

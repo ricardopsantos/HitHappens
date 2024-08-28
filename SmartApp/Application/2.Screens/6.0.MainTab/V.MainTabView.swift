@@ -102,16 +102,16 @@ struct MainTabView: View, ViewProtocol {
         .onAppear {
             UITabBar.appearance().unselectedItemTintColor = ColorSemantic.backgroundTertiary.uiColor
         }
-        .onChange(of: tab1Router.navPath) { _ in
-            DevTools.Log.debug(.valueChanged("\(Self.self)", "tab1Router", nil), .view)
-        }.onChange(of: tab2Router.navPath) { _ in
-            DevTools.Log.debug(.valueChanged("\(Self.self)", "tab2Router", nil), .view)
-        }.onChange(of: tab3Router.navPath) { _ in
-            DevTools.Log.debug(.valueChanged("\(Self.self)", "tab3Router", nil), .view)
-        }.onChange(of: tab4Router.navPath) { _ in
-            DevTools.Log.debug(.valueChanged("\(Self.self)", "tab4Router", nil), .view)
-        }.onChange(of: tab5Router.navPath) { _ in
-            DevTools.Log.debug(.valueChanged("\(Self.self)", "tab5Router", nil), .view)
+        .onChange(of: tab1Router.navPath) { value in
+            DevTools.Log.debug(.valueChanged("\(Self.self)", "tab1Router", "\(value)"), .view)
+        }.onChange(of: tab2Router.navPath) { value in
+            DevTools.Log.debug(.valueChanged("\(Self.self)", "tab2Router", "\(value)"), .view)
+        }.onChange(of: tab3Router.navPath) { value in
+            DevTools.Log.debug(.valueChanged("\(Self.self)", "tab3Router", "\(value)"), .view)
+        }.onChange(of: tab4Router.navPath) { value in
+            DevTools.Log.debug(.valueChanged("\(Self.self)", "tab4Router", "\(value)"), .view)
+        }.onChange(of: tab5Router.navPath) { value in
+            DevTools.Log.debug(.valueChanged("\(Self.self)", "tab5Router", "\(value)"), .view)
         }
     }
 
@@ -133,7 +133,11 @@ struct MainTabView: View, ViewProtocol {
             .environmentObject(configuration)
             .environmentObject(tab2Router)
         default:
-            EmptyView().onAppear(perform: {
+            Text("Not implemented [\(AppScreen.self).\(screen)]\nat [\(Self.self)|\(#function)]")
+                .fontSemantic(.callout)
+                .textColor(ColorSemantic.danger.color)
+                .multilineTextAlignment(.center)
+                .onAppear(perform: {
                 DevTools.assert(false, message: "Not predicted \(screen)")
             })
         }

@@ -45,15 +45,29 @@ struct EventsListViewCoordinator: View, ViewCoordinatorProtocol {
         switch screen {
         case .eventsList:
             let dependencies: EventsListViewModel.Dependencies = .init(
-                model: .init(), onCompletion: { _ in
-                }, onSelected: { model in
+                model: .init(), onShouldDisplayTrackedEntity: { model in
                     let detailsModel: EventDetailsModel = .init(event: model)
                     coordinatorTab2.navigate(to: .eventDetails(model: detailsModel))
+                }, onShouldDisplayNewTrackedEntity: {
+                    coordinator.sheetLink = .eventDetails(model: nil)
                 },
                 dataBaseRepository: configuration.dataBaseRepository)
             EventsListView(dependencies: dependencies)
+        case .eventDetails(model: let model):
+            let dependencies: EventDetailsViewModel.Dependencies = .init(
+                model: model, onPerformRouteBack: {
+                    coordinatorTab2.navigateBack()
+                }, onTrackedLogTapped: { trackedLog in
+                    coordinator.sheetLink = .eventLogDetails(model: .init(trackedLog: trackedLog))
+                },
+                dataBaseRepository: configuration.dataBaseRepository)
+            EventDetailsView(dependencies: dependencies)
         default:
-            EmptyView().onAppear(perform: {
+            Text("Not implemented [\(AppScreen.self).\(screen)]\nat [\(Self.self)|\(#function)]")
+                .fontSemantic(.callout)
+                .textColor(ColorSemantic.danger.color)
+                .multilineTextAlignment(.center)
+                .onAppear(perform: {
                 DevTools.assert(false, message: "Not predicted \(screen)")
             })
         }
@@ -71,13 +85,15 @@ struct EventsListView: View, ViewProtocol {
     public init(dependencies: EventsListViewModel.Dependencies) {
         DevTools.Log.debug(.viewInit("\(Self.self)"), .view)
         _viewModel = StateObject(wrappedValue: .init(dependencies: dependencies))
-        self.onSelected = dependencies.onSelected
+        self.onShouldDisplayTrackedEntity = dependencies.onShouldDisplayTrackedEntity
+        self.onShouldDisplayNewTrackedEntity = dependencies.onShouldDisplayNewTrackedEntity
     }
 
     // MARK: - Usage/Auxiliar Attributes
     @Environment(\.dismiss) var dismiss
     private let cancelBag: CancelBag = .init()
-    private let onSelected: (Model.TrackedEntity) -> Void
+    private let onShouldDisplayTrackedEntity: (Model.TrackedEntity) -> Void
+    private let onShouldDisplayNewTrackedEntity: () -> Void
 
     // MARK: - Body & View
     var body: some View {
@@ -109,9 +125,7 @@ struct EventsListView: View, ViewProtocol {
                     Header(text: "All events".localizedMissing)
                     ImageButton(systemImageName: "plus",
                                 imageSize: SizeNames.defaultButtonTertiaryDefaultHeight,
-                                onClick: {
-
-                    }, style: .tertiary, accessibility: .addButton)
+                                onClick: onShouldDisplayNewTrackedEntity, style: .tertiary, accessibility: .addButton)
                 }
             }
             LazyVStack(spacing: 0) {
@@ -152,7 +166,7 @@ struct EventsListView: View, ViewProtocol {
                 subTitle: item.localizedEventsCount,
                 systemImage: (item.category.systemImageName, item.category.color),
                 onTapGesture: {
-                    onSelected(item)
+                    onShouldDisplayTrackedEntity(item)
                 })
                 .paddingVertical(SizeNames.defaultMarginSmall / 2)
         }

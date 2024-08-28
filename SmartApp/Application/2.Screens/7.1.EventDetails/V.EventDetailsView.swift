@@ -46,7 +46,7 @@ struct EventDetailsViewCoordinator: View, ViewCoordinatorProtocol {
         switch screen {
         case .eventDetails(model: let model):
             let dependencies: EventDetailsViewModel.Dependencies = .init(
-                model: model, onCompletion: { _ in }, onPerformRouteBack: {
+                model: model, onPerformRouteBack: {
                     coordinatorTab2.navigateBack()
                 }, onTrackedLogTapped: { trackedLog in
                     coordinator.sheetLink = .eventLogDetails(model: .init(trackedLog: trackedLog))
@@ -59,7 +59,11 @@ struct EventDetailsViewCoordinator: View, ViewCoordinatorProtocol {
                 dataBaseRepository: configuration.dataBaseRepository)
             EventLogDetailsView(dependencies: dependencies)
         default:
-            EmptyView().onAppear(perform: {
+            Text("Not implemented [\(AppScreen.self).\(screen)]\nat [\(Self.self)|\(#function)]")
+                .fontSemantic(.callout)
+                .textColor(ColorSemantic.danger.color)
+                .multilineTextAlignment(.center)
+                .onAppear(perform: {
                 DevTools.assert(false, message: "Not predicted \(screen)")
             })
         }
@@ -107,7 +111,7 @@ struct EventDetailsView: View, ViewProtocol {
                 viewModel.send(.didDisappear)
             }
             .onChange(of: viewModel.locationRelevant) { locationRelevant in
-                DevTools.Log.debug(.valueChanged("\(Self.self)", "locationRelevant", nil), .view)
+                DevTools.Log.debug(.valueChanged("\(Self.self)", "locationRelevant", locationRelevant.description), .view)
                 if locationRelevant {
                     locationViewModel.start(sender: "\(Self.self)")
                 }

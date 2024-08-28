@@ -79,7 +79,6 @@ extension EventDetailsViewModel {
 
     struct Dependencies {
         let model: EventDetailsModel?
-        let onCompletion: (String) -> Void
         let onPerformRouteBack: () -> Void
         let onTrackedLogTapped: (Model.TrackedLog) -> Void
         let dataBaseRepository: DataBaseRepositoryProtocol

@@ -37,8 +37,8 @@ extension EventsListViewModel {
 
     struct Dependencies {
         let model: EventsListModel
-        let onCompletion: (String) -> Void
-        let onSelected: (Model.TrackedEntity) -> Void
+        let onShouldDisplayTrackedEntity: (Model.TrackedEntity) -> Void
+        let onShouldDisplayNewTrackedEntity: () -> Void
         let dataBaseRepository: DataBaseRepositoryProtocol
     }
 }
