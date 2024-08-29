@@ -123,6 +123,7 @@ extension TextButton {
 //
 
 #if canImport(SwiftUI) && DEBUG
+@available(iOS 17, *)
 #Preview {
     VStack {
         ForEach(TextButton.Style.allCases, id: \.self) { style in

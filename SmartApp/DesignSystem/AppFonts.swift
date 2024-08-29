@@ -122,6 +122,7 @@ public enum FontSemantic: CaseIterable {
 //
 
 #if canImport(SwiftUI) && DEBUG
+@available(iOS 17, *)
 #Preview {
     VStack(spacing: 0) {
         ForEach(FontSemantic.allCases, id: \.self) { font in

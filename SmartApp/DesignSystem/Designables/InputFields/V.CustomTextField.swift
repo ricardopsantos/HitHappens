@@ -41,15 +41,25 @@ public struct CustomTextField: View {
             }
             Group {
                 if isSecured {
-                    SecureField("", text: $inputText)
+                    let view = SecureField("", text: $inputText)
                         .accessibilityIdentifier(accessibility.identifier)
                         .autocorrectionDisabled()
-                        .textInputAutocapitalization(.never)
+                    if #available(iOS 15.0, *) {
+                        view
+                            .textInputAutocapitalization(.never)
+                    } else {
+                        view
+                    }
                 } else {
-                    TextField("", text: $inputText)
+                    let view = TextField("", text: $inputText)
                         .accessibilityIdentifier(accessibility.identifier)
                         .autocorrectionDisabled()
-                        .textInputAutocapitalization(.never)
+                    if #available(iOS 15.0, *) {
+                        view
+                            .textInputAutocapitalization(.never)
+                    } else {
+                        view
+                    }
                 }
             }
             .padding(.horizontal, SizeNames.defaultMarginSmall)
@@ -67,6 +77,7 @@ public struct CustomTextField: View {
 //
 
 #if canImport(SwiftUI) && DEBUG
+@available(iOS 17, *)
 #Preview {
     VStack {
         CustomTextField(

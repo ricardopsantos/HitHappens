@@ -127,14 +127,16 @@ esac
 printf "\n"
 
 echo "### Run XcodeGen?"
-echo " [1] : Yes (Default)"
-echo " [2] : No"
+echo " [1] : Yes (V1)"
+echo " [2] : Yes (V2)"
+echo " [3] : No"
 echo -n "Option? "
 read option
 case $option in
-    [1] )xcodegen -s ./XcodeGen/SmartApp.yml -p ./ ;;
-    [2] ) echo "Ignored...." ;;
-   *) xcodegen -s ./XcodeGen/SmartApp.yml -p ./ 
+    [1] )xcodegen -s ./XcodeGen/SmartAppV1.yml -p ./ ;;
+    [2] )xcodegen -s ./XcodeGen/SmartAppV2.yml -p ./ ;;
+    [3] ) echo "Ignored...." ;;
+   *) xcodegen -s ./XcodeGen/SmartAppV1.yml -p ./ 
 ;;
 esac
 
@@ -150,8 +152,8 @@ printf "\n"
 ################################################################################
 
 echo "Generating graphviz...."
-xcodegen dump --spec ./XcodeGen/SmartApp.yml --type graphviz --file ./_Documents/Graph.viz
-xcodegen dump --spec ./XcodeGen/SmartApp.yml --type json --file ./_Documents/Graph.json
+xcodegen dump --spec ./XcodeGen/SmartAppV1.yml --type graphviz --file ./_Documents/Graph.viz
+xcodegen dump --spec ./XcodeGen/SmartAppV1.yml --type json --file ./_Documents/Graph.json
 
 ################################################################################
 
@@ -170,5 +172,4 @@ echo " ╔═══════════════════════�
 echo " ║ Done! You're all set! ║"
 echo " ╚═══════════════════════╝"
 
-#open SmartApp.xcworkspace
 open SmartApp.xcodeproj

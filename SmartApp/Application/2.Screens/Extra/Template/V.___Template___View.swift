@@ -131,6 +131,7 @@ fileprivate extension ___Template___View {
 //
 
 #if canImport(SwiftUI) && DEBUG
+@available(iOS 17, *)
 #Preview {
     ___Template___ViewCoordinator(haveNavigationStack: false, model: .init(message: "Hi"))
         .environmentObject(AppStateViewModel.defaultForPreviews)

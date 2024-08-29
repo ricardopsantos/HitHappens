@@ -19,28 +19,22 @@ options:
 
 packages:
   
-  #Common:
-  #  path: ../Common
+  Common:
+    url: https://github.com/ricardopsantos/Common.git
+    branch: main
+
+#  Common:
+#    path: ../Common
     
   Firebase:
     url: https://github.com/firebase/firebase-ios-sdk.git
     revision: "888f0b6026e2441a69e3ee2ad5293c7a92031e62"
     
-  # Replacement for Apple's Reachability sample, re-written in Swift with closures.
-  Reachability:
-    url: https://github.com/ashleymills/Reachability.swift
-    revision: "7b7018a69c84ea94ac2a38dff626e16ea81d1db9"
-
  # Use Nimble to express the expected outcomes of Swift or Objective-C expressions
   Nimble:
     url: https://github.com/Quick/Nimble
     branch: main
-    
- # ViewInspector is a library for unit testing SwiftUI views
-  ViewInspector:
-    url: https://github.com/nalexn/ViewInspector
-    revision: "7b1732802ffe30e6a67754bda6c7819e5cb0eb70"
-    
+        
 ####################### Documents #######################
 ####################### Documents #######################
 ####################### Documents #######################
@@ -161,15 +155,13 @@ targets:
     # dependencies: ########################
     
     dependencies:
-      - target: Common
       - target: DevTools
       - target: Domain
       - target: Core
       - target: DesignSystem
 
-      - package: Reachability
-        product: Reachability
-        link: false
+      - package: Common
+        product: Common
       - package: Firebase
         product: FirebaseMessaging
         link: true
@@ -206,8 +198,9 @@ targets:
       - path: ../Domain
         excludes: [Info.plist]
     dependencies:
-      - target: Common
       - target: DevTools
+      - package: Common
+        product: Common
       
 # CORE
 # CORE
@@ -225,7 +218,8 @@ targets:
     dependencies:
       - target: Domain
       - target: DevTools
-      - target: Common
+      - package: Common
+        product: Common
     
 # DESIGN_SYSTEM 
 # DESIGN_SYSTEM 
@@ -241,10 +235,11 @@ targets:
       - path: ../DesignSystem
         excludes: [Info.plist]
     dependencies:
-      - target: Common
       - target: Domain
       - target: DevTools
-      
+      - package: Common
+        product: Common
+        
 # DEVTOOLS
 # DEVTOOLS
 # DEVTOOLS
@@ -259,23 +254,9 @@ targets:
       - path: ../DevTools
         excludes: [Info.plist]
     dependencies:
-      - target: Common
+      - package: Common
+        product: Common
       
-# COMMON (Cant have app dependencies)
-# COMMON (Cant have app dependencies)
-# COMMON (Cant have app dependencies)
-
-  Common:
-    templates:
-    - Framework
-    settings:
-      base:
-        MARKETING_VERSION: 1.0
-        SWIFT_OBJC_BRIDGING_HEADER: "Common/Sources/Common-Bridging-Header.h"
-    sources:
-      - path: ../Common
-        excludes: [Tests,Sources/Info.plist,.gitignore,.swiftpm,Package.swift,Package.resolved]
-
 ## TESTING
 ## TESTING
 ## TESTING
@@ -290,18 +271,12 @@ targets:
       - sdk: XCTest.framework
       - target: SmartApp
         link: true
-      - target: Common
-        link: false
       - target: Domain
-        link: false
       - target: Core
-        link: false
       - package: Nimble
         product: Nimble
-        link: true
-      - package: ViewInspector
-        product: ViewInspector
-        link: true
+      - package: Common
+        product: Common
         
   SmartAppUITests:
     templates:
@@ -313,12 +288,8 @@ targets:
       - sdk: XCTest.framework
       - target: SmartApp
         link: true
-      - target: Common
-        link: false
               
       - package: Nimble
         product: Nimble
-        link: true
-      - package: ViewInspector
-        product: ViewInspector
-        link: true
+      - package: Common
+        product: Common

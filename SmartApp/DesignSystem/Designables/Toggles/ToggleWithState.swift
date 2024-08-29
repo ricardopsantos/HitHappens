@@ -27,12 +27,18 @@ public struct ToggleWithBinding: View {
     }
 
     public var body: some View {
-        Toggle(isOn: $isOn.didSet { state in
+        let view = Toggle(isOn: $isOn.didSet { state in
             onChanged(state)
         }) {
             Text(title)
                 .applyStyle(titleStyle)
-        }.tint(ColorSemantic.primary.color)
+        }
+        if #available(iOS 16.0, *) {
+            view
+                .tint(ColorSemantic.primary.color)
+        } else {
+            view
+        }
     }
 }
 
@@ -48,12 +54,18 @@ public struct ToggleWithState: View {
     }
 
     public var body: some View {
-        Toggle(isOn: $isOn.didSet { state in
+        let view = Toggle(isOn: $isOn.didSet { state in
             onChanged(state)
         }) {
             Text(title)
                 .applyStyle(titleStyle)
-        }.tint(ColorSemantic.primary.color)
+        }
+        if #available(iOS 16.0, *) {
+            view
+                .tint(ColorSemantic.primary.color)
+        } else {
+            view
+        }
     }
 }
 
@@ -62,6 +74,7 @@ public struct ToggleWithState: View {
 //
 
 #if canImport(SwiftUI) && DEBUG
+@available(iOS 17, *)
 #Preview {
     ToggleWithState(title: "Title", isOn: true, onChanged: { _ in })
 }

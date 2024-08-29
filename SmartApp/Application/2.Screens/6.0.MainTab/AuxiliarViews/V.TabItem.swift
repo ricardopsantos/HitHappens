@@ -35,6 +35,7 @@ struct TabItemView: View {
 //
 
 #if canImport(SwiftUI) && DEBUG
+@available(iOS 17, *)
 #Preview {
     TabItemView(title: "Home", icon: "house.circle.fill")
 }

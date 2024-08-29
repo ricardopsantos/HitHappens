@@ -29,6 +29,7 @@ public enum AppImages: String, CaseIterable {
 //
 
 #if canImport(SwiftUI) && DEBUG
+@available(iOS 17, *)
 #Preview {
     VStack(spacing: 0) {
         ForEach(AppImages.allCases, id: \.self) { item in

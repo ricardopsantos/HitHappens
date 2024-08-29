@@ -32,7 +32,7 @@ public struct ConfirmationSheetV2: View {
     }
 
     public var body: some View {
-        VStack {
+        var content = VStack {
             Spacer()
             ConfirmationSheetV1(
                 isOpen: $isOpen,
@@ -47,7 +47,13 @@ public struct ConfirmationSheetV2: View {
             .padding(SizeNames.defaultMargin)
             Spacer()
         }
-        .presentationDetents([.fraction(0.25), .medium, .large])
+
+        if #available(iOS 16.0, *) {
+            content
+                .presentationDetents([.fraction(0.25), .medium, .large])
+        } else {
+            content
+        }
     }
 }
 
@@ -117,6 +123,7 @@ public struct ConfirmationSheetV1: View {
 //
 
 #if canImport(SwiftUI) && DEBUG
+@available(iOS 17, *)
 #Preview {
     ConfirmationSheetV1(
         isOpen: .constant(true),

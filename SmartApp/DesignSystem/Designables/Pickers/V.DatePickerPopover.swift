@@ -50,6 +50,7 @@ public struct DatePickerPopover: View {
 //
 
 #if canImport(SwiftUI) && DEBUG
+@available(iOS 17, *)
 #Preview {
     DatePickerPopover(
         title: "Title",

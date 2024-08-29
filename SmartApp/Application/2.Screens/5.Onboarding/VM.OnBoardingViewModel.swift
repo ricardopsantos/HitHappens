@@ -45,6 +45,7 @@ class OnboardingViewModel: BaseViewModel {
 //
 
 #if canImport(SwiftUI) && DEBUG
+@available(iOS 17, *)
 #Preview {
     OnboardingScreen(onCompletion: { _ in })
 }

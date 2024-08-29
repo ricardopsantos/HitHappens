@@ -96,6 +96,7 @@ public struct CustomTitleAndCustomTextFieldWithBinding: View {
 //
 
 #if canImport(SwiftUI) && DEBUG
+@available(iOS 17, *)
 #Preview {
     VStack {
         CustomTitleAndCustomTextFieldWithBinding(

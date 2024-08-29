@@ -145,6 +145,7 @@ struct EventsMapView: View, ViewProtocol {
 //
 
 #if canImport(SwiftUI) && DEBUG
+@available(iOS 17, *)
 #Preview {
     EventsMapViewCoordinator()
         .environmentObject(AppStateViewModel.defaultForPreviews)

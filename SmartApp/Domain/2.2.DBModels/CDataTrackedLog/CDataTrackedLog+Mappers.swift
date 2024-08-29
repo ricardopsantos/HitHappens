@@ -23,7 +23,7 @@ public extension CDataTrackedLog {
             longitude: longitude,
             addressMin: addressMin ?? "",
             note: note ?? "",
-            recordDate: recordDate ?? .now,
+            recordDate: recordDate ?? Date(),
             cascadeEntity: cascadeEntity
         )
     }

@@ -31,13 +31,18 @@ public struct DefaultPickerView: View {
                 Text(title)
                     .applyStyle(titleStyle)
                 Spacer()
-                Picker("", selection: $selectedOption) {
+                let picker = Picker("", selection: $selectedOption) {
                     ForEach(options, id: \.self) { option in
                         Text(option)
                     }
                 }
-                .tint(ColorSemantic.primary.color)
                 .pickerStyle(DefaultPickerStyle())
+                if #available(iOS 16.0, *) {
+                    picker
+                        .tint(ColorSemantic.primary.color)
+                } else {
+                    picker
+                }
             }
         } // .debugBackground()
     }
@@ -48,6 +53,7 @@ public struct DefaultPickerView: View {
 //
 
 #if canImport(SwiftUI) && DEBUG
+@available(iOS 17, *)
 #Preview {
     VStack {
         DefaultPickerView(

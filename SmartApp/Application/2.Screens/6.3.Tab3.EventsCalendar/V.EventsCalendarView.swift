@@ -163,6 +163,7 @@ struct EventsCalendarView: View, ViewProtocol {
 //
 
 #if canImport(SwiftUI) && DEBUG
+@available(iOS 17, *)
 #Preview {
     EventsCalendarViewCoordinator()
         .environmentObject(AppStateViewModel.defaultForPreviews)

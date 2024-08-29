@@ -54,7 +54,7 @@ public extension Model {
             self.message = message
             self.location = location
             self.onUserTapGesture = onUserTapGesture
-            self.date = .now
+            self.date = Date()
         }
     }
 }

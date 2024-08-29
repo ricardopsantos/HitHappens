@@ -31,6 +31,7 @@ struct ___Template___AuxiliarAuthView: View {
 //
 
 #if canImport(SwiftUI) && DEBUG
+@available(iOS 17, *)
 #Preview {
     ___Template___AuxiliarAuthView()
         .environmentObject(AuthenticationViewModel.defaultForPreviews)

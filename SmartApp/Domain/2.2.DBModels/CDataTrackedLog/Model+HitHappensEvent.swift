@@ -31,7 +31,7 @@ public extension Model {
             longitude: Double,
             addressMin: String,
             note: String,
-            recordDate: Date = .now,
+            recordDate: Date = Date(),
             cascadeEntity: Model.TrackedEntity? = nil
         ) {
             self.id = id
@@ -53,7 +53,7 @@ public extension Model.TrackedLog {
             longitude: CLLocationCoordinate2D.random.longitude,
             addressMin: "Address " + String.randomWithSpaces(10),
             note: String.randomWithSpaces(10),
-            recordDate: Date.now,
+            recordDate: Date(),
             cascadeEntity: .random(cascadeEvents: nil)
         )
     }

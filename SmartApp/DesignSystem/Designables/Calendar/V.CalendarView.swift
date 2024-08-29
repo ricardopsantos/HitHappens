@@ -177,11 +177,16 @@ public struct CalendarHeaderView: View {
                     selectedDay = nil
                 }
             }) {
-                Image("back")
+                let view = Image("back")
                     .resizable()
                     .scaledToFit()
                     .frame(width: SizeNames.defaultMargin * 1.5)
-                    .tint(ColorSemantic.primary.color)
+                if #available(iOS 16.0, *) {
+                    view
+                        .tint(ColorSemantic.primary.color)
+                } else {
+                    view
+                }
             }
             Spacer()
             Text(currentDate, formatter: DateFormatter.monthAndYear)
@@ -194,12 +199,17 @@ public struct CalendarHeaderView: View {
                     selectedDay = nil
                 }
             }) {
-                Image("back")
+                let view = Image("back")
                     .resizable()
                     .scaledToFit()
                     .frame(width: SizeNames.defaultMargin * 1.5)
-                    .tint(ColorSemantic.primary.color)
                     .rotate(degrees: 180)
+                if #available(iOS 16.0, *) {
+                    view
+                        .tint(ColorSemantic.primary.color)
+                } else {
+                    view
+                }
             }
         }
     }
@@ -322,7 +332,7 @@ public struct CalendarView: View {
             DevTools.Log.debug(.valueChanged("\(Self.self)", "currentDate", "\(value)"), .view)
             onSelectedMonth(value)
         }.onChange(of: selectedDay) { value in
-            DevTools.Log.debug(.valueChanged("\(Self.self)", "selectedDay", "\(value)"), .view)
+            DevTools.Log.debug(.valueChanged("\(Self.self)", "selectedDay", "\(String(describing: value))"), .view)
             onSelectedDay(value)
         }
     }
@@ -333,6 +343,7 @@ public struct CalendarView: View {
 //
 
 #if canImport(SwiftUI) && DEBUG
+@available(iOS 17, *)
 #Preview {
     CalendarView(
         currentDate: .constant(Date()),

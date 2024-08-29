@@ -1,5 +1,5 @@
 {
-  "originHash" : "982e55c017fc696cc425211c2571937d8201c75164b125b579d6056ca5430e8a",
+  "originHash" : "c446a199d60dd3677b917868614ac74a99ce078dd8579af3a79c4267161115de",
   "pins" : [
     {
       "identity" : "abseil-cpp-binary",
@@ -136,28 +136,12 @@
       }
     },
     {
-      "identity" : "reachability.swift",
-      "kind" : "remoteSourceControl",
-      "location" : "https://github.com/ashleymills/Reachability.swift",
-      "state" : {
-        "revision" : "7b7018a69c84ea94ac2a38dff626e16ea81d1db9"
-      }
-    },
-    {
       "identity" : "swift-protobuf",
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/apple/swift-protobuf.git",
       "state" : {
         "revision" : "9f0c76544701845ad98716f3f6a774a892152bcb",
         "version" : "1.26.0"
-      }
-    },
-    {
-      "identity" : "viewinspector",
-      "kind" : "remoteSourceControl",
-      "location" : "https://github.com/nalexn/ViewInspector",
-      "state" : {
-        "revision" : "7b1732802ffe30e6a67754bda6c7819e5cb0eb70"
       }
     }
   ],

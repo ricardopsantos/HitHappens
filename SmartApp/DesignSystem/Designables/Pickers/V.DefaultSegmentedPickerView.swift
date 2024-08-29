@@ -53,6 +53,7 @@ public struct DefaultSegmentedPickerView: View {
 //
 
 #if canImport(SwiftUI) && DEBUG
+@available(iOS 17, *)
 #Preview {
     VStack {
         DefaultSegmentedPickerView(

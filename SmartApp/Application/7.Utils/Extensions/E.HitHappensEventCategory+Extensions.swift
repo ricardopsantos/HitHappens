@@ -51,10 +51,10 @@ extension HitHappensEventCategory {
         case .professional: return Color.blue // Professional and corporate color
         case .personal: return Color.purple // Represents individuality and personal matters
         case .financial: return Color.orange // Represents financial aspects
-        case .cultural: return Color.teal // Color that represents culture and diversity
+        case .cultural: return Color(UIColor(red: 59, green: 191, blue: 157)) // Color.teal
         case .entertainment: return Color.pink // Bright and engaging color for entertainment
         case .social: return Color.yellow // Color associated with social interactions
-        case .educational: return Color.indigo // Represents learning and education
+        case .educational: return Color(UIColor(red: 75, green: 0, blue: 130)) // Color.indigo
         case .fitness: return Color.green.opacity(0.7) // Slightly different green for fitness and activity
         }
     }

@@ -166,6 +166,7 @@ public extension ListItemView {
 //
 
 #if canImport(SwiftUI) && DEBUG
+@available(iOS 17, *)
 #Preview {
     VStack(spacing: SizeNames.defaultMarginSmall) {
         ListItemView(title: "title1", subTitle: "subTitle", systemImage: ("info.circle", .red), onTapGesture: {})

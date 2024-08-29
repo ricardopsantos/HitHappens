@@ -74,6 +74,7 @@ struct ParentView: View {
 //
 
 #if canImport(SwiftUI) && DEBUG
+@available(iOS 17, *)
 #Preview {
     ParentView()
 }

@@ -419,6 +419,7 @@ fileprivate extension EventDetailsViewModel {
 //
 
 #if canImport(SwiftUI) && DEBUG
+@available(iOS 17, *)
 #Preview {
     EventDetailsViewCoordinator(
         model: .init(event: .random(cascadeEvents: [.random])), haveNavigationStack: false)

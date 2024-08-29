@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 54;
+	objectVersion = 52;
 	objects = {
 
 /* Begin PBXAggregateTarget section */
@@ -95,6 +95,7 @@
 		25C273E213957A83CF3D6F9B /* CommonLearningsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 056DE7D343899CC9950CE408 /* CommonLearningsTests.swift */; };
 		26672B103F4CB6916944587B /* VC.MailViewControllerRepresentable.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE925AF6206F274216957C24 /* VC.MailViewControllerRepresentable.swift */; };
 		271DB6A91F0D09425D4EFD7E /* TNConstrainable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 67E33C68214301970BA910A3 /* TNConstrainable.swift */; };
+		2760ABF07FAAE1940AEA5BEA /* ___Template___Auxiliar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 714CC00B1F5B24FE0F647401 /* ___Template___Auxiliar.swift */; };
 		27702256E7DD65D0A83D5312 /* XCTestCase+tap.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56873D601E04DB0C92D0E74B /* XCTestCase+tap.swift */; };
 		277530A2BAE64FD1FADBB281 /* ___Template___ViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC3D8450AB38B7F44E5427A9 /* ___Template___ViewModelTests.swift */; };
 		2812AFF2DC445EF282EA8C04 /* CGSize+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F4DEB81130E6667D57CBB53 /* CGSize+Extensions.swift */; };
@@ -161,6 +162,7 @@
 		46247690B5083039E79DD1B1 /* VM.___Template___ViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22B2FDC6DA0484D1C33E1155 /* VM.___Template___ViewModel.swift */; };
 		47B9D109814149873B90B6B8 /* Common.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 18E237663C47BB81482983EC /* Common.framework */; };
 		47E3AE63427475B126B0E8D9 /* UIViewController+Alerts.swift in Sources */ = {isa = PBXBuildFile; fileRef = C6A9F412B5B8D29C78E46DB0 /* UIViewController+Alerts.swift */; };
+		48BFB93652F7305BF5306B7B /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = B7B1DC1F01F709DA94EF94C9 /* README.md */; };
 		49C50496DD9866438A2CDEFC /* View+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBEE702E2B1D92CEC46ED84D /* View+Extensions.swift */; };
 		4A76F3586A557B933D6B7EF0 /* ModelDto+UpdateUserRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7DC9D232A9CCB6DE54E5D976 /* ModelDto+UpdateUserRequest.swift */; };
 		4BD66E492B3E372B917A4FCD /* Domain.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A9C05DE96EC10976152DACA0 /* Domain.framework */; };
@@ -345,9 +347,9 @@
 		A21598BA27D18183D290E220 /* View+BorderModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12CCB3B23B3463BC52EF3457 /* View+BorderModifier.swift */; };
 		A27E845192BC3F22FCDAD306 /* V.CustomTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA8C7A7782A2D387B3709DB4 /* V.CustomTextField.swift */; };
 		A32A947B85B9332A304F8969 /* HelveticaNeueLTCom-Bd.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 5AC7643017390AFBEB198939 /* HelveticaNeueLTCom-Bd.ttf */; };
-		A34FE9DCCD379A45982C989A /* ViewInspector in Frameworks */ = {isa = PBXBuildFile; productRef = E70E5D2A1A8E1322960EE6A8 /* ViewInspector */; };
 		A3C3015F4A51D0D221850D47 /* MasteringLists.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3CB2E5B4C31E0AD89C4A17DB /* MasteringLists.swift */; };
 		A4364CE7B9999F916C4B161B /* Response.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA6B76F85ABA13E5E9E5E01F /* Response.swift */; };
+		A44CC2E46167C5AE7713962F /* ___Template___CounterDisplayView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5565F38D02B755DCD812FA95 /* ___Template___CounterDisplayView.swift */; };
 		A4746103EF7A83D75C7615D1 /* View+Conditionals.swift in Sources */ = {isa = PBXBuildFile; fileRef = 598B781BD81740C400822A67 /* View+Conditionals.swift */; };
 		A49622D58094CD85EC859F68 /* DevTools.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EE4FA46294AA76564590851E /* DevTools.framework */; };
 		A4C2F6504D24093F10CC3E99 /* GoogleService-Info-com.ricardo.app.id.plist in Resources */ = {isa = PBXBuildFile; fileRef = D610E9C15F645141AA91565A /* GoogleService-Info-com.ricardo.app.id.plist */; };
@@ -396,7 +398,6 @@
 		BE0C4CAA9FABB6A3050CCB49 /* CommonLearnings.swift in Sources */ = {isa = PBXBuildFile; fileRef = A893D925BC7D1BAA3F27CDE4 /* CommonLearnings.swift */; };
 		BE9DEDEB48B0DA06235AD752 /* CRUDEntity+aSync.swift in Sources */ = {isa = PBXBuildFile; fileRef = 558C401750BB938F4064B419 /* CRUDEntity+aSync.swift */; };
 		BF23EA18387B84ECEB97D232 /* Core.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BD172972752F67B3F3BBB2C8 /* Core.framework */; };
-		BFE383E24FFCA211A28AAF03 /* ViewInspector in Frameworks */ = {isa = PBXBuildFile; productRef = 9FE74237DEDFD3CC1B72A9C4 /* ViewInspector */; };
 		C03E618B752CBD2FA6AC4F0D /* UIButton+CombineCompatible.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D1C684F5FD24C2CB8911087 /* UIButton+CombineCompatible.swift */; };
 		C0B9DD43EF59C6DCD8329C70 /* Model+CDataEvent.swift in Sources */ = {isa = PBXBuildFile; fileRef = FCA8AB7F6ED99E3BD76A90D4 /* Model+CDataEvent.swift */; };
 		C113372AFEBFC441EF124621 /* SharedLocationManagerViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 432BDE70960ABAC24205538B /* SharedLocationManagerViewModel.swift */; };
@@ -430,10 +431,6 @@
 		D5C275BFE0C5507EAF69FC15 /* CDataSong+NSFetchRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B60ECBDBA1CE766E7EF32B7 /* CDataSong+NSFetchRequest.swift */; };
 		D77DFB82549FEC2F91AD6C44 /* LoginAndSessionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAE8869CC081A4CE3C6D6BAC /* LoginAndSessionTests.swift */; };
 		D788201DC937D7CE2C4118C5 /* AnalyticsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 69F3005A989EBA3F790B2FC4 /* AnalyticsManager.swift */; };
-		D789AA372C7FD5BA00235A09 /* ___Template___AuxiliarAuthView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D789AA362C7FD5BA00235A09 /* ___Template___AuxiliarAuthView.swift */; };
-		D789AA3A2C7FD5E600235A09 /* ___Template___CounterDisplayView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D789AA392C7FD5E600235A09 /* ___Template___CounterDisplayView.swift */; };
-		D789AA3C2C7FD60800235A09 /* ___Template___Auxiliar.swift in Sources */ = {isa = PBXBuildFile; fileRef = D789AA3B2C7FD60800235A09 /* ___Template___Auxiliar.swift */; };
-		D789AA3F2C8065A400235A09 /* Common+UserDefaults.swift in Sources */ = {isa = PBXBuildFile; fileRef = D789AA3E2C8065A400235A09 /* Common+UserDefaults.swift */; };
 		D88E49AE9344ADEC9BE1BBB6 /* DispatchQueueVsOperationQueue.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60FF13C98F76F1A195728006 /* DispatchQueueVsOperationQueue.swift */; };
 		D8FC857887AF7D20A3D14826 /* ModelDtoProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7505FC51EBEA0E48E01409B /* ModelDtoProtocol.swift */; };
 		D9F004ECD5CB0FD2E87BD627 /* ModelDto+UpdateUserResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6F7ADEDCA2B161252C22CB97 /* ModelDto+UpdateUserResponse.swift */; };
@@ -487,6 +484,7 @@
 		EFB32B00E1C0A3F403D0C6D2 /* View+ViewFrameGetter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 601779A96E0314E08592AC3E /* View+ViewFrameGetter.swift */; };
 		F0AE77994DB3FFE856452F3B /* Image+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 697CD3E9340EB0991F2A5D71 /* Image+Extensions.swift */; };
 		F0C08C561EB4BB4BCE074EC4 /* UIWindow+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDC6699692B5BBEB0984FF37 /* UIWindow+Extensions.swift */; };
+		F197B3D5E91AC5C6770AC6F5 /* ___Template___AuxiliarAuthView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C10318C804958724435D385D /* ___Template___AuxiliarAuthView.swift */; };
 		F300E4949E71D6548731E407 /* V.CalendarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 426419625902EDFDC47BCE8E /* V.CalendarView.swift */; };
 		F30A026131BE4BD9CCBC11AB /* CDataTrackedEntity+NSFetchRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 532D619B3C8B5406F0E3A0E5 /* CDataTrackedEntity+NSFetchRequest.swift */; };
 		F333F1E1520D5A5AA667F996 /* CommonCoreData+Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 435A9078D2229159D39D959B /* CommonCoreData+Utils.swift */; };
@@ -494,6 +492,7 @@
 		F41A5BA6CEB45EC27633B4B1 /* E.HitHappensEventCategory+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2023B3FFF9E9ACADF4702389 /* E.HitHappensEventCategory+Extensions.swift */; };
 		F4319E07C97EE99CA1000592 /* UICollectionView+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C480B8B7D993E5857DE0AA5 /* UICollectionView+Extensions.swift */; };
 		F53589A074E5CB65C1A17C75 /* google.co.uk.cer in Resources */ = {isa = PBXBuildFile; fileRef = 030D635DD322A5DBFECF18E1 /* google.co.uk.cer */; };
+		F559FCC4FF2AC0248D490095 /* Common+UserDefaults.swift in Sources */ = {isa = PBXBuildFile; fileRef = E42BEA1EE5E2DB0F52DB2163 /* Common+UserDefaults.swift */; };
 		F5A9C8464C9EB776823BED46 /* SCNNode+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76F2ADF90C96461A0596FD24 /* SCNNode+Extensions.swift */; };
 		F663F750AD9ADC588B20CF4F /* Bool+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = A42DBCBC7FD31CB63B10E99E /* Bool+Extensions.swift */; };
 		F6D5749C67A415A15FD8BCFF /* DataUSAServiceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56B05A60CFF9869BBF84C68F /* DataUSAServiceTests.swift */; };
@@ -752,6 +751,7 @@
 		14E9E77CBCB289260F99F61F /* UITextField+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UITextField+Extensions.swift"; sourceTree = "<group>"; };
 		150AEB9E22D77F94AB4E8D80 /* 3.AuthenticationHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = 3.AuthenticationHandler.swift; sourceTree = "<group>"; };
 		15AC70A7FC4A55EE6EAC48B2 /* UnknownDecodableProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UnknownDecodableProtocol.swift; sourceTree = "<group>"; };
+		165C151D31A1CD9F402D95F7 /* SmartAppV1.yml */ = {isa = PBXFileReference; lastKnownFileType = text.yaml; path = SmartAppV1.yml; sourceTree = "<group>"; };
 		16BFD2AF969C7341E7EEC40B /* NSPredicate+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSPredicate+Extensions.swift"; sourceTree = "<group>"; };
 		174B5E0473D4DDD1D6F45752 /* GoogleService-Info-com.hit.happens.app.id.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = "GoogleService-Info-com.hit.happens.app.id.plist"; sourceTree = "<group>"; };
 		17CED1DC1C7C769062CCE47A /* UIScreen+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIScreen+Extensions.swift"; sourceTree = "<group>"; };
@@ -877,7 +877,6 @@
 		4FD8A1FE158609FE3D7B9EE1 /* E.ServiceCachePolicy.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = E.ServiceCachePolicy.swift; sourceTree = "<group>"; };
 		4FF3EC610A0E3B747E506FF4 /* production-base.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = "production-base.xcconfig"; sourceTree = "<group>"; };
 		506719BBA0172E36F9D166A2 /* CommonCoreData+Utils+NSPersistentContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CommonCoreData+Utils+NSPersistentContainer.swift"; sourceTree = "<group>"; };
-		50916DF16F9EE82DF6E8E443 /* SmartApp.yml */ = {isa = PBXFileReference; lastKnownFileType = text.yaml; path = SmartApp.yml; sourceTree = "<group>"; };
 		5113AC7344876FC6075C6BFA /* Utils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Utils.swift; sourceTree = "<group>"; };
 		5164489FD6DE9DC64FD09AC0 /* loading1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = loading1.png; sourceTree = "<group>"; };
 		51709DC0C28F23E8B54235AC /* E.AppScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = E.AppScreen.swift; sourceTree = "<group>"; };
@@ -894,6 +893,7 @@
 		54A9F4A526709C917B61D542 /* dev-debug.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = "dev-debug.xcconfig"; sourceTree = "<group>"; };
 		54FA9E35E5C4D59B54A098E1 /* XCTestCase+waitFor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "XCTestCase+waitFor.swift"; sourceTree = "<group>"; };
 		5529B80DAD46D62F00083656 /* VM.EventLogDetailsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VM.EventLogDetailsViewModel.swift; sourceTree = "<group>"; };
+		5565F38D02B755DCD812FA95 /* ___Template___CounterDisplayView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "___Template___CounterDisplayView.swift"; sourceTree = "<group>"; };
 		558C401750BB938F4064B419 /* CRUDEntity+aSync.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CRUDEntity+aSync.swift"; sourceTree = "<group>"; };
 		55F9304326C925D82ECBA306 /* AppAndDeviceInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppAndDeviceInfo.swift; sourceTree = "<group>"; };
 		560E50DFCAF1C968EF0A12F2 /* _AggregateTargets.yml */ = {isa = PBXFileReference; lastKnownFileType = text.yaml; path = _AggregateTargets.yml; sourceTree = "<group>"; };
@@ -957,6 +957,7 @@
 		6F7ADEDCA2B161252C22CB97 /* ModelDto+UpdateUserResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ModelDto+UpdateUserResponse.swift"; sourceTree = "<group>"; };
 		709F703F42BEEC42850D101F /* CDataTrackedLog+NSFetchRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CDataTrackedLog+NSFetchRequest.swift"; sourceTree = "<group>"; };
 		70E5BC087A650424E1860F7A /* V.DefaultPickerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = V.DefaultPickerView.swift; sourceTree = "<group>"; };
+		714CC00B1F5B24FE0F647401 /* ___Template___Auxiliar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "___Template___Auxiliar.swift"; sourceTree = "<group>"; };
 		7209094DF2887AF759CD1031 /* qa-base.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = "qa-base.xcconfig"; sourceTree = "<group>"; };
 		72B5857D2CDF67E4F7E59388 /* DataBaseRepository_Tests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataBaseRepository_Tests.swift; sourceTree = "<group>"; };
 		7343C124BF3514FC5DD9390D /* CRUDEntity+Mappers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CRUDEntity+Mappers.swift"; sourceTree = "<group>"; };
@@ -1100,12 +1101,14 @@
 		B5D87E5B0E88C479CB4DF8C1 /* HelveticaNeueLTComBdCn.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = HelveticaNeueLTComBdCn.ttf; sourceTree = "<group>"; };
 		B60AE3E39DD11F6FDD44A3CE /* DataBaseRepositoryProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataBaseRepositoryProtocol.swift; sourceTree = "<group>"; };
 		B65AB639C77983E6F68D47BC /* UISwitch+CombineCompatible.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UISwitch+CombineCompatible.swift"; sourceTree = "<group>"; };
+		B7B1DC1F01F709DA94EF94C9 /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		B83E6497905E47561A6709C8 /* GoogleService-Info-dev.hit.happens.app.id.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = "GoogleService-Info-dev.hit.happens.app.id.plist"; sourceTree = "<group>"; };
 		B8D71C05C3397204604DEE4B /* caching.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = caching.png; sourceTree = "<group>"; };
 		B95F3550748B9172F9E17410 /* NotoSans-SemiBold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "NotoSans-SemiBold.ttf"; sourceTree = "<group>"; };
 		B96813895DF53756426151E5 /* UISwitch+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UISwitch+Extensions.swift"; sourceTree = "<group>"; };
 		BA6B76F85ABA13E5E9E5E01F /* Response.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Response.swift; sourceTree = "<group>"; };
 		BA8C7A7782A2D387B3709DB4 /* V.CustomTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = V.CustomTextField.swift; sourceTree = "<group>"; };
+		BAE47368E8D6A95AB699357F /* SmartAppV2.yml */ = {isa = PBXFileReference; lastKnownFileType = text.yaml; path = SmartAppV2.yml; sourceTree = "<group>"; };
 		BBA472C4A57110A7E11D8B82 /* UseDrawingGroupToSpeedUpView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UseDrawingGroupToSpeedUpView.swift; sourceTree = "<group>"; };
 		BBEE702E2B1D92CEC46ED84D /* View+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "View+Extensions.swift"; sourceTree = "<group>"; };
 		BC7D36654F44D16A89F89E8B /* DesignSystem.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = DesignSystem.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -1123,6 +1126,7 @@
 		C05873E0850C9B79EF188753 /* GoogleService-Info-com.ricardo.app.id.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = "GoogleService-Info-com.ricardo.app.id.plist"; sourceTree = "<group>"; };
 		C0BEA3A418A8E3C6EA2F58D8 /* UILabel+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UILabel+Extensions.swift"; sourceTree = "<group>"; };
 		C0C53BBF3EFB01F4720CB745 /* Shapes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Shapes.swift; sourceTree = "<group>"; };
+		C10318C804958724435D385D /* ___Template___AuxiliarAuthView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "___Template___AuxiliarAuthView.swift"; sourceTree = "<group>"; };
 		C15C93599242F0356B1983D2 /* Text+Extentions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Text+Extentions.swift"; sourceTree = "<group>"; };
 		C195759181B794D9F1DCB8FF /* PreferenceKeyTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreferenceKeyTests.swift; sourceTree = "<group>"; };
 		C1A45E1FACD4D5C6C49829B1 /* dev-release.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = "dev-release.xcconfig"; sourceTree = "<group>"; };
@@ -1164,7 +1168,7 @@
 		CEA6D19087717DAD0377DC84 /* V.EventsMapView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = V.EventsMapView.swift; sourceTree = "<group>"; };
 		CF25B8E8319FADB2D8FD9C44 /* UIView+SubViews.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+SubViews.swift"; sourceTree = "<group>"; };
 		CF5D27E7331876E8324571C9 /* incorrect.caf */ = {isa = PBXFileReference; lastKnownFileType = file; path = incorrect.caf; sourceTree = "<group>"; };
-		CF9D6C93CE5A73F4A17612DC /* SmartAppUnitTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SmartAppUnitTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		CF9D6C93CE5A73F4A17612DC /* SmartAppUnitTests.xctest */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.cfbundle; path = SmartAppUnitTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		CFBDACDBAABBA43D6E727E40 /* Graph.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = Graph.json; sourceTree = "<group>"; };
 		CFCB1B30D9A58AFA7EB41C65 /* github.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = github.png; sourceTree = "<group>"; };
 		CFDA9EF825DA18F8FAB90681 /* GenericRequestWithCodableCache.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GenericRequestWithCodableCache.swift; sourceTree = "<group>"; };
@@ -1180,10 +1184,6 @@
 		D610E9C15F645141AA91565A /* GoogleService-Info-com.ricardo.app.id.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = "GoogleService-Info-com.ricardo.app.id.plist"; sourceTree = "<group>"; };
 		D7505FC51EBEA0E48E01409B /* ModelDtoProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModelDtoProtocol.swift; sourceTree = "<group>"; };
 		D751644E666193B8234B752B /* qa-debug.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = "qa-debug.xcconfig"; sourceTree = "<group>"; };
-		D789AA362C7FD5BA00235A09 /* ___Template___AuxiliarAuthView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "___Template___AuxiliarAuthView.swift"; sourceTree = "<group>"; };
-		D789AA392C7FD5E600235A09 /* ___Template___CounterDisplayView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "___Template___CounterDisplayView.swift"; sourceTree = "<group>"; };
-		D789AA3B2C7FD60800235A09 /* ___Template___Auxiliar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "___Template___Auxiliar.swift"; sourceTree = "<group>"; };
-		D789AA3E2C8065A400235A09 /* Common+UserDefaults.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Common+UserDefaults.swift"; sourceTree = "<group>"; };
 		D7F63A8944886705347BFA87 /* UIScrollView+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIScrollView+Extensions.swift"; sourceTree = "<group>"; };
 		D970FE1EDEA881819AF775BA /* host.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = host.png; sourceTree = "<group>"; };
 		D9AE59B81096776D491A6ABE /* AppColors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppColors.swift; sourceTree = "<group>"; };
@@ -1211,6 +1211,7 @@
 		E39F50FB91760066084B4EC1 /* install.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = install.png; sourceTree = "<group>"; };
 		E3A19BF72BBD9051336A50A2 /* UIEdgeInsets+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIEdgeInsets+Extensions.swift"; sourceTree = "<group>"; };
 		E3A1FF6B1834F2D3439FFD35 /* SmartApp.yml */ = {isa = PBXFileReference; lastKnownFileType = text.yaml; path = SmartApp.yml; sourceTree = "<group>"; };
+		E42BEA1EE5E2DB0F52DB2163 /* Common+UserDefaults.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Common+UserDefaults.swift"; sourceTree = "<group>"; };
 		E6962FE52E46170C77070547 /* V.FavoriteEventsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = V.FavoriteEventsView.swift; sourceTree = "<group>"; };
 		E6EDCA22F2350D81DCA00071 /* cuek.caf */ = {isa = PBXFileReference; lastKnownFileType = file; path = cuek.caf; sourceTree = "<group>"; };
 		E8ACDA451F05DFA73BACBF6C /* CommonDataBaseRepository+NSFetchedResultsControllerDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CommonDataBaseRepository+NSFetchedResultsControllerDelegate.swift"; sourceTree = "<group>"; };
@@ -1275,7 +1276,6 @@
 				1272564510C0AA8383E4DE1D /* XCTest.framework in Frameworks */,
 				0FAE766250ED4869B9257182 /* SmartApp.app in Frameworks */,
 				CFF46A92243D386CAABB45A2 /* Nimble in Frameworks */,
-				BFE383E24FFCA211A28AAF03 /* ViewInspector in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1305,7 +1305,6 @@
 				91B161188A256CEF7C969FD4 /* XCTest.framework in Frameworks */,
 				0E631307F67F3510B0B0BB08 /* SmartApp.app in Frameworks */,
 				75D05F94F2E94C17AAAA8185 /* Nimble in Frameworks */,
-				A34FE9DCCD379A45982C989A /* ViewInspector in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1454,7 +1453,8 @@
 				BFD47F97B7CD1EC7038EFB12 /* _FrameworkTemplate.yml */,
 				6ACBDE4A24CA142B823A51FD /* _UITestTemplate.yml */,
 				21129C165234DB2E4176182C /* _UnitTestTemplate.yml */,
-				50916DF16F9EE82DF6E8E443 /* SmartApp.yml */,
+				165C151D31A1CD9F402D95F7 /* SmartAppV1.yml */,
+				BAE47368E8D6A95AB699357F /* SmartAppV2.yml */,
 			);
 			path = XcodeGen;
 			sourceTree = "<group>";
@@ -1505,7 +1505,7 @@
 		201F0BB58C2368D3B8B227F5 /* Template */ = {
 			isa = PBXGroup;
 			children = (
-				D789AA382C7FD5C800235A09 /* Auxiliar */,
+				8CE598FC8DF81A22D54FB284 /* Auxiliar */,
 				1A574617235F036CA4AA327E /* V.___Template___View.swift */,
 				22B2FDC6DA0484D1C33E1155 /* VM.___Template___ViewModel.swift */,
 			);
@@ -1679,9 +1679,9 @@
 				5A90264F9ADF89FCFCC96029 /* Protocols */,
 				55F9304326C925D82ECBA306 /* AppAndDeviceInfo.swift */,
 				5EDDEB817C898D0858EF84B1 /* Common_XXXRepresentable.swift */,
+				E42BEA1EE5E2DB0F52DB2163 /* Common+UserDefaults.swift */,
 				5113AC7344876FC6075C6BFA /* Utils.swift */,
 				3457CDDD10DE952203ED70C1 /* Utils+Mirror.swift */,
-				D789AA3E2C8065A400235A09 /* Common+UserDefaults.swift */,
 			);
 			path = Utils;
 			sourceTree = "<group>";
@@ -2372,6 +2372,16 @@
 			path = "View+Debug";
 			sourceTree = "<group>";
 		};
+		8CE598FC8DF81A22D54FB284 /* Auxiliar */ = {
+			isa = PBXGroup;
+			children = (
+				714CC00B1F5B24FE0F647401 /* ___Template___Auxiliar.swift */,
+				C10318C804958724435D385D /* ___Template___AuxiliarAuthView.swift */,
+				5565F38D02B755DCD812FA95 /* ___Template___CounterDisplayView.swift */,
+			);
+			path = Auxiliar;
+			sourceTree = "<group>";
+		};
 		8DDAA46C7C289D7194839D27 /* 2.1.Core.Repositories */ = {
 			isa = PBXGroup;
 			children = (
@@ -2961,16 +2971,6 @@
 			path = CDataSongs;
 			sourceTree = "<group>";
 		};
-		D789AA382C7FD5C800235A09 /* Auxiliar */ = {
-			isa = PBXGroup;
-			children = (
-				D789AA362C7FD5BA00235A09 /* ___Template___AuxiliarAuthView.swift */,
-				D789AA392C7FD5E600235A09 /* ___Template___CounterDisplayView.swift */,
-				D789AA3B2C7FD60800235A09 /* ___Template___Auxiliar.swift */,
-			);
-			path = Auxiliar;
-			sourceTree = "<group>";
-		};
 		D7F45A3E0523BE258F0C1742 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
@@ -3089,6 +3089,7 @@
 			isa = PBXGroup;
 			children = (
 				CC6BB36D3BE0226B7356C9A5 /* Sources */,
+				B7B1DC1F01F709DA94EF94C9 /* README.md */,
 			);
 			path = Common;
 			sourceTree = "<group>";
@@ -3265,7 +3266,6 @@
 			name = SmartAppUITests;
 			packageProductDependencies = (
 				3058A10799767D154B441B24 /* Nimble */,
-				9FE74237DEDFD3CC1B72A9C4 /* ViewInspector */,
 			);
 			productName = SmartAppUITests;
 			productReference = 1D491B8DF3A6299EE6ACD7D6 /* SmartAppUITests.xctest */;
@@ -3343,7 +3343,6 @@
 			name = SmartAppUnitTests;
 			packageProductDependencies = (
 				2B75743979FCD9F9E1C365BA /* Nimble */,
-				E70E5D2A1A8E1322960EE6A8 /* ViewInspector */,
 			);
 			productName = SmartAppUnitTests;
 			productReference = CF9D6C93CE5A73F4A17612DC /* SmartAppUnitTests.xctest */;
@@ -3368,7 +3367,6 @@
 				A8494A995FF528043DBD8AB5 /* PBXTargetDependency */,
 				B92B574F75A24F069AD5E9CC /* PBXTargetDependency */,
 				8255A47BAC4553E288007571 /* PBXTargetDependency */,
-				A73D42C0C5D54E64950B9DE6 /* PBXTargetDependency */,
 			);
 			name = SmartApp;
 			packageProductDependencies = (
@@ -3415,9 +3413,6 @@
 					5AAC81C2F85D7CDB5793F1A7 = {
 						TestTargetID = CD8F2FFD550D622D2C2B8BA9;
 					};
-					A3D315A882F4852842A3D0EA = {
-						TestTargetID = CD8F2FFD550D622D2C2B8BA9;
-					};
 					CD8F2FFD550D622D2C2B8BA9 = {
 						DevelopmentTeam = EP8XQ3ZY9V;
 					};
@@ -3436,8 +3431,6 @@
 			packageReferences = (
 				B534D94EBDEC0AF4838E6834 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
 				CC2A9A6575431857ADB88A53 /* XCRemoteSwiftPackageReference "Nimble" */,
-				64F28F54E21D66478C2F3452 /* XCRemoteSwiftPackageReference "Reachability" */,
-				4D571D76266814166CBCAEAD /* XCRemoteSwiftPackageReference "ViewInspector" */,
 			);
 			projectDirPath = "";
 			projectRoot = "";
@@ -3518,6 +3511,7 @@
 			files = (
 				4253E0F7B25424C982934EE0 /* CDataNotes.md in Resources */,
 				0C6E59FDDA732CF148BA3BFF /* PreferenceKey.md in Resources */,
+				48BFB93652F7305BF5306B7B /* README.md in Resources */,
 				F53589A074E5CB65C1A17C75 /* google.co.uk.cer in Resources */,
 				1A444C0CE60BA80898EEE3A9 /* google.co.uk_old.cer in Resources */,
 				582F1751ED483D5DD318B61C /* image1.png in Resources */,
@@ -3557,7 +3551,6 @@
 		};
 		4507A92C2CA7754D30E612E8 /* FirebasePlistFile */ = {
 			isa = PBXShellScriptBuildPhase;
-			alwaysOutOfDate = 1;
 			buildActionMask = 2147483647;
 			files = (
 			);
@@ -3725,7 +3718,6 @@
 				905A6EFBAA6B5CCA70B482EA /* BaseView+AlertView.swift in Sources */,
 				E64DCCA312BE0F122F5B4029 /* BaseView+BackgroundView.swift in Sources */,
 				2ACECB36E773A894CA0B7BDF /* BaseView+NavigationModel.swift in Sources */,
-				D789AA3A2C7FD5E600235A09 /* ___Template___CounterDisplayView.swift in Sources */,
 				84453035FA3CF9CFC4E11F5D /* BaseView.swift in Sources */,
 				82A969FE85B7F9299480FB8A /* BaseViewModel.swift in Sources */,
 				C61689C76FC805A41EF6BF49 /* CPPWrapper.mm in Sources */,
@@ -3746,7 +3738,6 @@
 				CCC30B559AB8DAAA9F6542E8 /* SetupManager.swift in Sources */,
 				A12015A6889F802D0F50A392 /* SmartApp.swift in Sources */,
 				5191CC7D0A597904F60A8AE6 /* String+Extensions.swift in Sources */,
-				D789AA3C2C7FD60800235A09 /* ___Template___Auxiliar.swift in Sources */,
 				14EFA1CF13CD527620FFAA7E /* UITestingManager.swift in Sources */,
 				E565E1F376E24DF11B60BEC3 /* V.CounterView.swift in Sources */,
 				4594C9FE7DDB94E54126EFB8 /* V.EventDetailsView.swift in Sources */,
@@ -3766,7 +3757,6 @@
 				2D973FE8C06CC5FC11D09E07 /* V.___Template___View.swift in Sources */,
 				26672B103F4CB6916944587B /* VC.MailViewControllerRepresentable.swift in Sources */,
 				C49DC6E7C8C067F39F9C4515 /* VM.EventDetailsViewModel.swift in Sources */,
-				D789AA372C7FD5BA00235A09 /* ___Template___AuxiliarAuthView.swift in Sources */,
 				DEFDE14A2237530634FBF4FB /* VM.EventLogDetailsViewModel.swift in Sources */,
 				1164BB8F3FD4952885AC6CB5 /* VM.EventsCalendarViewModel.swift in Sources */,
 				77992ECE56D5D8A00299DBF2 /* VM.EventsListViewModel.swift in Sources */,
@@ -3780,6 +3770,9 @@
 				908810C3FA7B3803614C60F4 /* VM.SplashViewModel.swift in Sources */,
 				46247690B5083039E79DD1B1 /* VM.___Template___ViewModel.swift in Sources */,
 				5C17068A3F2701559BCD105F /* View+Extensions.swift in Sources */,
+				2760ABF07FAAE1940AEA5BEA /* ___Template___Auxiliar.swift in Sources */,
+				F197B3D5E91AC5C6770AC6F5 /* ___Template___AuxiliarAuthView.swift in Sources */,
+				A44CC2E46167C5AE7713962F /* ___Template___CounterDisplayView.swift in Sources */,
 				43E808266DBB03EF3F5E4299 /* main.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -3838,7 +3831,6 @@
 				E35CDFD59B9A024AC69B8FB5 /* AppAndDeviceInfo.swift in Sources */,
 				77E50C1B37E9F201057BC71E /* AsyncAwait.swift in Sources */,
 				F8C824F9F9F54173278950F6 /* AsyncAwaitMainActor.swift in Sources */,
-				D789AA3F2C8065A400235A09 /* Common+UserDefaults.swift in Sources */,
 				FAA754A9158236F90DC89824 /* AuthManager.swift in Sources */,
 				5D99A160B6B483DD3824C341 /* BasicLocationManagerViewModel.swift in Sources */,
 				E423BFA0C9ADE36B0E700CD4 /* Binding+Extensions.swift in Sources */,
@@ -3871,6 +3863,7 @@
 				65C67292C30EBD340B72791A /* Color+Extensions.swift in Sources */,
 				0BF3F834BE566999FFD7A629 /* Combine+UIKit.swift in Sources */,
 				97CB839800C2C0B28E9DA888 /* CombineCompatibleProtocol.swift in Sources */,
+				F559FCC4FF2AC0248D490095 /* Common+UserDefaults.swift in Sources */,
 				22E642A7DDF24C795E48D2C2 /* Common.Constants.swift in Sources */,
 				322523D4DA04EF88FE6AE17B /* Common.swift in Sources */,
 				BD6F76E4DFBFD8B6732ABB1F /* CommonBaseCoreDataManager.swift in Sources */,
@@ -4128,10 +4121,6 @@
 			target = 79FC05CAC9CFE1C27A1C01EB /* Common */;
 			targetProxy = 44551AD6797F01595C51C430 /* PBXContainerItemProxy */;
 		};
-		A73D42C0C5D54E64950B9DE6 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			productRef = "TEMP_DB641C01-C711-4087-91ED-858D3DE25EF9" /* Reachability */;
-		};
 		A8494A995FF528043DBD8AB5 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = 74025BD27BD04A32438E1D1F /* Domain */;
@@ -4203,7 +4192,7 @@
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
 				INFOPLIST_FILE = Common/Sources/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -4223,7 +4212,7 @@
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				INFOPLIST_FILE = SmartAppUITests/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -4265,7 +4254,7 @@
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
 				INFOPLIST_FILE = Common/Sources/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -4357,7 +4346,7 @@
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
 				INFOPLIST_FILE = Core/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -4418,7 +4407,7 @@
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
 				INFOPLIST_FILE = Domain/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -4437,7 +4426,7 @@
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				INFOPLIST_FILE = SmartAppUnitTests/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -4446,7 +4435,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.ricardo.app.id.SmartAppUnitTests;
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Smart.Dev.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/Smart.Dev";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/SmartApp.app/SmartApp";
 			};
 			name = "QA Debug";
 		};
@@ -4479,7 +4468,7 @@
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				INFOPLIST_FILE = SmartAppUITests/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -4503,7 +4492,7 @@
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
 				INFOPLIST_FILE = DesignSystem/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -4534,7 +4523,7 @@
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
 				INFOPLIST_FILE = Domain/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -4625,7 +4614,7 @@
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
 				INFOPLIST_FILE = DesignSystem/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -4650,7 +4639,7 @@
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
 				INFOPLIST_FILE = Core/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -4681,7 +4670,7 @@
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
 				INFOPLIST_FILE = Domain/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -4706,7 +4695,7 @@
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
 				INFOPLIST_FILE = DevTools/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -4731,7 +4720,7 @@
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
 				INFOPLIST_FILE = DevTools/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -4809,7 +4798,7 @@
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				INFOPLIST_FILE = SmartAppUnitTests/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -4818,7 +4807,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.ricardo.app.id.SmartAppUnitTests;
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Smart.Dev.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/Smart.Dev";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/SmartApp.app/SmartApp";
 			};
 			name = "Dev Debug";
 		};
@@ -4833,7 +4822,7 @@
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
 				INFOPLIST_FILE = Common/Sources/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -4859,7 +4848,7 @@
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
 				INFOPLIST_FILE = DevTools/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -4878,7 +4867,7 @@
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				INFOPLIST_FILE = SmartAppUITests/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -4955,7 +4944,7 @@
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				INFOPLIST_FILE = SmartAppUITests/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -4979,7 +4968,7 @@
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				INFOPLIST_FILE = SmartAppUnitTests/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -4988,7 +4977,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.ricardo.app.id.SmartAppUnitTests;
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Smart.Dev.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/Smart.Dev";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/SmartApp.app/SmartApp";
 			};
 			name = "Dev Release";
 		};
@@ -5003,7 +4992,7 @@
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
 				INFOPLIST_FILE = DevTools/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -5028,7 +5017,7 @@
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
 				INFOPLIST_FILE = DevTools/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -5136,7 +5125,7 @@
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
 				INFOPLIST_FILE = DesignSystem/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -5173,7 +5162,7 @@
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				INFOPLIST_FILE = SmartAppUITests/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -5197,7 +5186,7 @@
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
 				INFOPLIST_FILE = Core/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -5222,7 +5211,7 @@
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				INFOPLIST_FILE = SmartAppUnitTests/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -5231,7 +5220,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.ricardo.app.id.SmartAppUnitTests;
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Smart.Dev.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/Smart.Dev";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/SmartApp.app/SmartApp";
 			};
 			name = "Production Debug";
 		};
@@ -5246,7 +5235,7 @@
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
 				INFOPLIST_FILE = Common/Sources/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -5272,7 +5261,7 @@
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
 				INFOPLIST_FILE = DevTools/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -5291,7 +5280,7 @@
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				INFOPLIST_FILE = SmartAppUnitTests/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -5300,7 +5289,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.ricardo.app.id.SmartAppUnitTests;
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Smart.Dev.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/Smart.Dev";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/SmartApp.app/SmartApp";
 			};
 			name = "Production Release";
 		};
@@ -5315,7 +5304,7 @@
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
 				INFOPLIST_FILE = DesignSystem/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -5340,7 +5329,7 @@
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
 				INFOPLIST_FILE = Common/Sources/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -5366,7 +5355,7 @@
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
 				INFOPLIST_FILE = Core/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -5391,7 +5380,7 @@
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
 				INFOPLIST_FILE = DesignSystem/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -5416,7 +5405,7 @@
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				INFOPLIST_FILE = SmartAppUITests/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -5458,7 +5447,7 @@
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
 				INFOPLIST_FILE = Core/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -5483,7 +5472,7 @@
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
 				INFOPLIST_FILE = DesignSystem/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -5508,7 +5497,7 @@
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
 				INFOPLIST_FILE = Domain/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -5599,7 +5588,7 @@
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
 				INFOPLIST_FILE = Core/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -5624,7 +5613,7 @@
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
 				INFOPLIST_FILE = Domain/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -5649,7 +5638,7 @@
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
 				INFOPLIST_FILE = Common/Sources/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -5681,7 +5670,7 @@
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
 				INFOPLIST_FILE = Domain/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -5706,7 +5695,7 @@
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				INFOPLIST_FILE = SmartAppUnitTests/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -5715,7 +5704,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.ricardo.app.id.SmartAppUnitTests;
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Smart.Dev.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/Smart.Dev";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/SmartApp.app/SmartApp";
 			};
 			name = "QA Release";
 		};
@@ -5868,22 +5857,6 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
-		4D571D76266814166CBCAEAD /* XCRemoteSwiftPackageReference "ViewInspector" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/nalexn/ViewInspector";
-			requirement = {
-				kind = revision;
-				revision = 7b1732802ffe30e6a67754bda6c7819e5cb0eb70;
-			};
-		};
-		64F28F54E21D66478C2F3452 /* XCRemoteSwiftPackageReference "Reachability" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/ashleymills/Reachability.swift";
-			requirement = {
-				kind = revision;
-				revision = 7b7018a69c84ea94ac2a38dff626e16ea81d1db9;
-			};
-		};
 		B534D94EBDEC0AF4838E6834 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/firebase/firebase-ios-sdk.git";
@@ -5938,30 +5911,15 @@
 			package = B534D94EBDEC0AF4838E6834 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
 			productName = FirebaseAppCheck;
 		};
-		9FE74237DEDFD3CC1B72A9C4 /* ViewInspector */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 4D571D76266814166CBCAEAD /* XCRemoteSwiftPackageReference "ViewInspector" */;
-			productName = ViewInspector;
-		};
 		E1E66BBD8457F4F5B119276C /* FirebaseDatabase */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = B534D94EBDEC0AF4838E6834 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
 			productName = FirebaseDatabase;
 		};
-		E70E5D2A1A8E1322960EE6A8 /* ViewInspector */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 4D571D76266814166CBCAEAD /* XCRemoteSwiftPackageReference "ViewInspector" */;
-			productName = ViewInspector;
-		};
 		F15CDB6FE4EFD5E93C107FB5 /* FirebaseMessaging */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = B534D94EBDEC0AF4838E6834 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
 			productName = FirebaseMessaging;
-		};
-		"TEMP_DB641C01-C711-4087-91ED-858D3DE25EF9" /* Reachability */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 64F28F54E21D66478C2F3452 /* XCRemoteSwiftPackageReference "Reachability" */;
-			productName = Reachability;
 		};
 /* End XCSwiftPackageProductDependency section */
 

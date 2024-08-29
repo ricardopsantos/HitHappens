@@ -156,6 +156,7 @@ fileprivate extension FavoriteEventsViewModel {
 //
 
 #if canImport(SwiftUI) && DEBUG
+@available(iOS 17, *)
 #Preview {
     FavoriteEventsViewCoordinator(haveNavigationStack: true)
         .environmentObject(AppStateViewModel.defaultForPreviews)

@@ -136,6 +136,7 @@ fileprivate extension LoginViewModel {
 //
 
 #if canImport(SwiftUI) && DEBUG
+@available(iOS 17, *)
 #Preview {
     LoginViewCoordinator()
         .environmentObject(AppStateViewModel.defaultForPreviews)

@@ -303,7 +303,7 @@ private struct ColorsCache {
         VStack(spacing: 1) {
             ForEach(ColorSemantic.allCases.filter { $0 != .clear }, id: \.self) { style in
                 Text("\(style)")
-                    .foregroundStyle(.black)
+                    .foregroundColor(.black)
                     .frame(maxWidth: .infinity)
                 SwiftUIUtils.FixedVerticalSpacer(height: 5)
             }
@@ -311,7 +311,7 @@ private struct ColorsCache {
         VStack(spacing: 1) {
             ForEach(ColorSemantic.allCases.filter { $0 != .clear }, id: \.self) { style in
                 Text("\(style)")
-                    .foregroundStyle(.black)
+                    .foregroundColor(.black)
                     .frame(maxWidth: .infinity)
                     .background(style.color(.light))
                 SwiftUIUtils.FixedVerticalSpacer(height: 5)
@@ -320,7 +320,7 @@ private struct ColorsCache {
         VStack(spacing: 1) {
             ForEach(ColorSemantic.allCases.filter { $0 != .clear }, id: \.self) { style in
                 Text("\(style)")
-                    .foregroundStyle(.white)
+                    .foregroundColor(.white)
                     .frame(maxWidth: .infinity)
                     .background(style.color(.dark))
                 SwiftUIUtils.FixedVerticalSpacer(height: 5)
