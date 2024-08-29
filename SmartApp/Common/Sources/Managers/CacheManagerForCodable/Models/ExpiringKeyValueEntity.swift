@@ -85,14 +85,9 @@ public extension Common.ExpiringKeyValueEntity {
         case dataAES
     }
 
-    static var composedKeyPrefix: String {
-        "\(Common.ExpiringKeyValueEntity.self)"
-    }
-
     static func composedKey(_ key: String, _ keyParams: [any Hashable]) -> String {
-        // let keyParams2 = keyParams.map { $0.hashValue.description }
         let keyParams2 = keyParams.map { "\($0)".sha1 }
-        return "\(Self.composedKeyPrefix)_\(key)_[" + keyParams2.joined(separator: ",") + "]"
+        return "\(Common.InternalUserDefaults.Keys.expiringKeyValueEntity.defaultsKey)_\(key)_[" + keyParams2.joined(separator: ",") + "]"
     }
 
     var isExpired: Bool { valueData == nil }

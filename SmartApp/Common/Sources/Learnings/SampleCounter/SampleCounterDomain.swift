@@ -74,7 +74,7 @@ public enum SampleCounterShared {
         onTap: @autoclosure @escaping () -> Void) -> some View {
         VStack {
             Divider()
-            SwiftUIUtils.RenderedView("\(Self.self).\(#function)")
+            SwiftUIUtils.RenderedView("\(Self.self).\(#function)", visible: true)
             Text(title)
                 .font(.body)
             Divider()

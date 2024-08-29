@@ -15,10 +15,13 @@ public extension UITestingManager {
         case shouldDisableAnimations
         case shouldResetAllPreferences
         case isAuthenticated
+        case firebaseDisabled
 
         var enabled: Bool {
             switch self {
             case .onUITesting:
+                return UITestingManager.enabled(option: self)
+            case .firebaseDisabled:
                 return UITestingManager.enabled(option: self)
             default:
                 guard UITestingManager.enabled(option: .onUITesting) else {
@@ -31,7 +34,7 @@ public extension UITestingManager {
 }
 
 public enum UITestingManager {
-    private static func enabled(option: UITestingManager.Options) -> Bool {
+    static func enabled(option: UITestingManager.Options) -> Bool {
         CommandLine.arguments.contains(option.rawValue)
     }
 
@@ -53,7 +56,6 @@ public enum UITestingManager {
         if enabled(option: .isAuthenticated) {
             var nonSecureAppPreferences = DependenciesManager.Repository.nonSecureAppPreferences
             nonSecureAppPreferences.isAuthenticated = true
-            nonSecureAppPreferences.isPrivacyPolicyAccepted = true
             nonSecureAppPreferences.isOnboardingCompleted = true
         }
     }

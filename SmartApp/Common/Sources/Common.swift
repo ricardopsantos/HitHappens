@@ -14,9 +14,4 @@ public extension Common {
     static var bundleIdentifier: String {
         Bundle(for: CommonBundleFinder.self).bundleIdentifier ?? ""
     }
-
-    static var userDefaults: UserDefaults? {
-        UserDefaults(suiteName: "\(Common.bundleIdentifier)")
-        // .standard
-    }
 }

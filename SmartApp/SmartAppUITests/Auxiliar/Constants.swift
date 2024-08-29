@@ -42,6 +42,7 @@ enum UITestingOptions: String {
     case shouldDisableAnimations
     case shouldResetAllPreferences
     case isAuthenticated
+    case firebaseDisabled
 }
 
 //

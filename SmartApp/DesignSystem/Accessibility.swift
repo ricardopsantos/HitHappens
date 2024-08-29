@@ -21,6 +21,7 @@ public enum Accessibility: String, CaseIterable {
     case saveButton
     case fwdButton
     case backButton
+    case addButton
     case confirmButton
     case cancelButton
 

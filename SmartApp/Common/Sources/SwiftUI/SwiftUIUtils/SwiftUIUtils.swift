@@ -32,6 +32,7 @@ public enum SwiftUIUtils {
         public let name: String
         public let id: String
         public let date: Date
+        public let visible: Bool
         var identifier: String {
             if !id.trim.isEmpty {
                 return id
@@ -44,10 +45,16 @@ public enum SwiftUIUtils {
             renderedViewCounter[identifier] ?? 1
         }
 
-        public init(_ name: String, date: Date = Date(), id customId: String = "") {
+        public init(
+            _ name: String,
+            date: Date = Date(),
+            id customId: String = "",
+            visible: Bool
+        ) {
             self.id = customId
             self.name = name
             self.date = date
+            self.visible = visible
             if let renderedViewCounterValue = renderedViewCounter[identifier] {
                 renderedViewCounter[identifier] = renderedViewCounterValue + 1
             } else {
@@ -56,12 +63,15 @@ public enum SwiftUIUtils {
         }
 
         public var body: some View {
-            Text("Redraw[\(counter)]: \(name) | \(identifier.sha1.prefix(10))")
-                .padding(3)
-                .background(Color.red.opacity(0.25))
-                .font(.caption2)
-                .opacity(0.25)
-            // .debugBordersDefault()
+            if visible {
+                Text("Redraw[\(counter)]: \(name) | \(identifier.sha1.prefix(10))")
+                    .padding(3)
+                    .background(Color.red.opacity(0.25))
+                    .font(.caption2)
+                    .opacity(0.25)
+            } else {
+                EmptyView()
+            }
         }
     }
 
@@ -128,7 +138,7 @@ fileprivate extension Common_Preview {
             ZStack {
                 SwiftUIUtils.VisualEffectView(effect: UIBlurEffect(style: .extraLight))
                 VStack {
-                    SwiftUIUtils.RenderedView("\(Self.self)")
+                    SwiftUIUtils.RenderedView("\(Self.self)", visible: true)
                     SwiftUIUtils.FixedHorizontalSpacer(width: 50).background(Color.red)
                     SwiftUIUtils.FixedVerticalSpacer(height: 50).background(Color.green)
                     Spacer()

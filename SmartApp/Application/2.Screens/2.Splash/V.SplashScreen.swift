@@ -42,9 +42,7 @@ struct SplashViewCoordinator: View, ViewCoordinatorProtocol {
             )
             SplashView(dependencies: dependencies)
         default:
-            EmptyView().onAppear(perform: {
-                DevTools.assert(false, message: "Not predicted \(screen)")
-            })
+            NotImplementedView(screen: screen)
         }
     }
 }

@@ -16,6 +16,7 @@ import Domain
 import Core
 
 final class ___Template___ViewModelTests: BaseViewModelsTests {
+    let enabled = true
     private var viewModel: ___Template___ViewModel?
 
     override func tearDown() {
@@ -43,6 +44,10 @@ extension ___Template___ViewModelTests {
     // Test to check if the template view model loads successfully
 
     func testA1_testLoad() async throws {
+        guard enabled else {
+            XCTAssert(true)
+            return
+        }
         _ = await MainActor.run {
             expect(self.viewModel).notTo(beNil()) // Assert that the template view model is not nil
         }
@@ -50,6 +55,10 @@ extension ___Template___ViewModelTests {
 
     // Test to verify the increment action in the template view model
     @MainActor func testA2_incrementAction() {
+        guard enabled else {
+            XCTAssert(true)
+            return
+        }
         // Assert initial counter value is 0
         expect(self.viewModel?.counter == 0).toEventually(beTrue(), timeout: .seconds(timeout))
 

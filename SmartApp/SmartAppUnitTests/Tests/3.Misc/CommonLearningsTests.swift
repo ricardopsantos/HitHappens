@@ -28,7 +28,10 @@ final class CommonLearningsTests: XCTestCase {
     }
 
     func testListItems() throws {
-        guard enabled else { return }
+        guard enabled else {
+            XCTAssert(true)
+            return
+        }
         let view = CommonLearnings.ListTechniques.SimpleListView()
         let list = try view.inspect().list()
         XCTAssert(list.count == CommonLearnings.ListTechniques.items1.count)
@@ -36,7 +39,10 @@ final class CommonLearningsTests: XCTestCase {
     }
 
     func testSwipeAction() throws {
-        guard enabled else { return }
+        guard enabled else {
+            XCTAssert(true)
+            return
+        }
         let view = CommonLearnings.ListTechniques.ReorderableListView()
         let indexPath = IndexSet(integer: 0)
         view.move(from: indexPath, to: 1)
@@ -44,7 +50,10 @@ final class CommonLearningsTests: XCTestCase {
     }
 
     func testText() throws {
-        guard enabled else { return }
+        guard enabled else {
+            XCTAssert(true)
+            return
+        }
         let sut = Text("Completed by \(72.51, specifier: "%.1f")%").font(.caption)
         let string = try sut.inspect().text().string(locale: Locale(identifier: "es"))
         XCTAssert(string == "Completado por 72,5%")

@@ -16,6 +16,7 @@ import Domain
 import Core
 
 final class LoginViewModelTests: BaseViewModelsTests {
+    let enabled = true
     private var viewModel: LoginViewModel?
 
     override func tearDown() {
@@ -49,12 +50,20 @@ final class LoginViewModelTests: BaseViewModelsTests {
 extension LoginViewModelTests {
     // Test to check if the EditUserDetails view model loads successfully
     func testA1_testLoad() async throws {
+        guard enabled else {
+            XCTAssert(true)
+            return
+        }
         _ = await MainActor.run {
             expect(self.viewModel).notTo(beNil()) // Assert that the EditUserDetails view model is not nil
         }
     }
 
     @MainActor func testA1_invalidEmail() {
+        guard enabled else {
+            XCTAssert(true)
+            return
+        }
         guard let viewModel = viewModel else {
             return
         }
@@ -71,6 +80,10 @@ extension LoginViewModelTests {
     }
 
     @MainActor func testA2_validForm() {
+        guard enabled else {
+            XCTAssert(true)
+            return
+        }
         guard let viewModel = viewModel else {
             return
         }
@@ -81,6 +94,10 @@ extension LoginViewModelTests {
     }
 
     @MainActor func test_invalidForm1() {
+        guard enabled else {
+            XCTAssert(true)
+            return
+        }
         guard let viewModel = viewModel else {
             return
         }
@@ -91,6 +108,10 @@ extension LoginViewModelTests {
     }
 
     @MainActor func test_invalidForm2() {
+        guard enabled else {
+            XCTAssert(true)
+            return
+        }
         guard let viewModel = viewModel else {
             return
         }

@@ -24,7 +24,7 @@ public extension CommonCoreData.Utils {
         }
         container.loadPersistentStores { _, error in
             if let error {
-                Common_Logs.error("Log_\(Self.logNumber += 1): Unresolved error \(error), \(error.localizedDescription)")
+                Common_Logs.error("Unresolved error \(error), \(error.localizedDescription)")
             } else {
                 CommonCoreData.Utils.printDBReport(
                     dbName: dbName,
@@ -57,10 +57,10 @@ public extension CommonCoreData.Utils {
                       • tables: \(tables)
                       • size: \(fileSizeInMB) MB
                     """
-                    Common_Logs.debug("Log_\(Self.logNumber += 1): \(report)")
+                    Common_Logs.debug("\(report)")
                 }
             } catch {
-                Common_Logs.error("Log_\(Self.logNumber += 1): \(error.localizedDescription)")
+                Common_Logs.error("\(error.localizedDescription)")
             }
         }
     }

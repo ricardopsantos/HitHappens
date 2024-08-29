@@ -21,7 +21,7 @@ public enum AppScreen: Hashable, Identifiable, Sendable {
     case map
     case favoriteEvents
     case eventsList
-    case eventDetails(model: EventDetailsModel)
+    case eventDetails(model: EventDetailsModel?)
     case eventLogDetails(model: EventLogDetailsModel)
     //
     case templateWith(model: ___Template___Model)
@@ -29,7 +29,6 @@ public enum AppScreen: Hashable, Identifiable, Sendable {
     case login
     case onboarding
     case settings
-    case termsAndConditions
     public var id: String {
         String(describing: self)
     }

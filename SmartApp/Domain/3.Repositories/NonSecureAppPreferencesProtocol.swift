@@ -20,7 +20,6 @@ public enum NonSecureAppPreferencesKey: String, CaseIterable, Equatable {
     case userName
     case userPIN
     case isAuthenticated
-    case isPrivacyPolicyAccepted
     case isOnboardingCompleted
     case selectedAppearance
 }
@@ -33,9 +32,6 @@ public protocol NonSecureAppPreferencesProtocol {
 
     /// A Boolean value indicating whether the user is authenticated.
     var isAuthenticated: Bool { get set }
-
-    /// A Boolean value indicating whether the user has accepted the privacy policy.
-    var isPrivacyPolicyAccepted: Bool { get set }
 
     /// A Boolean value indicating whether the onboarding process is completed.
     var isOnboardingCompleted: Bool { get set }

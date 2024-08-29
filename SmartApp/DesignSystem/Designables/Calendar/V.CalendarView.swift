@@ -52,7 +52,6 @@ public extension CalendarView {
     }
 }
 
-
 public struct DayView: View {
     @Environment(\.colorScheme) var colorScheme
     private let day: CalendarView.DayModel
@@ -100,7 +99,7 @@ public struct DayView: View {
         .frame(height: cellHeight)
         .frame(maxWidth: .infinity)
     }
-    
+
     @ViewBuilder
     var eventsView: some View {
         if day.events.isEmpty {
@@ -108,16 +107,18 @@ public struct DayView: View {
         } else {
             VStack(spacing: 0) {
                 Spacer()
-                LinearGradient(gradient: Gradient(colors: day.events),
-                               startPoint: .leading,
-                               endPoint: .trailing)
+                LinearGradient(
+                    gradient: Gradient(colors: day.events),
+                    startPoint: .leading,
+                    endPoint: .trailing
+                )
                 .frame(height: 6)
                 .cornerRadius2(3)
                 .opacity(0.5)
             }
         }
     }
-    
+
     var dayView: some View {
         Text("\(unitDay)")
             .fontSemantic(CalendarView.Config.daysFont)
@@ -237,57 +238,57 @@ public struct CalendarMonthlyView: View {
     }
 
     public var body: some View {
-         let days = generateDays(for: currentDate)
-         VStack(spacing: 0) {
-             ForEach(0..<6) { row in
-                 HStack(spacing: SizeNames.defaultMarginSmall) {
-                     let allDays = (0..<7).map({ days[row * 7 + $0] })
-                     let someDaysAreCurrentMonth = !allDays.filter({ $0.isCurrentMonth }).isEmpty
-                     if someDaysAreCurrentMonth {
-                         ForEach(0..<7) { col in
-                             let day = days[row * 7 + col]
-                             DayView(day: day, currentDate: $currentDate, selectedDay: $selectedDay)
-                         }
-                     } else {
-                         // Don't display full rows that have only days from other month
-                         EmptyView()
-                     }
-                 }
-                 SwiftUIUtils.FixedVerticalSpacer(height: SizeNames.defaultMarginSmall)
-             }
-         }
-     }
+        let days = generateDays(for: currentDate)
+        VStack(spacing: 0) {
+            ForEach(0..<6) { row in
+                HStack(spacing: SizeNames.defaultMarginSmall) {
+                    let allDays = (0..<7).map { days[row * 7 + $0] }
+                    let someDaysAreCurrentMonth = !allDays.filter(\.isCurrentMonth).isEmpty
+                    if someDaysAreCurrentMonth {
+                        ForEach(0..<7) { col in
+                            let day = days[row * 7 + col]
+                            DayView(day: day, currentDate: $currentDate, selectedDay: $selectedDay)
+                        }
+                    } else {
+                        // Don't display full rows that have only days from other month
+                        EmptyView()
+                    }
+                }
+                SwiftUIUtils.FixedVerticalSpacer(height: SizeNames.defaultMarginSmall)
+            }
+        }
+    }
 
     func generateDays(for date: Date) -> [CalendarView.DayModel] {
-            let calendar = Calendar.current
-            var days = [CalendarView.DayModel]()
+        let calendar = Calendar.current
+        var days = [CalendarView.DayModel]()
 
-            guard let monthInterval = calendar.dateInterval(of: .month, for: date) else { return [] }
-            let firstDayOfMonth = monthInterval.start
-            let firstWeekdayOfMonth = calendar.component(.weekday, from: firstDayOfMonth)
+        guard let monthInterval = calendar.dateInterval(of: .month, for: date) else { return [] }
+        let firstDayOfMonth = monthInterval.start
+        let firstWeekdayOfMonth = calendar.component(.weekday, from: firstDayOfMonth)
 
-            let daysBefore = (firstWeekdayOfMonth + 5) % 7 // Days before the start of the month, adjusted for Monday
+        let daysBefore = (firstWeekdayOfMonth + 5) % 7 // Days before the start of the month, adjusted for Monday
 
-            for i in 0..<42 {
-                let dayOffset = i - daysBefore
-                let dayDate = calendar.date(byAdding: .day, value: dayOffset, to: firstDayOfMonth)!
-                let isCurrentMonth = calendar.isDate(dayDate, equalTo: date, toGranularity: .month)
-                let isPrevMonth = dayOffset < 0
-                let isNextMonth = !isCurrentMonth && !isPrevMonth
+        for i in 0..<42 {
+            let dayOffset = i - daysBefore
+            let dayDate = calendar.date(byAdding: .day, value: dayOffset, to: firstDayOfMonth)!
+            let isCurrentMonth = calendar.isDate(dayDate, equalTo: date, toGranularity: .month)
+            let isPrevMonth = dayOffset < 0
+            let isNextMonth = !isCurrentMonth && !isPrevMonth
 
-                let associated = eventsForDay.filter({ $0.key.isSame(day: dayDate) }).first?.value ?? []
-                // Get the events for this date from the dateDic dictionary
-                days.append(.init(
-                    date: dayDate,
-                    isCurrentMonth: isCurrentMonth,
-                    isPrevMonth: isPrevMonth,
-                    isNextMonth: isNextMonth,
-                    events: associated
-                ))
-            }
-
-            return days
+            let associated = eventsForDay.filter { $0.key.isSame(day: dayDate) }.first?.value ?? []
+            // Get the events for this date from the dateDic dictionary
+            days.append(.init(
+                date: dayDate,
+                isCurrentMonth: isCurrentMonth,
+                isPrevMonth: isPrevMonth,
+                isNextMonth: isNextMonth,
+                events: associated
+            ))
         }
+
+        return days
+    }
 }
 
 public struct CalendarView: View {
@@ -298,18 +299,18 @@ public struct CalendarView: View {
     private let onSelectedDay: (Date?) -> Void
     private let onSelectedMonth: (Date) -> Void
     public init(
-         currentDate: Binding<Date>,
-         selectedDay: Binding<Date?>,
-         eventsForDay: Binding<[Date: [Color]]>,
-         onSelectedDay: @escaping (Date?) -> Void,
-         onSelectedMonth: @escaping (Date) -> Void
-     ) {
-         self._currentDate = currentDate
-         self._selectedDay = selectedDay
-         self._eventsForDay = eventsForDay
-         self.onSelectedDay = onSelectedDay
-         self.onSelectedMonth = onSelectedMonth
-     }
+        currentDate: Binding<Date>,
+        selectedDay: Binding<Date?>,
+        eventsForDay: Binding<[Date: [Color]]>,
+        onSelectedDay: @escaping (Date?) -> Void,
+        onSelectedMonth: @escaping (Date) -> Void
+    ) {
+        self._currentDate = currentDate
+        self._selectedDay = selectedDay
+        self._eventsForDay = eventsForDay
+        self.onSelectedDay = onSelectedDay
+        self.onSelectedMonth = onSelectedMonth
+    }
 
     public var body: some View {
         VStack(spacing: SizeNames.defaultMarginSmall) {
@@ -317,12 +318,12 @@ public struct CalendarView: View {
             DaysOfWeekView()
             CalendarMonthlyView(currentDate: $currentDate, selectedDay: $selectedDay, eventsForDay: $eventsForDay)
             Spacer()
-        }.onChange(of: currentDate) { new in
-            DevTools.Log.debug(.valueChanged("\(Self.self)", "currentDate", new.description), .view)
-            onSelectedMonth(new)
-        }.onChange(of: selectedDay) { new in
-            DevTools.Log.debug(.valueChanged("\(Self.self)", "selectedDay", new?.description), .view)
-            onSelectedDay(new)
+        }.onChange(of: currentDate) { value in
+            DevTools.Log.debug(.valueChanged("\(Self.self)", "currentDate", "\(value)"), .view)
+            onSelectedMonth(value)
+        }.onChange(of: selectedDay) { value in
+            DevTools.Log.debug(.valueChanged("\(Self.self)", "selectedDay", "\(value)"), .view)
+            onSelectedDay(value)
         }
     }
 }
@@ -335,13 +336,13 @@ public struct CalendarView: View {
 #Preview {
     CalendarView(
         currentDate: .constant(Date()),
-        selectedDay: .constant(Date()), 
+        selectedDay: .constant(Date()),
         eventsForDay: .constant(
             [
                 Date().add(days: -12): [.red, .blue, .green],
                 Date().add(days: -11): [.red, .blue],
                 Date().add(days: -10): [.red],
-             Date(): [.red]
+                Date(): [.red]
             ]
         ),
         onSelectedDay: { _ in },

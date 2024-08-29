@@ -16,6 +16,7 @@ import Core
 import Common
 
 final class DataUSAServiceTests: XCTestCase {
+    let enabled = true
     lazy var service: DataUSAServiceProtocol = { DependenciesManager.Services.dataUSAService }()
     override func setUp() {
         super.setUp()
@@ -32,11 +33,19 @@ final class DataUSAServiceTests: XCTestCase {
 extension DataUSAServiceTests {
     // Test to verify that PopulationStateDataResponse mock
     func test_mockPopulationStateData() async {
+        guard enabled else {
+            XCTAssert(true)
+            return
+        }
         XCTAssertTrue(ModelDto.PopulationStateDataResponse.mockRegularLoad != nil, "mock data should be loaded successfully.")
     }
 
     // Test to verify that PopulationStateData information can be fetched
     func test_requestPopulationStateData() async {
+        guard enabled else {
+            XCTAssert(true)
+            return
+        }
         do {
             // Attempt to fetch PopulationNationData
             loadedAny = try await service.requestPopulationStateData(.init(), cachePolicy: .load)
@@ -51,11 +60,19 @@ extension DataUSAServiceTests {
 
     // Test to verify that PopulationNationDataResponse mock
     func test_mockPopulationNationDataResponse() async {
+        guard enabled else {
+            XCTAssert(true)
+            return
+        }
         XCTAssertTrue(ModelDto.PopulationNationDataResponse.mockRegularLoad != nil, "PopulationNationDataResponse.mock data should be loaded successfully.")
     }
 
     // Test to verify that PopulationNationDat information can be fetched
     func test_requestPopulationNationData() async {
+        guard enabled else {
+            XCTAssert(true)
+            return
+        }
         do {
             // Attempt to fetch PopulationNationData
             loadedAny = try await service.requestPopulationNationData(.init(), cachePolicy: .load)
@@ -75,6 +92,10 @@ extension DataUSAServiceTests {
 
 extension DataUSAServiceTests {
     func test_requestPopulationStateData_Performance_Load() throws {
+        guard enabled else {
+            XCTAssert(true)
+            return
+        }
         let cachePolicy: ServiceCachePolicy = .load
         let expectedTime: Double = 0.498
         let count = 10
@@ -99,6 +120,10 @@ extension DataUSAServiceTests {
     }
 
     func test_requestPopulationStateData_Performance_CacheElseLoad() throws {
+        guard enabled else {
+            XCTAssert(true)
+            return
+        }
         let cachePolicy: ServiceCachePolicy = .cacheElseLoad
         let expectedTime: Double = 0.009
         let count = 10

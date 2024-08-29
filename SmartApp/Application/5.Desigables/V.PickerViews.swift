@@ -11,6 +11,7 @@ import Domain
 import Core
 import DesignSystem
 import Common
+import DevTools
 
 /// Picker with closure (example)
 public struct CategoryPickerView: View {
@@ -33,6 +34,7 @@ public struct CategoryPickerView: View {
                 if let value = HitHappensEventCategory.allCases.filter({
                     $0.localized == newValue
                 }).first {
+                    DevTools.Log.debug(.valueChanged("\(Self.self)", "selectedOption", "\(value)"), .view)
                     onChange(value)
                 }
             }
@@ -60,25 +62,10 @@ public struct SoundPickerView: View {
                 if let value = SoundEffect.allCases.filter({
                     $0.name == newValue
                 }).first {
+                    DevTools.Log.debug(.valueChanged("\(Self.self)", "selectedOption", "\(value)"), .view)
                     onChange(value)
                 }
             }
-    }
-}
-
-public struct CountryPickerView: View {
-    @Environment(\.colorScheme) var colorScheme
-    @Binding var selected: String
-    public init(
-        selected: Binding<String>) {
-        self._selected = selected
-    }
-
-    public var body: some View {
-        DefaultPickerView(
-            title: "Country",
-            options: AppConstants.countriesOptions,
-            selectedOption: $selected)
     }
 }
 
@@ -126,8 +113,9 @@ public struct AppearancePickerView: View {
                 Text("Dark".localizedMissing).tag(Common.InterfaceStyle.dark.rawValue)
             }
             .pickerStyle(SegmentedPickerStyle())
-            .onChange(of: selected) { newValue in
-                InterfaceStyleManager.current = .init(rawValue: newValue)
+            .onChange(of: selected) { value in
+                DevTools.Log.debug(.valueChanged("\(Self.self)", "selectedOption", "\(value)"), .view)
+                InterfaceStyleManager.current = .init(rawValue: value)
             }
         }
         .foregroundColor(.labelPrimary)
@@ -141,8 +129,6 @@ public struct AppearancePickerView: View {
 #if canImport(SwiftUI) && DEBUG
 #Preview {
     VStack {
-        CountryPickerView(
-            selected: .constant("Portugal"))
         GenderPickerView(selected: .constant(.female))
         AppearancePickerView(selected: .constant(.dark))
         CategoryPickerView(

@@ -28,6 +28,8 @@ public extension Common {
             let appState = UIApplication.shared.applicationState
             return appState == .background || appState == .inactive
         }
+
+
     }
 
     struct DeviceInfo {

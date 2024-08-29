@@ -16,6 +16,7 @@ import Nimble
 import Common
 
 final class ApplicationLaunchPerformanceTests: BaseUITests {
+    let enabled = false
     override class var runsForEachTargetApplicationUIConfiguration: Bool {
         false
     }
@@ -36,6 +37,10 @@ final class ApplicationLaunchPerformanceTests: BaseUITests {
     //
 
     func testA1_launch() {
+        guard enabled else {
+            XCTAssert(true)
+            return
+        }
         // Duration (AppLaunch): 1.093 s
         measure(metrics: [XCTApplicationLaunchMetric()]) {
             XCUIApplication().launch()

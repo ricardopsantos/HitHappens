@@ -9,6 +9,7 @@ import SwiftUI
 //
 import Common
 import DevTools
+import DesignSystem
 
 //
 // MARK: - Coordinator
@@ -35,15 +36,12 @@ struct RootViewCoordinator: View, ViewCoordinatorProtocol {
             RootView(dependencies: .init(
                 model: .init(
                     isAppStartCompleted: false,
-                    isTermsAndConditionsAccepted: nonSecureAppPreferences.isPrivacyPolicyAccepted,
                     isOnboardingCompleted: nonSecureAppPreferences.isOnboardingCompleted
                 ),
                 nonSecureAppPreferences: configuration.nonSecureAppPreferences
             ))
         default:
-            EmptyView().opacity(0).onAppear(perform: {
-                DevTools.assert(false, message: "Not predicted \(screen)")
-            })
+            NotImplementedView(screen: screen)
         }
     }
 }
@@ -63,18 +61,7 @@ struct RootView: View, ViewProtocol {
     // MARK: - Usage/Auxiliar Attributes
     @Environment(\.dismiss) var dismiss
     @EnvironmentObject private var authenticationViewModel: AuthenticationViewModel
-    @State private var root: AppScreen = .splash {
-        didSet {
-            DevTools.Log.debug(
-                .valueChanged(
-                    "\(Self.self)",
-                    "root",
-                    "\(root)"
-                ),
-                .business
-            )
-        }
-    }
+    @State private var root: AppScreen = .splash
 
     // MARK: - Body & View
     var body: some View {
@@ -91,7 +78,6 @@ struct RootView: View, ViewProtocol {
         buildScreen(root)
             .onChange(of: viewModel.isAppStartCompleted) { _ in updateRoot() }
             .onChange(of: viewModel.preferencesChanged) { _ in updateRoot() }
-            .onChange(of: viewModel.isTermsAndConditionsAccepted) { _ in updateRoot() }
             .onChange(of: viewModel.isOnboardingCompleted) { _ in updateRoot() }
             .onChange(of: authenticationViewModel.isAuthenticated) { _ in updateRoot() }
     }
@@ -107,14 +93,9 @@ struct RootView: View, ViewProtocol {
             MainTabViewCoordinator()
         case .login:
             LoginViewCoordinator()
-        case .termsAndConditions:
-            TermsAndConditionsScreen(onCompletion: { _ in viewModel.send(action: .termsAndConditionsAccepted) })
         case .onboarding:
             OnboardingScreen(
-                onCompletion: { _ in viewModel.send(action: .onboardingCompleted) },
-                onBackPressed: {
-                    viewModel.send(action: .termsAndConditionsNotAccepted)
-                }
+                onCompletion: { _ in viewModel.send(action: .onboardingCompleted) }
             )
         default:
             Text("Not predicted \(root)")
@@ -132,22 +113,15 @@ fileprivate extension RootView {}
 //
 fileprivate extension RootView {
     func updateRoot() {
-        switch selectedApp() {
-        case .hitHappens:
-            root = .mainApp
-        case .template:
-            if !viewModel.isAppStartCompleted {
-                root = .splash
-            } else if !authenticationViewModel.isAuthenticated {
-                root = .login
-            } else if authenticationViewModel.isAuthenticated {
-                if !viewModel.isTermsAndConditionsAccepted {
-                    root = .termsAndConditions
-                } else if !viewModel.isOnboardingCompleted {
-                    root = .onboarding
-                } else {
-                    root = .mainApp
-                }
+        if !viewModel.isAppStartCompleted {
+            root = .splash
+        } else if !authenticationViewModel.isAuthenticated {
+            root = .login
+        } else if authenticationViewModel.isAuthenticated {
+            if !viewModel.isOnboardingCompleted {
+                root = .onboarding
+            } else {
+                root = .mainApp
             }
         }
     }

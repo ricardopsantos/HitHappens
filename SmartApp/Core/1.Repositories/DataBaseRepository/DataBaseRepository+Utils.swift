@@ -165,8 +165,8 @@ public extension DataBaseRepository {
 
             let cinema: Model.TrackedEntity = .init(
                 id: UUID().uuidString,
-                name: "Cinema",
-                info: "A list of movies I have saw",
+                name: "Cinema \(Date().year)",
+                info: "The number of movies I have saw at Cinema this eyear",
                 archived: false,
                 favorite: false,
                 locationRelevant: true,
@@ -251,8 +251,8 @@ public extension DataBaseRepository {
 
             let concerts: Model.TrackedEntity = .init(
                 id: UUID().uuidString,
-                name: "Concerts",
-                info: "A list of concerts I have saw",
+                name: "Concerts \(Date().year)",
+                info: "The number of concerts I have saw this year",
                 archived: false,
                 favorite: true,
                 locationRelevant: true,
@@ -288,7 +288,7 @@ public extension DataBaseRepository {
             let books: Model.TrackedEntity = .init(
                 id: UUID().uuidString,
                 name: "Books",
-                info: "A list of books I have completed",
+                info: "The number of books I have completed",
                 archived: false,
                 favorite: true,
                 locationRelevant: false,

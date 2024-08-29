@@ -16,7 +16,7 @@ struct DigitTransitionView: View {
     @State private var imageName: String
     @State private var timer: Timer?
     @Binding private var digit: Int
-    private let animated: Bool = Common_Utils.false
+    private let animated: Bool = Common_Utils.true
     private let onTapGesture: () -> Void
     private var images: [String] {
         let number = $digit.wrappedValue
@@ -149,7 +149,11 @@ struct CounterView: View {
 
     public var bodyV2: some View {
         VStack(spacing: 0) {
-            SwiftUIUtils.RenderedView("\(Self.self).\(#function)", id: model.id)
+            SwiftUIUtils.RenderedView(
+                "\(Self.self).\(#function)",
+                id: model.id,
+                visible: AppFeaturesManager.Debug.canDisplayRenderedView
+            )
             NumberTransitionView(
                 digitIndex0: $digitIndex0,
                 digitIndex1: $digitIndex1,
@@ -183,7 +187,11 @@ struct CounterView: View {
 
     public var bodyV1: some View {
         VStack(spacing: 0) {
-            SwiftUIUtils.RenderedView("\(Self.self).\(#function)", id: model.id)
+            SwiftUIUtils.RenderedView(
+                "\(Self.self).\(#function)",
+                id: model.id,
+                visible: AppFeaturesManager.Debug.canDisplayRenderedView
+            )
             HStack(spacing: 0) {
                 Text(model.name)
                     .fontSemantic(.largeTitle)

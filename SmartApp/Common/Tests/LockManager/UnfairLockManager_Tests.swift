@@ -218,7 +218,7 @@ final class UnfairLockManager_Tests: XCTestCase {
         let queue = DispatchQueue(label: #function, attributes: .concurrent)
         var readResults = [Int]()
 
-        DispatchQueue.concurrentPerform(iterations: iterations) { i in
+        DispatchQueue.concurrentPerform(iterations: iterations) { _ in
             queue.async {
                 self.lockManager.lock()
                 value += 1

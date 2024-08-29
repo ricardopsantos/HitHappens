@@ -24,7 +24,8 @@ class BaseUITests: XCTestCase {
     func appLaunch(launchArguments: [UITestingOptions]) {
         app.launchArguments = launchArguments.map(\.rawValue) + [
             UITestingOptions.onUITesting.rawValue,
-            UITestingOptions.shouldDisableAnimations.rawValue
+            UITestingOptions.shouldDisableAnimations.rawValue,
+            UITestingOptions.firebaseDisabled.rawValue
         ]
         app.launch()
     }

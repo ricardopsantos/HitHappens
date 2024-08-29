@@ -5,16 +5,18 @@
 //
 
 import SwiftUI
-
+//
 import Common
+
+public extension TextButton {
+    enum Style: String, CaseIterable, Equatable, Hashable {
+        case primary, secondary, textOnly
+    }
+}
 
 public struct TextButton: View {
     @Environment(\.colorScheme) var colorScheme
     @State var isPressed: Bool = false
-    public enum Style: String, CaseIterable, Equatable, Hashable {
-        case primary, secondary, textOnly
-    }
-
     // MARK: - Attributes
     private let animatedClick: Bool
     private let onClick: () -> Void
@@ -60,33 +62,7 @@ public struct TextButton: View {
                 onClick()
             }
         }) {
-            Text(text)
-                .fontSemantic(.bodyBold)
-                .doIf(enabled, transform: {
-                    switch style {
-                    case .primary: $0.foregroundColorSemantic(.labelPrimary)
-                    case .secondary: $0.foregroundColorSemantic(background)
-                    case .textOnly: $0.foregroundColorSemantic(background)
-                    }
-                })
-                .doIf(!enabled, transform: {
-                    switch style {
-                    case .primary: $0.foregroundColorSemantic(.labelSecondary)
-                    case .secondary: $0.foregroundColorSemantic(background)
-                    case .textOnly: $0.foregroundColorSemantic(background)
-                    }
-                })
-                .frame(maxWidth: .infinity, alignment: alignment)
-                .padding(SizeNames.defaultMarginSmall)
-                .background(backgroundColor)
-                .cornerRadius(SizeNames.defaultButtonPrimaryHeight)
-                .overlay(
-                    RoundedRectangle(cornerRadius: SizeNames.defaultButtonPrimaryHeight)
-                        .inset(by: 0.75)
-                        .stroke(stroke, lineWidth: 1.5)
-                )
-                .contentShape(Rectangle())
-                .userInteractionEnabled(enabled)
+            contentView
         }
         .scaleEffect(isPressed ? 0.985 : 1.0)
         .opacity(isPressed ? 0.8 : 1.0)
@@ -94,6 +70,37 @@ public struct TextButton: View {
         .accessibilityIdentifier(accessibility.identifier)
         .buttonStyle(.plain)
         .shadow(radius: SizeNames.shadowRadiusRegular)
+    }
+
+    var contentView: some View {
+        Text(text)
+            // .foregroundColor(.white)
+            .fontSemantic(.bodyBold)
+            .doIf(enabled, transform: {
+                switch style {
+                case .primary: $0.foregroundColorSemantic(.labelPrimary)
+                case .secondary: $0.foregroundColorSemantic(background)
+                case .textOnly: $0.foregroundColorSemantic(background)
+                }
+            })
+            .doIf(!enabled, transform: {
+                switch style {
+                case .primary: $0.foregroundColorSemantic(.labelSecondary)
+                case .secondary: $0.foregroundColorSemantic(background)
+                case .textOnly: $0.foregroundColorSemantic(background)
+                }
+            })
+            .frame(maxWidth: .infinity, alignment: alignment)
+            .padding(SizeNames.defaultMarginSmall)
+            .background(backgroundColor)
+            .cornerRadius(SizeNames.defaultButtonPrimaryHeight)
+            .overlay(
+                RoundedRectangle(cornerRadius: SizeNames.defaultButtonPrimaryHeight)
+                    .inset(by: 0.75)
+                    .stroke(stroke, lineWidth: 1.5)
+            )
+            .contentShape(Rectangle())
+            .userInteractionEnabled(enabled)
     }
 }
 

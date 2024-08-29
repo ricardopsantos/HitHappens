@@ -22,7 +22,7 @@ public extension SampleCounterDomain {
         @EnvironmentObject private var viewModel: ViewModel
         public var body: some View {
             VStack {
-                SwiftUIUtils.RenderedView("\(Self.self).\(#function)")
+                SwiftUIUtils.RenderedView("\(Self.self).\(#function)", visible: true)
                 SampleCounterShared.displayView(
                     title: "ViewModel with @EnvironmentObject",
                     counterValue: $viewModel.count,
