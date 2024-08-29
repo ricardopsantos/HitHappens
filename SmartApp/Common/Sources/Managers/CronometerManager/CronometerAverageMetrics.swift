@@ -15,11 +15,6 @@ public class CronometerAverageMetrics: NSObject {
     // Private initializer to prevent direct instantiation outside the class.
     override private init() {}
 
-    // Static variable to store the key for UserDefaults, combining the app version and the class name.
-    private static var defaultsKey: String {
-        "V\(Common.AppInfo.version).\(CronometerAverageMetrics.self)".replace(" ", with: "")
-    }
-
     // Thread-safe properties to store counts and times for different keys.
     @PWThreadSafe var measuresCount: [String: Double] = [:]
     @PWThreadSafe var measuresTime: [String: Double] = [:]
@@ -46,15 +41,19 @@ public class CronometerAverageMetrics: NSObject {
 //
 
 public extension CronometerAverageMetrics {
+    // Static variable to store the key for UserDefaults, combining the app version and the class name.
+    private static var defaultsKey: String {
+        "\(Common.InternalUserDefaults.Keys.averageMetrics.defaultsKey).V\(Common.AppInfo.version).".replace(" ", with: "")
+    }
+
     func clear() {
-        let keys = Common.userDefaults?.dictionaryRepresentation().keys
-            .filter { $0.contains(Self.defaultsKey) }
-        keys?.forEach { key in
-            Common.userDefaults?.removeObject(forKey: key)
+        let defaults = Common.InternalUserDefaults.defaults
+        let key = Common.InternalUserDefaults.Keys.averageMetrics.defaultsKey
+        let dictionary = defaults?.dictionaryRepresentation().filter { $0.key.contains(key) }
+        dictionary?.keys.forEach { key in
+            defaults?.removeObject(forKey: key)
         }
-        Common.userDefaults?.synchronize()
-        measuresCount.removeAll()
-        measuresTime.removeAll()
+        defaults?.synchronize()
     }
 
     // Starts the timer for a given key by building an identifier and passing it to the CronometerManager.
@@ -146,12 +145,12 @@ private extension CronometerAverageMetrics {
     // Saves the current state of the instance to UserDefaults.
     func saveToUserDefaults() {
         let encodedData = try? NSKeyedArchiver.archivedData(withRootObject: self, requiringSecureCoding: false)
-        Common.userDefaults?.set(encodedData, forKey: Self.defaultsKey)
+        Common.InternalUserDefaults.defaults?.set(encodedData, forKey: Self.defaultsKey)
     }
 
     // Loads a saved instance from UserDefaults, or creates a new instance if none exists.
     static func loadFromUserDefaults() -> CronometerAverageMetrics {
-        if let encodedData = Common.userDefaults?.data(forKey: Self.defaultsKey),
+        if let encodedData = Common.InternalUserDefaults.defaults?.data(forKey: defaultsKey),
            let instance = try? NSKeyedUnarchiver.unarchiveTopLevelObjectWithData(encodedData) as? CronometerAverageMetrics {
             return instance
         } else {

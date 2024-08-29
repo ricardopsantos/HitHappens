@@ -19,7 +19,7 @@ public class SetupManager {
     private init() {}
     static let shared = SetupManager()
     func setup(dataBaseRepository: DataBaseRepositoryProtocol) {
-        let numberOfLogins = Common.AppInfo.numberOfLoginsIncrement()
+        let numberOfLogins = Common.InternalUserDefaults.numberOfLoginsIncrement()
         CPPWrapper.disable_gdb() // Security: Detach debugger for real device
         CPPWrapper.crash_if_debugged() // Security: Crash app if debugger Detach failed
         DevTools.Log.setup()

@@ -14,9 +14,6 @@ public extension Common {
     class CacheManagerForCodableUserDefaultsRepository: CodableCacheManagerProtocol {
         private init() {}
         public static let shared = CacheManagerForCodableUserDefaultsRepository()
-        private lazy var userDefaults: UserDefaults? = {
-            Common.userDefaults
-        }()
 
         //
         // MARK: - Sync
@@ -34,18 +31,18 @@ public extension Common {
                 timeToLiveMinutes: timeToLiveMinutes
             )
             if let data = try? JSONEncoder().encode(expiringCodableObjectWithKey) {
-                userDefaults?.set(
+                Common.InternalUserDefaults.defaults?.set(
                     data,
                     forKey: expiringCodableObjectWithKey.key
                 )
-                userDefaults?.synchronize()
+                Common.InternalUserDefaults.defaults?.synchronize()
             } else {
                 Common_Utils.assert(false, message: "Not predicted")
             }
         }
 
         public func syncRetrieve<T: Codable>(_ type: T.Type, key: String, params: [any Hashable]) -> (model: T, recordDate: Date)? {
-            guard let data = userDefaults?.data(forKey: Commom_ExpiringKeyValueEntity.composedKey(key, params)),
+            guard let data = Common.InternalUserDefaults.defaults?.data(forKey: Commom_ExpiringKeyValueEntity.composedKey(key, params)),
                   let expiringCodableObjectWithKey = try? JSONDecoder().decodeFriendly(Common.ExpiringKeyValueEntity.self, from: data),
                   let cachedRecord = expiringCodableObjectWithKey.extract(type) else {
                 return nil
@@ -54,10 +51,10 @@ public extension Common {
         }
 
         public func syncAllCachedKeys() -> [(String, Date)] {
-            let keys = userDefaults?.dictionaryRepresentation().keys.filter { $0.hasPrefix(Common.ExpiringKeyValueEntity.composedKeyPrefix) } ?? []
+            let keys = Common.InternalUserDefaults.defaults?.dictionaryRepresentation().keys.filter { $0.hasPrefix(Common.InternalUserDefaults.Keys.expiringKeyValueEntity.defaultsKey) } ?? []
             var result: [(String, Date)] = []
             keys.forEach { key in
-                if let data = userDefaults?.data(forKey: key) {
+                if let data = Common.InternalUserDefaults.defaults?.data(forKey: key) {
                     if let expiringCodableObjectWithKey = try? JSONDecoder().decodeFriendly(Common.ExpiringKeyValueEntity.self, from: data) {
                         result.append((key, expiringCodableObjectWithKey.recordDate))
                     }
@@ -67,13 +64,11 @@ public extension Common {
         }
 
         public func syncClearAll() {
-            let keys = userDefaults?.dictionaryRepresentation()
-                .keys
-                .filter { $0.hasPrefix(Common.ExpiringKeyValueEntity.composedKeyPrefix) } ?? []
+            let keys = Common.InternalUserDefaults.defaults?.dictionaryRepresentation().keys.filter { $0.hasPrefix(Common.InternalUserDefaults.Keys.expiringKeyValueEntity.defaultsKey) } ?? []
             keys.forEach { key in
-                userDefaults?.removeObject(forKey: key)
+                Common.InternalUserDefaults.defaults?.removeObject(forKey: key)
             }
-            userDefaults?.synchronize()
+            Common.InternalUserDefaults.defaults?.synchronize()
         }
 
         //

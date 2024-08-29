@@ -31,20 +31,29 @@ public extension Common {
         }
 
         //
-        // MARK: - Address from...
+        // MARK: - LocationForAddress
         //
-        static func cachedAddressFromCoordsClean() {
-            let defaults = cachedAddressFromCoords
-            let dictionary = defaults?.dictionaryRepresentation()
+
+        public struct LocationForAddress: Codable {
+            public let latitude: Double
+            public let longitude: Double
+            public let addressIn: String
+            public let addressOut: String
+        }
+
+        static func clear() {
+            let defaults = Common.InternalUserDefaults.defaults
+            let key = InternalUserDefaults.Keys.locationUtils.defaultsKey
+            let dictionary = defaults?.dictionaryRepresentation().filter { $0.key.contains(key) }
             dictionary?.keys.forEach { key in
                 defaults?.removeObject(forKey: key)
             }
             defaults?.synchronize()
         }
 
-        private static var cachedAddressFromCoords: UserDefaults? {
-            Common.userDefaults
-        }
+        //
+        // MARK: - Address from...
+        //
 
         static func getAddressFromAsync(latitude: Double, longitude: Double) async throws -> CLPlacemark.CoreLocationManagerAddressResponse {
             try await getAddressFrom(latitude: latitude, longitude: longitude).async()
@@ -59,8 +68,8 @@ public extension Common {
         }
 
         public static func getAddressFrom(latitude: Double, longitude: Double, completion: @escaping (CLPlacemark.CoreLocationManagerAddressResponse) -> Void) {
-            let cacheKey = "\(Self.self)_\(#function)_cacheFor:\(latitude)|\(longitude)"
-            if let data = cachedAddressFromCoords?.data(forKey: cacheKey),
+            let cacheKey = buildCacheKey(location: "\(latitude)|\(longitude)")
+            if let data = Common.InternalUserDefaults.defaults?.data(forKey: cacheKey),
                let locationForAddress = try? JSONDecoder().decodeFriendly(CLPlacemark.CoreLocationManagerAddressResponse.self, from: data) {
                 completion(locationForAddress)
                 return
@@ -87,7 +96,8 @@ public extension Common {
                 let result = placemark.asCoreLocationManagerAddressResponse
                 // Cache response for performance and offline mode support
                 if let data = try? JSONEncoder().encode(result) {
-                    cachedAddressFromCoords?.set(data, forKey: cacheKey)
+                    Common.InternalUserDefaults.defaults?.set(data, forKey: cacheKey)
+                    Common.InternalUserDefaults.defaults?.synchronize()
                 }
                 completion(result)
             })
@@ -96,21 +106,6 @@ public extension Common {
         //
         // MARK: - Location from...
         //
-        static func cachedLocationFromAddressClean() {
-            let defaults = Common.userDefaults
-            let dictionary = defaults?.dictionaryRepresentation()
-            dictionary?.keys.forEach { key in
-                defaults?.removeObject(forKey: key)
-            }
-            defaults?.synchronize()
-        }
-
-        public struct LocationForAddress: Codable {
-            public let latitude: Double
-            public let longitude: Double
-            public let addressIn: String
-            public let addressOut: String
-        }
 
         public static func locationFromAddress(_ address: String) async throws -> LocationForAddress? {
             let result: LocationForAddress? = try await withCheckedThrowingContinuation { continuation in
@@ -129,14 +124,18 @@ public extension Common {
             }.eraseToAnyPublisher()
         }
 
+        private static func buildCacheKey(location: String) -> String {
+            "\(InternalUserDefaults.Keys.locationUtils.defaultsKey)_cacheFor:\(location)"
+        }
+
         private static func locationFromAddress(_ address: String, completion: @escaping (LocationForAddress?) -> Void) {
             let addressEscaped = address.trim.lowercased()
             guard !addressEscaped.isEmpty else {
                 completion(nil)
                 return
             }
-            let cacheKey = "\(Self.self)_\(#function)_cacheFor:\(addressEscaped)"
-            if let data = Common.userDefaults?.data(forKey: cacheKey),
+            let cacheKey = buildCacheKey(location: addressEscaped)
+            if let data = Common.InternalUserDefaults.defaults?.data(forKey: cacheKey),
                let locationForAddress = try? JSONDecoder().decodeFriendly(LocationForAddress.self, from: data) {
                 completion(locationForAddress)
                 return
@@ -162,7 +161,8 @@ public extension Common {
 
                 // Cache response for performance and offline mode support
                 if let data = try? JSONEncoder().encode(locationForAddress) {
-                    Common.userDefaults?.set(data, forKey: cacheKey)
+                    Common.InternalUserDefaults.defaults?.set(data, forKey: cacheKey)
+                    Common.InternalUserDefaults.defaults?.synchronize()
                 }
                 completion(locationForAddress)
             })
