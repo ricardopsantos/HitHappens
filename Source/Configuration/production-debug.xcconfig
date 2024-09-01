@@ -6,6 +6,6 @@
 #include "./production-base.xcconfig"
 
 DEVELOPMENT_TEAM = EP8XQ3ZY9V
-PROVISIONING_PROFILE_SPECIFIER = EP8XQ3ZY9V/Ricardo Santos
-CODE_SIGN_IDENTITY = iPhone Distribution
-CODE_SIGN_ENTITLEMENTS = SmartAppProduction Release.entitlements
+PROVISIONING_PROFILE_SPECIFIER = EP8XQ3ZY9V/com.ricardo.app.id_ProvisioningProfile
+CODE_SIGN_IDENTITY = Apple Development
+CODE_SIGN_ENTITLEMENTS = Entitlements/Production Release.entitlements

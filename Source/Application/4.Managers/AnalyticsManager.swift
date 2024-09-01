@@ -6,8 +6,10 @@
 //
 
 import Foundation
+#if FIREBASE_ENABLED
 import FirebaseAnalytics
 import Firebase
+#endif
 //
 import DevTools
 
@@ -58,10 +60,12 @@ class AnalyticsManager {
         guard FirebaseApp.configIsValidAndAvailable else {
             return
         }
+#if FIREBASE_ENABLED
         let parameters: [String: Any] = [
             AnalyticsParameterScreenName: appScreen.id.description
         ]
         Analytics.logEvent(AnalyticsEventScreenView, parameters: parameters)
+#endif
     }
 
     func handleCustomEvent(
@@ -141,6 +145,8 @@ private extension AnalyticsManager {
             return
         }
         DevTools.Log.debug(.log("\(AnalyticsManager.self) : \(baseEvent.eventType)"), .business)
+#if FIREBASE_ENABLED
         Analytics.logEvent(baseEvent.eventType.rawValue, parameters: baseEvent.eventProperties)
+#endif
     }
 }

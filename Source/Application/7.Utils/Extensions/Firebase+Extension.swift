@@ -4,10 +4,11 @@
 //
 //  Created by Ricardo Santos on 28/08/2024.
 //
-
+#if FIREBASE_ENABLED
 import Foundation
 //
 import Firebase
+
 //
 import Common
 import DevTools
@@ -29,3 +30,10 @@ public extension FirebaseApp {
         return false
     }
 }
+#else
+enum FirebaseApp  {
+    static var configIsValidAndAvailable: Bool {
+        false
+    }
+}
+#endif

@@ -3,9 +3,9 @@
 // https://help.apple.com/xcode/#/dev745c5c974
 //
 
-#include "./production-base.xcconfig"
+#include "./qa-base.xcconfig"
 
 DEVELOPMENT_TEAM = EP8XQ3ZY9V
-PROVISIONING_PROFILE_SPECIFIER = EP8XQ3ZY9V/com.ricardo.app.id_ProvisioningProfile
+PROVISIONING_PROFILE_SPECIFIER = EP8XQ3ZY9V/qa.com.ricardo.app.id_ProvisioningProfile
 CODE_SIGN_IDENTITY = Apple Development
-CODE_SIGN_ENTITLEMENTS = SmartAppProduction Release.entitlements
+CODE_SIGN_ENTITLEMENTS = Entitlements/QA Release.entitlements

@@ -6,11 +6,11 @@
 # Other folders
 #
 
-SmartApp/_Documents/GitIgnored/*
-SmartApp/Configuration/GitIgnored/*
+Source/_Documents/GitIgnored/*
+Source/Configuration/GitIgnored/*
 
-SmartApp/Application/GoogleService*.plist
-SmartApp/Application/GoogleServices/GoogleService*.plist
+Source/Application/GoogleService*.plist
+Source/Application/GoogleServices/GoogleService*.plist
 
 #
 # Build generated
@@ -44,7 +44,7 @@ xcuserdata/
 
 Packages/
 .build/
-#Pods/*
+Pods/*
 Carthage/*
 
 #

@@ -1,4 +1,4 @@
-name: SmartApp
+name: HitHappens
 
 #
 # https://github.com/yonaskolb/XcodeGen/blob/master/Docs/ProjectSpec.md
@@ -18,14 +18,7 @@ options:
 ####################### PACKAGES #######################
 
 packages:
-  
-  #Common:
-  #  path: ../Common
-    
-  Firebase:
-    url: https://github.com/firebase/firebase-ios-sdk.git
-    revision: "888f0b6026e2441a69e3ee2ad5293c7a92031e62"
-    
+        
  # Use Nimble to express the expected outcomes of Swift or Objective-C expressions
   Nimble:
     url: https://github.com/Quick/Nimble
@@ -76,7 +69,7 @@ settings:
     #ENABLE_BITCODE: YES
     SWIFT_VERSION: 5.3
     CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED: YES
-    SWIFT_OBJC_BRIDGING_HEADER: "Application/SmartApp-Bridging-Header.h"
+    SWIFT_OBJC_BRIDGING_HEADER: "Application/Bridging-Header.h"
 
 ####################### MAIN TARGET #######################
 ####################### MAIN TARGET #######################
@@ -84,7 +77,7 @@ settings:
 
 targets:
         
-  SmartApp:
+  HitHappens:
     type: application
     platform: iOS
     
@@ -111,8 +104,8 @@ targets:
  
     scheme:
       testTargets:
-        - SmartAppUnitTests
-        - SmartAppUITests
+        - UnitTests
+        - UITests
       configVariants:
         - Production
         - QA
@@ -132,21 +125,7 @@ targets:
          excludes:
            - "*.md"
            - "*.png"
-    
-    postCompileScripts:
-      - script: |
-                PATH_TO_CONFIG=$SRCROOT/Application/GoogleService-Info-$PRODUCT_BUNDLE_IDENTIFIER.plist
-                FILENAME_IN_BUNDLE=GoogleService-Info.plist
-                BUILD_APP_DIR=${BUILT_PRODUCTS_DIR}/${PRODUCT_NAME}.app
-                cp $PATH_TO_CONFIG "$BUILD_APP_DIR/$FILENAME_IN_BUNDLE"
-        name: FirebasePlistFile
-        
-    postBuildScripts:
-      - script: |
-                "${BUILD_DIR%/Build/*}/SourcePackages/checkouts/firebase-ios-sdk/Crashlytics/run"
-        inputFiles:
-          - "${DWARF_DSYM_FOLDER_PATH}/${DWARF_DSYM_FILE_NAME}/Contents/Resources/DWARF/${TARGET_NAME}"
-          - "$(SRCROOT)/$(BUILT_PRODUCTS_DIR)/$(INFOPLIST_PATH)"
+           - "GoogleService*"
           
     # dependencies: ########################
     
@@ -156,28 +135,6 @@ targets:
       - target: Domain
       - target: Core
       - target: DesignSystem
-
-      - package: Firebase
-        product: FirebaseMessaging
-        link: true
-      - package: Firebase
-        product: FirebaseCrashlytics
-        link: true
-      - package: Firebase
-        product: FirebaseRemoteConfig
-        link: true
-      - package: Firebase
-        product: FirebaseAnalytics
-        link: true
-      - package: Firebase
-        product: FirebaseAuth
-        link: true
-      - package: Firebase
-        product: FirebaseDatabase
-        link: true
-      - package: Firebase
-        product: FirebaseAppCheck
-        link: true
   
 # DOMAIN
 # DOMAIN
@@ -267,15 +224,15 @@ targets:
 ## TESTING
 ## TESTING
 
-  SmartAppUnitTests:
+  UnitTests:
     templates:
       - UnitTest
     sources:
-      - path: ../SmartAppUnitTests
+      - path: ../UnitTests
         excludes: [Info.plist]
     dependencies:
       - sdk: XCTest.framework
-      - target: SmartApp
+      - target: HitHappens
         link: true
       - target: Common
         link: false
@@ -287,15 +244,15 @@ targets:
         product: Nimble
         link: true
         
-  SmartAppUITests:
+  UITests:
     templates:
       - UITest
     sources:
-      - path: ../SmartAppUITests
+      - path: ../UITests
         excludes: [Info.plist]
     dependencies:
       - sdk: XCTest.framework
-      - target: SmartApp
+      - target: HitHappens
         link: true
       - target: Common
         link: false

@@ -1,6 +1,5 @@
 //
 //  Fonts.swift
-//  SmartApp
 //
 //  Created by Ricardo Santos on 15/04/2024.
 //
@@ -20,7 +19,7 @@ public enum FontsName: CaseIterable {
     case semibold
     case bold
     var name: String {
-        switch self {
+        return switch self {
         case .regular: "NotoSans-Regular"
         case .bold: "NotoSans-Bold"
         case .medium: "NotoSans-Medium"
@@ -41,19 +40,20 @@ public enum FontsName: CaseIterable {
 }
 
 public extension Font {
-    static var largeTitle: Font { FontSemantic.largeTitle.rawValue }
-    static var title1: Font { FontSemantic.title1.rawValue }
-    static var title2: Font { FontSemantic.title2.rawValue }
-    static var headline: Font { FontSemantic.headline.rawValue }
-    static var body: Font { FontSemantic.body.rawValue }
-    static var bodyBold: Font { FontSemantic.bodyBold.rawValue }
-    static var callout: Font { FontSemantic.callout.rawValue }
-    static var calloutBold: Font { FontSemantic.calloutBold.rawValue }
-    static var footnote: Font { FontSemantic.footnote.rawValue }
-    static var caption: Font { FontSemantic.caption.rawValue }
+    static var largeTitle: Font { FontSemantic.largeTitle.font }
+    static var title1: Font { FontSemantic.title1.font }
+    static var title2: Font { FontSemantic.title2.font }
+    static var headline: Font { FontSemantic.headline.font }
+    static var body: Font { FontSemantic.body.font }
+    static var bodyBold: Font { FontSemantic.bodyBold.font }
+    static var callout: Font { FontSemantic.callout.font }
+    static var calloutBold: Font { FontSemantic.calloutBold.font }
+    static var footnote: Font { FontSemantic.footnote.font }
+    static var caption: Font { FontSemantic.caption.font }
 }
 
 public enum FontSemantic: CaseIterable {
+    
     case largeTitle
 
     case title1
@@ -66,11 +66,15 @@ public enum FontSemantic: CaseIterable {
     case footnote
     case caption
 
-    public var font: Font {
+    public var uiFont: UIFont {
         rawValue
     }
+    
+    public var font: Font {
+        Font(rawValue)
+    }
 
-    public var rawValue: Font {
+    public var rawValue: UIFont {
         let trait = UIView().traitCollection.preferredContentSizeCategory
         var multiplier: CGFloat = 1
         if Common_Utils.false {
@@ -98,24 +102,42 @@ public enum FontSemantic: CaseIterable {
             }
         }
 
-        // swiftlint:disable switch_case_alignment
         let bodyFontSize: CGFloat = 15
         return switch self {
-        case .largeTitle: Font.custom(FontsName.regular.name, size: bodyFontSize * 2.5)
-        case .title1: Font.custom(FontsName.bold.name, size: bodyFontSize * 2)
-        case .title2: Font.custom(FontsName.regular.name, size: bodyFontSize * 1.6)
-        case .headline: Font.custom(FontsName.regular.name, size: bodyFontSize * 1.2)
-        case .headlineBold: Font.custom(FontsName.bold.name, size: bodyFontSize * 1.2)
-        case .body: Font.custom(FontsName.regular.name, size: bodyFontSize)
-        case .bodyBold: Font.custom(FontsName.bold.name, size: bodyFontSize)
-        case .callout: Font.custom(FontsName.regular.name, size: bodyFontSize * 0.9)
-        case .calloutBold: Font.custom(FontsName.regular.name, size: bodyFontSize * 0.8)
-        case .footnote: Font.custom(FontsName.regular.name, size: bodyFontSize * 0.7)
-        case .caption: Font.custom(FontsName.regular.name, size: bodyFontSize * 0.6)
+        case .largeTitle: UIFont(name:FontsName.regular.name, size: bodyFontSize * 2.5)!
+        case .title1: UIFont(name:FontsName.bold.name, size: bodyFontSize * 2)!
+        case .title2: UIFont(name:FontsName.regular.name, size: bodyFontSize * 1.6)!
+        case .headline: UIFont(name:FontsName.regular.name, size: bodyFontSize * 1.2)!
+        case .headlineBold: UIFont(name:FontsName.bold.name, size: bodyFontSize * 1.2)!
+        case .body: UIFont(name:FontsName.regular.name, size: bodyFontSize)!
+        case .bodyBold: UIFont(name:FontsName.bold.name, size: bodyFontSize)!
+        case .callout: UIFont(name:FontsName.regular.name, size: bodyFontSize * 0.9)!
+        case .calloutBold:UIFont(name:FontsName.regular.name, size: bodyFontSize * 0.8)!
+        case .footnote: UIFont(name:FontsName.regular.name, size: bodyFontSize * 0.7)!
+        case .caption: UIFont(name:FontsName.regular.name, size: bodyFontSize * 0.6)!
         }
-        // swiftlint:enable switch_case_alignment
     }
 }
+
+//
+// MARK: - Preview
+//
+
+#if canImport(SwiftUI) && DEBUG
+@available(iOS 17, *)
+#Preview {
+    VStack(spacing: 0) {
+        ForEach(FontSemantic.allCases, id: \.self) { font in
+            Text("\(font)")
+                .fontSemantic(font)
+                .foregroundStyle(.black)
+                .frame(maxWidth: .infinity)
+            SwiftUIUtils.FixedVerticalSpacer(height: 5)
+        }
+    }
+}
+#endif
+
 
 //
 // MARK: - Preview

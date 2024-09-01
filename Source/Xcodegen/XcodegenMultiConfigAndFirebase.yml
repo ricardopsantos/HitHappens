@@ -1,4 +1,4 @@
-name: SmartApp
+name: HitHappens
 
 #
 # https://github.com/yonaskolb/XcodeGen/blob/master/Docs/ProjectSpec.md
@@ -19,12 +19,8 @@ options:
 
 packages:
   
-  Common:
-    url: https://github.com/ricardopsantos/Common.git
-    branch: main
-
-#  Common:
-#    path: ../Common
+  #Common:
+  #  path: ../Common
     
   Firebase:
     url: https://github.com/firebase/firebase-ios-sdk.git
@@ -80,7 +76,7 @@ settings:
     #ENABLE_BITCODE: YES
     SWIFT_VERSION: 5.3
     CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED: YES
-    SWIFT_OBJC_BRIDGING_HEADER: "Application/SmartApp-Bridging-Header.h"
+    SWIFT_OBJC_BRIDGING_HEADER: "Application/Bridging-Header.h"
 
 ####################### MAIN TARGET #######################
 ####################### MAIN TARGET #######################
@@ -88,7 +84,7 @@ settings:
 
 targets:
         
-  SmartApp:
+  HitHappens:
     type: application
     platform: iOS
     
@@ -99,7 +95,7 @@ targets:
         SUPPORTS_MACCATALYST: NO
         SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD: NO
         TARGETED_DEVICE_FAMILY: 1
-        #OTHER_SWIFT_FLAGS: "-DSMART_SDK_ENABLED"
+        OTHER_SWIFT_FLAGS: "-DFIREBASE_ENABLED"
         
     # configFiles ########################
           
@@ -115,8 +111,8 @@ targets:
  
     scheme:
       testTargets:
-        - SmartAppUnitTests
-        - SmartAppUITests
+        - UnitTests
+        - UITests
       configVariants:
         - Production
         - QA
@@ -155,13 +151,12 @@ targets:
     # dependencies: ########################
     
     dependencies:
+      - target: Common
       - target: DevTools
       - target: Domain
       - target: Core
       - target: DesignSystem
 
-      - package: Common
-        product: Common
       - package: Firebase
         product: FirebaseMessaging
         link: true
@@ -198,9 +193,8 @@ targets:
       - path: ../Domain
         excludes: [Info.plist]
     dependencies:
+      - target: Common
       - target: DevTools
-      - package: Common
-        product: Common
       
 # CORE
 # CORE
@@ -218,8 +212,7 @@ targets:
     dependencies:
       - target: Domain
       - target: DevTools
-      - package: Common
-        product: Common
+      - target: Common
     
 # DESIGN_SYSTEM 
 # DESIGN_SYSTEM 
@@ -235,11 +228,10 @@ targets:
       - path: ../DesignSystem
         excludes: [Info.plist]
     dependencies:
+      - target: Common
       - target: Domain
       - target: DevTools
-      - package: Common
-        product: Common
-        
+      
 # DEVTOOLS
 # DEVTOOLS
 # DEVTOOLS
@@ -254,42 +246,60 @@ targets:
       - path: ../DevTools
         excludes: [Info.plist]
     dependencies:
-      - package: Common
-        product: Common
+      - target: Common
       
+# COMMON (Cant have app dependencies)
+# COMMON (Cant have app dependencies)
+# COMMON (Cant have app dependencies)
+
+  Common:
+    templates:
+    - Framework
+    settings:
+      base:
+        MARKETING_VERSION: 1.0
+        SWIFT_OBJC_BRIDGING_HEADER: "Common/Sources/Common-Bridging-Header.h"
+    sources:
+      - path: ../Common
+        excludes: [Tests,Sources/Info.plist,.gitignore,.swiftpm,Package.swift,Package.resolved]
+
 ## TESTING
 ## TESTING
 ## TESTING
 
-  SmartAppUnitTests:
+  UnitTests:
     templates:
       - UnitTest
     sources:
-      - path: ../SmartAppUnitTests
+      - path: ../UnitTests
         excludes: [Info.plist]
     dependencies:
       - sdk: XCTest.framework
-      - target: SmartApp
+      - target: HitHappens
         link: true
+      - target: Common
+        link: false
       - target: Domain
+        link: false
       - target: Core
+        link: false
       - package: Nimble
         product: Nimble
-      - package: Common
-        product: Common
+        link: true
         
-  SmartAppUITests:
+  UITests:
     templates:
       - UITest
     sources:
-      - path: ../SmartAppUITests
+      - path: ../UITests
         excludes: [Info.plist]
     dependencies:
       - sdk: XCTest.framework
-      - target: SmartApp
+      - target: HitHappens
         link: true
+      - target: Common
+        link: false
               
       - package: Nimble
         product: Nimble
-      - package: Common
-        product: Common
+        link: true

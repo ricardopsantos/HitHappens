@@ -127,16 +127,16 @@ esac
 printf "\n"
 
 echo "### Run XcodeGen?"
-echo " [1] : Yes (V1)"
-echo " [2] : Yes (V2)"
+echo " [1] : Yes (MultiConfig)"
+echo " [2] : Yes (MultiConfig+Firebase)"
 echo " [3] : No"
 echo -n "Option? "
 read option
 case $option in
-    [1] )xcodegen -s ./XcodeGen/SmartAppV1.yml -p ./ ;;
-    [2] )xcodegen -s ./XcodeGen/SmartAppV2.yml -p ./ ;;
+    [1] )xcodegen -s ./XcodeGen/XcodegenMultiConfig.yml -p ./ ;;
+    [2] )xcodegen -s ./XcodeGen/XcodegenMultiConfigAndFirebase.yml -p ./ ;;
     [3] ) echo "Ignored...." ;;
-   *) xcodegen -s ./XcodeGen/SmartAppV1.yml -p ./ 
+   *) xcodegen -s ./XcodeGen/XcodegenMultiConfig.yml -p ./ 
 ;;
 esac
 
@@ -152,8 +152,8 @@ printf "\n"
 ################################################################################
 
 echo "Generating graphviz...."
-xcodegen dump --spec ./XcodeGen/SmartAppV1.yml --type graphviz --file ./_Documents/Graph.viz
-xcodegen dump --spec ./XcodeGen/SmartAppV1.yml --type json --file ./_Documents/Graph.json
+xcodegen dump --spec ./XcodeGen/XcodegenMultiConfig.yml --type graphviz --file ./_Documents/Graph.viz
+xcodegen dump --spec ./XcodeGen/XcodegenMultiConfig.yml --type json --file ./_Documents/Graph.json
 
 ################################################################################
 
@@ -162,8 +162,8 @@ echo "↓ ↓ ↓ ↓ ↓ ↓ ↓ ↓ ↓ ↓ ↓ ↓ ↓ ↓ ↓ ↓ WARNING �
 echo "↓ ↓ ↓ ↓ ↓ ↓ ↓ ↓ ↓ ↓ ↓ ↓ ↓ ↓ ↓ ↓ WARNING ↓ ↓ ↓ ↓ ↓ ↓ ↓ ↓ ↓ ↓ ↓ ↓ ↓ ↓ ↓ ↓"
 echo ""
 echo " Dont forget to:"
-echo "  - For SmartApp target: Remove Info.plist from target Membership!!"
-echo "  - For SmartAppUnitTests target: Set Host Application to SmartApp"
+echo "  - For Main target: Remove Info.plist from target Membership!!"
+echo "  - For UnitTests target: Set Host Application to Main target"
 echo ""
 echo "↑ ↑ ↑ ↑ ↑ ↑ ↑ ↑ ↑ ↑ ↑ ↑ ↑ ↑ ↑ ↑ WARNING ↑ ↑ ↑ ↑ ↑ ↑ ↑ ↑ ↑ ↑ ↑ ↑ ↑ ↑ ↑ ↑"
 echo "↑ ↑ ↑ ↑ ↑ ↑ ↑ ↑ ↑ ↑ ↑ ↑ ↑ ↑ ↑ ↑ WARNING ↑ ↑ ↑ ↑ ↑ ↑ ↑ ↑ ↑ ↑ ↑ ↑ ↑ ↑ ↑ ↑"
@@ -172,4 +172,4 @@ echo " ╔═══════════════════════�
 echo " ║ Done! You're all set! ║"
 echo " ╚═══════════════════════╝"
 
-open SmartApp.xcodeproj
+open HitHappens.xcodeproj
