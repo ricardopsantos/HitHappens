@@ -32,7 +32,7 @@ public struct ConfirmationSheetV2: View {
     }
 
     public var body: some View {
-        var content = VStack {
+        let content = VStack {
             Spacer()
             ConfirmationSheetV1(
                 isOpen: $isOpen,

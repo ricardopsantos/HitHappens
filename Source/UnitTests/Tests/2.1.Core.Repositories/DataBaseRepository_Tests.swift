@@ -5,7 +5,7 @@
 
 /// @testable import comes from the ´PRODUCT_NAME´ on __.xcconfig__ file
 
-@testable import Smart_Dev
+@testable import HitHappens_Dev
 
 import XCTest
 import Combine

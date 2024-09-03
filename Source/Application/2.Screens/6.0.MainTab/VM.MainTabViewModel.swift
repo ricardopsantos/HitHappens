@@ -13,9 +13,9 @@ import Common
 import Core
 
 struct MainTabModel: Equatable, Hashable, Sendable {
-    let selectedTab: Tab
+    let selectedTab: AppTab
 
-    init(selectedTab: Tab) {
+    init(selectedTab: AppTab) {
         self.selectedTab = selectedTab
     }
 }
@@ -37,7 +37,7 @@ extension MainTabViewModel {
 
 class MainTabViewModel: BaseViewModel {
     // MARK: - Usage/Auxiliar Attributes
-    @Published var selectedTab: Tab = .tab1
+    @Published var selectedTab: AppTab = .tab1
     public init(dependencies: Dependencies) {
         self.selectedTab = dependencies.model.selectedTab
     }

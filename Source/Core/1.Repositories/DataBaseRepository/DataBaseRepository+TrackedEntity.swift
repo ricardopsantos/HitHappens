@@ -23,6 +23,7 @@ public extension DataBaseRepository {
         }
     }
 
+    @discardableResult
     func trackedEntityInsert(trackedEntity: Model.TrackedEntity) -> String {
         typealias DBEntity = CDataTrackedEntity
         let context = viewContext

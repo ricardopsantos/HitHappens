@@ -1,7 +1,7 @@
 targetTemplates:
   Framework:
     platform: iOS
-    deploymentTarget: '14.0'
+    deploymentTarget: '16.0'
     type: framework
     settings:
       base:

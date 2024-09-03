@@ -32,7 +32,6 @@
 /* End PBXAggregateTarget section */
 
 /* Begin PBXBuildFile section */
-		003954E02FB4A0AC007C75A5 /* GoogleService-Info-qa.com.ricardo.app.id.plist in Resources */ = {isa = PBXBuildFile; fileRef = 80DBCD669CFF4066CAA3988C /* GoogleService-Info-qa.com.ricardo.app.id.plist */; };
 		006CE2AA5ED42D2615F8ECB6 /* CommonNetworking+DataUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31EAC0E0F8A6FAF694494A76 /* CommonNetworking+DataUtils.swift */; };
 		00CE0F62A79A65BCA1F62AC1 /* ImagesFileManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 719B430C3A47F26973B86A01 /* ImagesFileManager.swift */; };
 		011D9B0CD598197F3F2836DF /* VM.RootViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97C61587C7A7AEDD8D57371B /* VM.RootViewModel.swift */; };
@@ -47,7 +46,6 @@
 		045FDAED33A706226E713FEE /* UIViewController+Alerts.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1CDE54024464E91C16462061 /* UIViewController+Alerts.swift */; };
 		046948000238ACBC8CAD198F /* ___Template___ViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F581D13CEC484C8B234DD121 /* ___Template___ViewModelTests.swift */; };
 		04ADFA76405044DF858808D1 /* LocationManagerViewModelProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = E54D687D337223CCF8AD292A /* LocationManagerViewModelProtocol.swift */; };
-		060FBB8FBACF681ED5791170 /* FirebaseRemoteConfig in Frameworks */ = {isa = PBXBuildFile; productRef = 94F495B3D5B5263367B81B08 /* FirebaseRemoteConfig */; };
 		069690704E6EC0353D16C683 /* NotImplementedView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B227829E99FA7EC91054EB74 /* NotImplementedView.swift */; };
 		077CE25402296B47BFF4F392 /* Codable+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7AA98457CBA83255E1631084 /* Codable+Extensions.swift */; };
 		07B5264D71C7ED426D36FC18 /* AuthenticationViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01E8B2A1413D84936796C366 /* AuthenticationViewModel.swift */; };
@@ -94,7 +92,6 @@
 		1E5BA40BA0AAD5F490D59E61 /* LocationUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12F61457EFFDA00F3F34FCFF /* LocationUtils.swift */; };
 		1FD5E706AD3DF9A51FAE5A41 /* 2.1.NetworkAgentClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68F7771D422073DBF258D42A /* 2.1.NetworkAgentClient.swift */; };
 		20253871F3C5C17E86D543B4 /* DataBaseRepositoryProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7AEE99B9ED0127D1A22D0097 /* DataBaseRepositoryProtocol.swift */; };
-		22DD5A32CAE28F42604DBEFF /* View+DebugPrint.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D4E4113DBAB9157234784A5 /* View+DebugPrint.swift */; };
 		234F5885544A9304C45BEDDB /* V.CustomTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = D05322705D62A5041109FDF3 /* V.CustomTextField.swift */; };
 		23E87389AD984AED6065548F /* Model+PopulationNationDataRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7CC2699103BAB4D146C38F4 /* Model+PopulationNationDataRequest.swift */; };
 		24A18124EE4DB106C9F416CC /* KeyboardState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CE36F28D599BBF5DA59BE52 /* KeyboardState.swift */; };
@@ -104,7 +101,6 @@
 		273B3132CCE8CFAAD4F41092 /* CRUDEntity+aSync.swift in Sources */ = {isa = PBXBuildFile; fileRef = 142F0E9D75B9CE8F276D6CE6 /* CRUDEntity+aSync.swift */; };
 		289B2C14232638CC96BC9381 /* CronometerManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = EBDF231564B7D6A4CA5A7147 /* CronometerManager.swift */; };
 		2968C39D411FA9FC63EE45E7 /* V.EventsMapView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 942BBFF0F1ADBFDA265F6D74 /* V.EventsMapView.swift */; };
-		2A0355A58B7703B8F57BDF4D /* CommonLearningsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8129812F52603FF22C8FC06 /* CommonLearningsTests.swift */; };
 		2A2BB90BC8A948ABC9830739 /* Common.Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1A32205FBDECC278173D909 /* Common.Constants.swift */; };
 		2A648A01CC0FE17EFC3C2CD6 /* V.CalendarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C44A9E5FA78B6E7BFCA23C04 /* V.CalendarView.swift */; };
 		2B2740B7569E16FA346BCB8A /* CommonDB.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = D608E557F50B436A257EB706 /* CommonDB.xcdatamodeld */; };
@@ -118,6 +114,7 @@
 		310D0166F6D8D692496AC85E /* typealias.CData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4DFED25BBF2F0BDB3561F6F0 /* typealias.CData.swift */; };
 		31739E28BFD9FCDD5525D7B8 /* Maps.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4236C4B1C51CC7AC64715FC2 /* Maps.swift */; };
 		3253BEC9725B474EEDD5CCDB /* Color+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E7A44FC77CB971B3EF3E2D4 /* Color+Extensions.swift */; };
+		3315DA57F5C09407D1835AFA /* View+DebugModifiers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73E3C3F00D1C1B82E55440F9 /* View+DebugModifiers.swift */; };
 		3384AA32008BADD8190B0E0C /* ExpiringKeyValueEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 203CF86A412B8917077DC52F /* ExpiringKeyValueEntity.swift */; };
 		33ACAB5EB1C5A3B573FDF2C8 /* NetworkLogger.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3F818AC78ACC179FE4100A3 /* NetworkLogger.swift */; };
 		3481F3AA93312139CB61530B /* Common.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FFF39C519E284BB9BED8F7C7 /* Common.framework */; };
@@ -180,15 +177,12 @@
 		51957DE8863EF388FC174E99 /* UnknownDecodableProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83F9F93B4AE3E11B7AD2196C /* UnknownDecodableProtocol.swift */; };
 		51D886BF1E36923111DB3DB9 /* CommonCoreData+Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7A0281BDDD00A4A9761C1DD6 /* CommonCoreData+Utils.swift */; };
 		5205A2B26BDF2DD62EB196D5 /* DataUSAService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7321CC21EDA02A53DD2EDB6F /* DataUSAService.swift */; };
-		526A3E7CCF6205FEFF248097 /* FirebaseMessaging in Frameworks */ = {isa = PBXBuildFile; productRef = 33328E7D9EACD074AF684E6F /* FirebaseMessaging */; };
-		53DDFC3D0FEB45AD9ED84EA8 /* FirebaseDatabase in Frameworks */ = {isa = PBXBuildFile; productRef = 6B499138EB20D260CEF76319 /* FirebaseDatabase */; };
 		54D029E0BB7C7D70F19DEA45 /* ToggleWithState.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFE9162A2D17CDB193718184 /* ToggleWithState.swift */; };
 		55096B59B286B3D105C5571F /* CDataNotes.md in Resources */ = {isa = PBXBuildFile; fileRef = 7C424A488C79C1939CF07709 /* CDataNotes.md */; };
 		5707C5BFC0BFB44A06F879BB /* Model+AlertModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5CFA3BA6F008D6A50C471A6 /* Model+AlertModel.swift */; };
 		574716529F4DE84BC646D69C /* E.StorageType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24CF4BD167D6B6E9C04D6FE7 /* E.StorageType.swift */; };
 		57832A32D669D157CEB8054C /* VM.MainTabViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6FF63DB68B606C54C32B8863 /* VM.MainTabViewModel.swift */; };
 		57E9D24AB6835D19FCF13FFB /* E.APIError.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB77472C94841BD3A6D4B011 /* E.APIError.swift */; };
-		58516C16E6B80AF1DD02D2AF /* GoogleService-Info-dev.com.ricardo.app.id.plist in Resources */ = {isa = PBXBuildFile; fileRef = 77EBEB2A9A05988AD562B9E9 /* GoogleService-Info-dev.com.ricardo.app.id.plist */; };
 		5995C39DDBF373341C40C4FB /* URLResponse+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BA757BEB824554A97AB1DFD /* URLResponse+Extensions.swift */; };
 		5A1C53B6745A59DF87DACAB0 /* DesignSystem+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0BC2ED4CDB6FB58D22907697 /* DesignSystem+Extensions.swift */; };
 		5B024D8FB1D67D5E6EA0FA51 /* V.MainTabView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC33FDFDF424019B9E70C0EB /* V.MainTabView.swift */; };
@@ -200,7 +194,6 @@
 		5F45DB7048742DD4F7FB3D4F /* typealias.Base.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5672B1A7DC89FA57D356206 /* typealias.Base.swift */; };
 		5FA4DC4F671BA57C18A30E1F /* CPPWrapper.mm in Sources */ = {isa = PBXBuildFile; fileRef = 8F2A648DC10287BEED95E08B /* CPPWrapper.mm */; };
 		60C8D6E5A1B22C811CDB292A /* UIControl+CombineCompatible.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A0F5524ACC7AE12154CDB3C /* UIControl+CombineCompatible.swift */; };
-		60F423C49F4910B98BA74CC8 /* FirebaseAnalytics in Frameworks */ = {isa = PBXBuildFile; productRef = 8BC066566E25FEF85B06E953 /* FirebaseAnalytics */; };
 		61BB040F713F23E1B84E679E /* XCTestCase+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0979B00BE85651EA43768B2A /* XCTestCase+Extensions.swift */; };
 		621853449D098E70ADDE03C4 /* TotalWidthKey.swift in Sources */ = {isa = PBXBuildFile; fileRef = F73BFE9100E9262CC9819C68 /* TotalWidthKey.swift */; };
 		627AA3A741BD98775F3F0D34 /* EmployeeService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F85A93734C2DB17C408A946 /* EmployeeService.swift */; };
@@ -232,6 +225,7 @@
 		7336DBD101DC209063103BD8 /* bomb1.caf in Resources */ = {isa = PBXBuildFile; fileRef = 775B3ABAC7C93EAFAF936153 /* bomb1.caf */; };
 		73AC40AACF85BFC1B5126B1E /* EnvironmentValues+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CBE823862A2D9C294ABFC9A /* EnvironmentValues+Extensions.swift */; };
 		754E2C9DDF256FA02C55FEEB /* Response.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8DC7765A49E5B0E0C2D3D7B2 /* Response.swift */; };
+		755671BD9210C7A5B8A488CC /* View+Debug.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18070CEAD55C897C9229A7FC /* View+Debug.swift */; };
 		7607C0DBA93BC1BBF45AABF9 /* E.AppsTags.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48D2A219CB82D35620FC9B8B /* E.AppsTags.swift */; };
 		760BE1741735BABC4AF55E1D /* NonSecureAppPreferences.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2426020EC16E6CB566B15D7C /* NonSecureAppPreferences.swift */; };
 		763C7C3B5EA19CDAFA412CE9 /* BaseView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39B361E2DCBAD1E96B532C1E /* BaseView.swift */; };
@@ -272,7 +266,6 @@
 		880C2F25F47BDCFF46E5904E /* BaseViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9637FF9242295ED06A2974E /* BaseViewModel.swift */; };
 		88338C9B2D3EF65A72901AF2 /* UUID+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = A892EC058462F505B53F07CC /* UUID+Extensions.swift */; };
 		89BE3477A66B64D747E7495B /* TotalWidthPreferenceKey.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D925FEEB2087F9224F8F829 /* TotalWidthPreferenceKey.swift */; };
-		89CE81958BD8E85349C7352F /* FirebaseAppCheck in Frameworks */ = {isa = PBXBuildFile; productRef = 19427F16DDA425E928F04B37 /* FirebaseAppCheck */; };
 		8A80B5E974AFBD78B7375614 /* applause1.caf in Resources */ = {isa = PBXBuildFile; fileRef = 1C10BB319025225FCE8E5249 /* applause1.caf */; };
 		8B41821637961D0F2891B10E /* Model+PopulationStateDataRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C8446EBC20B9A5A72124587 /* Model+PopulationStateDataRequest.swift */; };
 		8C8241F9FB759115B526E5D3 /* AppNavigationAndStateConcistencyTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B390F9DE0483B9F52B7F19EC /* AppNavigationAndStateConcistencyTests.swift */; };
@@ -305,7 +298,6 @@
 		98538EC71EE9AD796924F8A1 /* CoveredByYourGrace.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 7A29ABF13BCDBBAD97FA501B /* CoveredByYourGrace.ttf */; };
 		98B489D90E17E1FBD4E1BDFB /* ExecutionControlManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30AF64695183C2CEB459D58B /* ExecutionControlManager.swift */; };
 		994ACB93F41851D94F23F97D /* V.RootView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A16D271C20F098988204BBE /* V.RootView.swift */; };
-		995390DA3E172E72F032CA44 /* FirebaseAuth in Frameworks */ = {isa = PBXBuildFile; productRef = 6B2F600D2A80A44C69721CFD /* FirebaseAuth */; };
 		99B4857604230D705D87F80B /* UINavigationController+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A9FE1DFB0D8788CB021B0FB /* UINavigationController+Extensions.swift */; };
 		99C75EC812AE84BD900A72EC /* VM.SplashViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B83A58B77C028930391E2055 /* VM.SplashViewModel.swift */; };
 		99EF42C001DA820FC5ECDE0E /* AppFeaturesManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = F42DB3EB2707360422D7C423 /* AppFeaturesManager.swift */; };
@@ -331,7 +323,6 @@
 		A52BC86E3F61D74A07F4FF49 /* UIImageView+Transform.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6C0438ADCDEDA9702A7991B /* UIImageView+Transform.swift */; };
 		A62F9D2AC250841A5882F81E /* Nimble in Frameworks */ = {isa = PBXBuildFile; productRef = 5D7DB0B301DB52BB8A1D9AB9 /* Nimble */; };
 		A7BCF6CEC5557B6AD6912468 /* Model+User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AD36C5C054275EA5B1A4D55 /* Model+User.swift */; };
-		A830B5719759925309E269F6 /* GoogleService-Info-com.ricardo.app.id.plist in Resources */ = {isa = PBXBuildFile; fileRef = E48046CBB36451DA01CC7276 /* GoogleService-Info-com.ricardo.app.id.plist */; };
 		A87AF7802F369BE697584A0F /* DBModel.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 8D3ED9812FC7CC32540E8485 /* DBModel.xcdatamodeld */; };
 		AA2EF6415231E27869BAAB56 /* UIWindow+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BEF606B8567F3DD0783F5F7 /* UIWindow+Extensions.swift */; };
 		AA878D0884A1C603EBBAA371 /* UIStackView+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = A71AE32C9DDECA4826C14C96 /* UIStackView+Extensions.swift */; };
@@ -376,7 +367,6 @@
 		BE804EA3FD653795E1615A39 /* Common+UserDefaults.swift in Sources */ = {isa = PBXBuildFile; fileRef = D47900D80BE9678C188072D0 /* Common+UserDefaults.swift */; };
 		BF53835C8826B2CDC7474851 /* AppImages.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7AC9B5F3F7E4BA0378653412 /* AppImages.swift */; };
 		BF5F2306F76856661397F7ED /* V.Header.swift in Sources */ = {isa = PBXBuildFile; fileRef = 873B7DD8CBE7A0D88D5ED272 /* V.Header.swift */; };
-		BF6D62D3494183B3B5799583 /* FirebaseCrashlytics in Frameworks */ = {isa = PBXBuildFile; productRef = DB4D0921A16CC24BAB46516B /* FirebaseCrashlytics */; };
 		C0020C3037D7AF81E3FEBA1A /* CLLocationCoordinate2D+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = A068247CE202A8FDA6DFD28B /* CLLocationCoordinate2D+Extensions.swift */; };
 		C0E0ED3811CB52F88E7EF9E7 /* Combine+UIKit.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC5EB8316860FF5B19839B7B /* Combine+UIKit.swift */; };
 		C13B44F1F8FAB168A25A927E /* cheer2.caf in Resources */ = {isa = PBXBuildFile; fileRef = 0EF7DBE10CA557E4B71AF074 /* cheer2.caf */; };
@@ -738,6 +728,7 @@
 		17ABDC0BB94B839AA4FD1A2D /* UseDrawingGroupToSpeedUpView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UseDrawingGroupToSpeedUpView.swift; sourceTree = "<group>"; };
 		17DBA95835863E340CEE5D3D /* SmartApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SmartApp.swift; sourceTree = "<group>"; };
 		17E76519FEE0AC2E49610736 /* V.___Template___View.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "V.___Template___View.swift"; sourceTree = "<group>"; };
+		18070CEAD55C897C9229A7FC /* View+Debug.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "View+Debug.swift"; sourceTree = "<group>"; };
 		187F32D45479DFBACC5698D8 /* HelveticaNeueLTCom-Bd.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "HelveticaNeueLTCom-Bd.ttf"; sourceTree = "<group>"; };
 		19ACB3A9B4F671FBCA24404D /* cheer1.caf */ = {isa = PBXFileReference; lastKnownFileType = file; path = cheer1.caf; sourceTree = "<group>"; };
 		1A9B136B22A482E23E223437 /* CGFloat+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CGFloat+Extensions.swift"; sourceTree = "<group>"; };
@@ -919,6 +910,7 @@
 		734E5CA4622CF6164BE9E5ED /* Application.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Application.png; sourceTree = "<group>"; };
 		73697C082097D735118CE022 /* View+ShadowModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "View+ShadowModifier.swift"; sourceTree = "<group>"; };
 		738F8213F411E00DDBBFEB85 /* VM.LoginViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VM.LoginViewModel.swift; sourceTree = "<group>"; };
+		73E3C3F00D1C1B82E55440F9 /* View+DebugModifiers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "View+DebugModifiers.swift"; sourceTree = "<group>"; };
 		74B71438D35E46CEE8C4CBA7 /* localizables.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = localizables.png; sourceTree = "<group>"; };
 		75978C4149DF38E3A3E2C4B4 /* V.EventDetailsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = V.EventDetailsView.swift; sourceTree = "<group>"; };
 		75AC28A8DF1409295C24CD03 /* UserRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserRepository.swift; sourceTree = "<group>"; };
@@ -927,7 +919,6 @@
 		761CD0A3C067C0C9CE2190A3 /* SetupManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetupManager.swift; sourceTree = "<group>"; };
 		775B3ABAC7C93EAFAF936153 /* bomb1.caf */ = {isa = PBXFileReference; lastKnownFileType = file; path = bomb1.caf; sourceTree = "<group>"; };
 		7793A8E48191E826EB91BD44 /* String+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+Extensions.swift"; sourceTree = "<group>"; };
-		77EBEB2A9A05988AD562B9E9 /* GoogleService-Info-dev.com.ricardo.app.id.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = "GoogleService-Info-dev.com.ricardo.app.id.plist"; sourceTree = "<group>"; };
 		77F05BE9B701A27D41346F46 /* V.TextButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = V.TextButton.swift; sourceTree = "<group>"; };
 		79F37B466E1F43BF471038FD /* Graph.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = Graph.json; sourceTree = "<group>"; };
 		7A0281BDDD00A4A9761C1DD6 /* CommonCoreData+Utils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CommonCoreData+Utils.swift"; sourceTree = "<group>"; };
@@ -953,7 +944,6 @@
 		7F4D2B343118FD8877E41E49 /* production-base.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = "production-base.xcconfig"; sourceTree = "<group>"; };
 		7F84F8191DAFCD703BA0DF47 /* VM.EventsListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VM.EventsListViewModel.swift; sourceTree = "<group>"; };
 		8000267C5891ADE1C16F9F52 /* UIView+Transform.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+Transform.swift"; sourceTree = "<group>"; };
-		80DBCD669CFF4066CAA3988C /* GoogleService-Info-qa.com.ricardo.app.id.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = "GoogleService-Info-qa.com.ricardo.app.id.plist"; sourceTree = "<group>"; };
 		8132BE012970B7BF7952D542 /* UIImageView+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImageView+Extensions.swift"; sourceTree = "<group>"; };
 		815DBA42509AA8AC9B1A3EBA /* SampleCounterV1.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SampleCounterV1.swift; sourceTree = "<group>"; };
 		81F14712C9F3B6577AB93C90 /* main.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = main.swift; sourceTree = "<group>"; };
@@ -991,14 +981,13 @@
 		8C48CBF34A4A3E91F782DCA3 /* E.SoundEffect+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "E.SoundEffect+Extensions.swift"; sourceTree = "<group>"; };
 		8C8446EBC20B9A5A72124587 /* Model+PopulationStateDataRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Model+PopulationStateDataRequest.swift"; sourceTree = "<group>"; };
 		8C9C937F4693AF59D060EBC7 /* Xcode.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Xcode.png; sourceTree = "<group>"; };
-		8D4E4113DBAB9157234784A5 /* View+DebugPrint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "View+DebugPrint.swift"; sourceTree = "<group>"; };
 		8DC7765A49E5B0E0C2D3D7B2 /* Response.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Response.swift; sourceTree = "<group>"; };
 		8DFAA3FB3A548886E453D2D5 /* BundleFile<T>.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "BundleFile<T>.swift"; sourceTree = "<group>"; };
 		8E669E8A011B7BB71193FF63 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		8ECC91F0469307D77F8AC73B /* Model+Song.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Model+Song.swift"; sourceTree = "<group>"; };
 		8EDDC2786C0CB58130BD2F0E /* CodableCacheManagerProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CodableCacheManagerProtocol.swift; sourceTree = "<group>"; };
 		8F2A648DC10287BEED95E08B /* CPPWrapper.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = CPPWrapper.mm; sourceTree = "<group>"; };
-		8F921C9CE07FEBB9EBCC4756 /* HitHappens.app */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.application; name = HitHappens.app; path = Smart.Dev.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		8F921C9CE07FEBB9EBCC4756 /* HitHappens.app */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.application; name = HitHappens.app; path = HitHappens.Dev.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		8FA413A5E43230AAB11EFB65 /* designables.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = designables.png; sourceTree = "<group>"; };
 		905EC4EE7B15C86826DB7B66 /* FetchStatesScreenTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FetchStatesScreenTests.swift; sourceTree = "<group>"; };
 		909ED8D6D08791F365A57FE3 /* install.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = install.png; sourceTree = "<group>"; };
@@ -1169,14 +1158,12 @@
 		E2731BA9A9AE3DB73ABA806D /* github.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = github.png; sourceTree = "<group>"; };
 		E27684802EC2D29721353221 /* BasicLocationManagerViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BasicLocationManagerViewModel.swift; sourceTree = "<group>"; };
 		E3696FA304258C82C3B2AAEC /* host.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = host.png; sourceTree = "<group>"; };
-		E48046CBB36451DA01CC7276 /* GoogleService-Info-com.ricardo.app.id.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = "GoogleService-Info-com.ricardo.app.id.plist"; sourceTree = "<group>"; };
 		E5005CF9815CB8388F24D5F6 /* Core.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Core.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		E53D65EDD1CFDF844F3784BB /* Binding+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Binding+Extensions.swift"; sourceTree = "<group>"; };
 		E54D687D337223CCF8AD292A /* LocationManagerViewModelProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationManagerViewModelProtocol.swift; sourceTree = "<group>"; };
 		E65EBD2EF245564A4EEAED31 /* ThreadSafe<T>.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ThreadSafe<T>.swift"; sourceTree = "<group>"; };
 		E76B8687E060162560516E86 /* production-release.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = "production-release.xcconfig"; sourceTree = "<group>"; };
 		E7CC2699103BAB4D146C38F4 /* Model+PopulationNationDataRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Model+PopulationNationDataRequest.swift"; sourceTree = "<group>"; };
-		E8129812F52603FF22C8FC06 /* CommonLearningsTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommonLearningsTests.swift; sourceTree = "<group>"; };
 		E8187D331A68676A41F4741A /* V.LoginScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = V.LoginScreen.swift; sourceTree = "<group>"; };
 		E8C880ED279582D79033D075 /* Data+Extentions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Data+Extentions.swift"; sourceTree = "<group>"; };
 		E965FB25024DC88EB6E18F02 /* analitics.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = analitics.png; sourceTree = "<group>"; };
@@ -1240,13 +1227,6 @@
 				0459CC282089E9C64E67EBDC /* Domain.framework in Frameworks */,
 				7857B5B5A3ADFE5BBBC63076 /* Core.framework in Frameworks */,
 				EC579389E3D7221E3135C12F /* DesignSystem.framework in Frameworks */,
-				526A3E7CCF6205FEFF248097 /* FirebaseMessaging in Frameworks */,
-				BF6D62D3494183B3B5799583 /* FirebaseCrashlytics in Frameworks */,
-				060FBB8FBACF681ED5791170 /* FirebaseRemoteConfig in Frameworks */,
-				60F423C49F4910B98BA74CC8 /* FirebaseAnalytics in Frameworks */,
-				995390DA3E172E72F032CA44 /* FirebaseAuth in Frameworks */,
-				53DDFC3D0FEB45AD9ED84EA8 /* FirebaseDatabase in Frameworks */,
-				89CE81958BD8E85349C7352F /* FirebaseAppCheck in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1488,7 +1468,6 @@
 		141A345620CAE17CC45FE045 /* 3.Misc */ = {
 			isa = PBXGroup;
 			children = (
-				E8129812F52603FF22C8FC06 /* CommonLearningsTests.swift */,
 				1BAF99A3DD8ACC2D1C73F9DA /* PreferenceKeyTests.swift */,
 				F73BFE9100E9262CC9819C68 /* TotalWidthKey.swift */,
 			);
@@ -1597,8 +1576,9 @@
 		2447D6CDF7FAD00CE8427C49 /* View+Debug */ = {
 			isa = PBXGroup;
 			children = (
+				18070CEAD55C897C9229A7FC /* View+Debug.swift */,
 				9998CDD63398F76F2BD57B25 /* View+DebugBackground.swift */,
-				8D4E4113DBAB9157234784A5 /* View+DebugPrint.swift */,
+				73E3C3F00D1C1B82E55440F9 /* View+DebugModifiers.swift */,
 			);
 			path = "View+Debug";
 			sourceTree = "<group>";
@@ -2495,9 +2475,6 @@
 				EE8B071C84CF9436A86E6451 /* 6.Resources */,
 				8087227D51C09B2EDC7C2B04 /* 7.Utils */,
 				DA4C1512D49028787091B4BF /* Bridging-Header.h */,
-				E48046CBB36451DA01CC7276 /* GoogleService-Info-com.ricardo.app.id.plist */,
-				77EBEB2A9A05988AD562B9E9 /* GoogleService-Info-dev.com.ricardo.app.id.plist */,
-				80DBCD669CFF4066CAA3988C /* GoogleService-Info-qa.com.ricardo.app.id.plist */,
 				5ED4F524BE62E4713143FBB0 /* Info.plist */,
 			);
 			path = Application;
@@ -3192,11 +3169,9 @@
 			buildConfigurationList = 4DA6FBF1A23E848CA57ED92C /* Build configuration list for PBXNativeTarget "HitHappens" */;
 			buildPhases = (
 				3DA77040F4B1ED4E379E8C79 /* Sources */,
-				9A90DFF73448E58D92766CAC /* FirebasePlistFile */,
 				6B77B49B5633A807B70988D4 /* Resources */,
 				230482E906AC4CC00568EC91 /* Frameworks */,
 				8F746E8481D2559D730FB6BF /* Embed Frameworks */,
-				48A89465AACEC0B4B4FD6EE3 /* Run Script */,
 			);
 			buildRules = (
 			);
@@ -3208,15 +3183,6 @@
 				8B4C1FFF6A43D42F09C60AC8 /* PBXTargetDependency */,
 			);
 			name = HitHappens;
-			packageProductDependencies = (
-				33328E7D9EACD074AF684E6F /* FirebaseMessaging */,
-				DB4D0921A16CC24BAB46516B /* FirebaseCrashlytics */,
-				94F495B3D5B5263367B81B08 /* FirebaseRemoteConfig */,
-				8BC066566E25FEF85B06E953 /* FirebaseAnalytics */,
-				6B2F600D2A80A44C69721CFD /* FirebaseAuth */,
-				6B499138EB20D260CEF76319 /* FirebaseDatabase */,
-				19427F16DDA425E928F04B37 /* FirebaseAppCheck */,
-			);
 			productName = HitHappens;
 			productReference = 8F921C9CE07FEBB9EBCC4756 /* HitHappens.app */;
 			productType = "com.apple.product-type.application";
@@ -3265,7 +3231,6 @@
 			);
 			mainGroup = 9EA5AB85CDD268099834EAE5;
 			packageReferences = (
-				F70549CF7A100B98E9570230 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
 				2E7E71E1846D880C62C8C743 /* XCRemoteSwiftPackageReference "Nimble" */,
 			);
 			projectDirPath = "";
@@ -3303,9 +3268,6 @@
 			files = (
 				0BFFF83E17A09D179A816FF6 /* Assets.xcassets in Resources */,
 				98538EC71EE9AD796924F8A1 /* CoveredByYourGrace.ttf in Resources */,
-				A830B5719759925309E269F6 /* GoogleService-Info-com.ricardo.app.id.plist in Resources */,
-				58516C16E6B80AF1DD02D2AF /* GoogleService-Info-dev.com.ricardo.app.id.plist in Resources */,
-				003954E02FB4A0AC007C75A5 /* GoogleService-Info-qa.com.ricardo.app.id.plist in Resources */,
 				ACF7B7161C0AA707A3854482 /* HelveticaNeueLTCom-Bd.ttf in Resources */,
 				0CFA145EFE6CC5CA7F33BA65 /* HelveticaNeueLTComBdCn.ttf in Resources */,
 				2EF17699070E0B6F31F63796 /* HelveticaNeueLTComBlkCn.ttf in Resources */,
@@ -3382,44 +3344,6 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/bash;
 			shellScript = "${SRCROOT}/Scripts/executeSwiftFormat.sh\n";
-		};
-		48A89465AACEC0B4B4FD6EE3 /* Run Script */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-			);
-			inputPaths = (
-				"${DWARF_DSYM_FOLDER_PATH}/${DWARF_DSYM_FILE_NAME}/Contents/Resources/DWARF/${TARGET_NAME}",
-				"$(SRCROOT)/$(BUILT_PRODUCTS_DIR)/$(INFOPLIST_PATH)",
-			);
-			name = "Run Script";
-			outputFileListPaths = (
-			);
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${BUILD_DIR%/Build/*}/SourcePackages/checkouts/firebase-ios-sdk/Crashlytics/run\"\n";
-		};
-		9A90DFF73448E58D92766CAC /* FirebasePlistFile */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-			);
-			inputPaths = (
-			);
-			name = FirebasePlistFile;
-			outputFileListPaths = (
-			);
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "PATH_TO_CONFIG=$SRCROOT/Application/GoogleService-Info-$PRODUCT_BUNDLE_IDENTIFIER.plist\nFILENAME_IN_BUNDLE=GoogleService-Info.plist\nBUILD_APP_DIR=${BUILT_PRODUCTS_DIR}/${PRODUCT_NAME}.app\ncp $PATH_TO_CONFIG \"$BUILD_APP_DIR/$FILENAME_IN_BUNDLE\"\n";
 		};
 		D26349CABB72E465556B1EB0 /* SwiftLint */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -3668,8 +3592,9 @@
 				E17697530C9DA8C19BD02CB8 /* Utils.swift in Sources */,
 				83622D731C90C4A5192632AF /* View+BorderModifier.swift in Sources */,
 				4CDE4E0A4ADAB1631B617563 /* View+Conditionals.swift in Sources */,
+				755671BD9210C7A5B8A488CC /* View+Debug.swift in Sources */,
 				E6595A46E2870042164F87CF /* View+DebugBackground.swift in Sources */,
-				22DD5A32CAE28F42604DBEFF /* View+DebugPrint.swift in Sources */,
+				3315DA57F5C09407D1835AFA /* View+DebugModifiers.swift in Sources */,
 				15DEFA9E858A0F3383546807 /* View+Extensions.swift in Sources */,
 				0357B7C7EA1757974CC451D4 /* View+HideNavigationBar.swift in Sources */,
 				68201E4A1CC8588D2C98564B /* View+LoaderView.swift in Sources */,
@@ -3879,7 +3804,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				5126B77E7D8065F3564425CE /* BaseViewModelsTests.swift in Sources */,
-				2A0355A58B7703B8F57BDF4D /* CommonLearningsTests.swift in Sources */,
 				01A8291B83CD725845575736 /* DataBaseRepository_Tests.swift in Sources */,
 				5F231AE014586FAA984D9B39 /* DataUSAServiceTests.swift in Sources */,
 				16D5C16802C11B03DA3868A8 /* LoginViewModel.swift in Sources */,
@@ -4027,7 +3951,6 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				OTHER_SWIFT_FLAGS = "-DFIREBASE_ENABLED";
 				SDKROOT = iphoneos;
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
 				SUPPORTS_MACCATALYST = NO;
@@ -4041,7 +3964,7 @@
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				INFOPLIST_FILE = UITests/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -4065,7 +3988,7 @@
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
 				INFOPLIST_FILE = DesignSystem/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -4090,7 +4013,7 @@
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
 				INFOPLIST_FILE = Domain/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -4115,7 +4038,7 @@
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
 				INFOPLIST_FILE = Common/Sources/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -4141,7 +4064,7 @@
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
 				INFOPLIST_FILE = DesignSystem/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -4172,7 +4095,7 @@
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
 				INFOPLIST_FILE = Core/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -4197,7 +4120,7 @@
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
 				INFOPLIST_FILE = DesignSystem/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -4216,7 +4139,7 @@
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				INFOPLIST_FILE = UnitTests/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -4234,7 +4157,7 @@
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				INFOPLIST_FILE = UnitTests/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -4258,7 +4181,7 @@
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
 				INFOPLIST_FILE = DesignSystem/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -4283,7 +4206,7 @@
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
 				INFOPLIST_FILE = Domain/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -4308,7 +4231,7 @@
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
 				INFOPLIST_FILE = DevTools/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -4333,7 +4256,7 @@
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
 				INFOPLIST_FILE = Domain/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -4358,7 +4281,7 @@
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
 				INFOPLIST_FILE = Domain/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -4448,7 +4371,6 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				OTHER_SWIFT_FLAGS = "-DFIREBASE_ENABLED";
 				SDKROOT = iphoneos;
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
 				SUPPORTS_MACCATALYST = NO;
@@ -4468,7 +4390,7 @@
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
 				INFOPLIST_FILE = Domain/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -4487,7 +4409,7 @@
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				INFOPLIST_FILE = UITests/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -4505,7 +4427,7 @@
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				INFOPLIST_FILE = UITests/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -4647,7 +4569,7 @@
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				INFOPLIST_FILE = UnitTests/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -4670,7 +4592,6 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				OTHER_SWIFT_FLAGS = "-DFIREBASE_ENABLED";
 				SDKROOT = iphoneos;
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
 				SUPPORTS_MACCATALYST = NO;
@@ -4696,7 +4617,7 @@
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
 				INFOPLIST_FILE = DesignSystem/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -4727,7 +4648,7 @@
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
 				INFOPLIST_FILE = DevTools/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -4746,7 +4667,7 @@
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				INFOPLIST_FILE = UnitTests/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -4842,7 +4763,7 @@
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				INFOPLIST_FILE = UnitTests/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -4944,7 +4865,7 @@
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
 				INFOPLIST_FILE = DesignSystem/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -4969,7 +4890,7 @@
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
 				INFOPLIST_FILE = Common/Sources/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -4995,7 +4916,7 @@
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
 				INFOPLIST_FILE = Core/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -5014,7 +4935,7 @@
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				INFOPLIST_FILE = UITests/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -5038,7 +4959,7 @@
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
 				INFOPLIST_FILE = DevTools/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -5068,7 +4989,6 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				OTHER_SWIFT_FLAGS = "-DFIREBASE_ENABLED";
 				SDKROOT = iphoneos;
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
 				SUPPORTS_MACCATALYST = NO;
@@ -5088,7 +5008,7 @@
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
 				INFOPLIST_FILE = Core/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -5107,7 +5027,7 @@
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				INFOPLIST_FILE = UITests/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -5131,7 +5051,7 @@
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
 				INFOPLIST_FILE = DevTools/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -5155,7 +5075,6 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				OTHER_SWIFT_FLAGS = "-DFIREBASE_ENABLED";
 				SDKROOT = iphoneos;
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
 				SUPPORTS_MACCATALYST = NO;
@@ -5234,7 +5153,7 @@
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
 				INFOPLIST_FILE = Core/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -5259,7 +5178,7 @@
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
 				INFOPLIST_FILE = Common/Sources/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -5290,7 +5209,6 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				OTHER_SWIFT_FLAGS = "-DFIREBASE_ENABLED";
 				SDKROOT = iphoneos;
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
 				SUPPORTS_MACCATALYST = NO;
@@ -5310,7 +5228,7 @@
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				INFOPLIST_FILE = UnitTests/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -5334,7 +5252,7 @@
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
 				INFOPLIST_FILE = Core/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -5359,7 +5277,7 @@
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
 				INFOPLIST_FILE = DevTools/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -5384,7 +5302,7 @@
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
 				INFOPLIST_FILE = Core/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -5409,7 +5327,7 @@
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
 				INFOPLIST_FILE = Common/Sources/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -5441,7 +5359,7 @@
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
 				INFOPLIST_FILE = DevTools/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -5466,7 +5384,7 @@
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
 				INFOPLIST_FILE = Domain/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -5491,7 +5409,7 @@
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
 				INFOPLIST_FILE = Common/Sources/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -5511,7 +5429,7 @@
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				INFOPLIST_FILE = UITests/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -5535,7 +5453,7 @@
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
 				INFOPLIST_FILE = Common/Sources/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -5707,56 +5625,13 @@
 				kind = branch;
 			};
 		};
-		F70549CF7A100B98E9570230 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/firebase/firebase-ios-sdk.git";
-			requirement = {
-				kind = revision;
-				revision = 888f0b6026e2441a69e3ee2ad5293c7a92031e62;
-			};
-		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
-		19427F16DDA425E928F04B37 /* FirebaseAppCheck */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = F70549CF7A100B98E9570230 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
-			productName = FirebaseAppCheck;
-		};
-		33328E7D9EACD074AF684E6F /* FirebaseMessaging */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = F70549CF7A100B98E9570230 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
-			productName = FirebaseMessaging;
-		};
 		5D7DB0B301DB52BB8A1D9AB9 /* Nimble */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = 2E7E71E1846D880C62C8C743 /* XCRemoteSwiftPackageReference "Nimble" */;
 			productName = Nimble;
-		};
-		6B2F600D2A80A44C69721CFD /* FirebaseAuth */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = F70549CF7A100B98E9570230 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
-			productName = FirebaseAuth;
-		};
-		6B499138EB20D260CEF76319 /* FirebaseDatabase */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = F70549CF7A100B98E9570230 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
-			productName = FirebaseDatabase;
-		};
-		8BC066566E25FEF85B06E953 /* FirebaseAnalytics */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = F70549CF7A100B98E9570230 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
-			productName = FirebaseAnalytics;
-		};
-		94F495B3D5B5263367B81B08 /* FirebaseRemoteConfig */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = F70549CF7A100B98E9570230 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
-			productName = FirebaseRemoteConfig;
-		};
-		DB4D0921A16CC24BAB46516B /* FirebaseCrashlytics */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = F70549CF7A100B98E9570230 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
-			productName = FirebaseCrashlytics;
 		};
 		E4D321BF62A33C2276690A87 /* Nimble */ = {
 			isa = XCSwiftPackageProductDependency;

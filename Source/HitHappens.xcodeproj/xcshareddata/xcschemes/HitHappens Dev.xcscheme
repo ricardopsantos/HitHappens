@@ -15,7 +15,7 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "F7A7E879415146CCE92FA8DF"
-               BuildableName = "Smart.Dev.app"
+               BuildableName = "HitHappens.Dev.app"
                BlueprintName = "HitHappens"
                ReferencedContainer = "container:HitHappens.xcodeproj">
             </BuildableReference>
@@ -31,7 +31,7 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "F7A7E879415146CCE92FA8DF"
-            BuildableName = "Smart.Dev.app"
+            BuildableName = "HitHappens.Dev.app"
             BlueprintName = "HitHappens"
             ReferencedContainer = "container:HitHappens.xcodeproj">
          </BuildableReference>
@@ -74,7 +74,7 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "F7A7E879415146CCE92FA8DF"
-            BuildableName = "Smart.Dev.app"
+            BuildableName = "HitHappens.Dev.app"
             BlueprintName = "HitHappens"
             ReferencedContainer = "container:HitHappens.xcodeproj">
          </BuildableReference>
@@ -91,7 +91,7 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "F7A7E879415146CCE92FA8DF"
-            BuildableName = "Smart.Dev.app"
+            BuildableName = "HitHappens.Dev.app"
             BlueprintName = "HitHappens"
             ReferencedContainer = "container:HitHappens.xcodeproj">
          </BuildableReference>

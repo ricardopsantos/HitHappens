@@ -56,8 +56,8 @@ struct MainTabView: View, ViewProtocol {
                     .navigationDestination(for: AppScreen.self, destination: buildScreen)
                     .environmentObject(tab1Router)
             }
-            .tabItem { TabItemView(title: Tab.tab1.title, icon: Tab.tab1.icon) }
-            .tag(Tab.tab1)
+            .tabItem { TabItemView(title: AppTab.tab1.title, icon: AppTab.tab1.icon) }
+            .tag(AppTab.tab1)
             //
             // Tab 2 - Event as List
             //
@@ -66,8 +66,8 @@ struct MainTabView: View, ViewProtocol {
                     .navigationDestination(for: AppScreen.self, destination: buildScreen)
                     .environmentObject(tab2Router)
             }
-            .tabItem { TabItemView(title: Tab.tab2.title, icon: Tab.tab2.icon) }
-            .tag(Tab.tab2)
+            .tabItem { TabItemView(title: AppTab.tab2.title, icon: AppTab.tab2.icon) }
+            .tag(AppTab.tab2)
             //
             // Tab 3 - Event as Calendar
             //
@@ -76,8 +76,8 @@ struct MainTabView: View, ViewProtocol {
                     .navigationDestination(for: AppScreen.self, destination: buildScreen)
                     .environmentObject(tab3Router)
             }
-            .tabItem { TabItemView(title: Tab.tab3.title, icon: Tab.tab3.icon) }
-            .tag(Tab.tab3)
+            .tabItem { TabItemView(title: AppTab.tab3.title, icon: AppTab.tab3.icon) }
+            .tag(AppTab.tab3)
             //
             // Tab 4 - Event as Map
             //
@@ -86,8 +86,8 @@ struct MainTabView: View, ViewProtocol {
                     .navigationDestination(for: AppScreen.self, destination: buildScreen)
                     .environmentObject(tab4Router)
             }
-            .tabItem { TabItemView(title: Tab.tab4.title, icon: Tab.tab4.icon) }
-            .tag(Tab.tab4)
+            .tabItem { TabItemView(title: AppTab.tab4.title, icon: AppTab.tab4.icon) }
+            .tag(AppTab.tab4)
             //
             // Tab 5
             //
@@ -96,8 +96,8 @@ struct MainTabView: View, ViewProtocol {
                     .navigationDestination(for: AppScreen.self, destination: buildScreen)
                     .environmentObject(tab5Router)
             }
-            .tabItem { TabItemView(title: Tab.tab5.title, icon: Tab.tab5.icon) }
-            .tag(Tab.tab5)
+            .tabItem { TabItemView(title: AppTab.tab5.title, icon: AppTab.tab5.icon) }
+            .tag(AppTab.tab5)
         }
         .accentColor(.primaryColor)
         .onAppear {
@@ -141,7 +141,7 @@ struct MainTabView: View, ViewProtocol {
 
 extension MainTabView {
     // https://betterprogramming.pub/swiftui-navigation-stack-and-ideal-tab-view-behaviour-e514cc41a029
-    private func selectedTab() -> Binding<Tab> {
+    private func selectedTab() -> Binding<AppTab> {
         Binding {
             viewModel.selectedTab
         } set: { tappedTab in

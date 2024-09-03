@@ -8,7 +8,7 @@
 import Foundation
 import XCTest
 import SwiftUI
-@testable import Smart_Dev
+@testable import HitHappens_Dev
 
 class PreferenceKeyTests: XCTestCase {
     func testTotalWidthPreferenceKey() {

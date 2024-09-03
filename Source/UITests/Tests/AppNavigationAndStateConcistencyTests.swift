@@ -7,7 +7,7 @@
  https://medium.com/@jpmtech/level-up-your-career-by-adding-ui-tests-to-your-swiftui-app-37cbffeba459
  */
 
-@testable import Smart_Dev
+@testable import HitHappens_Dev
 
 import XCTest
 import Combine
