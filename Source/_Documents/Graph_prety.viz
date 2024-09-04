@@ -4,46 +4,50 @@ digraph {
   node [fontname="Helvetica", fontsize=10];
   edge [fontname="Helvetica", fontsize=8];
 
-  SmartAppUITests [shape=box, style=filled, fillcolor="#beeeee"]
-  SmartAppUnitTests [shape=box, style=filled, fillcolor="#beeeee"]
+  //label="Overall arquitecture"; // Add your caption here
+  //labelloc="t"; // Position the label at the top
+  //fontsize=12; // Set the font size of the label
+
+  UITests [shape=box, style=filled, fillcolor="#beeeee"]
+  UnitTests [shape=box, style=filled, fillcolor="#beeeee"]
 
   subgraph cluster_App {
-    label="• SceneDelegate\n• AppDelegate\n• Views\n • ViewModels\n• Localizables";
+    label="• AppDelegate\n• SceneDelegate\n• Views\n • ViewModels\n• Localizables\n• Managers";
     fontsize=8;
     node [style=filled, fillcolor="#bbdefb"];
-    SmartApp
+    App
   }
 
   subgraph cluster_Core {
-    label="• Repositories Implementation\n• Services Implementation\n• Networking (Web APIs)";
+    label="• Repositories imp.\n• Services imp.\n• Network imp. (REST APIs)";
     fontsize=8;
     node [style=filled, fillcolor="#beeeee"];
     Core
   }
 
   subgraph cluster_Domain {
-    label="• Models (struts, enuns...)\n• Repositories Interfaces\n• Services Interfaces";
+    label="• Models\n(structs, enuns, dtos)\n• Database\n• Repositories interface\n• Services interface\n• Network interface";
     fontsize=8;
     node [style=filled, fillcolor="#beeeee"];
     Domain
   }
 
   subgraph cluster_DesignSystem {
-    label="• Colors\n• Fonts\n• SizeNaming\n• Reusable UI Components";
+    label="• Colors\n• Fonts\n• SizeNaming\n• UI Components";
     fontsize=8;
     node [style=filled, fillcolor="#beeeee"];
     DesignSystem
   }
 
-  SmartApp -> Domain [style=dashed, color="#90a4ae", lhead=cluster_Domain, ltail=cluster_App]
-  SmartApp -> Core [style=dashed, color="#90a4ae", lhead=cluster_Core, ltail=cluster_App]
-  SmartApp -> DesignSystem [style=dashed, color="#90a4ae", lhead=cluster_DesignSystem, ltail=cluster_App]
+  App -> Domain [style=dashed, color="#90a4ae", lhead=cluster_Domain, ltail=cluster_App]
+  App -> Core [style=dashed, color="#90a4ae", lhead=cluster_Core, ltail=cluster_App]
+  App -> DesignSystem [style=dashed, color="#90a4ae", lhead=cluster_DesignSystem, ltail=cluster_App]
 
   Core -> Domain [style=dashed, color="#90a4ae", ltail=cluster_Core, lhead=cluster_Domain]
   DesignSystem -> Domain [style=dashed, color="#90a4ae", lhead=cluster_Domain, ltail=cluster_DesignSystem]
 
-  SmartAppUITests -> SmartApp [style=dashed, color="#90a4ae", lhead=cluster_App]
-  SmartAppUnitTests -> SmartApp [style=dashed, color="#90a4ae", lhead=cluster_App]
-  SmartAppUnitTests -> Domain [style=dashed, color="#90a4ae", lhead=cluster_Domain]
-  SmartAppUnitTests -> Core [style=dashed, color="#90a4ae", lhead=cluster_Core]
+  UITests -> App [style=dashed, color="#90a4ae", lhead=cluster_App]
+  UnitTests -> App [style=dashed, color="#90a4ae", lhead=cluster_App]
+  UnitTests -> Domain [style=dashed, color="#90a4ae", lhead=cluster_Domain]
+  UnitTests -> Core [style=dashed, color="#90a4ae", lhead=cluster_Core]
 }

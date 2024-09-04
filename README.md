@@ -31,7 +31,7 @@ __MVVM__ (Model-View-ViewModel) because separates concerns by dividing code into
 
 
 <center>
-<img src=SmartApp/_Documents/graphviz_prety.png width=800/>
+<img src=SmartApp/_Documents/Graph_prety.viz width=800/>
 </center>
 
 
