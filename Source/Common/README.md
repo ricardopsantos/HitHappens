@@ -56,7 +56,7 @@ $ brew update
 $ brew install carthage
 ```
 
-To integrate RJPSLibUB into your Xcode project using Carthage, specify it in your `Cartfile`:
+To integrate Common into your Xcode project using Carthage, specify it in your `Cartfile`:
 
 ```ogdl
 github "https://github.com/ricardopsantos/Common" "1.0.0"
@@ -65,7 +65,7 @@ github "https://github.com/ricardopsantos/Common" "1.0.0"
 or for beta
 
 ```ogdl
-github "ricardopsantos/RJSLibUF" "master"
+github "ricardopsantos/Common" "master"
 ```
 
 ---
