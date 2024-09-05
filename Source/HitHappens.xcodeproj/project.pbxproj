@@ -862,7 +862,7 @@
 		5A0F5524ACC7AE12154CDB3C /* UIControl+CombineCompatible.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIControl+CombineCompatible.swift"; sourceTree = "<group>"; };
 		5A5FAFA9B651E153FC6C02A6 /* CommonDataBaseRepository+NSFetchedResultsControllerDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CommonDataBaseRepository+NSFetchedResultsControllerDelegate.swift"; sourceTree = "<group>"; };
 		5BFA75B87F55847F62BADBE1 /* leaks.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = leaks.png; sourceTree = "<group>"; };
-		5C019ED81A967EE4965806ED /* UnitTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = UnitTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		5C019ED81A967EE4965806ED /* UnitTests.xctest */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.cfbundle; path = UnitTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		5D1DF9AE813D279EA6503147 /* SampleService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SampleService.swift; sourceTree = "<group>"; };
 		5D792FAD4D9879D6F20036DE /* uiTesting2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = uiTesting2.png; sourceTree = "<group>"; };
 		5E0EFDABBC89E6955C045187 /* _FrameworkTemplate.yml */ = {isa = PBXFileReference; lastKnownFileType = text.yaml; path = _FrameworkTemplate.yml; sourceTree = "<group>"; };
@@ -3196,9 +3196,6 @@
 					7FC1D4A9405E52C5CA9319C9 = {
 						TestTargetID = F7A7E879415146CCE92FA8DF;
 					};
-					ADF727D272C546FEA796F717 = {
-						TestTargetID = F7A7E879415146CCE92FA8DF;
-					};
 					F7A7E879415146CCE92FA8DF = {
 						DevelopmentTeam = EP8XQ3ZY9V;
 					};
@@ -4131,7 +4128,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.ricardo.app.id.UnitTests;
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/HitHappens.Dev.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/HitHappens.Dev";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/HitHappens.app/HitHappens";
 			};
 			name = "Production Debug";
 		};
@@ -4149,7 +4146,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.ricardo.app.id.UnitTests;
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/HitHappens.Dev.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/HitHappens.Dev";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/HitHappens.app/HitHappens";
 			};
 			name = "QA Release";
 		};
@@ -4561,7 +4558,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.ricardo.app.id.UnitTests;
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/HitHappens.Dev.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/HitHappens.Dev";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/HitHappens.app/HitHappens";
 			};
 			name = "Production Release";
 		};
@@ -4659,7 +4656,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.ricardo.app.id.UnitTests;
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/HitHappens.Dev.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/HitHappens.Dev";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/HitHappens.app/HitHappens";
 			};
 			name = "Dev Debug";
 		};
@@ -4755,7 +4752,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.ricardo.app.id.UnitTests;
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/HitHappens.Dev.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/HitHappens.Dev";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/HitHappens.app/HitHappens";
 			};
 			name = "Dev Release";
 		};
@@ -5220,7 +5217,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.ricardo.app.id.UnitTests;
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/HitHappens.Dev.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/HitHappens.Dev";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/HitHappens.app/HitHappens";
 			};
 			name = "QA Debug";
 		};

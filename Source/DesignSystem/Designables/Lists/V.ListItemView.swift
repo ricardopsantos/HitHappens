@@ -132,7 +132,6 @@ public struct ListItemView: View {
 public extension ListItemView {
     static func buildAccessoryImage(
         systemImage: String,
-
         imageColor: Color,
         margin: CGFloat
     ) -> some View {

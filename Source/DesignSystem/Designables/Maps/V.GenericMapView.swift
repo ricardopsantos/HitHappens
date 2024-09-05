@@ -19,14 +19,14 @@ public extension GenericMapView {
     struct ModelItem: Identifiable, Equatable {
         public static func == (lhs: GenericMapView.ModelItem, rhs: GenericMapView.ModelItem) -> Bool {
             lhs.id == rhs.id &&
-                lhs.name == rhs.name &&
-                lhs.coordinate.latitude == rhs.coordinate.latitude &&
-                lhs.coordinate.longitude == rhs.coordinate.longitude &&
-                lhs.image.systemName == rhs.image.systemName &&
-                lhs.image.backColor == rhs.image.backColor &&
-                lhs.image.imageColor == rhs.image.imageColor
+            lhs.name == rhs.name &&
+            lhs.coordinate.latitude == rhs.coordinate.latitude &&
+            lhs.coordinate.longitude == rhs.coordinate.longitude &&
+            lhs.image.systemName == rhs.image.systemName &&
+            lhs.image.backColor == rhs.image.backColor &&
+            lhs.image.imageColor == rhs.image.imageColor
         }
-
+        
         public let id: String
         public let name: String
         public let coordinate: CLLocationCoordinate2D
@@ -36,7 +36,7 @@ public extension GenericMapView {
             backColor: Color,
             imageColor: Color
         )
-
+        
         public init(
             id: String,
             name: String,
@@ -63,19 +63,20 @@ public struct GenericMapView: View {
     @State var shouldDisplayUserLocation: Bool = true
     @State var shouldDisplayEventsLocation: Bool = false
     @StateObject var locationViewModel: Common.SharedLocationManagerViewModel = .shared
-    @State private var isUserInteracting = false
     private let onRegionChanged: (MKCoordinateRegion) -> Void
     public init(items: Binding<[ModelItem]>, onRegionChanged: @escaping (MKCoordinateRegion) -> Void) {
         self.onRegionChanged = onRegionChanged
         self._items = items
     }
-
+    
     public var body: some View {
         content
             .onAppear {
                 locationViewModel.start(sender: "\(Self.self)")
                 shouldDisplayUserLocation = locationViewModel.locationIsAuthorized
-                updateRegionToFitCoordinates()
+                Common_Utils.delay(1) {
+                    updateRegionToFitCoordinates()
+                }
             }.onDisappear {
                 locationViewModel.stop(sender: "\(Self.self)")
             }
@@ -86,11 +87,9 @@ public struct GenericMapView: View {
                 }
             }
             .onChange(of: region) { new in
-                onRegionChanged(new)
-                if isUserInteracting {
-                    // User changed region. Turn off action buttons
-                    shouldDisplayUserLocation = false
-                    shouldDisplayEventsLocation = false
+                Common.ExecutionControlManager.debounce(1,
+                                                        operationId: "\(Self.self).region.changed") {
+                    onRegionChanged(new)
                 }
             }
             .onChange(of: locationViewModel.coordinates) { location in
@@ -108,30 +107,36 @@ public struct GenericMapView: View {
                 }
             }
     }
-
+    
     public var content: some View {
         ZStack {
             mapView
             actionBottonView
         }.cornerRadius2(SizeNames.cornerRadius)
     }
-
+    
+    @ViewBuilder
     public var mapView: some View {
-        Map(coordinateRegion: $region, annotationItems: items) { item in
+        Map(coordinateRegion: $region,
+            interactionModes: .all, 
+            showsUserLocation: true,
+            annotationItems: items) { item in
             MapAnnotation(coordinate: item.coordinate) {
-                annotationView(with: item)
+                annotationView(with: item, isUser: false)
             }
-        }.gesture(
-            DragGesture()
-                .onChanged { _ in
-                    isUserInteracting = true
-                }
-                .onEnded { _ in
-                    isUserInteracting = false
-                }
-        )
+        }
+        .gesture(TapGesture(count: 1)
+            .onEnded { _ in
+                userInteractedWithMap()
+            })
+        .simultaneousGesture(DragGesture().onChanged { value in
+            userInteractedWithMap()
+        })
+        .simultaneousGesture(MagnificationGesture().onChanged { value in
+            userInteractedWithMap()
+        })
     }
-
+    
     @ViewBuilder
     public var actionBottonView: some View {
         let allEventsRegion = Button(action: {
@@ -153,9 +158,9 @@ public struct GenericMapView: View {
                 .foregroundColor(.white)
                 .shadow(radius: SizeNames.shadowRadiusRegular)
         }
-        .userInteractionEnabled(!items.isEmpty)
-        .paddingBottom(SizeNames.defaultMargin)
-        .paddingRight(SizeNames.defaultMargin)
+            .userInteractionEnabled(!items.isEmpty)
+            .paddingBottom(SizeNames.defaultMargin)
+            .paddingRight(SizeNames.defaultMargin)
         let userRegion = Button(action: {
             shouldDisplayUserLocation.toggle()
             withAnimation {
@@ -175,9 +180,9 @@ public struct GenericMapView: View {
                 .foregroundColor(.white)
                 .shadow(radius: SizeNames.shadowRadiusRegular)
         }
-        .userInteractionEnabled(locationViewModel.locationIsAuthorized)
-        .paddingRight(SizeNames.defaultMargin)
-        .paddingBottom(SizeNames.defaultMargin)
+            .userInteractionEnabled(locationViewModel.locationIsAuthorized)
+            .paddingRight(SizeNames.defaultMargin)
+            .paddingBottom(SizeNames.defaultMargin)
         HStack(spacing: 0) {
             Spacer()
             VStack(alignment: .leading, spacing: 0, content: {
@@ -196,7 +201,7 @@ public struct GenericMapView: View {
 //
 public extension GenericMapView {
     @ViewBuilder
-    func annotationView(with item: ModelItem) -> some View {
+    func annotationView(with item: ModelItem, isUser: Bool) -> some View {
         let margin: CGFloat = SizeNames.size_3.cgFloat
         let size: CGFloat = SizeNames.defaultMargin + margin
         Button(action: {
@@ -220,6 +225,8 @@ public extension GenericMapView {
 // MARK: - Auxiliar
 //
 public extension GenericMapView {
+
+    
     var failSafeUserLocation: CLLocationCoordinate2D? {
         if let userLocation = userLocation {
             return userLocation
@@ -228,7 +235,7 @@ public extension GenericMapView {
         }
         return nil
     }
-
+    
     func updateRegionToFitCoordinates() {
         guard shouldDisplayUserLocation || shouldDisplayEventsLocation else {
             return
@@ -260,9 +267,18 @@ public extension GenericMapView {
 }
 
 //
-// MARK: - Utils
+// MARK: - Private
 //
-public extension GenericMapView {}
+private extension GenericMapView {
+    func userInteractedWithMap() {
+        if shouldDisplayUserLocation {
+            shouldDisplayUserLocation = false
+        }
+        if shouldDisplayEventsLocation {
+            shouldDisplayEventsLocation = false
+        }
+    }
+}
 
 //
 // MARK: - Preview
@@ -274,28 +290,28 @@ public extension GenericMapView {}
     VStack {
         GenericMapView(items: .constant([
             .init(
-                id: "",
+                id: "1",
                 name: "1",
                 coordinate: .random,
                 onTap: {},
                 image: ("heart", .random, .random)
             ),
             .init(
-                id: "",
+                id: "2",
                 name: "2",
                 coordinate: .random,
                 onTap: {},
                 image: ("heart", .random, .random)
             ),
             .init(
-                id: "",
+                id: "3",
                 name: "3",
                 coordinate: .random,
                 onTap: {},
                 image: ("heart", .random, .random)
             )
         ]), onRegionChanged: { _ in })
-            .frame(maxHeight: screenHeight / 3)
+        .frame(maxHeight: screenHeight / 3)
         Spacer()
     }
     .padding()
