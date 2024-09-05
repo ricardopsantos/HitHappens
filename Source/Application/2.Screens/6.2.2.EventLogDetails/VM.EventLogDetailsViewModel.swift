@@ -134,10 +134,10 @@ class EventLogDetailsViewModel: BaseViewModel {
         case .userDidChangedLocation(address: let address, latitude: let latitude, longitude: let longitude):
             userMessage = ("", .clear)
             Task { [weak self] in
-                guard let self = self, 
-                        var trackedLog = trackedLog,
-                      !address.trim.isEmpty, 
-                        trackedLog.addressMin != address,
+                guard let self = self,
+                      var trackedLog = trackedLog,
+                      !address.trim.isEmpty,
+                      trackedLog.addressMin != address,
                       latitude != 0, longitude != 0 else { return }
                 trackedLog.addressMin = address
                 trackedLog.latitude = latitude
@@ -164,8 +164,6 @@ class EventLogDetailsViewModel: BaseViewModel {
                     dataBaseRepository?.trackedLogDelete(trackedLogId: trackedLog.id)
                 }
             }
-
-
         }
     }
 }

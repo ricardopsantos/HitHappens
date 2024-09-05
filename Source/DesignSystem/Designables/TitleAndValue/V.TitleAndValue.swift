@@ -29,7 +29,7 @@ public struct TitleAndValueView: View {
         Group {
             switch style {
             case .horizontal:
-                HStack(spacing: 0) {
+                HStack(alignment: .top, spacing: 0) {
                     titleView
                     Spacer()
                     valueView
@@ -68,7 +68,7 @@ public struct TitleAndValueView: View {
         Text(value)
             .fontSemantic(.body)
             .foregroundColorSemantic(.labelSecondary)
-            .lineLimit(0)
+            .fixedSize(horizontal: false, vertical: true)
     }
 }
 
@@ -83,6 +83,7 @@ public struct TitleAndValueView: View {
         Spacer()
         ForEach(TitleAndValueView.Style.allCases, id: \.self) { style in
             TitleAndValueView(title: "title", value: "\(style)", style: style)
+            TitleAndValueView(title: "title", value: String.randomWithSpaces(200), style: style)
             Divider()
         }
         Spacer()

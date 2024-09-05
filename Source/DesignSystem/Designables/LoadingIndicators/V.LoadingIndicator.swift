@@ -29,8 +29,8 @@ public struct LoadingIndicator: View {
                         let view = ProgressView()
                             .scaleEffect(1.5)
                             .frame(maxWidth: .infinity)
-                        // NB: There seems to be a bug in SwiftUI where the progress view does not show
-                        // a second time unless it is given a new identity.
+                            // NB: There seems to be a bug in SwiftUI where the progress view does not show
+                            // a second time unless it is given a new identity.
                             .id(UUID())
                         if #available(iOS 16.0, *) {
                             view

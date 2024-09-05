@@ -122,7 +122,7 @@ fileprivate extension FavoriteEventsViewModel {
                                 self?.alertModel = .init(
                                     type: .success,
                                     location: .bottom,
-                                    message: "Event tracked!\nTap for edit/add details.",
+                                    message: "Event tracked!\n\n(Tap here to edit/add details.)",
                                     onUserTapGesture: { [weak self] in
                                         self?.onShouldDisplayTrackedLog(trackedEntity)
                                     })

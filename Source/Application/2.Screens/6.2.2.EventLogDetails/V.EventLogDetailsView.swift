@@ -120,31 +120,24 @@ struct EventLogDetailsView: View, ViewProtocol {
                 SwiftUIUtils.FixedVerticalSpacer(height: SizeNames.defaultMarginSmall)
             }
             .animation(.default, value: onEdit)
+            .animation(.default, value: addressCopy)
             if viewModel.confirmationSheetType != nil {
                 confirmationSheet
             }
             userMessageView
-        }.onChange(of: viewModel.eventDate) { value in
-            if value != eventDateCopy {
-                eventDateCopy = value
-            }
-        }.onChange(of: viewModel.note) { value in
-            if value != noteCopy {
-                noteCopy = value
-            }
-        }.onChange(of: viewModel.address) { value in
-            if value != addressCopy {
-                addressCopy = value
-            }
+        }.onChange(of: viewModel.eventDate) { _ in
+            updateStateCopyWithViewModelCurrentState()
+        }.onChange(of: viewModel.note) { _ in
+            updateStateCopyWithViewModelCurrentState()
+        }.onChange(of: viewModel.address) { _ in
+            updateStateCopyWithViewModelCurrentState()
         }.onAppear {
-            addressCopy = viewModel.address
-            noteCopy = viewModel.note
-            eventDateCopy = viewModel.eventDate
+            updateStateCopyWithViewModelCurrentState()
         }
     }
-    
+
     @ViewBuilder
-    var saveEditAndSaveActionsView : some View {
+    var saveEditAndSaveActionsView: some View {
         Group {
             Divider()
             if onEdit {
@@ -159,26 +152,24 @@ struct EventLogDetailsView: View, ViewProtocol {
             Divider()
         }
     }
-    
-    var btnEditView : some View {
-        TextButton(onClick: {
-            onEdit.toggle()
-            viewModel.send(.reload)
-        }, text: !onEdit ? "Edit".localizedMissing : "Cancel changes".localizedMissing,
-                   style: .textOnly,
-                   accessibility: .editButton)
+
+    var btnEditView: some View {
+        TextButton(
+            onClick: {
+                onEdit.toggle()
+                updateStateCopyWithViewModelCurrentState()
+            },
+            text: !onEdit ? "Edit".localizedMissing : "Cancel changes".localizedMissing,
+            style: .textOnly,
+            accessibility: .editButton)
     }
-    
+
     @ViewBuilder
-    var btnSaveView : some View {
+    var btnSaveView: some View {
         Group {
             if onEdit {
                 TextButton(onClick: {
-                    viewModel.send(.userDidChangedLocation(address: addressCopy,
-                                                           latitude: mapRegion?.center.latitude ?? 0,
-                                                           longitude: mapRegion?.center.longitude ?? 0))
-                    viewModel.send(.userDidChangedDate(value: eventDateCopy))
-                    viewModel.send(.userDidChangedNote(value: noteCopy))
+                    saveState()
                     onEdit.toggle()
                 }, text: "Save changes", style: .textOnly, accessibility: .editButton)
             } else {
@@ -186,8 +177,8 @@ struct EventLogDetailsView: View, ViewProtocol {
             }
         }
     }
-    
-    var noteView : some View {
+
+    var noteView: some View {
         Group {
             if onEdit {
                 CustomTitleAndCustomTextFieldWithBinding(
@@ -205,7 +196,7 @@ struct EventLogDetailsView: View, ViewProtocol {
             }
         }
     }
-    
+
     @ViewBuilder
     var recordDateView: some View {
         Group {
@@ -230,9 +221,8 @@ struct EventLogDetailsView: View, ViewProtocol {
                         DatePicker(
                             "",
                             selection: $eventDateCopy,
-                            displayedComponents: .date
-                        )
-                        .datePickerStyle(.compact)
+                            displayedComponents: .date)
+                            .datePickerStyle(.compact)
                     }
                     HStack(spacing: 0) {
                         Text("Time".localizedMissing)
@@ -242,15 +232,14 @@ struct EventLogDetailsView: View, ViewProtocol {
                         DatePicker(
                             "",
                             selection: $eventDateCopy,
-                            displayedComponents: .hourAndMinute
-                        )
-                        .datePickerStyle(.compact)
+                            displayedComponents: .hourAndMinute)
+                            .datePickerStyle(.compact)
                     }
                 }
             }
         }
     }
-    
+
     var userMessageView: some View {
         VStack {
             Spacer()
@@ -284,7 +273,7 @@ struct EventLogDetailsView: View, ViewProtocol {
                     style: .secondary,
                     background: .danger,
                     accessibility: .undefined)
-            }  else {
+            } else {
                 EmptyView()
             }
         }
@@ -316,44 +305,79 @@ struct EventLogDetailsView: View, ViewProtocol {
     @State var latitudeDelta: Double = 0
     @ViewBuilder
     var mapView: some View {
-        let distance = (minDelta - latitudeDelta)*1000
+        let distance = (minDelta - latitudeDelta) * 1000
+        let tipText = "Zoom in (till \(Int(abs(distance))) reach zero) on map to choose new address".localizedMissing
         if !viewModel.mapItems.isEmpty {
             GenericMapView(items: $viewModel.mapItems, onRegionChanged: { value in
+                mapRegion = value
+                latitudeDelta = abs(value.latitudeMax - value.latitudeMin)
                 if onEdit {
-                    mapRegion = value
-                    latitudeDelta = abs(value.latitudeMax - value.latitudeMin)
                     if latitudeDelta < minDelta {
-                        Common.ExecutionControlManager.debounce(1, operationId: "fetch_address") {
-                            addressCopy = "..."
-                            Common.LocationUtils.getAddressFrom(latitude: value.center.latitude,
-                                                                                longitude: value.center.longitude) { address in
-                                if !address.addressMin.isEmpty, addressCopy != address.addressMin {
-                                    addressCopy = address.addressMax
+                        addressCopy = "Fetching address for location...".localizedMissing
+                        Common.ExecutionControlManager.debounce(1.5, operationId: "fetch_address") {
+                            Common.LocationUtils.getAddressFrom(
+                                latitude: value.center.latitude,
+                                longitude: value.center.longitude) { address in
+                                    if !address.addressMin.isEmpty, addressCopy != address.addressMin {
+                                        addressCopy = address.addressMax
+                                    }
                                 }
-                            }
                         }
                     }
                 }
             })
-                .frame(height: screenWidth - (2 * SizeNames.defaultMargin))
+            .frame(height: screenWidth - (2 * SizeNames.defaultMargin))
             SwiftUIUtils.FixedVerticalSpacer(height: SizeNames.defaultMarginSmall)
-            if latitudeDelta > 0, onEdit, distance < 0 {
+            if onEdit, distance < 0 {
                 HStack(spacing: 0) {
                     Spacer()
-                    Text("Zoom (in) map to choose address... \(Int(abs(distance)))".localizedMissing)
+                    Text(tipText)
                         .textColor(ColorSemantic.labelSecondary.color)
                         .fontSemantic(FontSemantic.footnote)
                         .multilineTextAlignment(.trailing)
+                        .padding(SizeNames.size_1.cgFloat)
+                        .modifier(AnimatedBackground(
+                            color1: ColorSemantic.primary.color,
+                            color2: ColorSemantic.primary.color,
+                            duration: 3))
                 }
             }
             SwiftUIUtils.FixedVerticalSpacer(height: SizeNames.defaultMarginSmall)
             TitleAndValueView(
-                title: "Adress".localizedMissing,
+                title: "Address".localizedMissing,
                 value: addressCopy,
                 style: .vertical1)
+                .padding(SizeNames.size_1.cgFloat)
+                .modifier(AnimatedBackground(
+                    color1: ColorSemantic.primary.color,
+                    color2: ColorSemantic.primary.color,
+                    duration: 1))
 
         } else {
             EmptyView()
+        }
+    }
+}
+
+fileprivate extension EventLogDetailsView {
+    func saveState() {
+        viewModel.send(.userDidChangedLocation(
+            address: addressCopy,
+            latitude: mapRegion?.center.latitude ?? 0,
+            longitude: mapRegion?.center.longitude ?? 0))
+        viewModel.send(.userDidChangedDate(value: eventDateCopy))
+        viewModel.send(.userDidChangedNote(value: noteCopy))
+    }
+
+    func updateStateCopyWithViewModelCurrentState() {
+        if viewModel.eventDate != eventDateCopy {
+            eventDateCopy = viewModel.eventDate
+        }
+        if viewModel.note != noteCopy {
+            noteCopy = viewModel.note
+        }
+        if viewModel.address != addressCopy {
+            addressCopy = viewModel.address
         }
     }
 }

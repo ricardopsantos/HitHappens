@@ -31,7 +31,7 @@ public extension FirebaseApp {
     }
 }
 #else
-enum FirebaseApp  {
+enum FirebaseApp {
     static var configIsValidAndAvailable: Bool {
         false
     }

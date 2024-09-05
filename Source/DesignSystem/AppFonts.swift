@@ -19,7 +19,7 @@ public enum FontsName: CaseIterable {
     case semibold
     case bold
     var name: String {
-        return switch self {
+        switch self {
         case .regular: "NotoSans-Regular"
         case .bold: "NotoSans-Bold"
         case .medium: "NotoSans-Medium"
@@ -53,7 +53,6 @@ public extension Font {
 }
 
 public enum FontSemantic: CaseIterable {
-    
     case largeTitle
 
     case title1
@@ -69,7 +68,7 @@ public enum FontSemantic: CaseIterable {
     public var uiFont: UIFont {
         rawValue
     }
-    
+
     public var font: Font {
         Font(rawValue)
     }
@@ -104,17 +103,17 @@ public enum FontSemantic: CaseIterable {
 
         let bodyFontSize: CGFloat = 15
         return switch self {
-        case .largeTitle: UIFont(name:FontsName.regular.name, size: bodyFontSize * 2.5)!
-        case .title1: UIFont(name:FontsName.bold.name, size: bodyFontSize * 2)!
-        case .title2: UIFont(name:FontsName.regular.name, size: bodyFontSize * 1.6)!
-        case .headline: UIFont(name:FontsName.regular.name, size: bodyFontSize * 1.2)!
-        case .headlineBold: UIFont(name:FontsName.bold.name, size: bodyFontSize * 1.2)!
-        case .body: UIFont(name:FontsName.regular.name, size: bodyFontSize)!
-        case .bodyBold: UIFont(name:FontsName.bold.name, size: bodyFontSize)!
-        case .callout: UIFont(name:FontsName.regular.name, size: bodyFontSize * 0.9)!
-        case .calloutBold:UIFont(name:FontsName.regular.name, size: bodyFontSize * 0.8)!
-        case .footnote: UIFont(name:FontsName.regular.name, size: bodyFontSize * 0.7)!
-        case .caption: UIFont(name:FontsName.regular.name, size: bodyFontSize * 0.6)!
+        case .largeTitle: UIFont(name: FontsName.regular.name, size: bodyFontSize * 2.5)!
+        case .title1: UIFont(name: FontsName.bold.name, size: bodyFontSize * 2)!
+        case .title2: UIFont(name: FontsName.regular.name, size: bodyFontSize * 1.6)!
+        case .headline: UIFont(name: FontsName.regular.name, size: bodyFontSize * 1.2)!
+        case .headlineBold: UIFont(name: FontsName.bold.name, size: bodyFontSize * 1.2)!
+        case .body: UIFont(name: FontsName.regular.name, size: bodyFontSize)!
+        case .bodyBold: UIFont(name: FontsName.bold.name, size: bodyFontSize)!
+        case .callout: UIFont(name: FontsName.regular.name, size: bodyFontSize * 0.9)!
+        case .calloutBold: UIFont(name: FontsName.regular.name, size: bodyFontSize * 0.8)!
+        case .footnote: UIFont(name: FontsName.regular.name, size: bodyFontSize * 0.7)!
+        case .caption: UIFont(name: FontsName.regular.name, size: bodyFontSize * 0.6)!
         }
     }
 }
@@ -137,7 +136,6 @@ public enum FontSemantic: CaseIterable {
     }
 }
 #endif
-
 
 //
 // MARK: - Preview

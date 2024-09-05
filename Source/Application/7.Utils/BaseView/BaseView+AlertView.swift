@@ -64,7 +64,7 @@ extension BaseView {
 
         var textView: some View {
             Text(model?.message ?? "")
-                .fontSemantic(.bodyBold)
+                .fontSemantic(.body)
                 .lineLimit(nil) // Unlimited lines
                 .multilineTextAlignment(.center)
                 .fixedSize(horizontal: false, vertical: true) // Prevents truncation
@@ -94,7 +94,7 @@ extension BaseView {
                 return Color.clear
             }
             switch type {
-            case .success: return ColorSemantic.allCool.color
+            case .success: return ColorSemantic.primary.color
             case .warning: return ColorSemantic.warning.color
             case .error: return ColorSemantic.danger.color
             case .information: return ColorSemantic.warning.color

@@ -26,13 +26,13 @@ public class SetupManager {
         CPPWrapper.crash_if_debugged() // Security: Crash app if debugger Detach failed
         DevTools.Log.setup()
         UITestingManager.setup()
-#if FIREBASE_ENABLED
+        #if FIREBASE_ENABLED
         if FirebaseApp.configIsValidAndAvailable {
             FirebaseApp.configure()
         } else {
             DevTools.Log.debug(.log("Firebase config not available or invalid"), .business)
         }
-#endif
+        #endif
         FontsName.setup()
         if Common_Utils.onDebug, Common_Utils.false {
             UserDefaults.standard.set(true, forKey: "com.apple.CoreData.ConcurrencyDebug")
