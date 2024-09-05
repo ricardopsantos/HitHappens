@@ -59,7 +59,6 @@ public struct GenericMapView: View {
         span: MKCoordinateSpan(latitudeDelta: 0, longitudeDelta: 0)
     )
     @Binding var items: [ModelItem]
-    @State private var userLocation: CLLocationCoordinate2D?
     @State var shouldDisplayUserLocation: Bool = true
     @State var shouldDisplayEventsLocation: Bool = false
     @StateObject var locationViewModel: Common.SharedLocationManagerViewModel = .shared
@@ -74,6 +73,7 @@ public struct GenericMapView: View {
             .onAppear {
                 locationViewModel.start(sender: "\(Self.self)")
                 shouldDisplayUserLocation = locationViewModel.locationIsAuthorized
+                shouldDisplayEventsLocation = true
                 Common_Utils.delay(1) {
                     updateRegionToFitCoordinates()
                 }
@@ -87,23 +87,9 @@ public struct GenericMapView: View {
                 }
             }
             .onChange(of: region) { new in
-                Common.ExecutionControlManager.debounce(1,
+                Common.ExecutionControlManager.debounce(0.3,
                                                         operationId: "\(Self.self).region.changed") {
                     onRegionChanged(new)
-                }
-            }
-            .onChange(of: locationViewModel.coordinates) { location in
-                if let location = location {
-                    userLocation = .init(
-                        latitude: location.latitude,
-                        longitude: location.longitude
-                    )
-                    if shouldDisplayUserLocation, !shouldDisplayEventsLocation {
-                        // Just displaying user and user changed location. Update region
-                        withAnimation {
-                            updateRegionToFitCoordinates()
-                        }
-                    }
                 }
             }
     }
@@ -226,42 +212,29 @@ public extension GenericMapView {
 //
 public extension GenericMapView {
 
-    
-    var failSafeUserLocation: CLLocationCoordinate2D? {
-        if let userLocation = userLocation {
-            return userLocation
-        } else if let coordinates = locationViewModel.coordinates {
-            return .init(latitude: coordinates.latitude, longitude: coordinates.longitude)
-        }
-        return nil
-    }
-    
     func updateRegionToFitCoordinates() {
         guard shouldDisplayUserLocation || shouldDisplayEventsLocation else {
             return
         }
         var meanFullCoordinates: [CLLocationCoordinate2D] = []
-        if shouldDisplayUserLocation,
-           locationViewModel.locationIsAuthorized,
-           let userLocation = failSafeUserLocation {
-            meanFullCoordinates.append(userLocation)
+        let userLocation = locationViewModel.coordinates
+        
+        if shouldDisplayUserLocation, let userLocation = userLocation {
+            meanFullCoordinates.append(.init(latitude: userLocation.latitude,
+                                             longitude: userLocation.longitude))
         }
         if shouldDisplayEventsLocation {
             let validItems = items.map(\.coordinate)
                 .filter { $0.latitude != 0 && $0.longitude != 0 }
             meanFullCoordinates.append(contentsOf: validItems)
         }
+        
         if !meanFullCoordinates.isEmpty {
             region = meanFullCoordinates.regionToFitCoordinates()
-        } else {
+        } else if let userLocation = userLocation {
             // No coordinates! Center on user...
-            if let userLocation = failSafeUserLocation {
-                region = [userLocation].regionToFitCoordinates()
-            } else if region.center.latitude == 0, region.center.longitude == 0 {
-                // No coordinates and we failed to get the user position.
-                // If we arrive here and the center of the map is on the ocean, center it on Europe
-                region = CLLocationCoordinate2D.europeanCapitals.regionToFitCoordinates()
-            }
+            region = [.init(latitude: userLocation.latitude,
+                            longitude: userLocation.longitude)].regionToFitCoordinates()
         }
     }
 }

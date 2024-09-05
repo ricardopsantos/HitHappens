@@ -61,12 +61,14 @@ public struct TitleAndValueView: View {
         Text(title)
             .fontSemantic(.bodyBold)
             .foregroundColorSemantic(.labelPrimary)
+            .lineLimit(2)
     }
 
     var valueView: some View {
         Text(value)
             .fontSemantic(.body)
             .foregroundColorSemantic(.labelSecondary)
+            .lineLimit(0)
     }
 }
 

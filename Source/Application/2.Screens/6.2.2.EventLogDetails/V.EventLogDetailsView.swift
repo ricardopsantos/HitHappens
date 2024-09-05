@@ -312,19 +312,23 @@ struct EventLogDetailsView: View, ViewProtocol {
             })
     }
 
+    let minDelta: Double = 0.005
+    @State var latitudeDelta: Double = 0
     @ViewBuilder
     var mapView: some View {
+        let distance = (minDelta - latitudeDelta)*1000
         if !viewModel.mapItems.isEmpty {
             GenericMapView(items: $viewModel.mapItems, onRegionChanged: { value in
                 if onEdit {
                     mapRegion = value
-                    let delta = abs(value.latitudeMax - value.latitudeMin)
-                    if delta < 0.01 {
-                        Common.ExecutionControlManager.debounce(2, operationId: "fetch_address") {
+                    latitudeDelta = abs(value.latitudeMax - value.latitudeMin)
+                    if latitudeDelta < minDelta {
+                        Common.ExecutionControlManager.debounce(1, operationId: "fetch_address") {
+                            addressCopy = "..."
                             Common.LocationUtils.getAddressFrom(latitude: value.center.latitude,
                                                                                 longitude: value.center.longitude) { address in
                                 if !address.addressMin.isEmpty, addressCopy != address.addressMin {
-                                    addressCopy = address.addressMin
+                                    addressCopy = address.addressMax
                                 }
                             }
                         }
@@ -333,10 +337,21 @@ struct EventLogDetailsView: View, ViewProtocol {
             })
                 .frame(height: screenWidth - (2 * SizeNames.defaultMargin))
             SwiftUIUtils.FixedVerticalSpacer(height: SizeNames.defaultMarginSmall)
+            if latitudeDelta > 0, onEdit, distance < 0 {
+                HStack(spacing: 0) {
+                    Spacer()
+                    Text("Zoom (in) map to choose address... \(Int(abs(distance)))".localizedMissing)
+                        .textColor(ColorSemantic.labelSecondary.color)
+                        .fontSemantic(FontSemantic.footnote)
+                        .multilineTextAlignment(.trailing)
+                }
+            }
+            SwiftUIUtils.FixedVerticalSpacer(height: SizeNames.defaultMarginSmall)
             TitleAndValueView(
                 title: "Adress".localizedMissing,
                 value: addressCopy,
                 style: .vertical1)
+
         } else {
             EmptyView()
         }
