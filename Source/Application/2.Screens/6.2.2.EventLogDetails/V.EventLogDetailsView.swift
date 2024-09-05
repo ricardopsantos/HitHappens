@@ -7,6 +7,7 @@
 
 import Foundation
 import SwiftUI
+import MapKit
 //
 import DevTools
 import Common
@@ -73,10 +74,13 @@ struct EventLogDetailsView: View, ViewProtocol {
     // MARK: - Usage/Auxiliar Attributes
     @Environment(\.dismiss) var dismiss
     private let onPerformRouteBack: () -> Void
-    @State var locationSwitchIsOn: Bool = false
     private let cancelBag: CancelBag = .init()
     @StateObject var locationViewModel: Common.SharedLocationManagerViewModel = .shared
-
+    @State var onEdit: Bool = false
+    @State var eventDateCopy = Date()
+    @State var noteCopy = ""
+    @State var addressCopy = ""
+    @State var mapRegion: MKCoordinateRegion?
     // MARK: - Body & View
     var body: some View {
         BaseView.withLoading(
@@ -103,32 +107,150 @@ struct EventLogDetailsView: View, ViewProtocol {
             // ScrollView {
             VStack(spacing: 0) {
                 Header(text: "Details".localizedMissing)
-                TitleAndValueView(
-                    title: "Record Date".localizedMissing,
-                    value: viewModel.eventDate.dateMediumTimeShort,
-                    style: .vertical1)
+                recordDateView
                 SwiftUIUtils.FixedVerticalSpacer(height: SizeNames.defaultMarginSmall)
-                CustomTitleAndCustomTextFieldWithBinding(
-                    title: "Note".localizedMissing,
-                    placeholder: "Add a note".localizedMissing,
-                    inputText: $viewModel.note,
-                    accessibility: .undefined) { newValue in
-                        viewModel.send(.userDidChangedNote(value: newValue))
-                    }
+                noteView
                 SwiftUIUtils.FixedVerticalSpacer(height: SizeNames.defaultMarginSmall)
                 mapView
+                SwiftUIUtils.FixedVerticalSpacer(height: SizeNames.defaultMarginSmall)
+                saveEditAndSaveActionsView
                 SwiftUIUtils.FixedVerticalSpacer(height: SizeNames.defaultMarginSmall)
                 Spacer()
                 deleteView
                 SwiftUIUtils.FixedVerticalSpacer(height: SizeNames.defaultMarginSmall)
             }
+            .animation(.default, value: onEdit)
             if viewModel.confirmationSheetType != nil {
                 confirmationSheet
             }
             userMessageView
+        }.onChange(of: viewModel.eventDate) { value in
+            if value != eventDateCopy {
+                eventDateCopy = value
+            }
+        }.onChange(of: viewModel.note) { value in
+            if value != noteCopy {
+                noteCopy = value
+            }
+        }.onChange(of: viewModel.address) { value in
+            if value != addressCopy {
+                addressCopy = value
+            }
+        }.onAppear {
+            addressCopy = viewModel.address
+            noteCopy = viewModel.note
+            eventDateCopy = viewModel.eventDate
         }
     }
-
+    
+    @ViewBuilder
+    var saveEditAndSaveActionsView : some View {
+        Group {
+            Divider()
+            if onEdit {
+                HStack(spacing: 0) {
+                    btnSaveView
+                    Spacer()
+                    btnEditView
+                }
+            } else {
+                btnEditView
+            }
+            Divider()
+        }
+    }
+    
+    var btnEditView : some View {
+        TextButton(onClick: {
+            onEdit.toggle()
+            viewModel.send(.reload)
+        }, text: !onEdit ? "Edit".localizedMissing : "Cancel changes".localizedMissing,
+                   style: .textOnly,
+                   accessibility: .editButton)
+    }
+    
+    @ViewBuilder
+    var btnSaveView : some View {
+        Group {
+            if onEdit {
+                TextButton(onClick: {
+                    viewModel.send(.userDidChangedLocation(address: addressCopy,
+                                                           latitude: mapRegion?.center.latitude ?? 0,
+                                                           longitude: mapRegion?.center.longitude ?? 0))
+                    viewModel.send(.userDidChangedDate(value: eventDateCopy))
+                    viewModel.send(.userDidChangedNote(value: noteCopy))
+                    onEdit.toggle()
+                }, text: "Save changes", style: .textOnly, accessibility: .editButton)
+            } else {
+                EmptyView()
+            }
+        }
+    }
+    
+    var noteView : some View {
+        Group {
+            if onEdit {
+                CustomTitleAndCustomTextFieldWithBinding(
+                    title: "Note".localizedMissing,
+                    placeholder: "Add a note".localizedMissing,
+                    inputText: $noteCopy,
+                    accessibility: .undefined) { newValue in
+                        viewModel.send(.userDidChangedNote(value: newValue))
+                    }
+            } else {
+                TitleAndValueView(
+                    title: "Note".localizedMissing,
+                    value: viewModel.note,
+                    style: .vertical1)
+            }
+        }
+    }
+    
+    @ViewBuilder
+    var recordDateView: some View {
+        Group {
+            if !onEdit {
+                TitleAndValueView(
+                    title: "Record Date".localizedMissing,
+                    value: viewModel.eventDate.dateMediumTimeShort,
+                    style: .vertical1)
+            } else {
+                VStack(spacing: SizeNames.defaultMarginSmall) {
+                    HStack(spacing: 0) {
+                        Text("Record Date".localizedMissing)
+                            .textColor(ColorSemantic.labelPrimary.color)
+                            .fontSemantic(.bodyBold)
+                        Spacer()
+                    }
+                    HStack(spacing: 0) {
+                        Text("Date".localizedMissing)
+                            .textColor(ColorSemantic.labelPrimary.color)
+                            .fontSemantic(.body)
+                        Spacer()
+                        DatePicker(
+                            "",
+                            selection: $eventDateCopy,
+                            displayedComponents: .date
+                        )
+                        .datePickerStyle(.compact)
+                    }
+                    HStack(spacing: 0) {
+                        Text("Time".localizedMissing)
+                            .textColor(ColorSemantic.labelPrimary.color)
+                            .fontSemantic(.body)
+                        Spacer()
+                        DatePicker(
+                            "",
+                            selection: $eventDateCopy,
+                            displayedComponents: .hourAndMinute
+                        )
+                        .datePickerStyle(.compact)
+                    }
+                }
+            }
+        }
+    }
+    
     var userMessageView: some View {
         VStack {
             Spacer()
@@ -145,20 +267,27 @@ struct EventLogDetailsView: View, ViewProtocol {
         }
     }
 
+    @ViewBuilder
     var deleteView: some View {
-        TextButton(
-            onClick: {
-                AnalyticsManager.shared.handleButtonClickEvent(
-                    buttonType: .primary,
-                    label: "Delete",
-                    sender: "\(Self.self)")
-                viewModel.send(.delete(confirmed: false))
-            },
-            text: "Delete event".localizedMissing,
-            alignment: .center,
-            style: .secondary,
-            background: .danger,
-            accessibility: .undefined)
+        Group {
+            if !onEdit {
+                TextButton(
+                    onClick: {
+                        AnalyticsManager.shared.handleButtonClickEvent(
+                            buttonType: .primary,
+                            label: "Delete",
+                            sender: "\(Self.self)")
+                        viewModel.send(.delete(confirmed: false))
+                    },
+                    text: "Delete event".localizedMissing,
+                    alignment: .center,
+                    style: .secondary,
+                    background: .danger,
+                    accessibility: .undefined)
+            }  else {
+                EmptyView()
+            }
+        }
     }
 
     var confirmationSheet: some View {
@@ -186,8 +315,28 @@ struct EventLogDetailsView: View, ViewProtocol {
     @ViewBuilder
     var mapView: some View {
         if !viewModel.mapItems.isEmpty {
-            GenericMapView(items: $viewModel.mapItems, onRegionChanged: { _ in })
+            GenericMapView(items: $viewModel.mapItems, onRegionChanged: { value in
+                if onEdit {
+                    mapRegion = value
+                    let delta = abs(value.latitudeMax - value.latitudeMin)
+                    if delta < 0.01 {
+                        Common.ExecutionControlManager.debounce(2, operationId: "fetch_address") {
+                            Common.LocationUtils.getAddressFrom(latitude: value.center.latitude,
+                                                                                longitude: value.center.longitude) { address in
+                                if !address.addressMin.isEmpty, addressCopy != address.addressMin {
+                                    addressCopy = address.addressMin
+                                }
+                            }
+                        }
+                    }
+                }
+            })
                 .frame(height: screenWidth - (2 * SizeNames.defaultMargin))
+            SwiftUIUtils.FixedVerticalSpacer(height: SizeNames.defaultMarginSmall)
+            TitleAndValueView(
+                title: "Adress".localizedMissing,
+                value: addressCopy,
+                style: .vertical1)
         } else {
             EmptyView()
         }

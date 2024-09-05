@@ -52,8 +52,8 @@ public extension Model.TrackedLog {
             latitude: CLLocationCoordinate2D.random.latitude,
             longitude: CLLocationCoordinate2D.random.longitude,
             addressMin: "Address " + String.randomWithSpaces(10),
-            note: String.randomWithSpaces(10),
-            recordDate: Date(),
+            note: String.randomWithSpaces(Int.random(in: 0...50)),
+            recordDate: Date().add(minutes: -Int.random(in: 0...900)),
             cascadeEntity: .random(cascadeEvents: nil)
         )
     }

@@ -50,7 +50,7 @@ enum UITestingOptions: String {
 // Copy of `Accessibility` enum @ SmartApp Target
 // Copy of `Accessibility` enum @ SmartApp Target
 //
-enum Accessibility: String, CaseIterable {
+public enum Accessibility: String, CaseIterable {
     // Text Fields
     case txtName
     case txtUserName
@@ -64,6 +64,8 @@ enum Accessibility: String, CaseIterable {
     case saveButton
     case fwdButton
     case backButton
+    case addButton
+    case editButton
     case confirmButton
     case cancelButton
 

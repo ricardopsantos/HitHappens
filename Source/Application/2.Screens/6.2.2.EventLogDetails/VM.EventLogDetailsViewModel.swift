@@ -54,6 +54,8 @@ extension EventLogDetailsViewModel {
         case didDisappear
         case reload
         case userDidChangedNote(value: String)
+        case userDidChangedDate(value: Date)
+        case userDidChangedLocation(address: String, latitude: Double, longitude: Double)
         case delete(confirmed: Bool)
         case handleConfirmation
     }
@@ -75,6 +77,7 @@ class EventLogDetailsViewModel: BaseViewModel {
     @Published var userMessage: (text: String, color: ColorSemantic) = ("", .clear)
     @Published var note: String = ""
     @Published var eventDate: Date = .now
+    @Published var address: String = ""
     @Published var mapItems: [GenericMapView.ModelItem] = []
     private let cancelBag = CancelBag()
     private let dataBaseRepository: DataBaseRepositoryProtocol?
@@ -122,13 +125,36 @@ class EventLogDetailsViewModel: BaseViewModel {
         case .userDidChangedNote(value: let value):
             userMessage = ("", .clear)
             Task { [weak self] in
-                guard let self = self, var trackedLog = trackedLog else { return }
+                guard let self = self, var trackedLog = trackedLog, trackedLog.note != value else { return }
                 trackedLog.note = value
                 dataBaseRepository?.trackedLogInsertOrUpdate(
                     trackedLog: trackedLog,
                     trackedEntityId: trackedLog.cascadeEntity?.id ?? "")
             }
-
+        case .userDidChangedLocation(address: let address, latitude: let latitude, longitude: let longitude):
+            userMessage = ("", .clear)
+            Task { [weak self] in
+                guard let self = self, 
+                        var trackedLog = trackedLog,
+                      !address.trim.isEmpty, 
+                        trackedLog.addressMin != address,
+                      latitude != 0, longitude != 0 else { return }
+                trackedLog.addressMin = address
+                trackedLog.latitude = latitude
+                trackedLog.longitude = longitude
+                dataBaseRepository?.trackedLogInsertOrUpdate(
+                    trackedLog: trackedLog,
+                    trackedEntityId: trackedLog.cascadeEntity?.id ?? "")
+            }
+        case .userDidChangedDate(value: let value):
+            userMessage = ("", .clear)
+            Task { [weak self] in
+                guard let self = self, var trackedLog = trackedLog, trackedLog.recordDate != value else { return }
+                trackedLog.recordDate = value
+                dataBaseRepository?.trackedLogInsertOrUpdate(
+                    trackedLog: trackedLog,
+                    trackedEntityId: trackedLog.cascadeEntity?.id ?? "")
+            }
         case .delete(confirmed: let confirmed):
             if !confirmed {
                 confirmationSheetType = .delete
@@ -138,6 +164,8 @@ class EventLogDetailsViewModel: BaseViewModel {
                     dataBaseRepository?.trackedLogDelete(trackedLogId: trackedLog.id)
                 }
             }
+
+
         }
     }
 }
@@ -151,6 +179,7 @@ fileprivate extension EventLogDetailsViewModel {
         trackedLog = model
         note = model.note
         eventDate = model.recordDate
+        address = model.addressMin
         if model.latitude != 0, model.longitude != 0, let cascadeEntity = model.cascadeEntity {
             let category = cascadeEntity.category
             mapItems = [GenericMapView.ModelItem.with(
