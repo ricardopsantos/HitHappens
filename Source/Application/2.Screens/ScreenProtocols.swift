@@ -16,7 +16,7 @@ protocol ViewCoordinatorProtocol {
     var configuration: ConfigurationViewModel { get }
     var coordinator: RouterViewModel { get }
     @ViewBuilder
-    func buildScreen(_ screen: AppScreen) -> ContentView
+    func buildScreen(_ screen: AppScreen, presentationStyle: ViewPresentationStyle) -> ContentView
 }
 
 /// Protocol to ensure that all View follow the same coding standard

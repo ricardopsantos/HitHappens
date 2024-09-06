@@ -64,6 +64,7 @@ extension EventLogDetailsViewModel {
         let model: EventLogDetailsModel
         let onPerformRouteBack: () -> Void
         let dataBaseRepository: DataBaseRepositoryProtocol
+        let presentationStyle: ViewPresentationStyle
     }
 }
 

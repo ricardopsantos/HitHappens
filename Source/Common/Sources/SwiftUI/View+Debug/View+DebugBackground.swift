@@ -45,7 +45,7 @@ public struct AnimatedBackground: ViewModifier {
         isVisible: Bool = false,
         color1: Color = .red,
         color2: Color = .blue,
-        duration: CGFloat = Common.Constants.defaultAnimationsTime * 2
+        duration: CGFloat = Common.Constants.defaultAnimationsTime * 3
     ) {
         self.isVisible = isVisible
         self.color1 = color1
@@ -60,7 +60,7 @@ public struct AnimatedBackground: ViewModifier {
                     .trim(from: isVisible ? 1 : 0, to: 1)
                     .stroke(color1, lineWidth: lineWidth)
                     .padding(lineWidth)
-
+                
                 Rectangle()
                     .trim(from: isVisible ? 1 : 0, to: 1)
                     .stroke(color2, lineWidth: lineWidth)
@@ -70,7 +70,8 @@ public struct AnimatedBackground: ViewModifier {
                 withAnimation(.linear(duration: duration)) {
                     isVisible = true
                 }
-            } }
+            }
+    }
 }
 
 //

@@ -25,13 +25,17 @@ struct EventsListViewCoordinator: View, ViewCoordinatorProtocol {
     @Environment(\.dismiss) var dismiss
     // MARK: - Body & View
     var body: some View {
-        buildScreen(.eventsList)
-            .sheet(item: $coordinator.sheetLink, content: buildScreen)
-            .fullScreenCover(item: $coordinator.coverLink, content: buildScreen)
+        buildScreen(.eventsList, presentationStyle: .notApplied)
+            .sheet(item: $coordinator.sheetLink) { screen in
+                buildScreen(screen, presentationStyle: .sheet)
+            }
+            .fullScreenCover(item: $coordinator.coverLink) { screen in
+                buildScreen(screen, presentationStyle: .fullScreenCover)
+            }
     }
 
     @ViewBuilder
-    func buildScreen(_ screen: AppScreen) -> some View {
+    func buildScreen(_ screen: AppScreen, presentationStyle: ViewPresentationStyle) -> some View {
         switch screen {
         case .eventsList:
             let dependencies: EventsListViewModel.Dependencies = .init(
@@ -50,7 +54,8 @@ struct EventsListViewCoordinator: View, ViewCoordinatorProtocol {
                 }, onShouldDisplayTrackedLog: { trackedLog in
                     coordinatorTab2.coverLink = .eventLogDetails(model: .init(trackedLog: trackedLog))
                 },
-                dataBaseRepository: configuration.dataBaseRepository)
+                dataBaseRepository: configuration.dataBaseRepository,
+                presentationStyle: presentationStyle)
             EventDetailsView(dependencies: dependencies)
         default:
             NotImplementedView(screen: screen)
@@ -105,14 +110,17 @@ struct EventsListView: View, ViewProtocol {
         let sectionC = viewModel.events.filter(\.archived)
         ScrollView {
             ZStack {
-                HStack {
+                ZStack {
                     Header(text: "\(AppConstants.entityNamePlural)")
-                    ImageButton(
-                        systemImageName: "plus",
-                        imageSize: SizeNames.defaultButtonTertiaryDefaultHeight,
-                        onClick: onShouldDisplayNewTrackedEntity,
-                        style: .tertiary,
-                        accessibility: .addButton)
+                    HStack {
+                        Spacer()
+                        ImageButton(
+                            systemImageName: "plus",
+                            imageSize: SizeNames.defaultButtonTertiaryDefaultHeight,
+                            onClick: onShouldDisplayNewTrackedEntity,
+                            style: .tertiary,
+                            accessibility: .addButton)
+                    }
                 }
             }
             LazyVStack(spacing: 0) {

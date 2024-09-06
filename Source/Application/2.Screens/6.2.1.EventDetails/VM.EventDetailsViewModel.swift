@@ -89,6 +89,7 @@ extension EventDetailsViewModel {
         let onPerformRouteBack: () -> Void
         let onShouldDisplayTrackedLog: (Model.TrackedLog) -> Void
         let dataBaseRepository: DataBaseRepositoryProtocol
+        let presentationStyle: ViewPresentationStyle
     }
 }
 

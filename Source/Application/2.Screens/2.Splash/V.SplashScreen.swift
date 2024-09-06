@@ -24,15 +24,21 @@ struct SplashViewCoordinator: View, ViewCoordinatorProtocol {
     // MARK: - Body & View
     var body: some View {
         NavigationStack(path: $coordinator.navPath) {
-            buildScreen(.splash)
-                .navigationDestination(for: AppScreen.self, destination: buildScreen)
-                .sheet(item: $coordinator.sheetLink, content: buildScreen)
-                .fullScreenCover(item: $coordinator.coverLink, content: buildScreen)
+            buildScreen(.splash, presentationStyle: .notApplied)
+                .navigationDestination(for: AppScreen.self, destination: { screen in
+                    buildScreen(screen, presentationStyle: .fullScreenCover)
+                })
+                .sheet(item: $coordinator.sheetLink) { screen in
+                    buildScreen(screen, presentationStyle: .sheet)
+                }
+                .fullScreenCover(item: $coordinator.coverLink) { screen in
+                    buildScreen(screen, presentationStyle: .fullScreenCover)
+                }
         }
     }
 
     @ViewBuilder
-    func buildScreen(_ screen: AppScreen) -> some View {
+    func buildScreen(_ screen: AppScreen, presentationStyle: ViewPresentationStyle) -> some View {
         switch screen {
         case .splash:
             let dependencies: SplashViewModel.Dependencies = .init(

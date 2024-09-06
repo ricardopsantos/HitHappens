@@ -23,13 +23,17 @@ struct SettingsViewCoordinator: View, ViewCoordinatorProtocol {
     // MARK: - Usage/Auxiliar Attributes
     // MARK: - Body & View
     var body: some View {
-        buildScreen(.settings)
-            .sheet(item: $coordinator.sheetLink, content: buildScreen)
-            .fullScreenCover(item: $coordinator.coverLink, content: buildScreen)
+        buildScreen(.settings, presentationStyle: .notApplied)
+            .sheet(item: $coordinator.sheetLink) { screen in
+                buildScreen(screen, presentationStyle: .sheet)
+            }
+            .fullScreenCover(item: $coordinator.coverLink) { screen in
+                buildScreen(screen, presentationStyle: .fullScreenCover)
+            }
     }
 
     @ViewBuilder
-    func buildScreen(_ screen: AppScreen) -> some View {
+    func buildScreen(_ screen: AppScreen, presentationStyle: ViewPresentationStyle) -> some View {
         switch screen {
         case .settings:
             let dependencies: SettingsViewModel.Dependencies = .init(

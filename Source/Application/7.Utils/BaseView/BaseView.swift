@@ -117,11 +117,14 @@ enum BaseView {
                 case .custom:
                     NavigationView {
                         baseView
-                    }.customBackButtonV1(action: {
+                    }
+                    .customBackButtonV1(action: {
                         if let onBackButtonTap = navigationViewModel.onBackButtonTap {
                             onBackButtonTap()
                         }
                     }, title: navigationViewModel.title)
+                    //.hideNavigationBar()
+                    
                 case .default:
                     NavigationView {
                         baseView

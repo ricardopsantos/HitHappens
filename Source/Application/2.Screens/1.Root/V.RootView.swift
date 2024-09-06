@@ -22,14 +22,18 @@ struct RootViewCoordinator: View, ViewCoordinatorProtocol {
 
     // MARK: - Body & View
     var body: some View {
-        buildScreen(.root)
-            .sheet(item: $coordinator.sheetLink, content: buildScreen)
-            .fullScreenCover(item: $coordinator.coverLink, content: buildScreen)
+        buildScreen(.root, presentationStyle: .notApplied)
+            .sheet(item: $coordinator.sheetLink) { screen in
+                buildScreen(screen, presentationStyle: .sheet)
+            }
+            .fullScreenCover(item: $coordinator.coverLink) { screen in
+                buildScreen(screen, presentationStyle: .fullScreenCover)
+            }
             .environmentObject(configuration.authenticationViewModel)
     }
 
     /// Navigation Links
-    @ViewBuilder func buildScreen(_ screen: AppScreen) -> some View {
+    func buildScreen(_ screen: AppScreen, presentationStyle: ViewPresentationStyle) -> some View {
         switch screen {
         case .root:
             let nonSecureAppPreferences = configuration.nonSecureAppPreferences

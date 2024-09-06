@@ -27,20 +27,30 @@ struct ___Template___ViewCoordinator: View, ViewCoordinatorProtocol {
     var body: some View {
         if haveNavigationStack {
             NavigationStack(path: $coordinator.navPath) {
-                buildScreen(.templateWith(model: model))
-                    .navigationDestination(for: AppScreen.self, destination: buildScreen)
-                    .sheet(item: $coordinator.sheetLink, content: buildScreen)
-                    .fullScreenCover(item: $coordinator.coverLink, content: buildScreen)
+                buildScreen(.templateWith(model: model), presentationStyle: .notApplied)
+                    .navigationDestination(for: AppScreen.self, destination: { screen in
+                        buildScreen(screen, presentationStyle: .fullScreenCover)
+                    })
+                    .sheet(item: $coordinator.sheetLink) { screen in
+                        buildScreen(screen, presentationStyle: .sheet)
+                    }
+                    .fullScreenCover(item: $coordinator.coverLink) { screen in
+                        buildScreen(screen, presentationStyle: .fullScreenCover)
+                    }
             }
         } else {
-            buildScreen(.templateWith(model: model))
-                .sheet(item: $coordinator.sheetLink, content: buildScreen)
-                .fullScreenCover(item: $coordinator.coverLink, content: buildScreen)
+            buildScreen(.templateWith(model: model), presentationStyle: .notApplied)
+                .sheet(item: $coordinator.sheetLink) { screen in
+                    buildScreen(screen, presentationStyle: .sheet)
+                }
+                .fullScreenCover(item: $coordinator.coverLink) { screen in
+                    buildScreen(screen, presentationStyle: .fullScreenCover)
+                }
         }
     }
 
     @ViewBuilder
-    func buildScreen(_ screen: AppScreen) -> some View {
+    func buildScreen(_ screen: AppScreen, presentationStyle: ViewPresentationStyle) -> some View {
         switch screen {
         case .templateWith(model: let model):
             let dependencies: ___Template___ViewModel.Dependencies = .init(

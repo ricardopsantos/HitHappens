@@ -25,13 +25,17 @@ struct EventsMapViewCoordinator: View, ViewCoordinatorProtocol {
     @Environment(\.dismiss) var dismiss
     // MARK: - Body & View
     var body: some View {
-        buildScreen(.map)
-            .sheet(item: $coordinator.sheetLink, content: buildScreen)
-            .fullScreenCover(item: $coordinator.coverLink, content: buildScreen)
+        buildScreen(.map, presentationStyle: .notApplied)
+            .sheet(item: $coordinator.sheetLink) { screen in
+                buildScreen(screen, presentationStyle: .sheet)
+            }
+            .fullScreenCover(item: $coordinator.coverLink) { screen in
+                buildScreen(screen, presentationStyle: .fullScreenCover)
+            }
     }
 
     @ViewBuilder
-    func buildScreen(_ screen: AppScreen) -> some View {
+    func buildScreen(_ screen: AppScreen, presentationStyle: ViewPresentationStyle) -> some View {
         switch screen {
         case .map:
             let dependencies: EventsMapViewModel.Dependencies = .init(
@@ -45,7 +49,8 @@ struct EventsMapViewCoordinator: View, ViewCoordinatorProtocol {
                 model: model, onPerformRouteBack: {
                     coordinatorTab4.navigateBack()
                 },
-                dataBaseRepository: configuration.dataBaseRepository)
+                dataBaseRepository: configuration.dataBaseRepository,
+                presentationStyle: presentationStyle)
             EventLogDetailsView(dependencies: dependencies)
         default:
             NotImplementedView(screen: screen)

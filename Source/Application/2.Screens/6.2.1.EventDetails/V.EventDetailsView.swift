@@ -28,21 +28,28 @@ struct EventDetailsViewCoordinator: View, ViewCoordinatorProtocol {
     // MARK: - Body & View
     var body: some View {
         if !haveNavigationStack {
-            buildScreen(.eventDetails(model: model))
-                .sheet(item: $coordinator.sheetLink, content: buildScreen)
-                .fullScreenCover(item: $coordinator.coverLink, content: buildScreen)
+            buildScreen(.eventDetails(model: model), presentationStyle: .notApplied)
+                .sheet(item: $coordinator.sheetLink) { screen in
+                    buildScreen(screen, presentationStyle: .sheet)
+                }
+                .fullScreenCover(item: $coordinator.coverLink) { screen in
+                    buildScreen(screen, presentationStyle: .fullScreenCover)
+                }
         } else {
             NavigationStack(path: $coordinator.navPath) {
-                buildScreen(.eventDetails(model: model))
-                    .navigationDestination(for: AppScreen.self, destination: buildScreen)
-                    .sheet(item: $coordinator.sheetLink, content: buildScreen)
-                    .fullScreenCover(item: $coordinator.coverLink, content: buildScreen)
+                buildScreen(.eventDetails(model: model), presentationStyle: .navigation)
+                    .sheet(item: $coordinator.sheetLink) { screen in
+                        buildScreen(screen, presentationStyle: .sheet)
+                    }
+                    .fullScreenCover(item: $coordinator.coverLink) { screen in
+                        buildScreen(screen, presentationStyle: .fullScreenCover)
+                    }
             }
         }
     }
 
     @ViewBuilder
-    func buildScreen(_ screen: AppScreen) -> some View {
+    func buildScreen(_ screen: AppScreen, presentationStyle: ViewPresentationStyle) -> some View {
         switch screen {
         case .eventDetails(model: let model):
             let dependencies: EventDetailsViewModel.Dependencies = .init(
@@ -51,12 +58,14 @@ struct EventDetailsViewCoordinator: View, ViewCoordinatorProtocol {
                 }, onShouldDisplayTrackedLog: { trackedLog in
                     coordinator.coverLink = .eventLogDetails(model: .init(trackedLog: trackedLog))
                 },
-                dataBaseRepository: configuration.dataBaseRepository)
+                dataBaseRepository: configuration.dataBaseRepository,
+                presentationStyle: presentationStyle)
             EventDetailsView(dependencies: dependencies)
         case .eventLogDetails(model: let model):
             let dependencies: EventLogDetailsViewModel.Dependencies = .init(
                 model: model, onPerformRouteBack: {},
-                dataBaseRepository: configuration.dataBaseRepository)
+                dataBaseRepository: configuration.dataBaseRepository,
+                presentationStyle: presentationStyle)
             EventLogDetailsView(dependencies: dependencies)
         default:
             NotImplementedView(screen: screen)
@@ -76,10 +85,12 @@ struct EventDetailsView: View, ViewProtocol {
         DevTools.Log.debug(.viewInit("\(Self.self)"), .view)
         _viewModel = StateObject(wrappedValue: .init(dependencies: dependencies))
         self.onPerformRouteBack = dependencies.onPerformRouteBack
+        self.presentationStyle = dependencies.presentationStyle
     }
 
     // MARK: - Usage/Auxiliar Attributes
     @Environment(\.dismiss) var dismiss
+    private let presentationStyle: ViewPresentationStyle
     private let onPerformRouteBack: () -> Void
     @State var locationSwitchIsOn: Bool = false
     private let cancelBag: CancelBag = .init()
@@ -90,9 +101,7 @@ struct EventDetailsView: View, ViewProtocol {
         BaseView.withLoading(
             sender: "\(Self.self)",
             appScreen: .eventDetails(model: .init(event: .random(cascadeEvents: []))),
-            navigationViewModel: .custom(onBackButtonTap: {
-                onPerformRouteBack()
-            }, title: "\(AppConstants.entityNameSingle) details".localizedMissing),
+            navigationViewModel: navigationViewModel,
             ignoresSafeArea: false,
             background: .defaultBackground,
             loadingModel: viewModel.loadingModel,
@@ -118,13 +127,21 @@ struct EventDetailsView: View, ViewProtocol {
         ZStack {
             ScrollView {
                 LazyVStack(spacing: 0) {
+                    if presentationStyle == .fullScreenCover {
+                        Header(text: title, hasCloseButton: true, onBackOrCloseClick: {
+                            dismiss()
+                        })
+                    }
+                    SwiftUIUtils.FixedVerticalSpacer(height: SizeNames.defaultMarginSmall)
+                    Divider()
+                    SwiftUIUtils.FixedVerticalSpacer(height: SizeNames.defaultMarginSmall)
                     detailsView
                     SwiftUIUtils.FixedVerticalSpacer(height: SizeNames.defaultMarginSmall)
                     if viewModel.isNewEvent {
                         SwiftUIUtils.FixedVerticalSpacer(height: SizeNames.defaultMarginSmall)
                         saveNewView
                     } else {
-                        addNewView
+                        addNewLogView
                         SwiftUIUtils.FixedVerticalSpacer(height: SizeNames.defaultMarginSmall)
                         Divider()
                         SwiftUIUtils.FixedVerticalSpacer(height: SizeNames.defaultMarginSmall)
@@ -140,7 +157,27 @@ struct EventDetailsView: View, ViewProtocol {
             userMessageView
         }
     }
+}
 
+//
+// MARK: - Auxiliar
+//
+fileprivate extension EventDetailsView {
+    var title: String {
+        "\(AppConstants.entityNameSingle) details".localizedMissing
+    }
+    var navigationViewModel: BaseView.NavigationViewModel? {
+        guard presentationStyle == .navigation else {
+            return nil
+        }
+        return .custom(onBackButtonTap: { onPerformRouteBack() }, title: title)
+    }
+}
+
+//
+// MARK: - Auxiliar Views
+//
+fileprivate extension EventDetailsView {
     var userMessageView: some View {
         VStack(spacing: 0) {
             Text(viewModel.userMessage.text)
@@ -222,7 +259,7 @@ struct EventDetailsView: View, ViewProtocol {
             accessibility: .saveButton)
     }
 
-    var addNewView: some View {
+    var addNewLogView: some View {
         TextButton(
             onClick: {
                 AnalyticsManager.shared.handleButtonClickEvent(
@@ -231,7 +268,7 @@ struct EventDetailsView: View, ViewProtocol {
                     sender: "\(Self.self)")
                 viewModel.send(.addNewLog)
             },
-            text: "This happen? Track it!".localizedMissing,
+            text: "This happen? \(AppConstants.entityLogNameSingle) it!".localizedMissing,
             alignment: .center,
             style: .secondary,
             background: .primary,

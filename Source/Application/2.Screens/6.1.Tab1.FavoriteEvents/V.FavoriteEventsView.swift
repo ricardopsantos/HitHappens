@@ -27,20 +27,30 @@ struct FavoriteEventsViewCoordinator: View, ViewCoordinatorProtocol {
     var body: some View {
         if haveNavigationStack {
             NavigationStack(path: $coordinator.navPath) {
-                buildScreen(.favoriteEvents)
-                    .navigationDestination(for: AppScreen.self, destination: buildScreen)
-                    .sheet(item: $coordinator.sheetLink, content: buildScreen)
-                    .fullScreenCover(item: $coordinator.coverLink, content: buildScreen)
+                buildScreen(.favoriteEvents, presentationStyle: .notApplied)
+                    .navigationDestination(for: AppScreen.self, destination: { screen in
+                        buildScreen(screen, presentationStyle: .fullScreenCover)
+                    })
+                    .sheet(item: $coordinator.sheetLink) { screen in
+                        buildScreen(screen, presentationStyle: .sheet)
+                    }
+                    .fullScreenCover(item: $coordinator.coverLink) { screen in
+                        buildScreen(screen, presentationStyle: .fullScreenCover)
+                    }
             }
         } else {
-            buildScreen(.favoriteEvents)
-                .sheet(item: $coordinator.sheetLink, content: buildScreen)
-                .fullScreenCover(item: $coordinator.coverLink, content: buildScreen)
+            buildScreen(.favoriteEvents, presentationStyle: .notApplied)
+                .sheet(item: $coordinator.sheetLink) { screen in
+                    buildScreen(screen, presentationStyle: .sheet)
+                }
+                .fullScreenCover(item: $coordinator.coverLink) { screen in
+                    buildScreen(screen, presentationStyle: .fullScreenCover)
+                }
         }
     }
 
     @ViewBuilder
-    func buildScreen(_ screen: AppScreen) -> some View {
+    func buildScreen(_ screen: AppScreen, presentationStyle: ViewPresentationStyle) -> some View {
         switch screen {
         case .favoriteEvents:
             let dependencies: FavoriteEventsViewModel.Dependencies = .init(
@@ -52,7 +62,8 @@ struct FavoriteEventsViewCoordinator: View, ViewCoordinatorProtocol {
         case .eventLogDetails(model: let model):
             let dependencies: EventLogDetailsViewModel.Dependencies = .init(
                 model: model, onPerformRouteBack: {},
-                dataBaseRepository: configuration.dataBaseRepository)
+                dataBaseRepository: configuration.dataBaseRepository,
+                presentationStyle: presentationStyle)
             EventLogDetailsView(dependencies: dependencies)
         default:
             NotImplementedView(screen: screen)

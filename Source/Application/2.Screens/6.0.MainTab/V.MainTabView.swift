@@ -53,7 +53,9 @@ struct MainTabView: View, ViewProtocol {
             //
             NavigationStack(path: $tab1Router.navPath) {
                 FavoriteEventsViewCoordinator(haveNavigationStack: false)
-                    .navigationDestination(for: AppScreen.self, destination: buildScreen)
+                    .navigationDestination(for: AppScreen.self, destination: { screen in
+                        buildScreen(screen, presentationStyle: .notApplied)
+                    })
                     .environmentObject(tab1Router)
             }
             .tabItem { TabItemView(title: AppTab.tab1.title, icon: AppTab.tab1.icon) }
@@ -63,7 +65,9 @@ struct MainTabView: View, ViewProtocol {
             //
             NavigationStack(path: $tab2Router.navPath) {
                 EventsListViewCoordinator()
-                    .navigationDestination(for: AppScreen.self, destination: buildScreen)
+                    .navigationDestination(for: AppScreen.self, destination: { screen in
+                        buildScreen(screen, presentationStyle: .notApplied)
+                    })
                     .environmentObject(tab2Router)
             }
             .tabItem { TabItemView(title: AppTab.tab2.title, icon: AppTab.tab2.icon) }
@@ -73,7 +77,9 @@ struct MainTabView: View, ViewProtocol {
             //
             NavigationStack(path: $tab3Router.navPath) {
                 EventsCalendarViewCoordinator()
-                    .navigationDestination(for: AppScreen.self, destination: buildScreen)
+                    .navigationDestination(for: AppScreen.self, destination: { screen in
+                        buildScreen(screen, presentationStyle: .notApplied)
+                    })
                     .environmentObject(tab3Router)
             }
             .tabItem { TabItemView(title: AppTab.tab3.title, icon: AppTab.tab3.icon) }
@@ -83,7 +89,9 @@ struct MainTabView: View, ViewProtocol {
             //
             NavigationStack(path: $tab4Router.navPath) {
                 EventsMapViewCoordinator()
-                    .navigationDestination(for: AppScreen.self, destination: buildScreen)
+                    .navigationDestination(for: AppScreen.self, destination: { screen in
+                        buildScreen(screen, presentationStyle: .notApplied)
+                    })
                     .environmentObject(tab4Router)
             }
             .tabItem { TabItemView(title: AppTab.tab4.title, icon: AppTab.tab4.icon) }
@@ -93,7 +101,9 @@ struct MainTabView: View, ViewProtocol {
             //
             NavigationStack(path: $tab5Router.navPath) {
                 SettingsViewCoordinator()
-                    .navigationDestination(for: AppScreen.self, destination: buildScreen)
+                    .navigationDestination(for: AppScreen.self, destination: { screen in
+                        buildScreen(screen, presentationStyle: .notApplied)
+                    })
                     .environmentObject(tab5Router)
             }
             .tabItem { TabItemView(title: AppTab.tab5.title, icon: AppTab.tab5.icon) }
@@ -117,7 +127,7 @@ struct MainTabView: View, ViewProtocol {
     }
 
     @ViewBuilder
-    func buildScreen(_ screen: AppScreen) -> some View {
+    func buildScreen(_ screen: AppScreen, presentationStyle: ViewPresentationStyle) -> some View {
         switch screen {
         case .eventLogDetails(model: let model):
             EventLogDetailsViewCoordinator(

@@ -23,15 +23,21 @@ struct LoginViewCoordinator: View, ViewCoordinatorProtocol {
     // MARK: - Body & View
     var body: some View {
         NavigationStack(path: $coordinator.navPath) {
-            buildScreen(.login)
-                .navigationDestination(for: AppScreen.self, destination: buildScreen)
-                .sheet(item: $coordinator.sheetLink, content: buildScreen)
-                .fullScreenCover(item: $coordinator.coverLink, content: buildScreen)
+            buildScreen(.login, presentationStyle: .notApplied)
+                .navigationDestination(for: AppScreen.self, destination: { screen in
+                    buildScreen(screen, presentationStyle: .fullScreenCover)
+                })
+                .sheet(item: $coordinator.sheetLink) { screen in
+                    buildScreen(screen, presentationStyle: .sheet)
+                }
+                .fullScreenCover(item: $coordinator.coverLink) { screen in
+                    buildScreen(screen, presentationStyle: .fullScreenCover)
+                }
         }
     }
 
     @ViewBuilder
-    func buildScreen(_ screen: AppScreen) -> some View {
+    func buildScreen(_ screen: AppScreen, presentationStyle: ViewPresentationStyle) -> some View {
         switch screen {
         case .login:
             let dependencies: LoginViewModel.Dependencies = .init(

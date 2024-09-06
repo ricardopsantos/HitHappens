@@ -28,28 +28,39 @@ struct EventLogDetailsViewCoordinator: View, ViewCoordinatorProtocol {
     // MARK: - Body & View
     var body: some View {
         if !haveNavigationStack {
-            buildScreen(.eventLogDetails(model: model))
-                .sheet(item: $coordinator.sheetLink, content: buildScreen)
-                .fullScreenCover(item: $coordinator.coverLink, content: buildScreen)
+            buildScreen(.eventLogDetails(model: model), presentationStyle: .notApplied)
+                .sheet(item: $coordinator.sheetLink) { screen in
+                    buildScreen(screen, presentationStyle: .sheet)
+                }
+                .fullScreenCover(item: $coordinator.coverLink) { screen in
+                    buildScreen(screen, presentationStyle: .fullScreenCover)
+                }
         } else {
             NavigationStack(path: $coordinator.navPath) {
-                buildScreen(.eventLogDetails(model: model))
-                    .navigationDestination(for: AppScreen.self, destination: buildScreen)
-                    .sheet(item: $coordinator.sheetLink, content: buildScreen)
-                    .fullScreenCover(item: $coordinator.coverLink, content: buildScreen)
+                buildScreen(.eventLogDetails(model: model), presentationStyle: .notApplied)
+                    .navigationDestination(for: AppScreen.self, destination: { screen in
+                        buildScreen(screen, presentationStyle: .fullScreenCover)
+                    })
+                    .sheet(item: $coordinator.sheetLink) { screen in
+                        buildScreen(screen, presentationStyle: .sheet)
+                    }
+                    .fullScreenCover(item: $coordinator.coverLink) { screen in
+                        buildScreen(screen, presentationStyle: .fullScreenCover)
+                    }
             }
         }
     }
 
     @ViewBuilder
-    func buildScreen(_ screen: AppScreen) -> some View {
+    func buildScreen(_ screen: AppScreen, presentationStyle: ViewPresentationStyle) -> some View {
         switch screen {
         case .eventLogDetails(model: let model):
             let dependencies: EventLogDetailsViewModel.Dependencies = .init(
                 model: model, onPerformRouteBack: {
                     coordinatorTab2.navigateBack()
                 },
-                dataBaseRepository: configuration.dataBaseRepository)
+                dataBaseRepository: configuration.dataBaseRepository,
+                presentationStyle: presentationStyle)
             EventLogDetailsView(dependencies: dependencies)
         default:
             NotImplementedView(screen: screen)
@@ -106,7 +117,7 @@ struct EventLogDetailsView: View, ViewProtocol {
         ZStack {
             // ScrollView {
             VStack(spacing: 0) {
-                Header(text: "\(AppConstants.entityLogNameSingle.lowercased()) details".localizedMissing, hasCloseButton: true) {
+                Header(text: "\(AppConstants.entityLogNameSingle) details".localizedMissing, hasCloseButton: true) {
                     dismiss()
                 }
                 SwiftUIUtils.FixedVerticalSpacer(height: SizeNames.defaultMarginSmall)
