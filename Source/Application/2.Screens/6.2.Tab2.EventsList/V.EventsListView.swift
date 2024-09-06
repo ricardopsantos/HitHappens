@@ -39,7 +39,7 @@ struct EventsListViewCoordinator: View, ViewCoordinatorProtocol {
                     let detailsModel: EventDetailsModel = .init(event: model)
                     coordinatorTab2.navigate(to: .eventDetails(model: detailsModel))
                 }, onShouldDisplayNewTrackedEntity: {
-                    coordinator.sheetLink = .eventDetails(model: nil)
+                    coordinator.coverLink = .eventDetails(model: nil)
                 },
                 dataBaseRepository: configuration.dataBaseRepository)
             EventsListView(dependencies: dependencies)
@@ -48,7 +48,7 @@ struct EventsListViewCoordinator: View, ViewCoordinatorProtocol {
                 model: model, onPerformRouteBack: {
                     coordinatorTab2.navigateBack()
                 }, onShouldDisplayTrackedLog: { trackedLog in
-                    coordinatorTab2.sheetLink = .eventLogDetails(model: .init(trackedLog: trackedLog))
+                    coordinatorTab2.coverLink = .eventLogDetails(model: .init(trackedLog: trackedLog))
                 },
                 dataBaseRepository: configuration.dataBaseRepository)
             EventDetailsView(dependencies: dependencies)
@@ -86,7 +86,7 @@ struct EventsListView: View, ViewProtocol {
             appScreen: .eventsList,
             navigationViewModel: .disabled,
             ignoresSafeArea: false,
-            background: .linear,
+            background: .defaultBackground,
             loadingModel: viewModel.loadingModel,
             alertModel: viewModel.alertModel,
             networkStatus: nil) {
@@ -106,7 +106,7 @@ struct EventsListView: View, ViewProtocol {
         ScrollView {
             ZStack {
                 HStack {
-                    Header(text: "All events".localizedMissing)
+                    Header(text: "\(AppConstants.entityNamePlural)")
                     ImageButton(
                         systemImageName: "plus",
                         imageSize: SizeNames.defaultButtonTertiaryDefaultHeight,
@@ -119,7 +119,7 @@ struct EventsListView: View, ViewProtocol {
                 if sectionA.count + sectionB.count + sectionC.count == 0 {
                     VStack {
                         Spacer()
-                        Text("No events")
+                        Text("No \(AppConstants.entityNamePlural.lowercased())")
                             .textColor(ColorSemantic.labelPrimary.color)
                             .fontSemantic(.largeTitle)
                         Spacer()

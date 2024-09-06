@@ -49,7 +49,7 @@ struct EventDetailsViewCoordinator: View, ViewCoordinatorProtocol {
                 model: model, onPerformRouteBack: {
                     coordinatorTab2.navigateBack()
                 }, onShouldDisplayTrackedLog: { trackedLog in
-                    coordinator.sheetLink = .eventLogDetails(model: .init(trackedLog: trackedLog))
+                    coordinator.coverLink = .eventLogDetails(model: .init(trackedLog: trackedLog))
                 },
                 dataBaseRepository: configuration.dataBaseRepository)
             EventDetailsView(dependencies: dependencies)
@@ -92,7 +92,7 @@ struct EventDetailsView: View, ViewProtocol {
             appScreen: .eventDetails(model: .init(event: .random(cascadeEvents: []))),
             navigationViewModel: .custom(onBackButtonTap: {
                 onPerformRouteBack()
-            }, title: "Event Details".localizedMissing),
+            }, title: "\(AppConstants.entityNameSingle) details".localizedMissing),
             ignoresSafeArea: false,
             background: .defaultBackground,
             loadingModel: viewModel.loadingModel,
@@ -185,7 +185,7 @@ struct EventDetailsView: View, ViewProtocol {
 
             SwiftUIUtils.FixedVerticalSpacer(height: SizeNames.defaultMarginSmall)
             ToggleWithBinding(
-                title: "Grab user location when add new event".localizedMissing,
+                title: "Grab user location when adding new \(AppConstants.entityLogNameSingle.lowercased())".localizedMissing,
                 isOn: $viewModel.locationRelevant,
                 onChanged: { newValue in
                     viewModel.send(.userDidChangedLocationRelevant(value: newValue))
@@ -210,11 +210,11 @@ struct EventDetailsView: View, ViewProtocol {
             onClick: {
                 AnalyticsManager.shared.handleButtonClickEvent(
                     buttonType: .primary,
-                    label: "Save event",
+                    label: "Save \(AppConstants.entityNameSingle)",
                     sender: "\(Self.self)")
                 viewModel.send(.saveNewEvent(confirmed: false))
             },
-            text: "Save event".localizedMissing,
+            text: "Save \(AppConstants.entityNameSingle)".localizedMissing,
             alignment: .center,
             style: .secondary,
             background: .primary,
@@ -255,7 +255,7 @@ struct EventDetailsView: View, ViewProtocol {
                         sender: "\(Self.self)")
                     viewModel.send(.deleteEvent(confirmed: false))
                 },
-                text: "Delete Event".localizedMissing,
+                text: "Delete \(AppConstants.entityNameSingle)".localizedMissing,
                 alignment: .center,
                 style: .secondary,
                 background: .danger,

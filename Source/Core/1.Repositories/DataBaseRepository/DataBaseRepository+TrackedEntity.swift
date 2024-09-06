@@ -53,7 +53,7 @@ public extension DataBaseRepository {
 
             // Delete/update current events. We ONLY do this, if we have cascadeEvents != nil.
             // (We could have fetched the `TrackedEntity` without the `cascade` option just to
-            // update one property. Dont remove the type/cast
+            // update one property. Don't remove the type/cast
             let canUpdateEvents = trackedEntity.cascadeEvents != nil
             if canUpdateEvents {
                 var currentEventsId: [String] = []

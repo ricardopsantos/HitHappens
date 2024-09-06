@@ -70,22 +70,15 @@ public struct TextButton: View {
         .accessibilityIdentifier(accessibility.identifier)
         .buttonStyle(.plain)
         .shadow(radius: SizeNames.shadowRadiusRegular)
+        .userInteractionEnabled(enabled)
     }
 
     var contentView: some View {
         Text(text)
-            // .foregroundColor(.white)
             .fontSemantic(.bodyBold)
-            .doIf(enabled, transform: {
+            .doIf(true, transform: {
                 switch style {
-                case .primary: $0.foregroundColorSemantic(.labelPrimary)
-                case .secondary: $0.foregroundColorSemantic(background)
-                case .textOnly: $0.foregroundColorSemantic(background)
-                }
-            })
-            .doIf(!enabled, transform: {
-                switch style {
-                case .primary: $0.foregroundColorSemantic(.labelSecondary)
+                case .primary: $0.foregroundColorSemantic(.white)
                 case .secondary: $0.foregroundColorSemantic(background)
                 case .textOnly: $0.foregroundColorSemantic(background)
                 }
@@ -100,7 +93,6 @@ public struct TextButton: View {
                     .stroke(stroke, lineWidth: 1.5)
             )
             .contentShape(Rectangle())
-            .userInteractionEnabled(enabled)
     }
 }
 

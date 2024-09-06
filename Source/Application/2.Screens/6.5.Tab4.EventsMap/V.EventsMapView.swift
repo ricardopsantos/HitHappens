@@ -36,7 +36,7 @@ struct EventsMapViewCoordinator: View, ViewCoordinatorProtocol {
         case .map:
             let dependencies: EventsMapViewModel.Dependencies = .init(
                 model: .init(), onShouldDisplayTrackedLog: { trackedLog in
-                    coordinator.sheetLink = .eventLogDetails(model: .init(trackedLog: trackedLog))
+                    coordinator.coverLink = .eventLogDetails(model: .init(trackedLog: trackedLog))
                 },
                 dataBaseRepository: configuration.dataBaseRepository)
             EventsMapView(dependencies: dependencies)
@@ -68,6 +68,7 @@ struct EventsMapView: View, ViewProtocol {
 
     // MARK: - Usage/Auxiliar Attributes
     @Environment(\.dismiss) var dismiss
+    @StateObject var locationViewModel: Common.SharedLocationManagerViewModel = .shared
     private let cancelBag: CancelBag = .init()
 
     // MARK: - Body & View
@@ -77,15 +78,23 @@ struct EventsMapView: View, ViewProtocol {
             appScreen: .map,
             navigationViewModel: .disabled,
             ignoresSafeArea: false,
-            background: .linear,
+            background: .defaultBackground,
             loadingModel: viewModel.loadingModel,
             alertModel: viewModel.alertModel,
             networkStatus: nil) {
                 content
             }.onAppear {
                 viewModel.send(.didAppear)
+                locationViewModel.start(sender: "\(Self.self)")
+                Common_Utils.delay {
+                    if let coordinates = locationViewModel.coordinates {
+                        viewModel
+                            .send(.loadEvents(region: .init(center: .init(latitude: coordinates.latitude, longitude: coordinates.longitude), span: .init(latitudeDelta: 0.01, longitudeDelta: 0.01))))
+                    }
+                }
             }.onDisappear {
                 viewModel.send(.didDisappear)
+                locationViewModel.stop(sender: "\(Self.self)")
             }
     }
 
@@ -93,10 +102,13 @@ struct EventsMapView: View, ViewProtocol {
     var content: some View {
         ScrollView {
             LazyVStack(spacing: 0) {
-                GenericMapView(items: $viewModel.mapItems, onRegionChanged: { region in
-                    viewModel.send(.loadEvents(region: region))
-                })
-                .frame(height: screenSize.width - 2 * SizeNames.defaultMarginSmall)
+                GenericMapView(
+                    items: $viewModel.mapItems,
+                    displayGrid: .constant(false),
+                    onRegionChanged: { region in
+                        viewModel.send(.loadEvents(region: region))
+                    })
+                    .frame(height: screenSize.width - 2 * SizeNames.defaultMarginSmall)
                 Divider().padding(.vertical, SizeNames.defaultMarginSmall)
                 listTitle
                 SwiftUIUtils.FixedVerticalSpacer(height: SizeNames.defaultMarginSmall)

@@ -70,15 +70,16 @@ extension BaseView {
                 .fixedSize(horizontal: false, vertical: true) // Prevents truncation
                 .padding()
                 .doIf(model?.type == .success, transform: {
-                    $0.background(ColorSemantic.allCool.color)
+                    $0.background(ColorSemantic.primary.color.opacity(0.9))
                 })
                 .doIf(model?.type == .warning, transform: {
-                    $0.background(ColorSemantic.warning.color)
+                    $0.background(ColorSemantic.warning.color.opacity(0.9))
                 })
                 .doIf(model?.type == .error, transform: {
-                    $0.background(ColorSemantic.danger.color)
+                    $0.background(ColorSemantic.danger.color.opacity(0.9))
                 })
                 .cornerRadius(SizeNames.cornerRadius)
+                .shadow(radius: SizeNames.shadowRadiusRegular)
                 .onTapGesture {
                     if let onUserTapGesture = model?.onUserTapGesture {
                         onUserTapGesture()

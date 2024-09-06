@@ -17,7 +17,7 @@ extension BaseView.BackgroundView {
         case gradient
         case uiColor(_ uiColor: UIColor)
         static var defaultBackground: Self {
-            .linear
+            .gradient
         }
     }
 }
@@ -49,15 +49,20 @@ extension BaseView {
             ColorSemantic.backgroundPrimary.color.ignoresSafeArea()
         }
 
+        @ViewBuilder
         var backgroundGradient: some View {
-            LinearGradient(
-                colors: [
-                    ColorSemantic.backgroundPrimary.color,
-                    ColorSemantic.backgroundGradient.color
-                ],
-                startPoint: .topLeading,
-                endPoint: .bottomTrailing
-            ).ignoresSafeArea()
+            let gradientColor = ColorSemantic.backgroundGradient.color
+            ZStack {
+                backgroundLinear
+                LinearGradient(
+                    colors: [
+                        gradientColor.opacity(0.3),
+                        gradientColor.opacity(0.0)
+                    ],
+                    startPoint: .topLeading,
+                    endPoint: .bottomTrailing
+                ).ignoresSafeArea()
+            }
         }
     }
 }
@@ -71,5 +76,5 @@ extension BaseView {
         BaseView.BackgroundView(background: .linear)
         Divider()
         BaseView.BackgroundView(background: .gradient)
-    }.background(Color.random)
+    }
 }

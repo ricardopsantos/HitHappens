@@ -113,7 +113,7 @@ struct SettingsScreen: View, ViewProtocol {
                 .resizable()
                 .scaledToFit()
                 .frame(width: width)
-                .opacity(0.05)
+                .opacity(0.0)
                 .cornerRadius2(width / 2)
                 .blur(radius: 1)
             Spacer()

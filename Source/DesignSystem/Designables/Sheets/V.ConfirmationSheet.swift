@@ -46,8 +46,7 @@ public struct ConfirmationSheetV2: View {
             .cornerRadius2(SizeNames.cornerRadius)
             .padding(SizeNames.defaultMargin)
             Spacer()
-        }
-
+        }.shadow(radius: SizeNames.shadowRadiusRegular)
         if #available(iOS 16.0, *) {
             content
                 .presentationDetents([.fraction(0.25), .medium, .large])
@@ -86,7 +85,7 @@ public struct ConfirmationSheetV1: View {
             Text(title)
                 .fixedSize(horizontal: false, vertical: true)
                 .multilineTextAlignment(.center)
-                .fontSemantic(.headline)
+                .fontSemantic(.headlineBold)
                 .paddingBottom(SizeNames.defaultMargin)
             Text(subTitle)
                 .fixedSize(horizontal: false, vertical: true)
@@ -125,12 +124,17 @@ public struct ConfirmationSheetV1: View {
 #if canImport(SwiftUI) && DEBUG
 @available(iOS 17, *)
 #Preview {
-    ConfirmationSheetV1(
-        isOpen: .constant(true),
-        title: "title",
-        subTitle: "subTitle",
-        leftText: "leftText",
-        rightText: "rightText", confirmationAction: {}
-    )
+    VStack {
+        ConfirmationSheetV2(isOpen: .constant(true)) {}
+        Spacer()
+        ConfirmationSheetV1(
+            isOpen: .constant(true),
+            title: "title",
+            subTitle: "subTitle",
+            leftText: "leftText",
+            rightText: "rightText", confirmationAction: {}
+        )
+        Spacer()
+    }.background(Color.random)
 }
 #endif

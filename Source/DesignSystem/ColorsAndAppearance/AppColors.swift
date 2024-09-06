@@ -44,6 +44,7 @@ public indirect enum ColorSemantic: CaseIterable, Hashable {
     case color(_ colorSemantic: ColorSemantic, alpha: CGFloat)
 
     case clear // Static Color!
+    case white // Static Color!
     case danger // Static Color!
     case warning // Static Color!
     case allCool // Static Color!
@@ -64,6 +65,7 @@ public indirect enum ColorSemantic: CaseIterable, Hashable {
 
     public static var allCases: [ColorSemantic] = [
         .clear,
+        .white,
         .danger,
         .warning,
         .allCool,
@@ -132,7 +134,7 @@ public indirect enum ColorSemantic: CaseIterable, Hashable {
         case .danger: result = ColorPalletSmart.red2.uiColor
         case .allCool: result = ColorPalletSmart.green2.uiColor
         case .warning: result = ColorPalletSmart.yellow.uiColor
-
+        case .white: result = UIColor.white
         case .primary: result = ColorPalletSmart.primary.uiColor
 
         case .labelPrimary: result = on == .light ?

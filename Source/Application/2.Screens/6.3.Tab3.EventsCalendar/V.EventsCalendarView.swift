@@ -36,7 +36,7 @@ struct EventsCalendarViewCoordinator: View, ViewCoordinatorProtocol {
         case .calendar:
             let dependencies: EventsCalendarViewModel.Dependencies = .init(
                 model: .init(), onShouldDisplayTrackedLog: { trackedLog in
-                    coordinator.sheetLink = .eventLogDetails(model: .init(trackedLog: trackedLog))
+                    coordinator.coverLink = .eventLogDetails(model: .init(trackedLog: trackedLog))
                 },
                 dataBaseRepository: configuration.dataBaseRepository)
             EventsCalendarView(dependencies: dependencies)
@@ -77,7 +77,7 @@ struct EventsCalendarView: View, ViewProtocol {
             appScreen: .calendar,
             navigationViewModel: .disabled,
             ignoresSafeArea: false,
-            background: .linear,
+            background: .defaultBackground,
             loadingModel: viewModel.loadingModel,
             alertModel: viewModel.alertModel,
             networkStatus: nil) {

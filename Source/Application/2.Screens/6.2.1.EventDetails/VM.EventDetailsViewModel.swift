@@ -56,9 +56,10 @@ extension EventDetailsViewModel {
         var subTitle: String {
             switch self {
             case .delete:
-                "Are you sure you want to delete the event?".localizedMissing
+                "Are you sure you want to delete this \(AppConstants.entityNameSingle.lowercased())? All the \(AppConstants.entityOccurrenceNamePlural.lowercased()) associated to it will be deleted!"
+                    .localizedMissing
             case .save:
-                "Are you sure you want to save the event?".localizedMissing
+                "Are you sure you want to \(AppConstants.entityNameSingle.lowercased())?".localizedMissing
             }
         }
     }
@@ -382,7 +383,7 @@ fileprivate extension EventDetailsViewModel {
                                 self?.alertModel = .init(
                                     type: .success,
                                     location: .bottom,
-                                    message: "Event tracked!\nTap for edit/add details.",
+                                    message: "\(AppConstants.entityLogNameSingle) tracked!\nTap for edit/add details.",
                                     onUserTapGesture: { [weak self] in
                                         self?.onShouldDisplayTrackedLog(trackedEntity)
                                     })

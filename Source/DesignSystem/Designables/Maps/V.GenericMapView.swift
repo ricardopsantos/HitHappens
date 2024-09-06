@@ -53,38 +53,28 @@ public extension GenericMapView {
     }
 }
 
-class MapViewModel: ObservableObject {
-    @Published var region: MKCoordinateRegion {
-        didSet {
-            regionSubject.send(region)
-        }
-    }
-
-    let regionSubject = PassthroughSubject<MKCoordinateRegion, Never>()
-    init(initialRegion: MKCoordinateRegion) {
-        self.region = initialRegion
-    }
-}
-
 public struct GenericMapView: View {
-    // @State private var region: MKCoordinateRegion = MKCoordinateRegion(
-    //    center: CLLocationCoordinate2D(latitude: 0, longitude: 0),
-    //    span: MKCoordinateSpan(latitudeDelta: 0, longitudeDelta: 0)
-    // )
-    @StateObject private var viewModel = MapViewModel(initialRegion: MKCoordinateRegion(
+    @State private var region: MKCoordinateRegion = MKCoordinateRegion(
         center: CLLocationCoordinate2D(latitude: 0, longitude: 0),
         span: MKCoordinateSpan(latitudeDelta: 0, longitudeDelta: 0)
-    ))
+    )
     @State private var cancelBag = CancelBag()
-
-    @Binding var items: [ModelItem]
     @State var shouldDisplayUserLocation: Bool = true
     @State var shouldDisplayEventsLocation: Bool = false
+
+    @Binding var displayGrid: Bool
+    @Binding var items: [ModelItem]
     @StateObject var locationViewModel: Common.SharedLocationManagerViewModel = .shared
     private let onRegionChanged: (MKCoordinateRegion) -> Void
-    public init(items: Binding<[ModelItem]>, onRegionChanged: @escaping (MKCoordinateRegion) -> Void) {
+    public init(
+        items: Binding<[ModelItem]>,
+
+        displayGrid: Binding<Bool>,
+        onRegionChanged: @escaping (MKCoordinateRegion) -> Void
+    ) {
         self.onRegionChanged = onRegionChanged
         self._items = items
+        self._displayGrid = displayGrid
     }
 
     public var body: some View {
@@ -106,10 +96,10 @@ public struct GenericMapView: View {
                     shouldDisplayEventsLocation = false
                 }
             }
-            .onChange(of: viewModel.region) { new in
+            .onChange(of: region) { new in
                 // Ignore fast changes (swiping, etc)
                 let operationId = "\(Self.self).region.changed"
-                Common.ExecutionControlManager.dropFirst(n: 3, operationId: operationId, block: {
+                Common.ExecutionControlManager.dropFirst(n: 2, operationId: operationId, block: {
                     Common.ExecutionControlManager.debounce(
                         0.3,
                         operationId: operationId
@@ -123,38 +113,52 @@ public struct GenericMapView: View {
     public var content: some View {
         ZStack {
             mapView
+
             actionBottonView
         }.cornerRadius2(SizeNames.cornerRadius)
     }
+}
 
+//
+// MARK: - Auxiliar Views
+//
+fileprivate extension GenericMapView {
     @ViewBuilder
-    public var mapView: some View {
-        Map(
-            coordinateRegion: $viewModel.region,
-            interactionModes: .all,
-            showsUserLocation: true,
-            annotationItems: items
-        ) { item in
-            MapAnnotation(coordinate: item.coordinate) {
-                annotationView(with: item, isUser: false)
-            }
-        }
-        .gesture(
-            TapGesture(count: 1)
-                .onEnded { _ in
-                    userInteractedWithMap()
+    var mapView: some View {
+        Group {
+            Map(
+                coordinateRegion: $region,
+                interactionModes: .all,
+                showsUserLocation: true,
+                annotationItems: items
+            ) { item in
+                MapAnnotation(coordinate: item.coordinate) {
+                    annotationView(with: item, isUser: false)
                 }
-        )
-        .simultaneousGesture(DragGesture().onChanged { _ in
-            userInteractedWithMap()
-        })
-        .simultaneousGesture(MagnificationGesture().onChanged { _ in
-            userInteractedWithMap()
+            }
+            .gesture(
+                TapGesture(count: 1)
+                    .onEnded { _ in
+                        userInteractedWithMap()
+                    }
+            )
+            .simultaneousGesture(DragGesture().onChanged { _ in
+                userInteractedWithMap()
+            })
+            .simultaneousGesture(MagnificationGesture().onChanged { _ in
+                userInteractedWithMap()
+            })
+        }.doIf(displayGrid, transform: {
+            $0.overlay(
+                GeometryReader { geometry in
+                    gridOverlay(for: geometry.size)
+                }
+            )
         })
     }
 
     @ViewBuilder
-    public var actionBottonView: some View {
+    var actionBottonView: some View {
         let allEventsRegion = Button(action: {
             shouldDisplayEventsLocation.toggle()
             withAnimation {
@@ -204,18 +208,17 @@ public struct GenericMapView: View {
             VStack(alignment: .leading, spacing: 0, content: {
                 Spacer()
                 allEventsRegion
+                    .doIf(items.isEmpty, transform: {
+                        $0.hidden()
+                    })
+
                 if locationViewModel.locationIsAuthorized {
                     userRegion
                 }
             })
         }
     }
-}
 
-//
-// MARK: - Auxiliar Views
-//
-public extension GenericMapView {
     @ViewBuilder
     func annotationView(with item: ModelItem, isUser: Bool) -> some View {
         let margin: CGFloat = SizeNames.size_3.cgFloat
@@ -240,7 +243,54 @@ public extension GenericMapView {
 //
 // MARK: - Auxiliar
 //
-public extension GenericMapView {
+fileprivate extension GenericMapView {
+    private func gridOverlay(for size: CGSize) -> some View {
+        let gridSpacingX: CGFloat = size.width / 10
+        let gridSpacingY: CGFloat = size.width / 10
+        let color: Color = ColorSemantic.primary.color
+        let opacity: CGFloat = 0.5
+        let lineWidth: CGFloat = 0.75
+        return ZStack {
+            ForEach(0..<Int(size.width / gridSpacingX), id: \.self) { i in
+                Path { path in
+                    let x = CGFloat(i) * gridSpacingX
+                    path.move(to: CGPoint(x: x, y: 0))
+                    path.addLine(to: CGPoint(x: x, y: size.height))
+                }
+                .stroke(color.opacity(opacity), lineWidth: lineWidth)
+            }
+            ForEach(0..<Int(size.height / gridSpacingY), id: \.self) { i in
+                Path { path in
+                    let y = CGFloat(i) * gridSpacingY
+                    path.move(to: CGPoint(x: 0, y: y))
+                    path.addLine(to: CGPoint(x: size.width, y: y))
+                }
+                .stroke(color.opacity(opacity), lineWidth: lineWidth)
+            }
+            VStack {
+                Spacer()
+                HStack {
+                    Spacer()
+                    Circle()
+                        .stroke(.white, lineWidth: 2)
+                        .background(Circle().foregroundColor(color.opacity(0.5)))
+                        .frame(min(gridSpacingY, gridSpacingX) * 0.5)
+                    Spacer()
+                }
+                Spacer()
+            }
+        }
+    }
+
+    func userInteractedWithMap() {
+        if shouldDisplayUserLocation {
+            shouldDisplayUserLocation = false
+        }
+        if shouldDisplayEventsLocation {
+            shouldDisplayEventsLocation = false
+        }
+    }
+
     func updateRegionToFitCoordinates() {
         guard shouldDisplayUserLocation || shouldDisplayEventsLocation else {
             return
@@ -261,27 +311,20 @@ public extension GenericMapView {
         }
 
         if !meanFullCoordinates.isEmpty {
-            viewModel.region = meanFullCoordinates.regionToFitCoordinates()
+            if meanFullCoordinates.count == 1, let first = meanFullCoordinates.first {
+                region.center = .init(
+                    latitude: first.latitude,
+                    longitude: first.longitude
+                )
+            } else {
+                region = meanFullCoordinates.regionToFitCoordinates()
+            }
         } else if let userLocation = userLocation {
             // No coordinates! Center on user...
-            viewModel.region = [.init(
+            region = [.init(
                 latitude: userLocation.latitude,
                 longitude: userLocation.longitude
             )].regionToFitCoordinates()
-        }
-    }
-}
-
-//
-// MARK: - Private
-//
-private extension GenericMapView {
-    func userInteractedWithMap() {
-        if shouldDisplayUserLocation {
-            shouldDisplayUserLocation = false
-        }
-        if shouldDisplayEventsLocation {
-            shouldDisplayEventsLocation = false
         }
     }
 }
@@ -316,7 +359,7 @@ private extension GenericMapView {
                 onTap: {},
                 image: ("heart", .random, .random)
             )
-        ]), onRegionChanged: { _ in })
+        ]), displayGrid: .constant(true), onRegionChanged: { _ in })
             .frame(maxHeight: screenHeight / 3)
         Spacer()
     }

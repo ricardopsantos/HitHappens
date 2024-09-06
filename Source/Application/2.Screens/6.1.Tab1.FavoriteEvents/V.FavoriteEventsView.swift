@@ -45,7 +45,7 @@ struct FavoriteEventsViewCoordinator: View, ViewCoordinatorProtocol {
         case .favoriteEvents:
             let dependencies: FavoriteEventsViewModel.Dependencies = .init(
                 model: .init(), onShouldDisplayTrackedLog: { trackerLog in
-                    coordinator.sheetLink = .eventLogDetails(model: .init(trackedLog: trackerLog))
+                    coordinator.coverLink = .eventLogDetails(model: .init(trackedLog: trackerLog))
                 },
                 dataBaseRepository: configuration.dataBaseRepository)
             FavoriteEventsView(dependencies: dependencies)
@@ -109,10 +109,10 @@ struct FavoriteEventsView: View, ViewProtocol {
     var content: some View {
         ScrollView {
             LazyVStack(spacing: 0) {
-                Header(text: "Favorites events".localizedMissing)
+                Header(text: "Favorite \(AppConstants.entityNameSingle.lowercased())".localizedMissing)
                 if viewModel.favorits.isEmpty {
                     Spacer()
-                    Text("No events")
+                    Text("No \(AppConstants.entityNamePlural.lowercased())")
                         .textColor(ColorSemantic.labelPrimary.color)
                         .fontSemantic(.largeTitle)
                     Spacer()

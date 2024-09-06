@@ -88,7 +88,7 @@ struct EventLogDetailsView: View, ViewProtocol {
             appScreen: .eventLogDetails(model: .init(trackedLog: .random)),
             navigationViewModel: .custom(onBackButtonTap: {
                 onPerformRouteBack()
-            }, title: "Event Details".localizedMissing),
+            }, title: "\(AppConstants.entityLogNameSingle) details".localizedMissing),
             ignoresSafeArea: false,
             background: .defaultBackground,
             loadingModel: viewModel.loadingModel,
@@ -106,7 +106,12 @@ struct EventLogDetailsView: View, ViewProtocol {
         ZStack {
             // ScrollView {
             VStack(spacing: 0) {
-                Header(text: "Details".localizedMissing)
+                Header(text: "\(AppConstants.entityLogNameSingle.lowercased()) details".localizedMissing, hasCloseButton: true) {
+                    dismiss()
+                }
+                SwiftUIUtils.FixedVerticalSpacer(height: SizeNames.defaultMarginSmall)
+                Divider()
+                SwiftUIUtils.FixedVerticalSpacer(height: SizeNames.defaultMarginSmall)
                 recordDateView
                 SwiftUIUtils.FixedVerticalSpacer(height: SizeNames.defaultMarginSmall)
                 noteView
@@ -268,7 +273,7 @@ struct EventLogDetailsView: View, ViewProtocol {
                             sender: "\(Self.self)")
                         viewModel.send(.delete(confirmed: false))
                     },
-                    text: "Delete event".localizedMissing,
+                    text: "Delete \(AppConstants.entityLogNameSingle.lowercased())".localizedMissing,
                     alignment: .center,
                     style: .secondary,
                     background: .danger,
@@ -306,32 +311,34 @@ struct EventLogDetailsView: View, ViewProtocol {
     @ViewBuilder
     var mapView: some View {
         let distance = (minDelta - latitudeDelta) * 1000
-        let tipText = "Zoom in (till \(Int(abs(distance))) reach zero) on map to choose new address".localizedMissing
         if !viewModel.mapItems.isEmpty {
-            GenericMapView(items: $viewModel.mapItems, onRegionChanged: { value in
-                mapRegion = value
-                latitudeDelta = abs(value.latitudeMax - value.latitudeMin)
-                if onEdit {
-                    if latitudeDelta < minDelta {
-                        addressCopy = "Fetching address for location...".localizedMissing
-                        Common.ExecutionControlManager.debounce(1.5, operationId: "fetch_address") {
-                            Common.LocationUtils.getAddressFrom(
-                                latitude: value.center.latitude,
-                                longitude: value.center.longitude) { address in
-                                    if !address.addressMin.isEmpty, addressCopy != address.addressMin {
-                                        addressCopy = address.addressMax
+            GenericMapView(
+                items: $viewModel.mapItems,
+                displayGrid: $onEdit,
+                onRegionChanged: { value in
+                    mapRegion = value
+                    latitudeDelta = abs(value.latitudeMax - value.latitudeMin)
+                    if onEdit {
+                        if latitudeDelta < minDelta {
+                            addressCopy = "Fetching address for location...".localizedMissing
+                            Common.ExecutionControlManager.debounce(1.5, operationId: "fetch_address") {
+                                Common.LocationUtils.getAddressFrom(
+                                    latitude: value.center.latitude,
+                                    longitude: value.center.longitude) { address in
+                                        if !address.addressMin.isEmpty, addressCopy != address.addressMin {
+                                            addressCopy = address.addressMax
+                                        }
                                     }
-                                }
+                            }
                         }
                     }
-                }
-            })
-            .frame(height: screenWidth - (2 * SizeNames.defaultMargin))
+                })
+                .frame(height: screenWidth - (2 * SizeNames.defaultMargin))
             SwiftUIUtils.FixedVerticalSpacer(height: SizeNames.defaultMarginSmall)
             if onEdit, distance < 0 {
                 HStack(spacing: 0) {
                     Spacer()
-                    Text(tipText)
+                    Text("Zoom in on map till this number \(Int(abs(distance))) reaches 0, to choose new address".localizedMissing)
                         .textColor(ColorSemantic.labelSecondary.color)
                         .fontSemantic(FontSemantic.footnote)
                         .multilineTextAlignment(.trailing)
@@ -348,11 +355,6 @@ struct EventLogDetailsView: View, ViewProtocol {
                 value: addressCopy,
                 style: .vertical1)
                 .padding(SizeNames.size_1.cgFloat)
-                .modifier(AnimatedBackground(
-                    color1: ColorSemantic.primary.color,
-                    color2: ColorSemantic.primary.color,
-                    duration: 1))
-
         } else {
             EmptyView()
         }
