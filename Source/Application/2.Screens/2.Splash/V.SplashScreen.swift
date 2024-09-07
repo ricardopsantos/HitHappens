@@ -129,7 +129,6 @@ fileprivate extension SplashView {}
 @available(iOS 17, *)
 #Preview {
     SplashViewCoordinator(onCompletion: {})
-        .environmentObject(AppStateViewModel.defaultForPreviews)
         .environmentObject(ConfigurationViewModel.defaultForPreviews)
 }
 #endif

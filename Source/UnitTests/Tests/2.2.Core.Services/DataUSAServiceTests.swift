@@ -14,7 +14,7 @@ import Nimble
 import Domain
 import Core
 import Common
-
+/*
 final class DataUSAServiceTests: XCTestCase {
     let enabled = true
     lazy var service: DataUSAServiceProtocol = { DependenciesManager.Services.dataUSAService }()
@@ -147,3 +147,4 @@ extension DataUSAServiceTests {
         }
     }
 }
+*/

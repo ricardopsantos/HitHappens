@@ -23,8 +23,4 @@ class BaseViewModelsTests: XCTestCase {
     lazy var sampleService: SampleServiceProtocol = { DependenciesManager.Services.sampleService }()
     lazy var secureAppPreferences: SecureAppPreferencesProtocol = { DependenciesManager.Repository.secureAppPreferences }()
     lazy var nonSecureAppPreferences: NonSecureAppPreferencesProtocol = { DependenciesManager.Repository.nonSecureAppPreferences }()
-    lazy var userRepository: UserRepositoryProtocol = { UserRepository(
-        secureAppPreferences: secureAppPreferences,
-        nonSecureAppPreferences: nonSecureAppPreferences
-    ) }()
 }

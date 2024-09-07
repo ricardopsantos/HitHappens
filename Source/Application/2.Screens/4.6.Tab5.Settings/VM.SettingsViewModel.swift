@@ -1,8 +1,8 @@
 //
-//  SplashViewModel.swift
+//  SettingsViewModel.swift
 //  SmartApp
 //
-//  Created by Ricardo Santos on 15/04/2024.
+//  Created by Ricardo Santos on 03/01/24.
 //
 
 import Foundation
@@ -10,50 +10,55 @@ import SwiftUI
 //
 import Domain
 import Common
+import Core
 
-struct SplashModel: Equatable, Hashable, Sendable {
+//
+// MARK: - Model
+//
+
+struct SettingsModel: Equatable, Hashable, Sendable {
     let some: Bool
-    public init(some: Bool = true) {
+    init(some: Bool = false) {
         self.some = some
     }
 }
 
-extension SplashViewModel {
+//
+// MARK: - ViewModel (Extensions)
+//
+
+extension SettingsViewModel {
     enum Actions {
         case didAppear
         case didDisappear
+        case shouldDisplayOnboarding
     }
 
     struct Dependencies {
-        let model: SplashModel
+        let model: SettingsModel
+        let onShouldDisplayEditUserDetails: () -> Void
         let nonSecureAppPreferences: NonSecureAppPreferencesProtocol
-        let onCompletion: () -> Void
     }
 }
 
-class SplashViewModel: BaseViewModel {
-    // MARK: - Usage/Auxiliar Attributes
+class SettingsViewModel: BaseViewModel {
+    // MARK: - View Usage Attributes
     private var cancelBag = CancelBag()
     private var nonSecureAppPreferences: NonSecureAppPreferencesProtocol?
     public init(dependencies: Dependencies) {
         self.nonSecureAppPreferences = dependencies.nonSecureAppPreferences
+        super.init()
     }
-
-    // MARK: - Functions
 
     func send(action: Actions) {
         switch action {
         case .didAppear: ()
         case .didDisappear: ()
+        case .shouldDisplayOnboarding:
+            nonSecureAppPreferences?.isOnboardingCompleted = false
         }
     }
 }
-
-//
-// MARK: - Auxiliar
-//
-
-fileprivate extension RootViewModel {}
 
 //
 // MARK: - Preview
@@ -62,7 +67,7 @@ fileprivate extension RootViewModel {}
 #if canImport(SwiftUI) && DEBUG
 @available(iOS 17, *)
 #Preview {
-    SplashViewCoordinator(onCompletion: {})
+    SettingsViewCoordinator()
         .environmentObject(ConfigurationViewModel.defaultForPreviews)
 }
 #endif

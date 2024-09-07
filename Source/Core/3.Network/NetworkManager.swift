@@ -2,9 +2,9 @@
 //  NetworkManager.swift
 //  SmartApp
 //
-//  Created by Ashok Choudhary on 03/01/24.
-//  Changed/Updated by Ricardo Santos on 15/04/2024.
+//  Create by Ricardo Santos on 15/04/2024.
 //
+
 import Foundation
 import Combine
 //
@@ -28,9 +28,6 @@ class NetworkManager: NetworkAgentProtocol {
 extension NetworkManager {
     func requestAsync<T: Decodable>(_ api: APIEndpoints) async throws -> T {
         switch api {
-        case .updateUser(user: let user):
-            DevTools.assert(false, message: "Not implemented \(user)")
-            fatalError()
         default:
             let request = buildRequest(api: api)
             let cronometerAverageMetricsKey: String = api.name
@@ -48,9 +45,6 @@ extension NetworkManager {
 
     func requestPublisher<T: Decodable>(_ api: APIEndpoints) -> AnyPublisher<T, CommonNetworking.APIError> {
         switch api {
-        case .updateUser(user: let user):
-            DevTools.assert(false, message: "Not implemented \(user)")
-            fatalError()
         default:
             let request = buildRequest(api: api)
             let cronometerAverageMetricsKey: String = api.name

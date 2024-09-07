@@ -124,7 +124,7 @@ enum BaseView {
                         }
                     }, title: navigationViewModel.title)
                     .hideNavigationBar()
-                    
+
                 case .default:
                     NavigationView {
                         baseView

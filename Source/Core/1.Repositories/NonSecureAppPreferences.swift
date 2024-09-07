@@ -80,11 +80,6 @@ extension NonSecureAppPreferences: NonSecureAppPreferencesProtocol {
         defaults.synchronize()
     }
 
-    public var isAuthenticated: Bool {
-        get { defaults.bool(forKey: NonSecureAppPreferencesKey.isAuthenticated.rawValue) }
-        set { setBool(.isAuthenticated, newValue) }
-    }
-
     public var isOnboardingCompleted: Bool {
         get { defaults.bool(forKey: NonSecureAppPreferencesKey.isOnboardingCompleted.rawValue) }
         set { setBool(.isOnboardingCompleted, newValue) }

@@ -17,6 +17,8 @@ public enum AppScreen: Hashable, Identifiable, Sendable {
     case root
     case mainApp // TabBar
     // HitHappens app
+    case onboarding(model: OnboardingModel)
+    case settings
     case calendar
     case map
     case favoriteEvents
@@ -26,9 +28,6 @@ public enum AppScreen: Hashable, Identifiable, Sendable {
     //
     case templateWith(model: ___Template___Model)
     // Template App
-    case login
-    case onboarding
-    case settings
     public var id: String {
         String(describing: self)
     }

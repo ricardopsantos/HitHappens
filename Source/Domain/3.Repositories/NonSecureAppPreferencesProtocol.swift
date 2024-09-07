@@ -16,10 +16,6 @@ public enum NonSecureAppPreferencesOutputActions: Equatable {
 }
 
 public enum NonSecureAppPreferencesKey: String, CaseIterable, Equatable {
-    case user
-    case userName
-    case userPIN
-    case isAuthenticated
     case isOnboardingCompleted
     case selectedAppearance
 }
@@ -29,9 +25,6 @@ public protocol NonSecureAppPreferencesProtocol {
 
     /// The `UserDefaults` instance used for storing non-secure preferences.
     var nonSecureUserDefaults: UserDefaults { get }
-
-    /// A Boolean value indicating whether the user is authenticated.
-    var isAuthenticated: Bool { get set }
 
     /// A Boolean value indicating whether the onboarding process is completed.
     var isOnboardingCompleted: Bool { get set }

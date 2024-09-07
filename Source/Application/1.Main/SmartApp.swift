@@ -15,11 +15,8 @@ import DesignSystem
 struct SmartApp: App {
     @UIApplicationDelegateAdaptor(AppDelegate.self) var delegate
     let configuration: ConfigurationViewModel
-    let appState: AppStateViewModel
     init() {
-        let userService = DependenciesManager.Services.userService
         let sampleService = DependenciesManager.Services.sampleService
-        let userRepository = DependenciesManager.Repository.userRepository
         let dataBaseRepository = DependenciesManager.Repository.dataBaseRepository
         let nonSecureAppPreferences = DependenciesManager.Repository.nonSecureAppPreferences
         let secureAppPreferences = DependenciesManager.Repository.secureAppPreferences
@@ -27,29 +24,24 @@ struct SmartApp: App {
         let onTesting = UITestingManager.Options.onUITesting.enabled || Common_Utils.onUnitTests
         if onTesting {
             config = .init(
-                userService: userService,
                 sampleService: sampleService,
-                dataUSAService: DependenciesManager.Services.dataUSAServiceMock,
+                appConfigService: DependenciesManager.Services.appConfigService,
                 dataBaseRepository: dataBaseRepository,
-                userRepository: userRepository,
                 nonSecureAppPreferences: nonSecureAppPreferences,
                 secureAppPreferences: secureAppPreferences
             )
             self.configuration = config
         } else {
             config = .init(
-                userService: userService,
                 sampleService: sampleService,
-                dataUSAService: DependenciesManager.Services.dataUSAService,
+                appConfigService: DependenciesManager.Services.appConfigServiceMock,
                 dataBaseRepository: dataBaseRepository,
-                userRepository: userRepository,
                 nonSecureAppPreferences: nonSecureAppPreferences,
                 secureAppPreferences: secureAppPreferences
             )
             self.configuration = config
         }
         SetupManager.shared.setup(dataBaseRepository: dataBaseRepository)
-        self.appState = .init()
     }
 
     var body: some Scene {
@@ -58,7 +50,6 @@ struct SmartApp: App {
                 .onAppear(perform: {
                     InterfaceStyleManager.setup(nonSecureAppPreferences: configuration.nonSecureAppPreferences)
                 })
-                .environmentObject(appState)
                 .environmentObject(configuration)
         }
     }

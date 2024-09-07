@@ -14,18 +14,17 @@ import Core
 
 struct RootModel: Equatable, Hashable, Sendable {
     let isAppStartCompleted: Bool
-    let isOnboardingCompleted: Bool
 
-    init(isAppStartCompleted: Bool = false, isOnboardingCompleted: Bool = false) {
+    init(isAppStartCompleted: Bool = false) {
         self.isAppStartCompleted = isAppStartCompleted
-        self.isOnboardingCompleted = isOnboardingCompleted
     }
 }
 
 extension RootViewModel {
     enum Actions {
+        case reload
         case start
-        case onboardingCompleted
+        case markOnboardingAsCompleted
     }
 
     struct Dependencies {
@@ -40,15 +39,25 @@ class RootViewModel: ObservableObject {
     @Published private(set) var alertModel: Model.AlertModel?
     @Published private(set) var isAppStartCompleted: Bool = false
     @Published private(set) var isOnboardingCompleted: Bool = false
-    @Published private(set) var preferencesChanged: Date = .now
     private var cancelBag = CancelBag()
     private var nonSecureAppPreferences: NonSecureAppPreferencesProtocol?
     public init(dependencies: Dependencies) {
         self.nonSecureAppPreferences = dependencies.nonSecureAppPreferences
         self.isAppStartCompleted = dependencies.model.isAppStartCompleted
-        self.isOnboardingCompleted = dependencies.model.isOnboardingCompleted
-        dependencies.nonSecureAppPreferences.output([]).sinkToReceiveValue { [weak self] _ in
-            self?.preferencesChanged = .now
+        dependencies.nonSecureAppPreferences.output([]).sinkToReceiveValue { [weak self] some in
+            guard let self = self else { return }
+            switch some {
+            case .success(let some):
+                switch some {
+                case .deletedAll, .changedKey:
+                    Common.ExecutionControlManager.debounce(operationId: "\(Self.self)|\(#function)") { [weak self] in
+                        Common_Utils.delay {  [weak self] in
+                            guard let self = self else { return }
+                            self.send(action: .reload)
+                        }
+                    }
+                }
+            }
         }.store(in: cancelBag)
     }
 
@@ -56,13 +65,15 @@ class RootViewModel: ObservableObject {
 
     func send(action: Actions) {
         switch action {
-        case .start:
-            guard !isAppStartCompleted else { return }
+        case .reload:
             isAppStartCompleted = true
-        case .onboardingCompleted:
+            isOnboardingCompleted = nonSecureAppPreferences?.isOnboardingCompleted ?? false
+        case .start:
+            send(action: .reload)
+        case .markOnboardingAsCompleted:
             guard !isOnboardingCompleted else { return }
             nonSecureAppPreferences?.isOnboardingCompleted = true
-            isOnboardingCompleted = true
+            //isOnboardingCompleted = true
         }
     }
 }

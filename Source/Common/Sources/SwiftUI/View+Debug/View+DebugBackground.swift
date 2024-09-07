@@ -60,7 +60,7 @@ public struct AnimatedBackground: ViewModifier {
                     .trim(from: isVisible ? 1 : 0, to: 1)
                     .stroke(color1, lineWidth: lineWidth)
                     .padding(lineWidth)
-                
+
                 Rectangle()
                     .trim(from: isVisible ? 1 : 0, to: 1)
                     .stroke(color2, lineWidth: lineWidth)

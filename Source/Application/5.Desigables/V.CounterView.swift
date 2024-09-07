@@ -144,7 +144,7 @@ struct CounterView: View {
         self.onChange = onChange
         self.onTapGesture = onTapGesture
     }
-    
+
     public var body: some View {
         VStack(spacing: 0) {
             SwiftUIUtils.RenderedView(
@@ -198,7 +198,7 @@ struct ContentView_Previews: PreviewProvider {
                 onTapGesture: {}
             )
             CounterView(
-                model: .random(cascadeEvents: [.random, .random, .random]), 
+                model: .random(cascadeEvents: [.random, .random, .random]),
                 minimalDisplay: true,
                 onChange: { number in
                     Common_Logs.debug(number)

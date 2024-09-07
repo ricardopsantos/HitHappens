@@ -55,7 +55,6 @@ public enum UITestingManager {
 
         if enabled(option: .isAuthenticated) {
             var nonSecureAppPreferences = DependenciesManager.Repository.nonSecureAppPreferences
-            nonSecureAppPreferences.isAuthenticated = true
             nonSecureAppPreferences.isOnboardingCompleted = true
         }
     }

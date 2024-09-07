@@ -118,8 +118,6 @@ struct ___Template___View: View, ViewProtocol {
                 viewModel.send(.increment)
             })
             Divider()
-            ___Template___AuxiliarAuthView()
-            Divider()
             Button("Display error") {
                 viewModel.send(.displayRandomError)
             }
@@ -144,8 +142,6 @@ fileprivate extension ___Template___View {
 @available(iOS 17, *)
 #Preview {
     ___Template___ViewCoordinator(haveNavigationStack: false, model: .init(message: "Hi"))
-        .environmentObject(AppStateViewModel.defaultForPreviews)
         .environmentObject(ConfigurationViewModel.defaultForPreviews)
-        .environmentObject(AuthenticationViewModel.defaultForPreviews)
 }
 #endif

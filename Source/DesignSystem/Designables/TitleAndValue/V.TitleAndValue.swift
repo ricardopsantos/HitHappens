@@ -17,11 +17,18 @@ public struct TitleAndValueView: View {
 
     @Environment(\.colorScheme) var colorScheme
     private let title: String
-    private let value: String
+    @Binding var value: String
     private let style: Style
+
     public init(title: String, value: String, style: Style = .horizontal) {
         self.title = title
-        self.value = value
+        self._value = .constant(value)
+        self.style = style
+    }
+
+    public init(title: String, value: Binding<String>, style: Style = .horizontal) {
+        self.title = title
+        self._value = value
         self.style = style
     }
 

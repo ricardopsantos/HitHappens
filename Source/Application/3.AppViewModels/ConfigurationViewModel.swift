@@ -16,44 +16,33 @@ class ConfigurationViewModel: ObservableObject {
     // MARK: - Dependency Attributes
 
     // Services
-    let userService: UserServiceProtocol
+    let appConfigService: AppConfigServiceProtocol
     let sampleService: SampleServiceProtocol
-    let dataUSAService: DataUSAServiceProtocol
 
     // Repositories
     let dataBaseRepository: DataBaseRepositoryProtocol
     let nonSecureAppPreferences: NonSecureAppPreferencesProtocol
     let secureAppPreferences: SecureAppPreferencesProtocol
-    let userRepository: UserRepositoryProtocol
 
     // ViewModels
-    let authenticationViewModel: AuthenticationViewModel
+    // let authenticationViewModel: AuthenticationViewModel
 
     // MARK: - Usage/Auxiliar Attributes
     // private var cancelBag: CancelBag = .init()
 
     // MARK: - Constructor
     init(
-        userService: UserServiceProtocol,
         sampleService: SampleServiceProtocol,
-        dataUSAService: DataUSAServiceProtocol,
+        appConfigService: AppConfigServiceProtocol,
         dataBaseRepository: DataBaseRepositoryProtocol,
-        userRepository: UserRepositoryProtocol,
         nonSecureAppPreferences: NonSecureAppPreferencesProtocol,
         secureAppPreferences: SecureAppPreferencesProtocol
     ) {
-        self.userService = userService
         self.sampleService = sampleService
-        self.dataUSAService = dataUSAService
+        self.appConfigService = appConfigService
         self.dataBaseRepository = dataBaseRepository
-        self.userRepository = userRepository
         self.nonSecureAppPreferences = nonSecureAppPreferences
         self.secureAppPreferences = secureAppPreferences
-        self.authenticationViewModel = AuthenticationViewModel(
-            secureAppPreferences: secureAppPreferences,
-            nonSecureAppPreferences: nonSecureAppPreferences,
-            userRepository: userRepository
-        )
     }
 }
 
@@ -62,11 +51,9 @@ class ConfigurationViewModel: ObservableObject {
 extension ConfigurationViewModel {
     static var defaultForPreviews: ConfigurationViewModel {
         ConfigurationViewModel(
-            userService: DependenciesManager.Services.userService,
             sampleService: DependenciesManager.Services.sampleService,
-            dataUSAService: DependenciesManager.Services.dataUSAService,
+            appConfigService: DependenciesManager.Services.appConfigServiceMock,
             dataBaseRepository: DependenciesManager.Repository.dataBaseRepository,
-            userRepository: DependenciesManager.Repository.userRepository,
             nonSecureAppPreferences: DependenciesManager.Repository.nonSecureAppPreferences,
             secureAppPreferences: DependenciesManager.Repository.secureAppPreferences
         )

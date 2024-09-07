@@ -29,7 +29,6 @@ struct RootViewCoordinator: View, ViewCoordinatorProtocol {
             .fullScreenCover(item: $coordinator.coverLink) { screen in
                 buildScreen(screen, presentationStyle: .fullScreenCover)
             }
-            .environmentObject(configuration.authenticationViewModel)
     }
 
     /// Navigation Links
@@ -38,10 +37,7 @@ struct RootViewCoordinator: View, ViewCoordinatorProtocol {
         case .root:
             let nonSecureAppPreferences = configuration.nonSecureAppPreferences
             RootView(dependencies: .init(
-                model: .init(
-                    isAppStartCompleted: false,
-                    isOnboardingCompleted: nonSecureAppPreferences.isOnboardingCompleted
-                ),
+                model: .init(isAppStartCompleted: false),
                 nonSecureAppPreferences: configuration.nonSecureAppPreferences
             ))
         default:
@@ -64,7 +60,6 @@ struct RootView: View, ViewProtocol {
 
     // MARK: - Usage/Auxiliar Attributes
     @Environment(\.dismiss) var dismiss
-    @EnvironmentObject private var authenticationViewModel: AuthenticationViewModel
     @State private var root: AppScreen = .splash
 
     // MARK: - Body & View
@@ -81,9 +76,7 @@ struct RootView: View, ViewProtocol {
         }
         buildScreen(root)
             .onChange(of: viewModel.isAppStartCompleted) { _ in updateRoot() }
-            .onChange(of: viewModel.preferencesChanged) { _ in updateRoot() }
             .onChange(of: viewModel.isOnboardingCompleted) { _ in updateRoot() }
-            .onChange(of: authenticationViewModel.isAuthenticated) { _ in updateRoot() }
     }
 
     /// Navigation Links
@@ -95,11 +88,11 @@ struct RootView: View, ViewProtocol {
             })
         case .mainApp:
             MainTabViewCoordinator()
-        case .login:
-            LoginViewCoordinator()
         case .onboarding:
-            OnboardingScreen(
-                onCompletion: { _ in viewModel.send(action: .onboardingCompleted) }
+            OnboardingViewCoordinator(
+                haveNavigationStack: false,
+                model: .init(),
+                onCompletion: { _ in viewModel.send(action: .markOnboardingAsCompleted) }
             )
         default:
             Text("Not predicted \(root)")
@@ -119,14 +112,10 @@ fileprivate extension RootView {
     func updateRoot() {
         if !viewModel.isAppStartCompleted {
             root = .splash
-        } else if !authenticationViewModel.isAuthenticated {
-            root = .login
-        } else if authenticationViewModel.isAuthenticated {
-            if !viewModel.isOnboardingCompleted {
-                root = .onboarding
-            } else {
-                root = .mainApp
-            }
+        } else if !viewModel.isOnboardingCompleted {
+            root = .onboarding(model: .init())
+        } else {
+            root = .mainApp
         }
     }
 }

@@ -144,8 +144,8 @@ private extension CronometerAverageMetrics {
 
     // Saves the current state of the instance to UserDefaults.
     func saveToUserDefaults() {
-        //let encodedData = try? NSKeyedArchiver.archivedData(withRootObject: self, requiringSecureCoding: false)
-        //Common.InternalUserDefaults.defaults?.set(encodedData, forKey: Self.defaultsKey)
+        // let encodedData = try? NSKeyedArchiver.archivedData(withRootObject: self, requiringSecureCoding: false)
+        // Common.InternalUserDefaults.defaults?.set(encodedData, forKey: Self.defaultsKey)
         if let encodedData = try? NSKeyedArchiver.archivedData(withRootObject: self, requiringSecureCoding: false) {
             Common.InternalUserDefaults.defaults?.set(encodedData, forKey: Self.defaultsKey)
             Common.InternalUserDefaults.defaults?.synchronize()
@@ -154,12 +154,12 @@ private extension CronometerAverageMetrics {
 
     // Loads a saved instance from UserDefaults, or creates a new instance if none exists.
     static func loadFromUserDefaults() -> CronometerAverageMetrics {
-        /*if let encodedData = Common.InternalUserDefaults.defaults?.data(forKey: defaultsKey),
-           let instance = try? NSKeyedUnarchiver.unarchiveTopLevelObjectWithData(encodedData) as? CronometerAverageMetrics {
-            return instance
-        } else {
-            return CronometerAverageMetrics()
-        }*/
+        /* if let encodedData = Common.InternalUserDefaults.defaults?.data(forKey: defaultsKey),
+            let instance = try? NSKeyedUnarchiver.unarchiveTopLevelObjectWithData(encodedData) as? CronometerAverageMetrics {
+             return instance
+         } else {
+             return CronometerAverageMetrics()
+         } */
         guard let encodedData = Common.InternalUserDefaults.defaults?.data(forKey: defaultsKey) else {
             return CronometerAverageMetrics()
         }

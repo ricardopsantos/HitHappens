@@ -1,8 +1,8 @@
 //
-//  ___Template___ViewModel.swift
-//  Common
+//  OnBoardingViewModel.swift
+//  SmartApp
 //
-//  Created by Ricardo Santos on 03/01/24.
+//  Created by Ricardo Santos on 20/05/2024.
 //
 
 import Foundation
@@ -16,7 +16,7 @@ import Core
 // MARK: - Model
 //
 
-public struct ___Template___Model: Equatable, Hashable, Sendable {
+public struct OnboardingModel: Equatable, Hashable, Sendable {
     let message: String
     let counter: Int
 
@@ -30,49 +30,36 @@ public struct ___Template___Model: Equatable, Hashable, Sendable {
 // MARK: - ViewModel (Extensions)
 //
 
-extension ___Template___ViewModel {
+extension OnboardingViewModel {
     enum Actions {
         case didAppear
         case didDisappear
-        case increment
-        case displayRandomError
+        case fetchConfig
     }
 
     struct Dependencies {
-        let model: ___Template___Model
+        let model: OnboardingModel
         let onCompletion: (String) -> Void
-        let sampleService: SampleServiceProtocol
+        let appConfigService: AppConfigServiceProtocol
     }
 }
 
-//
-// MARK: - ViewModel
-//
-class ___Template___ViewModel: BaseViewModel {
+class OnboardingViewModel: BaseViewModel {
     // MARK: - Usage/Auxiliar Attributes
     @Published private(set) var message: String = ""
     @Published var counter: Int = 0
-    private let sampleService: SampleServiceProtocol?
+    private let appConfigService: AppConfigServiceProtocol?
     public init(dependencies: Dependencies) {
-        self.sampleService = dependencies.sampleService
+        self.appConfigService = dependencies.appConfigService
         self.message = dependencies.model.message
         self.counter = dependencies.model.counter
     }
 
-    func send(_ action: Actions) {
+    func send(action: Actions) {
         switch action {
         case .didAppear: ()
         case .didDisappear: ()
-        case .increment: ()
-            counter += 1
-            message = "Counter: \(counter)"
-        case .displayRandomError:
-            alertModel = .init(
-                type: .error,
-
-                location: .top,
-                message: String.randomWithSpaces(10)
-            )
+        case .fetchConfig: () // Do something
         }
     }
 }
@@ -81,7 +68,7 @@ class ___Template___ViewModel: BaseViewModel {
 // MARK: - Auxiliar
 //
 
-fileprivate extension ___Template___ViewModel {}
+fileprivate extension OnboardingViewModel {}
 
 //
 // MARK: - Preview
@@ -90,7 +77,7 @@ fileprivate extension ___Template___ViewModel {}
 #if canImport(SwiftUI) && DEBUG
 @available(iOS 17, *)
 #Preview {
-    ___Template___ViewCoordinator(haveNavigationStack: false, model: .init(message: "Hi"))
+    OnboardingViewCoordinator(haveNavigationStack: true, model: .init(), onCompletion: { _ in })
         .environmentObject(ConfigurationViewModel.defaultForPreviews)
 }
 #endif
