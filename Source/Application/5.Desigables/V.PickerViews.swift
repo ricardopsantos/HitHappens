@@ -63,6 +63,7 @@ public struct SoundPickerView: View {
                     $0.name == newValue
                 }).first {
                     DevTools.Log.debug(.valueChanged("\(Self.self)", "selectedOption", "\(value)"), .view)
+                    value.play()
                     onChange(value)
                 }
             }

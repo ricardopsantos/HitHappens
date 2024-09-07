@@ -33,18 +33,21 @@ public extension SoundEffect {
     var name: String {
         switch self {
         case .none: return "None"
-        case .amb1: return "Ambient"
+        case .amb1: return "Ambulance"
         case .applause1: return "Clapping"
-        case .applause2: return "Cheering"
-        case .bomb1: return "Explosion"
-        case .boo1: return "Disapproval"
-        case .cheer1: return "Encouragement"
-        case .cheer2: return "Celebration"
-        case .cuek: return "Disinterest"
-        case .dixie: return "Nostalgic"
-        case .drama: return "Tension"
+        case .bomb1: return "Missile"
+        case .boo1: return "Boo"
+        case .cheer1: return "Cheer 1"
+        case .cheer2: return "Cheer 2"
+        case .applause2: return "Cheer 3"
+        case .cuek: return "Duck"
+        case .dixie: return "Horn"
+        case .lightSaberOn: return "Lightsaber on"
+        case .drama: return "Drama"
         case .incorrect: return "Error"
-        case .airHorn, .crickets, .doh, .haha, .lightSaberOn, .rimShot, .sadTrombone:
+        case .rimShot: return "Badum tss"
+        case .sadTrombone: return "Sad Trombone"
+        case .airHorn, .crickets, .doh, .haha:
             return rawValue.camelCaseToWords.replace(".Caf", with: "")
         }
     }

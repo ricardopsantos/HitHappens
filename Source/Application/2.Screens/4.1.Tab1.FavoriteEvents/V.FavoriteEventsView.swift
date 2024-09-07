@@ -152,6 +152,7 @@ struct FavoriteEventsView: View, ViewProtocol {
                                 Common_Logs.debug(number)
                             },
                             onTapGesture: {
+                                model.sound.play()
                                 viewModel.send(.addNewEvent(trackedEntityId: model.id))
                             })
                             .padding(.vertical, SizeNames.defaultMargin)
