@@ -28,7 +28,7 @@ struct EventDetailsViewCoordinator: View, ViewCoordinatorProtocol {
     // MARK: - Body & View
     var body: some View {
         if !haveNavigationStack {
-            buildScreen(.eventDetails(model: model), presentationStyle: .notApplied)
+            buildScreen(.eventDetails(model: model), presentationStyle: .navigation)
                 .sheet(item: $coordinator.sheetLink) { screen in
                     buildScreen(screen, presentationStyle: .sheet)
                 }
@@ -90,11 +90,12 @@ struct EventDetailsView: View, ViewProtocol {
 
     // MARK: - Usage/Auxiliar Attributes
     @Environment(\.dismiss) var dismiss
+    @State var onEdit: Bool = false
+    @State var locationSwitchIsOn: Bool = false
+    @StateObject var locationViewModel: Common.SharedLocationManagerViewModel = .shared
     private let presentationStyle: ViewPresentationStyle
     private let onPerformRouteBack: () -> Void
-    @State var locationSwitchIsOn: Bool = false
     private let cancelBag: CancelBag = .init()
-    @StateObject var locationViewModel: Common.SharedLocationManagerViewModel = .shared
 
     // MARK: - Body & View
     var body: some View {
@@ -112,6 +113,11 @@ struct EventDetailsView: View, ViewProtocol {
                 viewModel.send(.didAppear)
             }.onDisappear {
                 viewModel.send(.didDisappear)
+            }
+            .onChange(of: viewModel.isNewEvent) { isNew in
+                if isNew {
+                    onEdit = true
+                }
             }
             .onChange(of: viewModel.locationRelevant) { locationRelevant in
                 DevTools.Log.debug(.valueChanged("\(Self.self)", "locationRelevant", locationRelevant.description), .view)
@@ -141,13 +147,18 @@ struct EventDetailsView: View, ViewProtocol {
                         SwiftUIUtils.FixedVerticalSpacer(height: SizeNames.defaultMarginSmall)
                         saveNewView
                     } else {
-                        addNewLogView
-                        SwiftUIUtils.FixedVerticalSpacer(height: SizeNames.defaultMarginSmall)
+                        editionActionsView
                         Divider()
-                        SwiftUIUtils.FixedVerticalSpacer(height: SizeNames.defaultMarginSmall)
-                        archivedAndDeleteView
-                        SwiftUIUtils.FixedVerticalSpacer(height: SizeNames.defaultMarginSmall)
-                        listView
+                        if !onEdit {
+                            SwiftUIUtils.FixedVerticalSpacer(height: SizeNames.defaultMarginSmall)
+                            addNewLogView
+                            SwiftUIUtils.FixedVerticalSpacer(height: SizeNames.defaultMarginSmall)
+                            Divider()
+                            SwiftUIUtils.FixedVerticalSpacer(height: SizeNames.defaultMarginSmall)
+                            archivedAndDeleteView
+                            SwiftUIUtils.FixedVerticalSpacer(height: SizeNames.defaultMarginSmall)
+                            listView
+                        }
                     }
                 }
             }
@@ -155,7 +166,7 @@ struct EventDetailsView: View, ViewProtocol {
                 confirmationSheet
             }
             userMessageView
-        }
+        }.animation(.default, value: onEdit)
     }
 }
 
@@ -172,12 +183,76 @@ fileprivate extension EventDetailsView {
         }
         return .custom(onBackButtonTap: { onPerformRouteBack() }, title: title)
     }
+    
+    func saveState() {
+    /*    viewModel.send(.userDidChangedLocation(
+            address: addressCopy,
+            latitude: mapRegion?.center.latitude ?? 0,
+            longitude: mapRegion?.center.longitude ?? 0))
+        viewModel.send(.userDidChangedDate(value: eventDateCopy))
+        viewModel.send(.userDidChangedNote(value: noteCopy))*/
+    }
+    
+    func updateStateCopyWithViewModelCurrentState() {
+        /*if viewModel.eventDate != eventDateCopy {
+            eventDateCopy = viewModel.eventDate
+        }
+        if viewModel.note != noteCopy {
+            noteCopy = viewModel.note
+        }
+        if viewModel.address != addressCopy {
+            addressCopy = viewModel.address
+        }*/
+    }
 }
 
 //
 // MARK: - Auxiliar Views
 //
 fileprivate extension EventDetailsView {
+    
+    @ViewBuilder
+    var editionActionsView: some View {
+        Group {
+            if onEdit {
+                Divider()
+                HStack(spacing: 0) {
+                    saveEditionChangesView
+                    Spacer()
+                    doEditionView
+                }
+            } else {
+                doEditionView
+            }
+            Divider()
+        }
+    }
+
+    var doEditionView: some View {
+        TextButton(
+            onClick: {
+                onEdit.toggle()
+                updateStateCopyWithViewModelCurrentState()
+            },
+            text: !onEdit ? "Edit \(AppConstants.entityLogNameSingle.lowercased())".localizedMissing : "Cancel changes".localizedMissing,
+            style: .textOnly,
+            accessibility: .editButton)
+    }
+
+    @ViewBuilder
+    var saveEditionChangesView: some View {
+        Group {
+            if onEdit {
+                TextButton(onClick: {
+                    saveState()
+                    onEdit.toggle()
+                }, text: "Save changes", style: .textOnly, accessibility: .editButton)
+            } else {
+                EmptyView()
+            }
+        }
+    }
+    
     var userMessageView: some View {
         VStack(spacing: 0) {
             Text(viewModel.userMessage.text)
@@ -195,48 +270,84 @@ fileprivate extension EventDetailsView {
 
     var detailsView: some View {
         LazyVStack(spacing: 0) {
-            CustomTitleAndCustomTextFieldWithBinding(
-                title: "Name".localizedMissing,
-                placeholder: "Name".localizedMissing,
-                inputText: $viewModel.name,
-                accessibility: .undefined) { newValue in
-                    viewModel.send(.userDidChangedName(value: newValue))
-                }
-
+            if onEdit {
+                CustomTitleAndCustomTextFieldWithBinding(
+                    title: "Name".localizedMissing,
+                    placeholder: "Name".localizedMissing,
+                    inputText: $viewModel.name,
+                    accessibility: .undefined) { newValue in
+                        viewModel.send(.userDidChangedName(value: newValue))
+                    }
+            } else {
+                TitleAndValueView(title: "Name".localizedMissing,
+                                  value: viewModel.name,
+                                  style: .horizontal)
+            }
             SwiftUIUtils.FixedVerticalSpacer(height: SizeNames.defaultMarginSmall)
-            CustomTitleAndCustomTextFieldWithBinding(
-                title: "Info".localizedMissing,
-                placeholder: "Info".localizedMissing,
-                inputText: $viewModel.info,
-                accessibility: .undefined) { newValue in
-                    viewModel.send(.userDidChangedInfo(value: newValue))
-                }
-
-            SwiftUIUtils.FixedVerticalSpacer(height: SizeNames.defaultMarginSmall)
-            ToggleWithBinding(
-                title: "Favorite".localizedMissing,
-                isOn: $viewModel.favorite,
-                onChanged: { newValue in
-                    viewModel.send(.userDidChangedFavorite(value: newValue))
-                })
-
-            SwiftUIUtils.FixedVerticalSpacer(height: SizeNames.defaultMarginSmall)
-            ToggleWithBinding(
-                title: "Grab user location when adding new \(AppConstants.entityLogNameSingle.lowercased())".localizedMissing,
-                isOn: $viewModel.locationRelevant,
-                onChanged: { newValue in
-                    viewModel.send(.userDidChangedLocationRelevant(value: newValue))
-                })
-
-            SwiftUIUtils.FixedVerticalSpacer(height: SizeNames.defaultMarginSmall)
-            CategoryPickerView(selected: viewModel.category) { newValue in
-                viewModel.send(.userDidChangedEventCategory(value: newValue))
+            if onEdit {
+                CustomTitleAndCustomTextFieldWithBinding(
+                    title: "Info".localizedMissing,
+                    placeholder: "Info".localizedMissing,
+                    inputText: $viewModel.info,
+                    accessibility: .undefined) { newValue in
+                        viewModel.send(.userDidChangedInfo(value: newValue))
+                    }
+            } else {
+                TitleAndValueView(title: "Info".localizedMissing,
+                                  value: viewModel.info,
+                                  style: .horizontal)
             }
 
             SwiftUIUtils.FixedVerticalSpacer(height: SizeNames.defaultMarginSmall)
-            SoundPickerView(selected: $viewModel.soundEffect) { newValue in
-                viewModel.send(.userDidChangedSoundEffect(value: newValue))
+            if onEdit {
+                ToggleWithBinding(
+                    title: "Favorite".localizedMissing,
+                    isOn: $viewModel.favorite,
+                    onChanged: { newValue in
+                        viewModel.send(.userDidChangedFavorite(value: newValue))
+                    })
+            } else {
+                TitleAndValueView(title: "Favorite".localizedMissing,
+                                  value: viewModel.favorite ? "Yes".localizedMissing : "No".localizedMissing,
+                                  style: .horizontal)
             }
+            SwiftUIUtils.FixedVerticalSpacer(height: SizeNames.defaultMarginSmall)
+            if onEdit {
+                ToggleWithBinding(
+                    title: "Grab user location when adding new".localizedMissing,
+                    isOn: $viewModel.locationRelevant,
+                    onChanged: { newValue in
+                        viewModel.send(.userDidChangedLocationRelevant(value: newValue))
+                    })
+            } else {
+                TitleAndValueView(title: "Grab user location when adding new".localizedMissing,
+                                  value: viewModel.locationRelevant ? "Yes".localizedMissing : "No".localizedMissing,
+                                  style: .horizontal)
+            }
+            SwiftUIUtils.FixedVerticalSpacer(height: SizeNames.defaultMarginSmall)
+
+            if onEdit {
+                CategoryPickerView(selected: viewModel.category) { newValue in
+                    viewModel.send(.userDidChangedEventCategory(value: newValue))
+                }
+            } else {
+                TitleAndValueView(title: "Category".localizedMissing,
+                                  value: viewModel.category.localizedMissing,
+                                  style: .horizontal)
+            }
+
+            SwiftUIUtils.FixedVerticalSpacer(height: SizeNames.defaultMarginSmall)
+            if onEdit {
+                SoundPickerView(selected: $viewModel.soundEffect) { newValue in
+                    viewModel.send(.userDidChangedSoundEffect(value: newValue))
+                }
+            } else {
+                TitleAndValueView(title: "Sound effect".localizedMissing,
+                                  value: viewModel.soundEffect,
+                                  style: .horizontal)
+            }
+            
+
         }
         .paddingRight(SizeNames.size_1.cgFloat)
         .paddingLeft(SizeNames.size_1.cgFloat)
@@ -259,20 +370,23 @@ fileprivate extension EventDetailsView {
             accessibility: .saveButton)
     }
 
+    @ViewBuilder
     var addNewLogView: some View {
-        TextButton(
-            onClick: {
-                AnalyticsManager.shared.handleButtonClickEvent(
-                    buttonType: .primary,
-                    label: "Add new",
-                    sender: "\(Self.self)")
-                viewModel.send(.addNewLog)
-            },
-            text: "This happen? \(AppConstants.entityLogNameSingle) it!".localizedMissing,
-            alignment: .center,
-            style: .secondary,
-            background: .primary,
-            accessibility: .undefined)
+        if viewModel.trackedEntity != nil {
+            ForEach([viewModel.trackedEntity!], id: \.self) { model in
+                CounterView(
+                    model: model,
+                    minimalDisplay: true,
+                    onChange: { number in
+                        Common_Logs.debug(number)
+                    },
+                    onTapGesture: {
+                        viewModel.send(.addNewLog)
+                    })
+            }
+        } else {
+            EmptyView()
+        }
     }
 
     var archivedAndDeleteView: some View {
@@ -349,7 +463,7 @@ fileprivate extension EventDetailsView {
 //
 
 #if canImport(SwiftUI) && DEBUG
-#Preview("Edit") {
+#Preview("Existing") {
     EventDetailsViewCoordinator(
         model: .init(event: .random(cascadeEvents: [
             .random,

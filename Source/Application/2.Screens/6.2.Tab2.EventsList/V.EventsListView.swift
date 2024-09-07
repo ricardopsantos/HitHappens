@@ -112,7 +112,7 @@ struct EventsListView: View, ViewProtocol {
             ZStack {
                 ZStack {
                     Header(text: "\(AppConstants.entityNamePlural)")
-                    HStack {
+                    HStack(spacing: 0) {
                         Spacer()
                         ImageButton(
                             systemImageName: "plus",

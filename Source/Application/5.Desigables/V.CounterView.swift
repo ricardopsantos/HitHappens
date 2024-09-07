@@ -104,8 +104,6 @@ struct NumberTransitionView: View {
             DigitTransitionView(digit: $digitIndex0, onTapGesture: onTapGesture)
             DigitTransitionView(digit: $digitIndex1, onTapGesture: onTapGesture)
             DigitTransitionView(digit: $digitIndex2, onTapGesture: onTapGesture)
-        }.onTapGesture {
-            onTapGesture()
         }
     }
 }
@@ -124,34 +122,34 @@ struct CounterView: View {
     @State private var digitIndex2: Int
     private let onChange: (Int) -> Void
     private let onTapGesture: () -> Void
-    private let model: Model.TrackedEntity
+    private let info: String
+    private let name: String
+    private let id: String
+    private let minimalDisplay: Bool
     init(
         model: Model.TrackedEntity,
+        minimalDisplay: Bool,
         onChange: @escaping (Int) -> Void,
         onTapGesture: @escaping () -> Void
     ) {
-        let counterValue = model.cascadeEvents?.count ?? 0
-        self.model = model
-        self._number = State(initialValue: counterValue)
-        self.digitIndex0 = Self.digitsArray(number: counterValue)[0]
-        self.digitIndex1 = Self.digitsArray(number: counterValue)[1]
-        self.digitIndex2 = Self.digitsArray(number: counterValue)[2]
+        let counter = model.cascadeEvents?.count ?? 0
+        self.minimalDisplay = minimalDisplay
+        self.id = model.id
+        self.name = model.name
+        self.info = model.info
+        self._number = State(initialValue: counter)
+        self.digitIndex0 = Self.digitsArray(number: counter)[0]
+        self.digitIndex1 = Self.digitsArray(number: counter)[1]
+        self.digitIndex2 = Self.digitsArray(number: counter)[2]
         self.onChange = onChange
         self.onTapGesture = onTapGesture
     }
-
+    
     public var body: some View {
-        bodyV2
-            .onTapGesture {
-                onTapGesture()
-            }
-    }
-
-    public var bodyV2: some View {
         VStack(spacing: 0) {
             SwiftUIUtils.RenderedView(
                 "\(Self.self).\(#function)",
-                id: model.id,
+                id: id,
                 visible: AppFeaturesManager.Debug.canDisplayRenderedView
             )
             NumberTransitionView(
@@ -166,50 +164,19 @@ struct CounterView: View {
                 digitIndex2 = Self.digitsArray(number: number)[2]
                 onChange(number)
             }
-            Text(model.name)
-                .fontSemantic(.title2)
-                .textColor(ColorSemantic.labelPrimary.color)
-                .lineLimit(2)
-                .multilineTextAlignment(.center)
-            Group {
-                if !model.info.isEmpty {
-                    Text("(" + model.info + ")")
-                        .fontSemantic(.footnote)
-                        .textColor(ColorSemantic.labelSecondary.color)
-                        .lineLimit(2)
-                        .multilineTextAlignment(.center)
-                } else {
-                    EmptyView()
-                }
-            }
-        }
-    }
-
-    public var bodyV1: some View {
-        VStack(spacing: 0) {
-            SwiftUIUtils.RenderedView(
-                "\(Self.self).\(#function)",
-                id: model.id,
-                visible: AppFeaturesManager.Debug.canDisplayRenderedView
-            )
-            HStack(spacing: 0) {
-                Text(model.name)
-                    .fontSemantic(.largeTitle)
+            if !minimalDisplay, !name.isEmpty {
+                Text(name)
+                    .fontSemantic(.title2)
                     .textColor(ColorSemantic.labelPrimary.color)
                     .lineLimit(2)
-                Spacer()
-                NumberTransitionView(
-                    digitIndex0: $digitIndex0,
-                    digitIndex1: $digitIndex1,
-                    digitIndex2: $digitIndex2,
-                    onTapGesture: onTapGesture
-                )
-                .onChange(of: number) { _ in
-                    digitIndex0 = Self.digitsArray(number: number)[0]
-                    digitIndex1 = Self.digitsArray(number: number)[1]
-                    digitIndex2 = Self.digitsArray(number: number)[2]
-                    onChange(number)
-                }
+                    .multilineTextAlignment(.center)
+            }
+            if !minimalDisplay, !info.isEmpty {
+                Text("(" + info + ")")
+                    .fontSemantic(.footnote)
+                    .textColor(ColorSemantic.labelSecondary.color)
+                    .lineLimit(2)
+                    .multilineTextAlignment(.center)
             }
         }
     }
@@ -224,13 +191,15 @@ struct ContentView_Previews: PreviewProvider {
         VStack {
             CounterView(
                 model: .random(cascadeEvents: [.random]),
+                minimalDisplay: false,
                 onChange: { number in
                     Common_Logs.debug(number)
                 },
                 onTapGesture: {}
             )
             CounterView(
-                model: .random(cascadeEvents: [.random, .random, .random]),
+                model: .random(cascadeEvents: [.random, .random, .random]), 
+                minimalDisplay: true,
                 onChange: { number in
                     Common_Logs.debug(number)
                 },

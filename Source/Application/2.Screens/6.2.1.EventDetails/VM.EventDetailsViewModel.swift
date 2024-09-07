@@ -98,7 +98,7 @@ extension EventDetailsViewModel {
 //
 class EventDetailsViewModel: BaseViewModel {
     // MARK: - Usage/Auxiliar Attributes
-    private var event: Model.TrackedEntity?
+    @Published var trackedEntity: Model.TrackedEntity?
     @Published var isNewEvent: Bool = false
     @Published var canSaveNewEvent: Bool = false
     @Published private(set) var logs: [CascadeEventListItem]?
@@ -108,6 +108,8 @@ class EventDetailsViewModel: BaseViewModel {
     @Published var archived: Bool = false
     @Published var name: String = ""
     @Published var info: String = ""
+    @Published var id: String = ""
+    @Published var counter: Int = 0
     @Published var locationRelevant: Bool = false
     @Published var userMessage: (text: String, color: ColorSemantic) = ("", .clear)
     private let cancelBag = CancelBag()
@@ -118,7 +120,7 @@ class EventDetailsViewModel: BaseViewModel {
 
     public init(dependencies: Dependencies) {
         self.dataBaseRepository = dependencies.dataBaseRepository
-        self.event = dependencies.model?.event
+        self.trackedEntity = dependencies.model?.event
         self.onPerformRouteBack = dependencies.onPerformRouteBack
         self.onShouldDisplayTrackedLog = dependencies.onShouldDisplayTrackedLog
         super.init()
@@ -128,9 +130,9 @@ class EventDetailsViewModel: BaseViewModel {
     func send(_ action: Actions) {
         switch action {
         case .didAppear:
-            guard let unwrapped = event else {
+            guard let unwrapped = trackedEntity else {
                 isNewEvent = true
-                event = .new
+                trackedEntity = .new
                 return
             }
             isNewEvent = false
@@ -138,7 +140,7 @@ class EventDetailsViewModel: BaseViewModel {
         case .didDisappear: ()
         case .reload:
             guard !isNewEvent else { return }
-            guard let unwrapped = event else {
+            guard let unwrapped = trackedEntity else {
                 return
             }
             Task { [weak self] in
@@ -152,11 +154,11 @@ class EventDetailsViewModel: BaseViewModel {
             displayUserMessage("")
             value.play()
             if isNewEvent {
-                event?.sound = value
+                trackedEntity?.sound = value
 
             } else {
                 Task { [weak self] in
-                    guard let self = self, var trackedEntity = event else { return }
+                    guard let self = self, var trackedEntity = trackedEntity else { return }
                     trackedEntity.sound = value
                     dataBaseRepository?.trackedEntityUpdate(
                         trackedEntity: trackedEntity)
@@ -166,11 +168,11 @@ class EventDetailsViewModel: BaseViewModel {
         case .userDidChangedEventCategory(value: let value):
             displayUserMessage("")
             if isNewEvent {
-                event?.category = value
+                trackedEntity?.category = value
 
             } else {
                 Task { [weak self] in
-                    guard let self = self, var trackedEntity = event else { return }
+                    guard let self = self, var trackedEntity = trackedEntity else { return }
                     trackedEntity.category = value
                     dataBaseRepository?.trackedEntityUpdate(
                         trackedEntity: trackedEntity)
@@ -180,11 +182,11 @@ class EventDetailsViewModel: BaseViewModel {
         case .userDidChangedLocationRelevant(value: let value):
             displayUserMessage("")
             if isNewEvent {
-                event?.locationRelevant = value
+                trackedEntity?.locationRelevant = value
 
             } else {
                 Task { [weak self] in
-                    guard let self = self, var trackedEntity = event else { return }
+                    guard let self = self, var trackedEntity = trackedEntity else { return }
                     trackedEntity.locationRelevant = value
                     dataBaseRepository?.trackedEntityUpdate(
                         trackedEntity: trackedEntity)
@@ -197,11 +199,11 @@ class EventDetailsViewModel: BaseViewModel {
         case .userDidChangedName(value: let value):
             displayUserMessage("")
             if isNewEvent {
-                event?.name = value
+                trackedEntity?.name = value
                 canSaveNewEvent = !value.trim.isEmpty
             } else {
                 Task { [weak self] in
-                    guard let self = self, var trackedEntity = event else { return }
+                    guard let self = self, var trackedEntity = trackedEntity else { return }
                     trackedEntity.name = value
                     dataBaseRepository?.trackedEntityUpdate(
                         trackedEntity: trackedEntity)
@@ -211,11 +213,11 @@ class EventDetailsViewModel: BaseViewModel {
         case .userDidChangedArchived(value: let value):
             displayUserMessage("")
             if isNewEvent {
-                event?.archived = value
+                trackedEntity?.archived = value
 
             } else {
                 Task { [weak self] in
-                    guard let self = self, var trackedEntity = event else { return }
+                    guard let self = self, var trackedEntity = trackedEntity else { return }
                     trackedEntity.archived = value
                     if value {
                         // archived cant be favorite
@@ -232,10 +234,10 @@ class EventDetailsViewModel: BaseViewModel {
         case .userDidChangedFavorite(value: let value):
             displayUserMessage("")
             if isNewEvent {
-                event?.favorite = value
+                trackedEntity?.favorite = value
             } else {
                 Task { [weak self] in
-                    guard let self = self, var trackedEntity = event else { return }
+                    guard let self = self, var trackedEntity = trackedEntity else { return }
                     trackedEntity.favorite = value
                     if value {
                         // archived cant be favorite
@@ -252,10 +254,10 @@ class EventDetailsViewModel: BaseViewModel {
         case .userDidChangedInfo(value: let value):
             displayUserMessage("")
             if isNewEvent {
-                event?.info = value
+                trackedEntity?.info = value
             } else {
                 Task { [weak self] in
-                    guard let self = self, var trackedEntity = event else { return }
+                    guard let self = self, var trackedEntity = trackedEntity else { return }
                     trackedEntity.info = value
                     dataBaseRepository?.trackedEntityUpdate(
                         trackedEntity: trackedEntity)
@@ -277,8 +279,8 @@ class EventDetailsViewModel: BaseViewModel {
             guard !isNewEvent else { return }
             Task { [weak self] in
                 guard let self = self else { return }
-                let trackedEntityId = event?.id ?? ""
-                let locationRelevant = event?.locationRelevant ?? false
+                let trackedEntityId = trackedEntity?.id ?? ""
+                let locationRelevant = trackedEntity?.locationRelevant ?? false
                 let location = Common.SharedLocationManager.lastKnowLocation?.coordinate
                 if locationRelevant, let location = location {
                     Common.LocationUtils.getAddressFrom(
@@ -317,7 +319,7 @@ class EventDetailsViewModel: BaseViewModel {
                 confirmationSheetType = .delete
             } else {
                 Task { [weak self] in
-                    guard let self = self, let trackedEntity = event else { return }
+                    guard let self = self, let trackedEntity = trackedEntity else { return }
                     dataBaseRepository?.trackedEntityDelete(trackedEntity: trackedEntity)
                 }
             }
@@ -327,9 +329,9 @@ class EventDetailsViewModel: BaseViewModel {
                 confirmationSheetType = .save
             } else {
                 Task { [weak self] in
-                    guard let self = self, let trackedEntity = event else { return }
+                    guard let self = self, let trackedEntity = trackedEntity else { return }
                     if let trackedEntityId = dataBaseRepository?.trackedEntityInsert(trackedEntity: trackedEntity) {
-                        self.event = dataBaseRepository?.trackedEntityGet(trackedEntityId: trackedEntityId, cascade: true)
+                        self.trackedEntity = dataBaseRepository?.trackedEntityGet(trackedEntityId: trackedEntityId, cascade: true)
                         self.isNewEvent = false
                         self.canSaveNewEvent = false
                     }
@@ -351,7 +353,9 @@ fileprivate extension EventDetailsViewModel {
 
     func updateUI(event model: Model.TrackedEntity) {
         let count = model.cascadeEvents?.count ?? 0
-        event = model
+        trackedEntity = model
+        name = model.name
+        info = model.info
         logs = model.cascadeEvents?
             .sorted(by: { $0.recordDate > $1.recordDate })
             .enumerated()
@@ -361,6 +365,7 @@ fileprivate extension EventDetailsViewModel {
                     title: "\(count - index). \(event.localizedListItemTitleV1)",
                     value: event.localizedListItemValueV1)
             }
+        counter = model.cascadeEvents?.count ?? 0
         soundEffect = model.sound.name
         favorite = model.favorite
         archived = model.archived
@@ -394,7 +399,7 @@ fileprivate extension EventDetailsViewModel {
                 case .databaseDidUpdatedContentOn: break
                 case .databaseDidDeletedContentOn(let table, let id):
                     // Record deleted! Route back
-                    if table == "\(CDataTrackedEntity.self)", id == self?.event?.id {
+                    if table == "\(CDataTrackedEntity.self)", id == self?.trackedEntity?.id {
                         self?.onPerformRouteBack()
                     }
                 case .databaseDidChangedContentItemOn: break

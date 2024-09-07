@@ -123,7 +123,7 @@ enum BaseView {
                             onBackButtonTap()
                         }
                     }, title: navigationViewModel.title)
-                    //.hideNavigationBar()
+                    .hideNavigationBar()
                     
                 case .default:
                     NavigationView {

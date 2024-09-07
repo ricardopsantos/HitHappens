@@ -129,7 +129,7 @@ struct EventLogDetailsView: View, ViewProtocol {
                 SwiftUIUtils.FixedVerticalSpacer(height: SizeNames.defaultMarginSmall)
                 mapView
                 SwiftUIUtils.FixedVerticalSpacer(height: SizeNames.defaultMarginSmall)
-                saveEditAndSaveActionsView
+                editionActionsView
                 SwiftUIUtils.FixedVerticalSpacer(height: SizeNames.defaultMarginSmall)
                 Spacer()
                 deleteView
@@ -153,35 +153,35 @@ struct EventLogDetailsView: View, ViewProtocol {
     }
 
     @ViewBuilder
-    var saveEditAndSaveActionsView: some View {
+    var editionActionsView: some View {
         Group {
             Divider()
             if onEdit {
                 HStack(spacing: 0) {
-                    btnSaveView
+                    saveEditionChangesView
                     Spacer()
-                    btnEditView
+                    doEditionView
                 }
             } else {
-                btnEditView
+                doEditionView
             }
             Divider()
         }
     }
 
-    var btnEditView: some View {
+    var doEditionView: some View {
         TextButton(
             onClick: {
                 onEdit.toggle()
                 updateStateCopyWithViewModelCurrentState()
             },
-            text: !onEdit ? "Edit".localizedMissing : "Cancel changes".localizedMissing,
+            text: !onEdit ? "Edit \(AppConstants.entityLogNameSingle.lowercased())".localizedMissing : "Cancel changes".localizedMissing,
             style: .textOnly,
             accessibility: .editButton)
     }
 
     @ViewBuilder
-    var btnSaveView: some View {
+    var saveEditionChangesView: some View {
         Group {
             if onEdit {
                 TextButton(onClick: {

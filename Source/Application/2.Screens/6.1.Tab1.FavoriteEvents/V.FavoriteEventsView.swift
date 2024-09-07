@@ -132,6 +132,7 @@ struct FavoriteEventsView: View, ViewProtocol {
                     ForEach(viewModel.favorits, id: \.self) { model in
                         CounterView(
                             model: model,
+                            minimalDisplay: false,
                             onChange: { number in
                                 Common_Logs.debug(number)
                             },
