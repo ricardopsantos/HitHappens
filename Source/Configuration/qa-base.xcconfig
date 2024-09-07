@@ -7,8 +7,7 @@
 
 BUILD_USER = $(USER)
 PRODUCT_NAME = HitHappens.QA
-//PRODUCT_BUNDLE_IDENTIFIER = qa.hit.happens.app.id
-PRODUCT_BUNDLE_IDENTIFIER = dev.com.ricardo.app.id
+PRODUCT_BUNDLE_IDENTIFIER = com.hit.happens.app.id
 TARGET_ENVIRONMENT = qa
 //ENABLE_BITCODE = YES
 

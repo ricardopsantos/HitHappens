@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 52;
+	objectVersion = 54;
 	objects = {
 
 /* Begin PBXAggregateTarget section */
@@ -163,7 +163,6 @@
 		4E6733F049692EC50B68C618 /* CommonDataBaseRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EAC1A842E226D1E6632976F /* CommonDataBaseRepository.swift */; };
 		4F0C61A1CBE0390186CCF4C6 /* typealias.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C68BFAF42D5C8274606D2CA /* typealias.swift */; };
 		4F13A4E425BB9A791AE79C31 /* UIApplication+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = D438E2937766799131DD9699 /* UIApplication+Extensions.swift */; };
-		5062490A3E15FDC6CD08C55F /* SmartApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17DBA95835863E340CEE5D3D /* SmartApp.swift */; };
 		510CDFFB6C0C59746C27919B /* View+ShadowModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73697C082097D735118CE022 /* View+ShadowModifier.swift */; };
 		5126B77E7D8065F3564425CE /* BaseViewModelsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8364FDA81049E3C189B44966 /* BaseViewModelsTests.swift */; };
 		51957DE8863EF388FC174E99 /* UnknownDecodableProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83F9F93B4AE3E11B7AD2196C /* UnknownDecodableProtocol.swift */; };
@@ -259,6 +258,7 @@
 		8B8EFD143BAD03BC305E3AEE /* ModelDto+AppConfigResponse+Mock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 932A26A2F096AA8A5403D509 /* ModelDto+AppConfigResponse+Mock.swift */; };
 		8C8241F9FB759115B526E5D3 /* AppNavigationAndStateConcistencyTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B390F9DE0483B9F52B7F19EC /* AppNavigationAndStateConcistencyTests.swift */; };
 		8C9685BB4355901D9CF152C1 /* DevTools.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 44D52D0BEED29C4D8DFC3A83 /* DevTools.framework */; };
+		8C9807A22175902733C34B52 /* HitHappensApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 728D820080D1CF964E8BD4EA /* HitHappensApp.swift */; };
 		8CBDED40931135EE58883251 /* SyncCoreDataManagerSaveProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71DACDA6BF8AE4D5CF777096 /* SyncCoreDataManagerSaveProtocol.swift */; };
 		8E26FC126EE74ADCA28E2F3B /* incorrect.caf in Resources */ = {isa = PBXBuildFile; fileRef = 3473E7B5B7D797D8C001677C /* incorrect.caf */; };
 		8ED097EDA13A4D157ECBF44F /* AppConfigServiceProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC0C1A631EA8AA2D70BEAFFB /* AppConfigServiceProtocol.swift */; };
@@ -270,7 +270,7 @@
 		90F2C6F934B495FEF4FC009E /* V.CustomTitleAndCustomTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64F6BF3EF90669227EBF3DE5 /* V.CustomTitleAndCustomTextField.swift */; };
 		9139BBF198571E117485C54F /* Common_XXXRepresentable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 172530F8BBFF21164ED92078 /* Common_XXXRepresentable.swift */; };
 		918451D9ECCD44F70F0266D1 /* URLRequest+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7DA293B866305D750B71DE69 /* URLRequest+Extensions.swift */; };
-		91F41639C2A3C49616972700 /* HitHappens.app in Frameworks */ = {isa = PBXBuildFile; fileRef = 8F921C9CE07FEBB9EBCC4756 /* HitHappens.app */; };
+		91F41639C2A3C49616972700 /* HitHappens.Dev.app in Frameworks */ = {isa = PBXBuildFile; fileRef = 8F921C9CE07FEBB9EBCC4756 /* HitHappens.Dev.app */; };
 		9217A1A6F2060BD2899298E1 /* Binding+Examples.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6095DBB305E840ABFCA49E1A /* Binding+Examples.swift */; };
 		94DBEB31E7432C37026494EE /* NotificationCenter+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3AE23097266BC3C4D9BC31E /* NotificationCenter+Extensions.swift */; };
 		94DE3F8EE077740A7FAB73A6 /* NSManagedObject+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25CC2010EE7BB5A90B1AB73A /* NSManagedObject+Extensions.swift */; };
@@ -371,7 +371,7 @@
 		C6B7CC7F1A68371C9876BE50 /* PropertyWrappers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94D857FA2F60D21D30A0ABD2 /* PropertyWrappers.swift */; };
 		C6BCB98D559DE4357274979E /* Common.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FFF39C519E284BB9BED8F7C7 /* Common.framework */; };
 		C6F9BA73D990F1CCF7D02ABE /* RequestDtoProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9B80CF1336D81BB856A077B /* RequestDtoProtocol.swift */; };
-		C776238DAC7786495CF6936A /* HitHappens.app in Frameworks */ = {isa = PBXBuildFile; fileRef = 8F921C9CE07FEBB9EBCC4756 /* HitHappens.app */; };
+		C776238DAC7786495CF6936A /* HitHappens.Dev.app in Frameworks */ = {isa = PBXBuildFile; fileRef = 8F921C9CE07FEBB9EBCC4756 /* HitHappens.Dev.app */; };
 		C7888324B16813648A511B6A /* AsyncAwaitMainActor.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6282F0D57441100B3875E8A /* AsyncAwaitMainActor.swift */; };
 		C83465B639C42700F6AF585C /* amb1.caf in Resources */ = {isa = PBXBuildFile; fileRef = B7FF5DC85B2658CAB30CA051 /* amb1.caf */; };
 		C8C94AA8221F8FE6DE2F5FB0 /* XCTest.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 168C14F2513585F25FAB0E2E /* XCTest.framework */; };
@@ -678,11 +678,9 @@
 		0312ED3C00E36DD54EED387C /* V.TabItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = V.TabItem.swift; sourceTree = "<group>"; };
 		034DE4DBA423C810D68FAFB1 /* SampleServiceProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SampleServiceProtocol.swift; sourceTree = "<group>"; };
 		036B9639B3F64EFF0EA15086 /* tests.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = tests.png; sourceTree = "<group>"; };
-		036F5D0DED148EB8E3274627 /* unitTesting2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = unitTesting2.png; sourceTree = "<group>"; };
 		0402DC178913B4403700ED64 /* AsyncAwait.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AsyncAwait.swift; sourceTree = "<group>"; };
 		048D3D3179133DB38451FC28 /* ProjectedOnChange<T>.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ProjectedOnChange<T>.swift"; sourceTree = "<group>"; };
 		051207A6A09EEB4FF90C8921 /* SampleUsage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SampleUsage.swift; sourceTree = "<group>"; };
-		05A33E1E1879DFD6C29F5277 /* graphviz.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = graphviz.png; sourceTree = "<group>"; };
 		05D345AF152D91E41D1B43C4 /* E.ColorScheme.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = E.ColorScheme.swift; sourceTree = "<group>"; };
 		06096C4C0A337CC7F5BDDC20 /* E.SyncCoreDataManagerOperationQueue.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = E.SyncCoreDataManagerOperationQueue.swift; sourceTree = "<group>"; };
 		075FEADF3094EB3125C2E62A /* rimshot.caf */ = {isa = PBXFileReference; lastKnownFileType = file; path = rimshot.caf; sourceTree = "<group>"; };
@@ -700,6 +698,7 @@
 		0DE058B52754B47438010DDC /* XcodegenMultiConfig.yml */ = {isa = PBXFileReference; lastKnownFileType = text.yaml; path = XcodegenMultiConfig.yml; sourceTree = "<group>"; };
 		0E7C19FCA5891FD63A55EF8F /* Just+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Just+Extensions.swift"; sourceTree = "<group>"; };
 		0EF7DBE10CA557E4B71AF074 /* cheer2.caf */ = {isa = PBXFileReference; lastKnownFileType = file; path = cheer2.caf; sourceTree = "<group>"; };
+		0F0B2AC7A4ABC93CD4FBC3F4 /* UITests.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = UITests.png; sourceTree = "<group>"; };
 		101FF199845EDB592ED207C8 /* AppConfigService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppConfigService.swift; sourceTree = "<group>"; };
 		10EE2F799536FDDE8E90318B /* UIView+Combine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+Combine.swift"; sourceTree = "<group>"; };
 		11D6E8283CDF1B74A5FA6C7B /* boo1.caf */ = {isa = PBXFileReference; lastKnownFileType = file; path = boo1.caf; sourceTree = "<group>"; };
@@ -713,7 +712,6 @@
 		168C14F2513585F25FAB0E2E /* XCTest.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = XCTest.framework; path = System/Library/Frameworks/XCTest.framework; sourceTree = SDKROOT; };
 		172530F8BBFF21164ED92078 /* Common_XXXRepresentable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Common_XXXRepresentable.swift; sourceTree = "<group>"; };
 		17ABDC0BB94B839AA4FD1A2D /* UseDrawingGroupToSpeedUpView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UseDrawingGroupToSpeedUpView.swift; sourceTree = "<group>"; };
-		17DBA95835863E340CEE5D3D /* SmartApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SmartApp.swift; sourceTree = "<group>"; };
 		17E76519FEE0AC2E49610736 /* V.___Template___View.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "V.___Template___View.swift"; sourceTree = "<group>"; };
 		18070CEAD55C897C9229A7FC /* View+Debug.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "View+Debug.swift"; sourceTree = "<group>"; };
 		187F32D45479DFBACC5698D8 /* HelveticaNeueLTCom-Bd.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "HelveticaNeueLTCom-Bd.ttf"; sourceTree = "<group>"; };
@@ -729,9 +727,7 @@
 		1CE464A25942FED936A3317D /* CancelBag.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CancelBag.swift; sourceTree = "<group>"; };
 		1D6DC1D2C27599E8845CC433 /* Subscribers+Extentions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Subscribers+Extentions.swift"; sourceTree = "<group>"; };
 		1DB912FA8EE4858934D7FB0F /* AuthManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthManager.swift; sourceTree = "<group>"; };
-		1E2C9ECF9EA3DB9C81652349 /* lint.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = lint.png; sourceTree = "<group>"; };
 		1E2F8014E2709DD8EEA6DBC3 /* sadtrombone.caf */ = {isa = PBXFileReference; lastKnownFileType = file; path = sadtrombone.caf; sourceTree = "<group>"; };
-		1EA8B8270B3EEF90C8E1ED65 /* error2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = error2.png; sourceTree = "<group>"; };
 		1F80B25D6CDAC3960088F4EB /* CommonCoreData+Utils+NSManagedObjectModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CommonCoreData+Utils+NSManagedObjectModel.swift"; sourceTree = "<group>"; };
 		1F9B10171257F9FBEE47E1AB /* Common.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Common.swift; sourceTree = "<group>"; };
 		1FFE074AF5F044B35500AF94 /* DepedenciesManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DepedenciesManager.swift; sourceTree = "<group>"; };
@@ -739,17 +735,14 @@
 		205F63C60E99110555042712 /* ___Template___CounterDisplayView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "___Template___CounterDisplayView.swift"; sourceTree = "<group>"; };
 		207A283AC3D43FCDC8FEE5A1 /* UIColor+ExtensionsBase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+ExtensionsBase.swift"; sourceTree = "<group>"; };
 		21C0901246D3DF7A67B5AE41 /* MKMapView+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MKMapView+Extensions.swift"; sourceTree = "<group>"; };
-		22679B7A1CA2C14F8872CE31 /* xcodegen.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = xcodegen.png; sourceTree = "<group>"; };
 		241A8F44A87DC713037EE839 /* DispatchQueue+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "DispatchQueue+Extensions.swift"; sourceTree = "<group>"; };
 		2426020EC16E6CB566B15D7C /* NonSecureAppPreferences.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NonSecureAppPreferences.swift; sourceTree = "<group>"; };
-		2433CB24FC7DB0B4B1ACB3D4 /* darkMode.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = darkMode.png; sourceTree = "<group>"; };
 		244B3AA52D4A67CC6A96D677 /* SyncCoreDataManagerCreatingProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SyncCoreDataManagerCreatingProtocol.swift; sourceTree = "<group>"; };
 		2452DBF9C02AE2367B26EE00 /* _UITestTemplate.yml */ = {isa = PBXFileReference; lastKnownFileType = text.yaml; path = _UITestTemplate.yml; sourceTree = "<group>"; };
 		24CF4BD167D6B6E9C04D6FE7 /* E.StorageType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = E.StorageType.swift; sourceTree = "<group>"; };
 		256910174A9C93E7F8C7293E /* PreferenceKey.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = PreferenceKey.md; sourceTree = "<group>"; };
 		25CC2010EE7BB5A90B1AB73A /* NSManagedObject+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSManagedObject+Extensions.swift"; sourceTree = "<group>"; };
 		25CEA12B1DBFD3CE892B9BFA /* AnalyticsManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnalyticsManager.swift; sourceTree = "<group>"; };
-		25D4DD2D98E66DD331C58CE5 /* fonts.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = fonts.png; sourceTree = "<group>"; };
 		2630727CF6C1A60FD1178859 /* View+ViewBuilder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "View+ViewBuilder.swift"; sourceTree = "<group>"; };
 		269D269286EA9EC168CE8B2B /* SCNNode+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SCNNode+Extensions.swift"; sourceTree = "<group>"; };
 		2769E7E6072AA33235A5A786 /* E.ResponseFormat.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = E.ResponseFormat.swift; sourceTree = "<group>"; };
@@ -759,7 +752,6 @@
 		2976570CE8AD64419C228A57 /* GestureSubscription.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GestureSubscription.swift; sourceTree = "<group>"; };
 		29F78D713B87657ED6EACE7D /* View+ResignKeyboardOnDragGesture.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "View+ResignKeyboardOnDragGesture.swift"; sourceTree = "<group>"; };
 		2A1D04C05A6502C174D8438B /* View+Modifiers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "View+Modifiers.swift"; sourceTree = "<group>"; };
-		2A9A2BFFE589FA1B3BDDB90C /* spm.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = spm.png; sourceTree = "<group>"; };
 		2AF3185606ADB14D27C78340 /* image1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = image1.png; sourceTree = "<group>"; };
 		2D26CCF06D404D545B15FEEA /* test_reps.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = test_reps.png; sourceTree = "<group>"; };
 		2D3460CC9C9B4A5F11054AE2 /* AppAndDeviceInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppAndDeviceInfo.swift; sourceTree = "<group>"; };
@@ -790,14 +782,13 @@
 		3A270C7D27C4EB35808C9869 /* ModelDtoProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModelDtoProtocol.swift; sourceTree = "<group>"; };
 		3ACB960C92AF195A1E0DAB2F /* READ_AboutConfiguration.pptx */ = {isa = PBXFileReference; lastKnownFileType = file; path = READ_AboutConfiguration.pptx; sourceTree = "<group>"; };
 		3C7028117162E2160515F011 /* URLSession+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "URLSession+Extensions.swift"; sourceTree = "<group>"; };
-		3C955EC88A47DFB31C1852D5 /* SmartAppUnitTests.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = SmartAppUnitTests.png; sourceTree = "<group>"; };
-		3CB1181082762E4420A262EC /* unitTesting1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = unitTesting1.png; sourceTree = "<group>"; };
 		3EB8789D983039A04E8438EC /* BundleFinder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BundleFinder.swift; sourceTree = "<group>"; };
 		3F60BCB7AB44D4279315A890 /* View+BorderModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "View+BorderModifier.swift"; sourceTree = "<group>"; };
 		407A73A01C5B6270F23A98C4 /* CommonCoreData+Utils+NSPersistentContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CommonCoreData+Utils+NSPersistentContainer.swift"; sourceTree = "<group>"; };
 		4095DC985521E17CD0C608E5 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		4111BD7DACE77661457527D9 /* View+HideNavigationBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "View+HideNavigationBar.swift"; sourceTree = "<group>"; };
 		4236C4B1C51CC7AC64715FC2 /* Maps.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Maps.swift; sourceTree = "<group>"; };
+		423FBBC2786115CB5AE9A04B /* UnitTests.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = UnitTests.png; sourceTree = "<group>"; };
 		426D64284E0E319FA554FE32 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		4453FF85189030ABA4FBD6D0 /* CommonNetworking+NetworMonitor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CommonNetworking+NetworMonitor.swift"; sourceTree = "<group>"; };
 		44D52D0BEED29C4D8DFC3A83 /* DevTools.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = DevTools.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -843,11 +834,9 @@
 		5BFA75B87F55847F62BADBE1 /* leaks.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = leaks.png; sourceTree = "<group>"; };
 		5C019ED81A967EE4965806ED /* UnitTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = UnitTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		5D1DF9AE813D279EA6503147 /* SampleService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SampleService.swift; sourceTree = "<group>"; };
-		5D792FAD4D9879D6F20036DE /* uiTesting2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = uiTesting2.png; sourceTree = "<group>"; };
 		5E0EFDABBC89E6955C045187 /* _FrameworkTemplate.yml */ = {isa = PBXFileReference; lastKnownFileType = text.yaml; path = _FrameworkTemplate.yml; sourceTree = "<group>"; };
 		5ED4F524BE62E4713143FBB0 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		5F584762B518AD2CDD88AA33 /* SharedLocationManagerViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SharedLocationManagerViewModel.swift; sourceTree = "<group>"; };
-		5F5A0F291E5D1D99F76ABF9A /* pullDonwRefresh.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = pullDonwRefresh.png; sourceTree = "<group>"; };
 		5F5B07E571290AE7AA9D1EA7 /* NetworkAgentRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkAgentRequest.swift; sourceTree = "<group>"; };
 		6095DBB305E840ABFCA49E1A /* Binding+Examples.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Binding+Examples.swift"; sourceTree = "<group>"; };
 		60E1AA65762DB7CAE68ACC94 /* SwiftUI+UIKit.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SwiftUI+UIKit.swift"; sourceTree = "<group>"; };
@@ -865,9 +854,7 @@
 		68765DF53748A4613F3946B7 /* UIBarButtonItem+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIBarButtonItem+Extensions.swift"; sourceTree = "<group>"; };
 		6882AE7329CBEE9F816E957C /* APIEndpoints.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIEndpoints.swift; sourceTree = "<group>"; };
 		68F7771D422073DBF258D42A /* 2.1.NetworkAgentClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = 2.1.NetworkAgentClient.swift; sourceTree = "<group>"; };
-		6A0070872F4E3ED74CC56794 /* uiTesting.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = uiTesting.png; sourceTree = "<group>"; };
 		6A333F6D7A58D410A426B041 /* TNConstrainable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TNConstrainable.swift; sourceTree = "<group>"; };
-		6B5EBCADFE80130784B3BBAA /* errorsManager.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = errorsManager.png; sourceTree = "<group>"; };
 		6B77C643612567831475E175 /* NSAttributedString+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSAttributedString+Extensions.swift"; sourceTree = "<group>"; };
 		6BCBE86300221D48F7D02BAA /* crickets.caf */ = {isa = PBXFileReference; lastKnownFileType = file; path = crickets.caf; sourceTree = "<group>"; };
 		6D58633A4D393676C846F21C /* AppErrors+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AppErrors+Extensions.swift"; sourceTree = "<group>"; };
@@ -880,13 +867,13 @@
 		71DACDA6BF8AE4D5CF777096 /* SyncCoreDataManagerSaveProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SyncCoreDataManagerSaveProtocol.swift; sourceTree = "<group>"; };
 		722804E45110DC3EFC073426 /* ___Template___Auxiliar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "___Template___Auxiliar.swift"; sourceTree = "<group>"; };
 		727D80957FAA6CF945ECF9DB /* CommonNetworking+Reachability.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CommonNetworking+Reachability.swift"; sourceTree = "<group>"; };
+		728D820080D1CF964E8BD4EA /* HitHappensApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HitHappensApp.swift; sourceTree = "<group>"; };
 		729E55CF1B0F958B65400EDD /* UICollectionView+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UICollectionView+Extensions.swift"; sourceTree = "<group>"; };
 		72AF334CDBB2461BE0AD6CFB /* applause2.caf */ = {isa = PBXFileReference; lastKnownFileType = file; path = applause2.caf; sourceTree = "<group>"; };
 		7334BFEFE1BC4847C80CF4ED /* SecureAppPreferences.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SecureAppPreferences.swift; sourceTree = "<group>"; };
 		734E5CA4622CF6164BE9E5ED /* Application.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Application.png; sourceTree = "<group>"; };
 		73697C082097D735118CE022 /* View+ShadowModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "View+ShadowModifier.swift"; sourceTree = "<group>"; };
 		73E3C3F00D1C1B82E55440F9 /* View+DebugModifiers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "View+DebugModifiers.swift"; sourceTree = "<group>"; };
-		74B71438D35E46CEE8C4CBA7 /* localizables.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = localizables.png; sourceTree = "<group>"; };
 		75EA5233434AC9D301782EFF /* CommonBaseCoreDataManagerOutput.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommonBaseCoreDataManagerOutput.swift; sourceTree = "<group>"; };
 		75F484839870A936D4A8A40A /* PointFreeFunctions+Foundation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "PointFreeFunctions+Foundation.swift"; sourceTree = "<group>"; };
 		761CD0A3C067C0C9CE2190A3 /* SetupManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetupManager.swift; sourceTree = "<group>"; };
@@ -923,15 +910,13 @@
 		81F14712C9F3B6577AB93C90 /* main.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = main.swift; sourceTree = "<group>"; };
 		827A163DB0EA257785F9B9C6 /* VM.EventsMapViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VM.EventsMapViewModel.swift; sourceTree = "<group>"; };
 		82AAC0590F5F20BC806B3007 /* DesignSystem.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = DesignSystem.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		833D281025396845B399E4ED /* UITests.xctest */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.cfbundle; path = UITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		833D281025396845B399E4ED /* UITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = UITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		8364FDA81049E3C189B44966 /* BaseViewModelsTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseViewModelsTests.swift; sourceTree = "<group>"; };
-		838736F9C73A389BD40A4F0E /* loading1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = loading1.png; sourceTree = "<group>"; };
 		83BBB138523E5439C65DD3C4 /* VM.MainTabViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VM.MainTabViewModel.swift; sourceTree = "<group>"; };
 		83F9F93B4AE3E11B7AD2196C /* UnknownDecodableProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UnknownDecodableProtocol.swift; sourceTree = "<group>"; };
 		841BCDCF789645BBF0759CEB /* SolvingRedraw.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SolvingRedraw.swift; sourceTree = "<group>"; };
 		848023DB37E6F014DF0DF349 /* Image+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Image+Extensions.swift"; sourceTree = "<group>"; };
 		84B93161EC912D2B4A110CEB /* Shapes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Shapes.swift; sourceTree = "<group>"; };
-		84BB81503BF7083EF665D5A4 /* colors.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = colors.png; sourceTree = "<group>"; };
 		856E1C5F3C35EF2169E97486 /* ScreenProtocols.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScreenProtocols.swift; sourceTree = "<group>"; };
 		85AA4C76F052DD490955F2DA /* DesignSystem.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = DesignSystem.png; sourceTree = "<group>"; };
 		85B866E26F5E76FC9E7B3E91 /* ErrorsManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ErrorsManager.swift; sourceTree = "<group>"; };
@@ -955,8 +940,7 @@
 		8ECC91F0469307D77F8AC73B /* Model+Song.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Model+Song.swift"; sourceTree = "<group>"; };
 		8EDDC2786C0CB58130BD2F0E /* CodableCacheManagerProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CodableCacheManagerProtocol.swift; sourceTree = "<group>"; };
 		8F2A648DC10287BEED95E08B /* CPPWrapper.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = CPPWrapper.mm; sourceTree = "<group>"; };
-		8F921C9CE07FEBB9EBCC4756 /* HitHappens.app */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.application; name = HitHappens.app; path = HitHappens.Dev.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		8FA413A5E43230AAB11EFB65 /* designables.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = designables.png; sourceTree = "<group>"; };
+		8F921C9CE07FEBB9EBCC4756 /* HitHappens.Dev.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = HitHappens.Dev.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		905EC4EE7B15C86826DB7B66 /* FetchStatesScreenTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FetchStatesScreenTests.swift; sourceTree = "<group>"; };
 		909ED8D6D08791F365A57FE3 /* install.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = install.png; sourceTree = "<group>"; };
 		910C283C78E293E00E79BC03 /* Int+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Int+Extensions.swift"; sourceTree = "<group>"; };
@@ -1021,7 +1005,6 @@
 		AC0C1A631EA8AA2D70BEAFFB /* AppConfigServiceProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppConfigServiceProtocol.swift; sourceTree = "<group>"; };
 		AE56BC1F2F0489FE478B1F25 /* Stack.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Stack.swift; sourceTree = "<group>"; };
 		AECF8C56298298E0E92F6848 /* V.MainTabView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = V.MainTabView.swift; sourceTree = "<group>"; };
-		AF9EA6F526413764560CC0D6 /* caching.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = caching.png; sourceTree = "<group>"; };
 		B06FCE8DC7F8B757928A9433 /* E.AppErrors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = E.AppErrors.swift; sourceTree = "<group>"; };
 		B1064A16C85096E77B777779 /* BaseUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseUITests.swift; sourceTree = "<group>"; };
 		B1983429A1ABD3C2D5490509 /* Domain.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Domain.png; sourceTree = "<group>"; };
@@ -1033,10 +1016,8 @@
 		B390F9DE0483B9F52B7F19EC /* AppNavigationAndStateConcistencyTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppNavigationAndStateConcistencyTests.swift; sourceTree = "<group>"; };
 		B3AE23097266BC3C4D9BC31E /* NotificationCenter+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NotificationCenter+Extensions.swift"; sourceTree = "<group>"; };
 		B473782EACF97CC7C01E934E /* CDataTrackedEntity+Mappers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CDataTrackedEntity+Mappers.swift"; sourceTree = "<group>"; };
-		B4965B262D4F55577397BFFF /* clean.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = clean.png; sourceTree = "<group>"; };
 		B4B059E49DCFBB9EAE3819D5 /* CommonBaseCoreDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommonBaseCoreDataManager.swift; sourceTree = "<group>"; };
 		B4B8DCD41A0B504FFD55F633 /* NotoSans-Medium.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "NotoSans-Medium.ttf"; sourceTree = "<group>"; };
-		B4D4B8D0D574E70E283CA8BA /* uiTesting1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = uiTesting1.png; sourceTree = "<group>"; };
 		B5CD802DFADCB3967482A7AA /* E.Tab.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = E.Tab.swift; sourceTree = "<group>"; };
 		B6465797363FF69F593BCB40 /* Common-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Common-Bridging-Header.h"; sourceTree = "<group>"; };
 		B6C0438ADCDEDA9702A7991B /* UIImageView+Transform.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImageView+Transform.swift"; sourceTree = "<group>"; };
@@ -1077,7 +1058,6 @@
 		CB77472C94841BD3A6D4B011 /* E.APIError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = E.APIError.swift; sourceTree = "<group>"; };
 		CD0FC9FE359A27E787826E96 /* UIEdgeInsets+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIEdgeInsets+Extensions.swift"; sourceTree = "<group>"; };
 		CD1FDDE3659D2750582E5261 /* doh.caf */ = {isa = PBXFileReference; lastKnownFileType = file; path = doh.caf; sourceTree = "<group>"; };
-		CEC5D94D4AF3BF7F46C0377C /* loading2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = loading2.png; sourceTree = "<group>"; };
 		CED0AB849FEC2B790505562D /* E.Gender.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = E.Gender.swift; sourceTree = "<group>"; };
 		CF836039B8A0CFEE54E5B8BE /* lightsaber_on.caf */ = {isa = PBXFileReference; lastKnownFileType = file; path = lightsaber_on.caf; sourceTree = "<group>"; };
 		CF910C4076D66135F4E41C96 /* FetchNationScreenTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FetchNationScreenTests.swift; sourceTree = "<group>"; };
@@ -1104,7 +1084,6 @@
 		D86627024BFE862917768A72 /* CategoryPickerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryPickerView.swift; sourceTree = "<group>"; };
 		D8B937923FA73CF87145E3C4 /* V.ListItemView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = V.ListItemView.swift; sourceTree = "<group>"; };
 		D95D93D539F1F36375A07927 /* qa-release.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = "qa-release.xcconfig"; sourceTree = "<group>"; };
-		D9936A4E607392AB878642F2 /* ligthMode.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ligthMode.png; sourceTree = "<group>"; };
 		DA1388E4642F941583C36380 /* View+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "View+Extensions.swift"; sourceTree = "<group>"; };
 		DA4C1512D49028787091B4BF /* Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Bridging-Header.h"; sourceTree = "<group>"; };
 		DB3812F24D5B17DA645113B6 /* CommonNetworking+Utils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CommonNetworking+Utils.swift"; sourceTree = "<group>"; };
@@ -1118,7 +1097,6 @@
 		DFAF4676F056FFA16560F0F7 /* interstate_regularcondensed.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = interstate_regularcondensed.ttf; sourceTree = "<group>"; };
 		DFD437DC52B2BD2143C57759 /* CALayer+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CALayer+Extensions.swift"; sourceTree = "<group>"; };
 		E019F8B3A7C182541F6F39FE /* View+LoaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "View+LoaderView.swift"; sourceTree = "<group>"; };
-		E025147D6F4179C546FFB715 /* SmartAppUITests.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = SmartAppUITests.png; sourceTree = "<group>"; };
 		E07AF0A11AF7FA1ECDA7116D /* pods.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = pods.xcconfig; sourceTree = "<group>"; };
 		E0F6A297F1680E6004FFB137 /* V.GenericMapView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = V.GenericMapView.swift; sourceTree = "<group>"; };
 		E1C71847B677D34BD8D4DAA3 /* VM.EventsCalendarViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VM.EventsCalendarViewModel.swift; sourceTree = "<group>"; };
@@ -1133,14 +1111,12 @@
 		E65EBD2EF245564A4EEAED31 /* ThreadSafe<T>.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ThreadSafe<T>.swift"; sourceTree = "<group>"; };
 		E76B8687E060162560516E86 /* production-release.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = "production-release.xcconfig"; sourceTree = "<group>"; };
 		E8C880ED279582D79033D075 /* Data+Extentions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Data+Extentions.swift"; sourceTree = "<group>"; };
-		E965FB25024DC88EB6E18F02 /* analitics.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = analitics.png; sourceTree = "<group>"; };
 		E9C82B1F475F968746B156CE /* V.SplashScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = V.SplashScreen.swift; sourceTree = "<group>"; };
 		E9F5C56D022D9244BAAB6345 /* UIImage+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImage+Extensions.swift"; sourceTree = "<group>"; };
 		EB7AA19FEEBA9B2CA7E1A920 /* DevTools.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = DevTools.png; sourceTree = "<group>"; };
 		EBDF231564B7D6A4CA5A7147 /* CronometerManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CronometerManager.swift; sourceTree = "<group>"; };
 		EBE464405B2D727FE4E32693 /* UIScreen+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIScreen+Extensions.swift"; sourceTree = "<group>"; };
 		EC1A3791A315A03A27E7D519 /* CustomSubscriber.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomSubscriber.swift; sourceTree = "<group>"; };
-		ECD5AB1A8895BED944915EF9 /* testing.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = testing.png; sourceTree = "<group>"; };
 		ECF7F26F14AD1FAD29555F51 /* Keychain.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Keychain.swift; sourceTree = "<group>"; };
 		EE1EAF226F84347970DAFF17 /* ModelProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModelProtocol.swift; sourceTree = "<group>"; };
 		EE3E5F20C9E19AF94614FB39 /* Model+HitHappensEvent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Model+HitHappensEvent.swift"; sourceTree = "<group>"; };
@@ -1173,10 +1149,8 @@
 		FB23EAAC10959B6458C85D74 /* E.HashableModelState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = E.HashableModelState.swift; sourceTree = "<group>"; };
 		FB341F4A0BB290A0462DC258 /* InAppPushNotManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InAppPushNotManager.swift; sourceTree = "<group>"; };
 		FB8463A740E5109BA44742E8 /* qa-base.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = "qa-base.xcconfig"; sourceTree = "<group>"; };
-		FBA9DDFB1306B4DC571DBD63 /* error1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = error1.png; sourceTree = "<group>"; };
 		FBF6D015750690BD6C4E93D6 /* TwoViewSameSize.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TwoViewSameSize.swift; sourceTree = "<group>"; };
 		FC4B63DF6B01468C8291D02B /* DBVersion1.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = DBVersion1.xcdatamodel; sourceTree = "<group>"; };
-		FE33B48626220C5A90A051E5 /* logs.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = logs.png; sourceTree = "<group>"; };
 		FECE776817669DA93B595643 /* Inject<T>.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Inject<T>.swift"; sourceTree = "<group>"; };
 		FF268ADB4A0740084106B7DD /* CDataSinger+NSFetchRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CDataSinger+NSFetchRequest.swift"; sourceTree = "<group>"; };
 		FF28DB0DCEE4B829E8D3A60F /* dev-release.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = "dev-release.xcconfig"; sourceTree = "<group>"; };
@@ -1201,7 +1175,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				AF72B86336757AB7ECA114E7 /* XCTest.framework in Frameworks */,
-				91F41639C2A3C49616972700 /* HitHappens.app in Frameworks */,
+				91F41639C2A3C49616972700 /* HitHappens.Dev.app in Frameworks */,
 				A0EB4EDABE96147A7874D6DD /* Nimble in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1221,7 +1195,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				C8C94AA8221F8FE6DE2F5FB0 /* XCTest.framework in Frameworks */,
-				C776238DAC7786495CF6936A /* HitHappens.app in Frameworks */,
+				C776238DAC7786495CF6936A /* HitHappens.Dev.app in Frameworks */,
 				A62F9D2AC250841A5882F81E /* Nimble in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1387,7 +1361,6 @@
 				36202361E2F9EC3203E13E94 /* Graph_prety.viz.png */,
 				79F37B466E1F43BF471038FD /* Graph.json */,
 				08A9CBE4EF193A1AF12EF4FF /* Graph.viz */,
-				05A33E1E1879DFD6C29F5277 /* graphviz.png */,
 				909ED8D6D08791F365A57FE3 /* install.png */,
 			);
 			path = _Documents;
@@ -2234,15 +2207,6 @@
 			path = DataBaseRepository;
 			sourceTree = "<group>";
 		};
-		9E0363CFD351718E5BFA15F3 /* deprecated */ = {
-			isa = PBXGroup;
-			children = (
-				B4D4B8D0D574E70E283CA8BA /* uiTesting1.png */,
-				5D792FAD4D9879D6F20036DE /* uiTesting2.png */,
-			);
-			path = deprecated;
-			sourceTree = "<group>";
-		};
 		9EA5AB85CDD268099834EAE5 = {
 			isa = PBXGroup;
 			children = (
@@ -2356,7 +2320,6 @@
 		B1790CC57A97A1615647CC1C /* images */ = {
 			isa = PBXGroup;
 			children = (
-				F863A57A7327538D08B43E41 /* features */,
 				C19806AF2C106FA5BACD5D1D /* project_struct */,
 				72A6FE7333D06BE9F165823E /* tests */,
 				8C9C937F4693AF59D060EBC7 /* Xcode.png */,
@@ -2451,8 +2414,8 @@
 				85AA4C76F052DD490955F2DA /* DesignSystem.png */,
 				EB7AA19FEEBA9B2CA7E1A920 /* DevTools.png */,
 				B1983429A1ABD3C2D5490509 /* Domain.png */,
-				E025147D6F4179C546FFB715 /* SmartAppUITests.png */,
-				3C955EC88A47DFB31C1852D5 /* SmartAppUnitTests.png */,
+				0F0B2AC7A4ABC93CD4FBC3F4 /* UITests.png */,
+				423FBBC2786115CB5AE9A04B /* UnitTests.png */,
 				4D53B91E7B8388F4C515459F /* XcodeGen.png */,
 			);
 			path = project_struct;
@@ -2531,8 +2494,8 @@
 			isa = PBXGroup;
 			children = (
 				1B5875AB81E13AB04609D5B9 /* AppDelegate.swift */,
+				728D820080D1CF964E8BD4EA /* HitHappensApp.swift */,
 				81F14712C9F3B6577AB93C90 /* main.swift */,
-				17DBA95835863E340CEE5D3D /* SmartApp.swift */,
 			);
 			path = 1.Main;
 			sourceTree = "<group>";
@@ -2673,7 +2636,7 @@
 				82AAC0590F5F20BC806B3007 /* DesignSystem.framework */,
 				44D52D0BEED29C4D8DFC3A83 /* DevTools.framework */,
 				50900AE93714414999A66957 /* Domain.framework */,
-				8F921C9CE07FEBB9EBCC4756 /* HitHappens.app */,
+				8F921C9CE07FEBB9EBCC4756 /* HitHappens.Dev.app */,
 				833D281025396845B399E4ED /* UITests.xctest */,
 				5C019ED81A967EE4965806ED /* UnitTests.xctest */,
 			);
@@ -2798,37 +2761,6 @@
 				06096C4C0A337CC7F5BDDC20 /* E.SyncCoreDataManagerOperationQueue.swift */,
 			);
 			path = 2.Utils;
-			sourceTree = "<group>";
-		};
-		F863A57A7327538D08B43E41 /* features */ = {
-			isa = PBXGroup;
-			children = (
-				9E0363CFD351718E5BFA15F3 /* deprecated */,
-				E965FB25024DC88EB6E18F02 /* analitics.png */,
-				AF9EA6F526413764560CC0D6 /* caching.png */,
-				B4965B262D4F55577397BFFF /* clean.png */,
-				84BB81503BF7083EF665D5A4 /* colors.png */,
-				2433CB24FC7DB0B4B1ACB3D4 /* darkMode.png */,
-				8FA413A5E43230AAB11EFB65 /* designables.png */,
-				FBA9DDFB1306B4DC571DBD63 /* error1.png */,
-				1EA8B8270B3EEF90C8E1ED65 /* error2.png */,
-				6B5EBCADFE80130784B3BBAA /* errorsManager.png */,
-				25D4DD2D98E66DD331C58CE5 /* fonts.png */,
-				D9936A4E607392AB878642F2 /* ligthMode.png */,
-				1E2C9ECF9EA3DB9C81652349 /* lint.png */,
-				838736F9C73A389BD40A4F0E /* loading1.png */,
-				CEC5D94D4AF3BF7F46C0377C /* loading2.png */,
-				74B71438D35E46CEE8C4CBA7 /* localizables.png */,
-				FE33B48626220C5A90A051E5 /* logs.png */,
-				5F5A0F291E5D1D99F76ABF9A /* pullDonwRefresh.png */,
-				2A9A2BFFE589FA1B3BDDB90C /* spm.png */,
-				ECD5AB1A8895BED944915EF9 /* testing.png */,
-				6A0070872F4E3ED74CC56794 /* uiTesting.png */,
-				3CB1181082762E4420A262EC /* unitTesting1.png */,
-				036F5D0DED148EB8E3274627 /* unitTesting2.png */,
-				22679B7A1CA2C14F8872CE31 /* xcodegen.png */,
-			);
-			path = features;
 			sourceTree = "<group>";
 		};
 		F9C79F007A419A3AEF553E97 /* BaseView */ = {
@@ -3077,7 +3009,7 @@
 			);
 			name = HitHappens;
 			productName = HitHappens;
-			productReference = 8F921C9CE07FEBB9EBCC4756 /* HitHappens.app */;
+			productReference = 8F921C9CE07FEBB9EBCC4756 /* HitHappens.Dev.app */;
 			productType = "com.apple.product-type.application";
 		};
 		FF45A0732131899A1CD97284 /* Common */ = {
@@ -3103,16 +3035,11 @@
 		2272A138D7A445ABC7678CC6 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 1501;
+				BuildIndependentTargetsInParallel = YES;
+				LastUpgradeCheck = 1540;
 				TargetAttributes = {
 					7FC1D4A9405E52C5CA9319C9 = {
 						TestTargetID = F7A7E879415146CCE92FA8DF;
-					};
-					ADF727D272C546FEA796F717 = {
-						TestTargetID = F7A7E879415146CCE92FA8DF;
-					};
-					F7A7E879415146CCE92FA8DF = {
-						DevelopmentTeam = EP8XQ3ZY9V;
 					};
 				};
 			};
@@ -3532,6 +3459,7 @@
 				CD969D09E7E232E2BE1A3D04 /* ErrorsManager.swift in Sources */,
 				24DC3DE2ADB23A54CF4F8129 /* Firebase+Extension.swift in Sources */,
 				2F9E64350C37AAC83B867C9E /* GenericMapView+Extensions.swift in Sources */,
+				8C9807A22175902733C34B52 /* HitHappensApp.swift in Sources */,
 				D6C52F865B66653A2AC286F5 /* InAppPushNotManager.swift in Sources */,
 				2D675B260C0F4F04F976E716 /* InterfaceStyleManager.swift in Sources */,
 				FE47C2DBBE23BFCF6FA711FC /* Models+Extensions.swift in Sources */,
@@ -3539,7 +3467,6 @@
 				EBB70E9E855A86D51D00952E /* RouterViewModel.swift in Sources */,
 				641975C3260AE7E1C154E326 /* ScreenProtocols.swift in Sources */,
 				B1EF18BE11233FAF091EC129 /* SetupManager.swift in Sources */,
-				5062490A3E15FDC6CD08C55F /* SmartApp.swift in Sources */,
 				EEA1304F8FD62F1B4172AF4E /* String+Extensions.swift in Sources */,
 				0C40B5F362DC0D21AE65523F /* UITestingManager.swift in Sources */,
 				E4877B38E9317709D61C2B8E /* V.CounterView.swift in Sources */,
@@ -3825,11 +3752,15 @@
 			baseConfigurationReference = DD0DA4E4955C4B0732C54BFD /* production-debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "Apple Development";
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = G92548JLNB;
 				INFOPLIST_FILE = Application/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SDKROOT = iphoneos;
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
 				SUPPORTS_MACCATALYST = NO;
@@ -3849,7 +3780,7 @@
 					"@executable_path/Frameworks",
 					"@loader_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.ricardo.app.id.UITests;
+				PRODUCT_BUNDLE_IDENTIFIER = hit.happens.app.id.UITests;
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				TEST_TARGET_NAME = HitHappens;
@@ -3865,6 +3796,7 @@
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				ENABLE_MODULE_VERIFIER = YES;
 				INFOPLIST_FILE = DesignSystem/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
@@ -3873,7 +3805,8 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.ricardo.app.id.DesignSystem;
+				MODULE_VERIFIER_SUPPORTED_LANGUAGE_STANDARDS = "gnu11 gnu++14";
+				PRODUCT_BUNDLE_IDENTIFIER = hit.happens.app.id.DesignSystem;
 				SDKROOT = iphoneos;
 				SKIP_INSTALL = YES;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -3890,6 +3823,7 @@
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				ENABLE_MODULE_VERIFIER = YES;
 				INFOPLIST_FILE = Domain/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
@@ -3898,7 +3832,8 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.ricardo.app.id.Domain;
+				MODULE_VERIFIER_SUPPORTED_LANGUAGE_STANDARDS = "gnu11 gnu++14";
+				PRODUCT_BUNDLE_IDENTIFIER = hit.happens.app.id.Domain;
 				SDKROOT = iphoneos;
 				SKIP_INSTALL = YES;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -3923,7 +3858,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.ricardo.app.id.Common;
+				PRODUCT_BUNDLE_IDENTIFIER = hit.happens.app.id.Common;
 				SDKROOT = iphoneos;
 				SKIP_INSTALL = YES;
 				SWIFT_OBJC_BRIDGING_HEADER = "Common/Sources/Common-Bridging-Header.h";
@@ -3941,6 +3876,7 @@
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				ENABLE_MODULE_VERIFIER = YES;
 				INFOPLIST_FILE = DesignSystem/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
@@ -3949,7 +3885,8 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.ricardo.app.id.DesignSystem;
+				MODULE_VERIFIER_SUPPORTED_LANGUAGE_STANDARDS = "gnu11 gnu++14";
+				PRODUCT_BUNDLE_IDENTIFIER = hit.happens.app.id.DesignSystem;
 				SDKROOT = iphoneos;
 				SKIP_INSTALL = YES;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -3972,6 +3909,7 @@
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				ENABLE_MODULE_VERIFIER = YES;
 				INFOPLIST_FILE = Core/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
@@ -3980,7 +3918,8 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.ricardo.app.id.Core;
+				MODULE_VERIFIER_SUPPORTED_LANGUAGE_STANDARDS = "gnu11 gnu++14";
+				PRODUCT_BUNDLE_IDENTIFIER = hit.happens.app.id.Core;
 				SDKROOT = iphoneos;
 				SKIP_INSTALL = YES;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -3997,6 +3936,7 @@
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				ENABLE_MODULE_VERIFIER = YES;
 				INFOPLIST_FILE = DesignSystem/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
@@ -4005,7 +3945,8 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.ricardo.app.id.DesignSystem;
+				MODULE_VERIFIER_SUPPORTED_LANGUAGE_STANDARDS = "gnu11 gnu++14";
+				PRODUCT_BUNDLE_IDENTIFIER = hit.happens.app.id.DesignSystem;
 				SDKROOT = iphoneos;
 				SKIP_INSTALL = YES;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -4024,10 +3965,10 @@
 					"@executable_path/Frameworks",
 					"@loader_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.ricardo.app.id.UnitTests;
+				PRODUCT_BUNDLE_IDENTIFIER = hit.happens.app.id.UnitTests;
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/HitHappens.Dev.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/HitHappens.Dev";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/HitHappens.app/HitHappens";
 			};
 			name = "Production Debug";
 		};
@@ -4042,10 +3983,10 @@
 					"@executable_path/Frameworks",
 					"@loader_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.ricardo.app.id.UnitTests;
+				PRODUCT_BUNDLE_IDENTIFIER = hit.happens.app.id.UnitTests;
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/HitHappens.Dev.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/HitHappens.Dev";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/HitHappens.app/HitHappens";
 			};
 			name = "QA Release";
 		};
@@ -4058,6 +3999,7 @@
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				ENABLE_MODULE_VERIFIER = YES;
 				INFOPLIST_FILE = DesignSystem/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
@@ -4066,7 +4008,8 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.ricardo.app.id.DesignSystem;
+				MODULE_VERIFIER_SUPPORTED_LANGUAGE_STANDARDS = "gnu11 gnu++14";
+				PRODUCT_BUNDLE_IDENTIFIER = hit.happens.app.id.DesignSystem;
 				SDKROOT = iphoneos;
 				SKIP_INSTALL = YES;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -4083,6 +4026,7 @@
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				ENABLE_MODULE_VERIFIER = YES;
 				INFOPLIST_FILE = Domain/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
@@ -4091,7 +4035,8 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.ricardo.app.id.Domain;
+				MODULE_VERIFIER_SUPPORTED_LANGUAGE_STANDARDS = "gnu11 gnu++14";
+				PRODUCT_BUNDLE_IDENTIFIER = hit.happens.app.id.Domain;
 				SDKROOT = iphoneos;
 				SKIP_INSTALL = YES;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -4108,6 +4053,7 @@
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				ENABLE_MODULE_VERIFIER = YES;
 				INFOPLIST_FILE = DevTools/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
@@ -4116,7 +4062,8 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.ricardo.app.id.DevTools;
+				MODULE_VERIFIER_SUPPORTED_LANGUAGE_STANDARDS = "gnu11 gnu++14";
+				PRODUCT_BUNDLE_IDENTIFIER = hit.happens.app.id.DevTools;
 				SDKROOT = iphoneos;
 				SKIP_INSTALL = YES;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -4133,6 +4080,7 @@
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				ENABLE_MODULE_VERIFIER = YES;
 				INFOPLIST_FILE = Domain/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
@@ -4141,7 +4089,8 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.ricardo.app.id.Domain;
+				MODULE_VERIFIER_SUPPORTED_LANGUAGE_STANDARDS = "gnu11 gnu++14";
+				PRODUCT_BUNDLE_IDENTIFIER = hit.happens.app.id.Domain;
 				SDKROOT = iphoneos;
 				SKIP_INSTALL = YES;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -4158,6 +4107,7 @@
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				ENABLE_MODULE_VERIFIER = YES;
 				INFOPLIST_FILE = Domain/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
@@ -4166,7 +4116,8 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.ricardo.app.id.Domain;
+				MODULE_VERIFIER_SUPPORTED_LANGUAGE_STANDARDS = "gnu11 gnu++14";
+				PRODUCT_BUNDLE_IDENTIFIER = hit.happens.app.id.Domain;
 				SDKROOT = iphoneos;
 				SKIP_INSTALL = YES;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -4212,6 +4163,7 @@
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_NO_COMMON_BLOCKS = YES;
@@ -4245,11 +4197,15 @@
 			baseConfigurationReference = D95D93D539F1F36375A07927 /* qa-release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "Apple Development";
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = G92548JLNB;
 				INFOPLIST_FILE = Application/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SDKROOT = iphoneos;
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
 				SUPPORTS_MACCATALYST = NO;
@@ -4267,6 +4223,7 @@
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				ENABLE_MODULE_VERIFIER = YES;
 				INFOPLIST_FILE = Domain/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
@@ -4275,7 +4232,8 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.ricardo.app.id.Domain;
+				MODULE_VERIFIER_SUPPORTED_LANGUAGE_STANDARDS = "gnu11 gnu++14";
+				PRODUCT_BUNDLE_IDENTIFIER = hit.happens.app.id.Domain;
 				SDKROOT = iphoneos;
 				SKIP_INSTALL = YES;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -4294,7 +4252,7 @@
 					"@executable_path/Frameworks",
 					"@loader_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.ricardo.app.id.UITests;
+				PRODUCT_BUNDLE_IDENTIFIER = hit.happens.app.id.UITests;
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				TEST_TARGET_NAME = HitHappens;
@@ -4312,7 +4270,7 @@
 					"@executable_path/Frameworks",
 					"@loader_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.ricardo.app.id.UITests;
+				PRODUCT_BUNDLE_IDENTIFIER = hit.happens.app.id.UITests;
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				TEST_TARGET_NAME = HitHappens;
@@ -4363,6 +4321,7 @@
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				GCC_NO_COMMON_BLOCKS = YES;
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
@@ -4422,6 +4381,7 @@
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				GCC_NO_COMMON_BLOCKS = YES;
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
@@ -4454,10 +4414,10 @@
 					"@executable_path/Frameworks",
 					"@loader_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.ricardo.app.id.UnitTests;
+				PRODUCT_BUNDLE_IDENTIFIER = hit.happens.app.id.UnitTests;
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/HitHappens.Dev.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/HitHappens.Dev";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/HitHappens.app/HitHappens";
 			};
 			name = "Production Release";
 		};
@@ -4466,11 +4426,15 @@
 			baseConfigurationReference = F73D9B8BE84D0324B9A93E71 /* dev-debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "Apple Development";
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = G92548JLNB;
 				INFOPLIST_FILE = Application/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SDKROOT = iphoneos;
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
 				SUPPORTS_MACCATALYST = NO;
@@ -4494,6 +4458,7 @@
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				ENABLE_MODULE_VERIFIER = YES;
 				INFOPLIST_FILE = DesignSystem/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
@@ -4502,7 +4467,8 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.ricardo.app.id.DesignSystem;
+				MODULE_VERIFIER_SUPPORTED_LANGUAGE_STANDARDS = "gnu11 gnu++14";
+				PRODUCT_BUNDLE_IDENTIFIER = hit.happens.app.id.DesignSystem;
 				SDKROOT = iphoneos;
 				SKIP_INSTALL = YES;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -4525,6 +4491,7 @@
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				ENABLE_MODULE_VERIFIER = YES;
 				INFOPLIST_FILE = DevTools/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
@@ -4533,7 +4500,8 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.ricardo.app.id.DevTools;
+				MODULE_VERIFIER_SUPPORTED_LANGUAGE_STANDARDS = "gnu11 gnu++14";
+				PRODUCT_BUNDLE_IDENTIFIER = hit.happens.app.id.DevTools;
 				SDKROOT = iphoneos;
 				SKIP_INSTALL = YES;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -4552,10 +4520,10 @@
 					"@executable_path/Frameworks",
 					"@loader_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.ricardo.app.id.UnitTests;
+				PRODUCT_BUNDLE_IDENTIFIER = hit.happens.app.id.UnitTests;
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/HitHappens.Dev.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/HitHappens.Dev";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/HitHappens.app/HitHappens";
 			};
 			name = "Dev Debug";
 		};
@@ -4609,6 +4577,7 @@
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_NO_COMMON_BLOCKS = YES;
@@ -4648,10 +4617,10 @@
 					"@executable_path/Frameworks",
 					"@loader_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.ricardo.app.id.UnitTests;
+				PRODUCT_BUNDLE_IDENTIFIER = hit.happens.app.id.UnitTests;
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/HitHappens.Dev.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/HitHappens.Dev";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/HitHappens.app/HitHappens";
 			};
 			name = "Dev Release";
 		};
@@ -4693,6 +4662,7 @@
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_NO_COMMON_BLOCKS = YES;
@@ -4742,6 +4712,7 @@
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				ENABLE_MODULE_VERIFIER = YES;
 				INFOPLIST_FILE = DesignSystem/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
@@ -4750,7 +4721,8 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.ricardo.app.id.DesignSystem;
+				MODULE_VERIFIER_SUPPORTED_LANGUAGE_STANDARDS = "gnu11 gnu++14";
+				PRODUCT_BUNDLE_IDENTIFIER = hit.happens.app.id.DesignSystem;
 				SDKROOT = iphoneos;
 				SKIP_INSTALL = YES;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -4775,7 +4747,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.ricardo.app.id.Common;
+				PRODUCT_BUNDLE_IDENTIFIER = hit.happens.app.id.Common;
 				SDKROOT = iphoneos;
 				SKIP_INSTALL = YES;
 				SWIFT_OBJC_BRIDGING_HEADER = "Common/Sources/Common-Bridging-Header.h";
@@ -4793,6 +4765,7 @@
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				ENABLE_MODULE_VERIFIER = YES;
 				INFOPLIST_FILE = Core/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
@@ -4801,7 +4774,8 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.ricardo.app.id.Core;
+				MODULE_VERIFIER_SUPPORTED_LANGUAGE_STANDARDS = "gnu11 gnu++14";
+				PRODUCT_BUNDLE_IDENTIFIER = hit.happens.app.id.Core;
 				SDKROOT = iphoneos;
 				SKIP_INSTALL = YES;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -4820,7 +4794,7 @@
 					"@executable_path/Frameworks",
 					"@loader_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.ricardo.app.id.UITests;
+				PRODUCT_BUNDLE_IDENTIFIER = hit.happens.app.id.UITests;
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				TEST_TARGET_NAME = HitHappens;
@@ -4836,6 +4810,7 @@
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				ENABLE_MODULE_VERIFIER = YES;
 				INFOPLIST_FILE = DevTools/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
@@ -4844,7 +4819,8 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.ricardo.app.id.DevTools;
+				MODULE_VERIFIER_SUPPORTED_LANGUAGE_STANDARDS = "gnu11 gnu++14";
+				PRODUCT_BUNDLE_IDENTIFIER = hit.happens.app.id.DevTools;
 				SDKROOT = iphoneos;
 				SKIP_INSTALL = YES;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -4863,11 +4839,15 @@
 			baseConfigurationReference = 45F570CFE670D023A614D242 /* qa-debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "Apple Development";
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = G92548JLNB;
 				INFOPLIST_FILE = Application/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SDKROOT = iphoneos;
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
 				SUPPORTS_MACCATALYST = NO;
@@ -4885,6 +4865,7 @@
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				ENABLE_MODULE_VERIFIER = YES;
 				INFOPLIST_FILE = Core/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
@@ -4893,7 +4874,8 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.ricardo.app.id.Core;
+				MODULE_VERIFIER_SUPPORTED_LANGUAGE_STANDARDS = "gnu11 gnu++14";
+				PRODUCT_BUNDLE_IDENTIFIER = hit.happens.app.id.Core;
 				SDKROOT = iphoneos;
 				SKIP_INSTALL = YES;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -4912,7 +4894,7 @@
 					"@executable_path/Frameworks",
 					"@loader_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.ricardo.app.id.UITests;
+				PRODUCT_BUNDLE_IDENTIFIER = hit.happens.app.id.UITests;
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				TEST_TARGET_NAME = HitHappens;
@@ -4928,6 +4910,7 @@
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				ENABLE_MODULE_VERIFIER = YES;
 				INFOPLIST_FILE = DevTools/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
@@ -4936,7 +4919,8 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.ricardo.app.id.DevTools;
+				MODULE_VERIFIER_SUPPORTED_LANGUAGE_STANDARDS = "gnu11 gnu++14";
+				PRODUCT_BUNDLE_IDENTIFIER = hit.happens.app.id.DevTools;
 				SDKROOT = iphoneos;
 				SKIP_INSTALL = YES;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -4949,11 +4933,15 @@
 			baseConfigurationReference = E76B8687E060162560516E86 /* production-release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "Apple Development";
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = EP8XQ3ZY9V;
 				INFOPLIST_FILE = Application/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SDKROOT = iphoneos;
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
 				SUPPORTS_MACCATALYST = NO;
@@ -5000,6 +4988,7 @@
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				GCC_NO_COMMON_BLOCKS = YES;
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
@@ -5030,6 +5019,7 @@
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				ENABLE_MODULE_VERIFIER = YES;
 				INFOPLIST_FILE = Core/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
@@ -5038,7 +5028,8 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.ricardo.app.id.Core;
+				MODULE_VERIFIER_SUPPORTED_LANGUAGE_STANDARDS = "gnu11 gnu++14";
+				PRODUCT_BUNDLE_IDENTIFIER = hit.happens.app.id.Core;
 				SDKROOT = iphoneos;
 				SKIP_INSTALL = YES;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -5063,7 +5054,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.ricardo.app.id.Common;
+				PRODUCT_BUNDLE_IDENTIFIER = hit.happens.app.id.Common;
 				SDKROOT = iphoneos;
 				SKIP_INSTALL = YES;
 				SWIFT_OBJC_BRIDGING_HEADER = "Common/Sources/Common-Bridging-Header.h";
@@ -5083,11 +5074,15 @@
 			baseConfigurationReference = FF28DB0DCEE4B829E8D3A60F /* dev-release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "Apple Development";
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = G92548JLNB;
 				INFOPLIST_FILE = Application/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SDKROOT = iphoneos;
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
 				SUPPORTS_MACCATALYST = NO;
@@ -5113,10 +5108,10 @@
 					"@executable_path/Frameworks",
 					"@loader_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.ricardo.app.id.UnitTests;
+				PRODUCT_BUNDLE_IDENTIFIER = hit.happens.app.id.UnitTests;
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/HitHappens.Dev.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/HitHappens.Dev";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/HitHappens.app/HitHappens";
 			};
 			name = "QA Debug";
 		};
@@ -5129,6 +5124,7 @@
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				ENABLE_MODULE_VERIFIER = YES;
 				INFOPLIST_FILE = Core/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
@@ -5137,7 +5133,8 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.ricardo.app.id.Core;
+				MODULE_VERIFIER_SUPPORTED_LANGUAGE_STANDARDS = "gnu11 gnu++14";
+				PRODUCT_BUNDLE_IDENTIFIER = hit.happens.app.id.Core;
 				SDKROOT = iphoneos;
 				SKIP_INSTALL = YES;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -5154,6 +5151,7 @@
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				ENABLE_MODULE_VERIFIER = YES;
 				INFOPLIST_FILE = DevTools/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
@@ -5162,7 +5160,8 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.ricardo.app.id.DevTools;
+				MODULE_VERIFIER_SUPPORTED_LANGUAGE_STANDARDS = "gnu11 gnu++14";
+				PRODUCT_BUNDLE_IDENTIFIER = hit.happens.app.id.DevTools;
 				SDKROOT = iphoneos;
 				SKIP_INSTALL = YES;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -5179,6 +5178,7 @@
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				ENABLE_MODULE_VERIFIER = YES;
 				INFOPLIST_FILE = Core/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
@@ -5187,7 +5187,8 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.ricardo.app.id.Core;
+				MODULE_VERIFIER_SUPPORTED_LANGUAGE_STANDARDS = "gnu11 gnu++14";
+				PRODUCT_BUNDLE_IDENTIFIER = hit.happens.app.id.Core;
 				SDKROOT = iphoneos;
 				SKIP_INSTALL = YES;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -5212,7 +5213,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.ricardo.app.id.Common;
+				PRODUCT_BUNDLE_IDENTIFIER = hit.happens.app.id.Common;
 				SDKROOT = iphoneos;
 				SKIP_INSTALL = YES;
 				SWIFT_OBJC_BRIDGING_HEADER = "Common/Sources/Common-Bridging-Header.h";
@@ -5236,6 +5237,7 @@
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				ENABLE_MODULE_VERIFIER = YES;
 				INFOPLIST_FILE = DevTools/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
@@ -5244,7 +5246,8 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.ricardo.app.id.DevTools;
+				MODULE_VERIFIER_SUPPORTED_LANGUAGE_STANDARDS = "gnu11 gnu++14";
+				PRODUCT_BUNDLE_IDENTIFIER = hit.happens.app.id.DevTools;
 				SDKROOT = iphoneos;
 				SKIP_INSTALL = YES;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -5261,6 +5264,7 @@
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				ENABLE_MODULE_VERIFIER = YES;
 				INFOPLIST_FILE = Domain/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
@@ -5269,7 +5273,8 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.ricardo.app.id.Domain;
+				MODULE_VERIFIER_SUPPORTED_LANGUAGE_STANDARDS = "gnu11 gnu++14";
+				PRODUCT_BUNDLE_IDENTIFIER = hit.happens.app.id.Domain;
 				SDKROOT = iphoneos;
 				SKIP_INSTALL = YES;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -5294,7 +5299,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.ricardo.app.id.Common;
+				PRODUCT_BUNDLE_IDENTIFIER = hit.happens.app.id.Common;
 				SDKROOT = iphoneos;
 				SKIP_INSTALL = YES;
 				SWIFT_OBJC_BRIDGING_HEADER = "Common/Sources/Common-Bridging-Header.h";
@@ -5314,7 +5319,7 @@
 					"@executable_path/Frameworks",
 					"@loader_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.ricardo.app.id.UITests;
+				PRODUCT_BUNDLE_IDENTIFIER = hit.happens.app.id.UITests;
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				TEST_TARGET_NAME = HitHappens;
@@ -5338,7 +5343,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.ricardo.app.id.Common;
+				PRODUCT_BUNDLE_IDENTIFIER = hit.happens.app.id.Common;
 				SDKROOT = iphoneos;
 				SKIP_INSTALL = YES;
 				SWIFT_OBJC_BRIDGING_HEADER = "Common/Sources/Common-Bridging-Header.h";

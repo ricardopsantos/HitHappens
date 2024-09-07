@@ -394,7 +394,7 @@ fileprivate extension EventDetailsView {
                 .textColor(ColorSemantic.labelPrimary.color)
             Spacer()
         }
-        
+
         if viewModel.trackedEntity != nil {
             ForEach([viewModel.trackedEntity!], id: \.self) { model in
                 CounterView(

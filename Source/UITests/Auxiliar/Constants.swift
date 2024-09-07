@@ -1,6 +1,6 @@
 //
 //  Constants.swift
-//  SmartAppUITests
+//  HitHappensUITests
 //
 //  Created by Ricardo Santos on 08/08/2024.
 //
@@ -33,9 +33,9 @@ enum Constants {
 }
 
 //
-// Copy of `UITestingManager.Options` enum @ SmartApp Target
-// Copy of `UITestingManager.Options` enum @ SmartApp Target
-// Copy of `UITestingManager.Options` enum @ SmartApp Target
+// Copy of `UITestingManager.Options` enum @ HitHappens Target
+// Copy of `UITestingManager.Options` enum @ HitHappens Target
+// Copy of `UITestingManager.Options` enum @ HitHappens Target
 //
 enum UITestingOptions: String {
     case onUITesting
@@ -46,9 +46,9 @@ enum UITestingOptions: String {
 }
 
 //
-// Copy of `Accessibility` enum @ SmartApp Target
-// Copy of `Accessibility` enum @ SmartApp Target
-// Copy of `Accessibility` enum @ SmartApp Target
+// Copy of `Accessibility` enum @ HitHappens Target
+// Copy of `Accessibility` enum @ HitHappens Target
+// Copy of `Accessibility` enum @ HitHappens Target
 //
 public enum Accessibility: String, CaseIterable {
     // Text Fields

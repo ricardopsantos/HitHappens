@@ -120,21 +120,21 @@ struct EventsCalendarView: View, ViewProtocol {
         Group {
             if let logs = viewModel.logs, !logs.isEmpty {
                 if let selectedDay = viewModel.selectedDay {
-                    Text("\(logs.count) event(s) on \(selectedDay.dateStyleShort)")
+                    Text("\(logs.count) \(AppConstants.entityOccurrenceNamePlural) on \(selectedDay.dateStyleShort)")
                         .fontSemantic(.body)
                         .textColor(ColorSemantic.labelPrimary.color)
                 } else {
-                    Text("\(logs.count) event(s) on \(viewModel.selectedMonth.monthAndYear)".localizedMissing)
+                    Text("\(logs.count) \(AppConstants.entityOccurrenceNamePlural) on \(viewModel.selectedMonth.monthAndYear)".localizedMissing)
                         .fontSemantic(.body)
                         .textColor(ColorSemantic.labelPrimary.color)
                 }
             } else {
                 if let selectedDay = viewModel.selectedDay {
-                    Text("No events for \(selectedDay.dateStyleShort)".localizedMissing)
+                    Text("No \(AppConstants.entityOccurrenceNamePlural) at \(selectedDay.dateStyleShort)".localizedMissing)
                         .fontSemantic(.body)
                         .textColor(ColorSemantic.labelPrimary.color)
                 } else {
-                    Text("No events for \(viewModel.selectedMonth.monthAndYear)".localizedMissing)
+                    Text("No \(AppConstants.entityOccurrenceNamePlural) on \(viewModel.selectedMonth.monthAndYear)".localizedMissing)
                         .fontSemantic(.body)
                         .textColor(ColorSemantic.labelPrimary.color)
                 }

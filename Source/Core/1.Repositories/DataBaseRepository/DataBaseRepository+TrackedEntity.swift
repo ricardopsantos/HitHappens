@@ -61,9 +61,9 @@ public extension DataBaseRepository {
                     if let storedEvent = event as? CDataTrackedLog {
                         let relatedEvent = trackedEntity.cascadeEvents?.filter { $0.id == storedEvent.id }.first
                         let wasDeleted = relatedEvent == nil
-                        if wasDeleted {
+                        if wasDeleted, let event = event as? NSManagedObject {
                             // Deleted
-                            context.delete(event as! NSManagedObject)
+                            context.delete(event)
                         } else if let relatedEvent = relatedEvent {
                             // Updated?
                             storedEvent.bind(model: relatedEvent)

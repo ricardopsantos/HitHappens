@@ -1,6 +1,6 @@
 //
 //  OnBoardingViewModel.swift
-//  SmartApp
+//  HitHappens
 //
 //  Created by Ricardo Santos on 20/05/2024.
 //

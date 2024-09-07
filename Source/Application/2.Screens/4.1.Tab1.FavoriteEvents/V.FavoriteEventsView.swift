@@ -56,6 +56,8 @@ struct FavoriteEventsViewCoordinator: View, ViewCoordinatorProtocol {
             let dependencies: FavoriteEventsViewModel.Dependencies = .init(
                 model: .init(), onShouldDisplayTrackedLog: { trackerLog in
                     coordinator.coverLink = .eventLogDetails(model: .init(trackedLog: trackerLog))
+                }, onShouldDisplayNewTrackedEntity: {
+                    coordinator.coverLink = .eventDetails(model: nil)
                 },
                 dataBaseRepository: configuration.dataBaseRepository)
             FavoriteEventsView(dependencies: dependencies)
@@ -65,6 +67,13 @@ struct FavoriteEventsViewCoordinator: View, ViewCoordinatorProtocol {
                 dataBaseRepository: configuration.dataBaseRepository,
                 presentationStyle: presentationStyle)
             EventLogDetailsView(dependencies: dependencies)
+        case .eventDetails(model: let model):
+            let dependencies: EventDetailsViewModel.Dependencies = .init(
+                model: model, onPerformRouteBack: { },
+                onShouldDisplayTrackedLog: { _ in },
+                dataBaseRepository: configuration.dataBaseRepository,
+                presentationStyle: presentationStyle)
+            EventDetailsView(dependencies: dependencies)
         default:
             NotImplementedView(screen: screen)
         }
@@ -79,9 +88,11 @@ struct FavoriteEventsView: View, ViewProtocol {
     // MARK: - ViewProtocol
     @Environment(\.colorScheme) var colorScheme
     @StateObject var viewModel: FavoriteEventsViewModel
+    let onShouldDisplayNewTrackedEntity: () -> Void
     public init(dependencies: FavoriteEventsViewModel.Dependencies) {
         DevTools.Log.debug(.viewInit("\(Self.self)"), .view)
         _viewModel = StateObject(wrappedValue: .init(dependencies: dependencies))
+        self.onShouldDisplayNewTrackedEntity = dependencies.onShouldDisplayNewTrackedEntity
     }
 
     // MARK: - Usage/Auxiliar Attributes
@@ -120,13 +131,16 @@ struct FavoriteEventsView: View, ViewProtocol {
     var content: some View {
         ScrollView {
             LazyVStack(spacing: 0) {
-                Header(text: "Favorite \(AppConstants.entityNameSingle.lowercased())".localizedMissing)
+                Header(text: "Favorite \(AppConstants.entityNamePlural.lowercased())".localizedMissing)
                 if viewModel.favorits.isEmpty {
                     SwiftUIUtils.FixedVerticalSpacer(height: screenHeight * 0.33)
-                    Text("You don't have any \(AppConstants.entityNamePlural.lowercased()) marked as favorite".localizedMissing)
+                    Text("You don't have any \(AppConstants.entityNamePlural.lowercased()) marked as favorite\n\nTap to add one!".localizedMissing)
                         .multilineTextAlignment(.center)
                         .textColor(ColorSemantic.labelPrimary.color)
                         .fontSemantic(.headline)
+                        .onTapGesture {
+                            onShouldDisplayNewTrackedEntity()
+                        }
                     Spacer()
                 } else {
                     Spacer()

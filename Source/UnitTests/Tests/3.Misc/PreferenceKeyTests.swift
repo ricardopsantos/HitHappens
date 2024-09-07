@@ -1,6 +1,6 @@
 //
 //  File.swift
-//  SmartAppUnitTests
+//  HitHappensUnitTests
 //
 //  Created by Ricardo Santos on 07/08/2024.
 //

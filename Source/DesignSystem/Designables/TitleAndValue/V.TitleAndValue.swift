@@ -1,6 +1,6 @@
 //
 //  TitleValue.swift
-//  SmartApp
+//  HitHappens
 //
 //  Created by Ricardo Santos on 19/05/2024.
 //

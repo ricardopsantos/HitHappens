@@ -5,7 +5,7 @@ name: HitHappens
 #
 
 options:
-  bundleIdPrefix: com.ricardo.app.id
+  bundleIdPrefix: hit.happens.app.id
   xcodeVersion: '15.0.1'
   deploymentTarget: '16.0'
   groupSortPosition: top

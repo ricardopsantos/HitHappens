@@ -1,6 +1,6 @@
 //
 //  SettingsView.swift
-//  SmartApp
+//  HitHappens
 //
 //  Created by Ricardo Santos on 03/01/24.
 //
@@ -38,6 +38,7 @@ struct SettingsViewCoordinator: View, ViewCoordinatorProtocol {
         case .settings:
             let dependencies: SettingsViewModel.Dependencies = .init(
                 model: .init(), onShouldDisplayEditUserDetails: {},
+                appConfigService: configuration.appConfigService,
                 nonSecureAppPreferences: configuration.nonSecureAppPreferences
             )
             SettingsScreen(dependencies: dependencies)
@@ -99,13 +100,19 @@ struct SettingsScreen: View, ViewProtocol {
             logoView
             Spacer()
             contactSupportView
+                .animation(.default, value: viewModel.supportEmail)
             onBoarding
             SwiftUIUtils.FixedVerticalSpacer(height: SizeNames.defaultMargin)
             versionView
             SwiftUIUtils.FixedVerticalSpacer(height: SizeNames.defaultMargin)
         }.paddingHorizontal(SizeNames.defaultMarginSmall)
     }
+}
 
+//
+// MARK: - Auxiliar Views
+//
+fileprivate extension SettingsScreen {
     @ViewBuilder
     var logoView: some View {
         let width = screenWidth * 0.5
@@ -139,40 +146,40 @@ struct SettingsScreen: View, ViewProtocol {
         )
     }
 
+    @ViewBuilder
     var contactSupportView: some View {
-        TextButton(
-            onClick: {
-                if MFMailComposeViewController.canSendMail() {
-                    isShowingMailView = true
-                } else {
-                    showMailError = true
-                }
-            },
-            text: "Contact Support".localizedMissing,
-            style: .textOnly,
-            accessibility: .undefined
-        )
-        .alert(isPresented: $showMailError) {
-            Alert(
-                title: Text("Cannot Send Email".localizedMissing),
-                message: Text("Your device is not configured to send emails.".localizedMissing),
-                dismissButton: .default(Text("OK".localizedMissing))
+        if !viewModel.supportEmail.isEmpty {
+            TextButton(
+                onClick: {
+                    if MFMailComposeViewController.canSendMail() {
+                        isShowingMailView = true
+                    } else {
+                        showMailError = true
+                    }
+                },
+                text: "Contact Support".localizedMissing,
+                style: .textOnly,
+                accessibility: .undefined
             )
-        }
-        .sheet(isPresented: $isShowingMailView) {
-            MailViewControllerRepresentable(
-                recipients: [AppConstants.supportEmail.decrypted],
-                subject: "Support \(Common.AppInfo.bundleIdentifier) | \(Common.AppInfo.version)",
-                messageBody: "Hello, I need help with..."
-            )
+            .alert(isPresented: $showMailError) {
+                Alert(
+                    title: Text("Cannot Send Email".localizedMissing),
+                    message: Text("Your device is not configured to send emails.".localizedMissing),
+                    dismissButton: .default(Text("OK".localizedMissing))
+                )
+            }
+            .sheet(isPresented: $isShowingMailView) {
+                MailViewControllerRepresentable(
+                    recipients: [viewModel.supportEmail],
+                    subject: "Support \(Common.AppInfo.bundleIdentifier) | \(Common.AppInfo.version)",
+                    messageBody: "Hello, I need help with...".localizedMissing
+                )
+            }
+        } else {
+            EmptyView()
         }
     }
 }
-
-//
-// MARK: - Auxiliar Views
-//
-fileprivate extension SettingsScreen {}
 
 //
 // MARK: - Private

@@ -9,6 +9,9 @@ import Common
 
 public extension ModelDto {
     struct AppConfigRequest: ModelDtoProtocol {
-        public let json: String
+        public let param: String
+        public init(param: String = "") {
+            self.param = param
+        }
     }
 }

@@ -1,6 +1,6 @@
 //
 //  NavigationModel.swift
-//  SmartApp
+//  HitHappens
 //
 //  Created by Ricardo Santos on 03/08/2024.
 //

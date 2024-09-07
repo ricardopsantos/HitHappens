@@ -1,6 +1,6 @@
 //
 //  SecureAppPreferences.swift
-//  SmartApp
+//  HitHappens
 //
 //  Created by Ricardo Santos on 15/04/2024.
 //
@@ -17,7 +17,7 @@ public class SecureAppPreferences {
 
     fileprivate var output = PassthroughSubject<SecureAppPreferencesOutputActions, Never>()
 
-    private var keychain: Keychain { Keychain(service: Bundle.main.bundleIdentifier ?? "SmartApp") }
+    private var keychain: Keychain { Keychain(service: Bundle.main.bundleIdentifier ?? "HitHappens") }
     private func forKey(_ key: SecureAppPreferencesKey) -> String {
         "\(SecureAppPreferences.self).\(key.rawValue)"
     }

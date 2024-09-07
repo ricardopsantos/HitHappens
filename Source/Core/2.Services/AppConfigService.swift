@@ -1,6 +1,6 @@
 //
 //  AppConfigService.swift
-//  SmartApp
+//  HitHappens
 //
 //  Created by Ricardo Santos on 15/04/2024.
 //
@@ -23,7 +23,7 @@ public class AppConfigService {
 extension AppConfigService: AppConfigServiceProtocol {
     public func requestAppConfig(_ request: ModelDto.AppConfigRequest, cachePolicy: ServiceCachePolicy) async throws -> ModelDto.AppConfigResponse {
         let cacheKey = "\(#function)"
-        let cacheParams: [any Hashable] = [request.json]
+        let cacheParams: [any Hashable] = [request.param]
         let responseType = ModelDto.AppConfigResponse.self
 
         if let cached = await cacheManager.aSyncRetrieve(responseType, key: cacheKey, params: cacheParams), cachePolicy == .cacheElseLoad {

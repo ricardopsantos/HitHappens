@@ -6,6 +6,6 @@
 #include "./production-base.xcconfig"
 
 DEVELOPMENT_TEAM = EP8XQ3ZY9V
-PROVISIONING_PROFILE_SPECIFIER = EP8XQ3ZY9V/Ricardo Santos
+PROVISIONING_PROFILE_SPECIFIER = EP8XQ3ZY9V/com.hit.happens.app.id_ProvisioningProfileStore
 CODE_SIGN_IDENTITY = iPhone Distribution
 CODE_SIGN_ENTITLEMENTS = Entitlements/Production Release.entitlements

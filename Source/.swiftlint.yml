@@ -215,6 +215,7 @@ identifier_name:
 function_parameter_count: 10
 
 disabled_rules:
+    - xctassertnodifference_preferred
     - switch_case_alignment
     - discouraged_direct_init
     - large_tuple

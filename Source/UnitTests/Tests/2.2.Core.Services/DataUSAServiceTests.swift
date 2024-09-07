@@ -15,136 +15,136 @@ import Domain
 import Core
 import Common
 /*
-final class DataUSAServiceTests: XCTestCase {
-    let enabled = true
-    lazy var service: DataUSAServiceProtocol = { DependenciesManager.Services.dataUSAService }()
-    override func setUp() {
-        super.setUp()
-        continueAfterFailure = false
-        loadedAny = nil
-        cancelBag.cancel()
-    }
-}
+ final class DataUSAServiceTests: XCTestCase {
+     let enabled = true
+     lazy var service: DataUSAServiceProtocol = { DependenciesManager.Services.dataUSAService }()
+     override func setUp() {
+         super.setUp()
+         continueAfterFailure = false
+         loadedAny = nil
+         cancelBag.cancel()
+     }
+ }
 
-//
-// MARK: - Tests
-//
+ //
+ // MARK: - Tests
+ //
 
-extension DataUSAServiceTests {
-    // Test to verify that PopulationStateDataResponse mock
-    func test_mockPopulationStateData() async {
-        guard enabled else {
-            XCTAssert(true)
-            return
-        }
-        XCTAssertTrue(ModelDto.PopulationStateDataResponse.mockRegularLoad != nil, "mock data should be loaded successfully.")
-    }
+ extension DataUSAServiceTests {
+     // Test to verify that PopulationStateDataResponse mock
+     func test_mockPopulationStateData() async {
+         guard enabled else {
+             XCTAssert(true)
+             return
+         }
+         XCTAssertTrue(ModelDto.PopulationStateDataResponse.mockRegularLoad != nil, "mock data should be loaded successfully.")
+     }
 
-    // Test to verify that PopulationStateData information can be fetched
-    func test_requestPopulationStateData() async {
-        guard enabled else {
-            XCTAssert(true)
-            return
-        }
-        do {
-            // Attempt to fetch PopulationNationData
-            loadedAny = try await service.requestPopulationStateData(.init(), cachePolicy: .load)
+     // Test to verify that PopulationStateData information can be fetched
+     func test_requestPopulationStateData() async {
+         guard enabled else {
+             XCTAssert(true)
+             return
+         }
+         do {
+             // Attempt to fetch PopulationNationData
+             loadedAny = try await service.requestPopulationStateData(.init(), cachePolicy: .load)
 
-            // Verify that PopulationStateData was successfully loaded
-            XCTAssertTrue(loadedAny != nil, "data should be loaded successfully.")
-        } catch {
-            // In case of an error, fail the test
-            XCTAssertTrue(false, "Failed to fetch with error: \(error)")
-        }
-    }
+             // Verify that PopulationStateData was successfully loaded
+             XCTAssertTrue(loadedAny != nil, "data should be loaded successfully.")
+         } catch {
+             // In case of an error, fail the test
+             XCTAssertTrue(false, "Failed to fetch with error: \(error)")
+         }
+     }
 
-    // Test to verify that PopulationNationDataResponse mock
-    func test_mockPopulationNationDataResponse() async {
-        guard enabled else {
-            XCTAssert(true)
-            return
-        }
-        XCTAssertTrue(ModelDto.PopulationNationDataResponse.mockRegularLoad != nil, "PopulationNationDataResponse.mock data should be loaded successfully.")
-    }
+     // Test to verify that PopulationNationDataResponse mock
+     func test_mockPopulationNationDataResponse() async {
+         guard enabled else {
+             XCTAssert(true)
+             return
+         }
+         XCTAssertTrue(ModelDto.PopulationNationDataResponse.mockRegularLoad != nil, "PopulationNationDataResponse.mock data should be loaded successfully.")
+     }
 
-    // Test to verify that PopulationNationDat information can be fetched
-    func test_requestPopulationNationData() async {
-        guard enabled else {
-            XCTAssert(true)
-            return
-        }
-        do {
-            // Attempt to fetch PopulationNationData
-            loadedAny = try await service.requestPopulationNationData(.init(), cachePolicy: .load)
+     // Test to verify that PopulationNationDat information can be fetched
+     func test_requestPopulationNationData() async {
+         guard enabled else {
+             XCTAssert(true)
+             return
+         }
+         do {
+             // Attempt to fetch PopulationNationData
+             loadedAny = try await service.requestPopulationNationData(.init(), cachePolicy: .load)
 
-            // Verify that PopulationNationData was successfully loaded
-            XCTAssertTrue(loadedAny != nil, "PopulationNationData data should be loaded successfully.")
-        } catch {
-            // In case of an error, fail the test
-            XCTAssertTrue(false, "Failed to fetch PopulationNationData with error: \(error)")
-        }
-    }
-}
+             // Verify that PopulationNationData was successfully loaded
+             XCTAssertTrue(loadedAny != nil, "PopulationNationData data should be loaded successfully.")
+         } catch {
+             // In case of an error, fail the test
+             XCTAssertTrue(false, "Failed to fetch PopulationNationData with error: \(error)")
+         }
+     }
+ }
 
-//
-// MARK: - Performance Tests
-//
+ //
+ // MARK: - Performance Tests
+ //
 
-extension DataUSAServiceTests {
-    func test_requestPopulationStateData_Performance_Load() throws {
-        guard enabled else {
-            XCTAssert(true)
-            return
-        }
-        let cachePolicy: ServiceCachePolicy = .load
-        let expectedTime: Double = 0.498
-        let count = 10
-        // Time: 0.498 sec
-        measure {
-            let expectation = expectation(description: #function)
-            Task {
-                do {
-                    for _ in 1...count {
-                        _ = try await service.requestPopulationStateData(
-                            .init(),
-                            cachePolicy: cachePolicy
-                        )
-                    }
-                    expectation.fulfill()
-                } catch {
-                    XCTFail("Async function threw an error: \(error)")
-                }
-            }
-            wait(for: [expectation], timeout: expectedTime * 1.25 * Double(count))
-        }
-    }
+ extension DataUSAServiceTests {
+     func test_requestPopulationStateData_Performance_Load() throws {
+         guard enabled else {
+             XCTAssert(true)
+             return
+         }
+         let cachePolicy: ServiceCachePolicy = .load
+         let expectedTime: Double = 0.498
+         let count = 10
+         // Time: 0.498 sec
+         measure {
+             let expectation = expectation(description: #function)
+             Task {
+                 do {
+                     for _ in 1...count {
+                         _ = try await service.requestPopulationStateData(
+                             .init(),
+                             cachePolicy: cachePolicy
+                         )
+                     }
+                     expectation.fulfill()
+                 } catch {
+                     XCTFail("Async function threw an error: \(error)")
+                 }
+             }
+             wait(for: [expectation], timeout: expectedTime * 1.25 * Double(count))
+         }
+     }
 
-    func test_requestPopulationStateData_Performance_CacheElseLoad() throws {
-        guard enabled else {
-            XCTAssert(true)
-            return
-        }
-        let cachePolicy: ServiceCachePolicy = .cacheElseLoad
-        let expectedTime: Double = 0.009
-        let count = 10
-        // Time: 0.009 sec
-        measure {
-            let expectation = expectation(description: #function)
-            Task {
-                do {
-                    for _ in 1...count {
-                        _ = try await service.requestPopulationStateData(
-                            .init(),
-                            cachePolicy: cachePolicy
-                        )
-                    }
-                    expectation.fulfill()
-                } catch {
-                    XCTFail("Async function threw an error: \(error)")
-                }
-            }
-            wait(for: [expectation], timeout: expectedTime * 1.25 * Double(count))
-        }
-    }
-}
-*/
+     func test_requestPopulationStateData_Performance_CacheElseLoad() throws {
+         guard enabled else {
+             XCTAssert(true)
+             return
+         }
+         let cachePolicy: ServiceCachePolicy = .cacheElseLoad
+         let expectedTime: Double = 0.009
+         let count = 10
+         // Time: 0.009 sec
+         measure {
+             let expectation = expectation(description: #function)
+             Task {
+                 do {
+                     for _ in 1...count {
+                         _ = try await service.requestPopulationStateData(
+                             .init(),
+                             cachePolicy: cachePolicy
+                         )
+                     }
+                     expectation.fulfill()
+                 } catch {
+                     XCTFail("Async function threw an error: \(error)")
+                 }
+             }
+             wait(for: [expectation], timeout: expectedTime * 1.25 * Double(count))
+         }
+     }
+ }
+ */

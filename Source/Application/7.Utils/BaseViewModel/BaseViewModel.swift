@@ -1,6 +1,6 @@
 //
 //  BaseViewModel.swift
-//  SmartAppUITests
+//  HitHappensUITests
 //
 //  Created by Ricardo Santos on 03/08/2024.
 //

@@ -12,7 +12,7 @@ import Common
 public extension ModelDto {
     // MARK: - AppConfigResponse
     struct AppConfigResponse: ModelDtoProtocol {
-        let hitHappens: HitHappens
+        public let hitHappens: HitHappens
 
         enum CodingKeys: String, CodingKey {
             case hitHappens = "hit_happens"
@@ -27,24 +27,26 @@ public extension ModelDto {
 public extension ModelDto.AppConfigResponse {
     // MARK: - HitHappens
     struct HitHappens: ModelDtoProtocol {
-        let onboarding: Onboarding
-        let supportEmailEncrypted: String
+        public let onboarding: Onboarding
+        public let supportEmailEncrypted: String
+        public let publicCodeB64: String
         enum CodingKeys: String, CodingKey {
             case onboarding
             case supportEmailEncrypted = "support_email_encrypted"
+            case publicCodeB64 = "public_code_b64"
         }
-        
+
         // MARK: - Onboarding
-        struct Onboarding: ModelDtoProtocol {
-            let intro: String
-            let pages: [Page]
+        public struct Onboarding: ModelDtoProtocol {
+            public let intro: String
+            public let pages: [Page]
         }
 
         // MARK: - Page
-        struct Page: ModelDtoProtocol {
-            let order: Int
+        public struct Page: ModelDtoProtocol {
+            public let order: Int
             let test: String
-            let imageLight, imageDark: String
+            public let imageLight, imageDark: String
 
             enum CodingKeys: String, CodingKey {
                 case order, test

@@ -1,6 +1,6 @@
 //
 //  LaunchApp.swift
-//  SmartApp
+//  HitHappens
 //
 //  Created by Ricardo Santos on 15/04/2024.
 //
@@ -11,8 +11,7 @@ import Domain
 import Common
 import DesignSystem
 
-// @main
-struct SmartApp: App {
+struct HitHappensApp: App {
     @UIApplicationDelegateAdaptor(AppDelegate.self) var delegate
     let configuration: ConfigurationViewModel
     init() {

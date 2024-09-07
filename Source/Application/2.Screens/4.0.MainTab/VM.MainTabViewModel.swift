@@ -1,6 +1,6 @@
 //
 //  MainTabViewModel.swift
-//  SmartApp
+//  HitHappens
 //
 //  Created by Ricardo Santos on 03/01/24.
 //

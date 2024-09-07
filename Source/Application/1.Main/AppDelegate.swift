@@ -1,6 +1,6 @@
 //
 //  AppDelegate.swift
-//  SmartApp
+//  HitHappens
 //
 //  Created by Ricardo Santos on 19/07/2024.
 //

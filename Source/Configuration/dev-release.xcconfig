@@ -6,6 +6,6 @@
 #include "./dev-base.xcconfig"
 
 DEVELOPMENT_TEAM = EP8XQ3ZY9V
-PROVISIONING_PROFILE_SPECIFIER = EP8XQ3ZY9V/dev.com.ricardo.app.id_ProvisioningProfileAppStore
+PROVISIONING_PROFILE_SPECIFIER = EP8XQ3ZY9V/com.hit.happens.app.id_ProvisioningProfileStore
 CODE_SIGN_IDENTITY = iPhone Distribution
 CODE_SIGN_ENTITLEMENTS = Entitlements/Dev Release.entitlements

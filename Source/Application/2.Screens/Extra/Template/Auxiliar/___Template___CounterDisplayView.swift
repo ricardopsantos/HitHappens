@@ -1,6 +1,6 @@
 //
 //  ___Template___CounterDisplayView.swift
-//  SmartApp
+//  HitHappens
 //
 //  Created by Ricardo Santos on 28/08/2024.
 //

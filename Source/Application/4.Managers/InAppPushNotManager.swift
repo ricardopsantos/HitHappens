@@ -1,6 +1,6 @@
 //
 //  InAppPushNotManager.swift
-//  SmartApp
+//  HitHappens
 //
 //  Created by Ricardo Santos on 27/08/2024.
 //

@@ -1,6 +1,6 @@
 //
 //  AppFeaturesManager.swift
-//  SmartApp
+//  HitHappens
 //
 //  Created by Ricardo Santos on 28/08/2024.
 //

@@ -1,6 +1,6 @@
 //
 //  HitHappensEventCategory+Extensions.swift
-//  SmartApp
+//  HitHappens
 //
 //  Created by Ricardo Santos on 22/08/2024.
 //

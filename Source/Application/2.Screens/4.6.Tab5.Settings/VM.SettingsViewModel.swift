@@ -1,6 +1,6 @@
 //
 //  SettingsViewModel.swift
-//  SmartApp
+//  HitHappens
 //
 //  Created by Ricardo Santos on 03/01/24.
 //
@@ -37,6 +37,7 @@ extension SettingsViewModel {
     struct Dependencies {
         let model: SettingsModel
         let onShouldDisplayEditUserDetails: () -> Void
+        let appConfigService: AppConfigServiceProtocol
         let nonSecureAppPreferences: NonSecureAppPreferencesProtocol
     }
 }
@@ -44,15 +45,30 @@ extension SettingsViewModel {
 class SettingsViewModel: BaseViewModel {
     // MARK: - View Usage Attributes
     private var cancelBag = CancelBag()
+    @Published var supportEmail: String = ""
     private var nonSecureAppPreferences: NonSecureAppPreferencesProtocol?
+    private var appConfigService: AppConfigServiceProtocol?
     public init(dependencies: Dependencies) {
         self.nonSecureAppPreferences = dependencies.nonSecureAppPreferences
+        self.appConfigService = dependencies.appConfigService
         super.init()
     }
 
     func send(action: Actions) {
         switch action {
-        case .didAppear: ()
+        case .didAppear:
+            Task { [weak self] in
+                guard let self = self else { return }
+                loadingModel = .loading(message: "")
+                do {
+                    let appConfigService = try await appConfigService?.requestAppConfig(.init(), cachePolicy: .cacheElseLoad)
+                    supportEmail = appConfigService?.hitHappens.supportEmailEncrypted.decrypted ?? ""
+                } catch {
+                    handle(error: error, sender: "\(action)")
+                }
+                loadingModel = .notLoading
+            }
+
         case .didDisappear: ()
         case .shouldDisplayOnboarding:
             nonSecureAppPreferences?.isOnboardingCompleted = false

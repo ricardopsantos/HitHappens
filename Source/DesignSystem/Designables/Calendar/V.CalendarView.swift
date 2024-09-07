@@ -1,6 +1,6 @@
 //
 //  CalendarView.swift
-//  SmartApp
+//  HitHappens
 //
 //  Created by Ricardo Santos on 25/08/2024.
 //

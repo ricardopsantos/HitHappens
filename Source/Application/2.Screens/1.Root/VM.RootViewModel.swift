@@ -1,6 +1,6 @@
 //
 //  RootViewModel.swift
-//  SmartApp
+//  HitHappens
 //
 //  Created by Ricardo Santos on 15/04/2024.
 //
@@ -45,14 +45,14 @@ class RootViewModel: ObservableObject {
         self.nonSecureAppPreferences = dependencies.nonSecureAppPreferences
         self.isAppStartCompleted = dependencies.model.isAppStartCompleted
         dependencies.nonSecureAppPreferences.output([]).sinkToReceiveValue { [weak self] some in
-            guard let self = self else { return }
+            guard let self = self else { return }
             switch some {
             case .success(let some):
                 switch some {
                 case .deletedAll, .changedKey:
                     Common.ExecutionControlManager.debounce(operationId: "\(Self.self)|\(#function)") { [weak self] in
-                        Common_Utils.delay {  [weak self] in
-                            guard let self = self else { return }
+                        Common_Utils.delay { [weak self] in
+                            guard let self = self else { return }
                             self.send(action: .reload)
                         }
                     }
@@ -73,7 +73,7 @@ class RootViewModel: ObservableObject {
         case .markOnboardingAsCompleted:
             guard !isOnboardingCompleted else { return }
             nonSecureAppPreferences?.isOnboardingCompleted = true
-            //isOnboardingCompleted = true
+            // isOnboardingCompleted = true
         }
     }
 }

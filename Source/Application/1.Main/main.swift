@@ -1,6 +1,6 @@
 //
 //  main.swift
-//  SmartApp
+//  HitHappens
 //
 //  Created by Ricardo Santos on 19/07/2024.
 //
@@ -21,5 +21,5 @@ struct EmptyApp: App {
 if NSClassFromString("XCTestCase") != nil { // Unit Testing
     EmptyApp.main()
 } else { // App
-    SmartApp.main()
+    HitHappensApp.main()
 }
