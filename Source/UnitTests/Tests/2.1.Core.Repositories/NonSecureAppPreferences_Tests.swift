@@ -40,14 +40,14 @@ extension NonSecureAppPreferences_Tests {
         var emittedEvent = false
 
         // Subscribe to output events for the .changedKey event with key .isAuthenticated
-        repository?.output([.changedKey(key: .isAuthenticated)])
+        repository?.output([.changedKey(key: .isOnboardingCompleted)])
             .sink { _ in
                 emittedEvent = true // Set the flag to true when the event is received
             }.store(in: cancelBag)
 
         // Toggle the value of isAuthenticated to trigger the event
-        if let isAuthenticated = repository?.isAuthenticated {
-            repository?.isAuthenticated = !isAuthenticated
+        if let isOnboardingCompleted = repository?.isOnboardingCompleted {
+            repository?.isOnboardingCompleted = !isOnboardingCompleted
         }
 
         // Verify that the event is emitted

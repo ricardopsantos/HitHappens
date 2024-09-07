@@ -122,10 +122,11 @@ struct FavoriteEventsView: View, ViewProtocol {
             LazyVStack(spacing: 0) {
                 Header(text: "Favorite \(AppConstants.entityNameSingle.lowercased())".localizedMissing)
                 if viewModel.favorits.isEmpty {
-                    Spacer()
-                    Text("No \(AppConstants.entityNamePlural.lowercased())")
+                    SwiftUIUtils.FixedVerticalSpacer(height: screenHeight * 0.33)
+                    Text("You don't have any \(AppConstants.entityNamePlural.lowercased()) marked as favorite".localizedMissing)
+                        .multilineTextAlignment(.center)
                         .textColor(ColorSemantic.labelPrimary.color)
-                        .fontSemantic(.largeTitle)
+                        .fontSemantic(.headline)
                     Spacer()
                 } else {
                     Spacer()

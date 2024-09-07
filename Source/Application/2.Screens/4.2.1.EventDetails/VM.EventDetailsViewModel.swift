@@ -59,7 +59,7 @@ extension EventDetailsViewModel {
                 "Are you sure you want to delete this \(AppConstants.entityNameSingle.lowercased())? All the \(AppConstants.entityOccurrenceNamePlural.lowercased()) associated to it will be deleted!"
                     .localizedMissing
             case .save:
-                "Are you sure you want to \(AppConstants.entityNameSingle.lowercased())?".localizedMissing
+                "Are you sure you want to save  \(AppConstants.entityNameSingle.lowercased())?".localizedMissing
             }
         }
     }

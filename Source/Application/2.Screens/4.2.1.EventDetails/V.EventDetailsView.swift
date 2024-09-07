@@ -117,6 +117,8 @@ struct EventDetailsView: View, ViewProtocol {
             .onChange(of: viewModel.isNewEvent) { isNew in
                 if isNew {
                     onEdit = true
+                } else {
+                    onEdit = false
                 }
             }
             .onChange(of: viewModel.locationRelevant) { locationRelevant in
@@ -151,7 +153,7 @@ struct EventDetailsView: View, ViewProtocol {
                         Divider()
                         if !onEdit {
                             SwiftUIUtils.FixedVerticalSpacer(height: SizeNames.defaultMarginSmall)
-                            addNewLogView
+                            counterView
                             SwiftUIUtils.FixedVerticalSpacer(height: SizeNames.defaultMarginSmall)
                             Divider()
                             SwiftUIUtils.FixedVerticalSpacer(height: SizeNames.defaultMarginSmall)
@@ -268,7 +270,16 @@ fileprivate extension EventDetailsView {
         }
     }
 
+    @ViewBuilder
     var detailsView: some View {
+        HStack {
+            Spacer()
+            Text("Details".localizedMissing)
+                .fontSemantic(.headlineBold)
+                .textColor(ColorSemantic.labelPrimary.color)
+            Spacer()
+        }
+        SwiftUIUtils.FixedVerticalSpacer(height: SizeNames.defaultMargin)
         LazyVStack(spacing: 0) {
             if onEdit {
                 CustomTitleAndCustomTextFieldWithBinding(
@@ -375,7 +386,15 @@ fileprivate extension EventDetailsView {
     }
 
     @ViewBuilder
-    var addNewLogView: some View {
+    var counterView: some View {
+        HStack {
+            Spacer()
+            Text("Counter".localizedMissing)
+                .fontSemantic(.headlineBold)
+                .textColor(ColorSemantic.labelPrimary.color)
+            Spacer()
+        }
+        
         if viewModel.trackedEntity != nil {
             ForEach([viewModel.trackedEntity!], id: \.self) { model in
                 CounterView(
@@ -395,6 +414,14 @@ fileprivate extension EventDetailsView {
 
     var archivedAndDeleteView: some View {
         Group {
+            HStack {
+                Spacer()
+                Text("Danger".localizedMissing)
+                    .fontSemantic(.headlineBold)
+                    .textColor(ColorSemantic.labelPrimary.color)
+                Spacer()
+            }
+            SwiftUIUtils.FixedVerticalSpacer(height: SizeNames.defaultMargin)
             ToggleWithState(
                 title: "Archived".localizedMissing,
                 isOn: viewModel.archived,
@@ -423,6 +450,16 @@ fileprivate extension EventDetailsView {
     var listView: some View {
         Group {
             if let logs = viewModel.logs, !logs.isEmpty {
+                Divider()
+                SwiftUIUtils.FixedVerticalSpacer(height: SizeNames.defaultMargin)
+                HStack {
+                    Spacer()
+                    Text("All \(AppConstants.entityOccurrenceNamePlural.lowercased())".localizedMissing)
+                        .fontSemantic(.headlineBold)
+                        .textColor(ColorSemantic.labelPrimary.color)
+                    Spacer()
+                }
+                SwiftUIUtils.FixedVerticalSpacer(height: SizeNames.defaultMargin)
                 LazyVStack {
                     ForEach(logs, id: \.self) { model in
                         ListItemView(

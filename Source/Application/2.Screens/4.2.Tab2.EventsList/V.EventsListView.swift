@@ -126,11 +126,14 @@ struct EventsListView: View, ViewProtocol {
             LazyVStack(spacing: 0) {
                 if sectionA.count + sectionB.count + sectionC.count == 0 {
                     VStack {
-                        Spacer()
-                        Text("No \(AppConstants.entityNamePlural.lowercased())")
+                        SwiftUIUtils.FixedVerticalSpacer(height: screenHeight * 0.33)
+                        Text("You don't have any \(AppConstants.entityNamePlural.lowercased())\n\nTap to add one!".localizedMissing)
+                            .multilineTextAlignment(.center)
                             .textColor(ColorSemantic.labelPrimary.color)
-                            .fontSemantic(.largeTitle)
-                        Spacer()
+                            .fontSemantic(.headline)
+                            .onTapGesture {
+                                onShouldDisplayNewTrackedEntity()
+                            }
                     }
                 }
                 if !sectionA.isEmpty {
