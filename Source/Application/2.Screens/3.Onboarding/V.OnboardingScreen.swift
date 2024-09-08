@@ -133,6 +133,7 @@ fileprivate extension OnboardingView {
     @ViewBuilder
     var pageView: some View {
         TabView(selection: $selectedTab) {
+            Text("pages: \(viewModel.onboardingModel.count)/\(selectedTab)")
             ForEach(viewModel.onboardingModel, id: \.self) { model in
                 VStack(spacing: 0) {
                     Image(uiImage: model.image)

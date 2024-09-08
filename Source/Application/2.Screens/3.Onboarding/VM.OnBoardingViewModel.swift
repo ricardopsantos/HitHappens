@@ -20,11 +20,13 @@ public struct OnboardingModel: Equatable, Hashable, Identifiable, Sendable {
     public var id: String { order.description }
     let text: String
     let image: UIImage
+    let imageURL: String
     let order: Int
-    public init(text: String = "", image: UIImage = UIImage(), order: Int = 0) {
+    public init(text: String = "", image: UIImage = UIImage(), order: Int = 0, imageURL: String = "") {
         self.text = text
         self.image = image
         self.order = order
+        self.imageURL = imageURL
     }
 }
 
@@ -68,11 +70,12 @@ class OnboardingViewModel: BaseViewModel {
                         cachePolicy: .load
                     ) {
                         handle(config: appConfigService)
+                    } else {
+                        handle(config: ModelDto.AppConfigResponse.mock)
                     }
                 } catch {
                     handle(error: error, sender: "\(action)")
                 }
-                loadingModel = .notLoading
             }
         case .didDisappear: ()
         case .fetchConfig: () // Do something
@@ -85,7 +88,11 @@ class OnboardingViewModel: BaseViewModel {
 //
 
 fileprivate extension OnboardingViewModel {
-    func handle(config: ModelDto.AppConfigResponse) {
+    func handle(config: ModelDto.AppConfigResponse?) {
+        guard let config = config else {
+            loadingModel = .notLoading
+            return
+        }
         let intro = config.hitHappens.onboarding.intro
         let pages = config.hitHappens.onboarding.pages.count
         let imagesLightURL = config.hitHappens.onboarding.pages
@@ -95,24 +102,18 @@ fileprivate extension OnboardingViewModel {
         imagesLightURL.forEach { url in
             CommonNetworking.ImageUtils.imageFrom(
                 url: URL(string: url),
-                caching: .hotElseCold,
+                caching: .none,
                 downsample: .zero
             ) { [weak self] image, url in
                 if let image = image,
-                   let text = config.hitHappens.onboarding.pages
-                   .filter({ $0.imageLight == url })
-                   .first?.text,
-                   let order = config.hitHappens.onboarding.pages
-                   .filter({ $0.imageLight == url })
-                   .first?.order {
-                    let model = OnboardingModel(text: text, image: image, order: order)
-                    onboardingModelAcc.append(model)
+                   let page = config.hitHappens.onboarding.pages.filter({ $0.imageLight == url }).first {
+                    onboardingModelAcc.append(.init(text: page.text, image: image, order: page.order))
                     if onboardingModelAcc.count == pages {
-                        self?.onboardingModel = [.init(text: intro,
-                                                       image: UIImage(named: "logo")!)
-                        ] + onboardingModelAcc.sorted(by: { $0.order > $1.order })
+                        let intro: OnboardingModel = .init(text: intro,
+                                                           image: UIImage(named: "logo")!)
+                        self?.onboardingModel = [intro] + onboardingModelAcc.sorted(by: { $0.order < $1.order })
                         self?.loadingModel = .notLoading
-                       // self?.loaded = true
+                        self?.loaded = true
                     }
                 }
             }
