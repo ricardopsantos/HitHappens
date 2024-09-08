@@ -108,7 +108,7 @@ struct OnboardingView: View {
     var content: some View {
         VStack(spacing: 0) {
             if !viewModel.loaded {
-                loadingView
+                EmptyView()
             } else {
                 pageView
                 SwiftUIUtils.FixedVerticalSpacer(height: SizeNames.defaultMarginSmall)
@@ -126,33 +126,33 @@ struct OnboardingView: View {
 // MARK: - Auxiliar Views
 //
 fileprivate extension OnboardingView {
-    var loadingView: some View {
-        EmptyView()
-    }
 
-    @ViewBuilder
     var pageView: some View {
-        TabView(selection: $selectedTab) {
-            Text("pages: \(viewModel.onboardingModel.count)/\(selectedTab)")
-            ForEach(viewModel.onboardingModel, id: \.self) { model in
-                VStack(spacing: 0) {
-                    Image(uiImage: model.image)
-                        .resizable()
-                        .cornerRadius(SizeNames.cornerRadius)
-                        .scaledToFit()
-                        .frame(width: screenWidth - 2 * SizeNames.defaultMargin)
-                        .padding()
-                    Text(model.text)
-                        .textColor(ColorSemantic.labelPrimary.color)
-                        .fontSemantic(.callout)
-                    SwiftUIUtils.FixedVerticalSpacer(height: SizeNames.defaultMarginSmall)
-                    Divider()
-                    SwiftUIUtils.FixedVerticalSpacer(height: SizeNames.defaultMarginSmall)
-                }
-            }
-        }
-        .tabViewStyle(PageTabViewStyle(indexDisplayMode: .never))
-    }
+         TabView(selection: $selectedTab) {
+             ForEach(0..<viewModel.onboardingModel.count, id: \.self) { index in
+                 VStack(spacing: 0) {
+                     if let uiImage = viewModel.onboardingModel.safeItem(at: index)?.image {
+                         Image(uiImage: uiImage)
+                             .resizable()
+                             .cornerRadius(SizeNames.cornerRadius)
+                             .scaledToFit()
+                             .frame(width: screenWidth - 2 * SizeNames.defaultMargin)
+                             .padding()
+                     }
+                     if let text = viewModel.onboardingModel.safeItem(at: index)?.text {
+                         Text(text)
+                             .textColor(ColorSemantic.labelPrimary.color)
+                             .fontSemantic(.callout)
+                     }
+
+                     SwiftUIUtils.FixedVerticalSpacer(height: SizeNames.defaultMarginSmall)
+                     Divider()
+                     SwiftUIUtils.FixedVerticalSpacer(height: SizeNames.defaultMarginSmall)
+                 }
+             }
+         }
+         .tabViewStyle(PageTabViewStyle(indexDisplayMode: .never))
+     }
 }
 
 //
