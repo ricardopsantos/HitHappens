@@ -45,11 +45,11 @@ public extension ModelDto.AppConfigResponse {
         // MARK: - Page
         public struct Page: ModelDtoProtocol {
             public let order: Int
-            let test: String
+            public let text: String
             public let imageLight, imageDark: String
 
             enum CodingKeys: String, CodingKey {
-                case order, test
+                case order, text
                 case imageLight = "image_light"
                 case imageDark = "image_dark"
             }

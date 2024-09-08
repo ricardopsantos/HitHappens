@@ -53,8 +53,8 @@ extension APIEndpoints {
         switch self {
         case .getAppConfiguration: (
                 .get,
-                "https://github.com/ricardopsantos/RJPS_AppsConfig",
-                "/blob/main/HitHappens/config.json"
+                "https://raw.githubusercontent.com/ricardopsantos/RJPS_AppsConfig/main/HitHappens",
+                "config.json"
             )
         }
     }

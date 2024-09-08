@@ -89,12 +89,13 @@ public indirect enum ColorSemantic: CaseIterable, Hashable {
     // Public
     //
 
-    private static var userCustomInterfaceStyle: Common.InterfaceStyle?
+    private(set) static var userCustomInterfaceStyle: Common.InterfaceStyle?
     public static func applyUserCustomInterfaceStyle(_ value: Common.InterfaceStyle?) {
         Self.userCustomInterfaceStyle = value
     }
 
-    var currentInterfaceStyle: Common.InterfaceStyle {
+    /// Will return the style selected by the user, if any, else the one selected by the system
+    var appInterfaceStyle: Common.InterfaceStyle {
         if let userCustomInterfaceStyle = Self.userCustomInterfaceStyle {
             return userCustomInterfaceStyle
         } else {
@@ -102,13 +103,13 @@ public indirect enum ColorSemantic: CaseIterable, Hashable {
         }
     }
 
-    public var rawValue: UIColor { rawValue(currentInterfaceStyle) }
+    public var rawValue: UIColor { rawValue(appInterfaceStyle) }
     public var cgColor: CGColor { rawValue.cgColor }
     public var uiColor: UIColor { rawValue }
     public var color: Color { Color(rawValue) }
     public func color(_ on: Common.InterfaceStyle) -> Color { Color(rawValue(on)) }
     public func uiColor(_ on: Common.InterfaceStyle) -> UIColor { rawValue(on) }
-    public var uiColorAlternative: UIColor! { rawValue(currentInterfaceStyle == .dark ? .light : .dark) }
+    public var uiColorAlternative: UIColor! { rawValue(appInterfaceStyle == .dark ? .light : .dark) }
     public var name: String { "\(self)" }
 
     public init?(rawValue: UIColor) {

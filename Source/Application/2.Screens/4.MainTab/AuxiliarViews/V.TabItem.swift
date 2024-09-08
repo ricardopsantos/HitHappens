@@ -18,7 +18,6 @@ struct TabItemView: View {
             ZStack {
                 Image(systemName: icon)
                     .resizable()
-                    .tint(color: ColorSemantic.primary.color)
                     .frame(
                         width: SizeNames.size_7.cgFloat,
                         height: SizeNames.size_7.cgFloat

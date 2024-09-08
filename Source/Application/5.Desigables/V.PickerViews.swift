@@ -70,28 +70,6 @@ public struct SoundPickerView: View {
     }
 }
 
-struct GenderPickerView: View {
-    @Binding var selected: Gender
-    var options: [DefaultSegmentedPickerView.Option] {
-        Gender.allCases.map {
-            DefaultSegmentedPickerView.Option(value: $0.rawValue, tag: "")
-        }
-    }
-
-    var body: some View {
-        DefaultSegmentedPickerView(
-            title: "Gender",
-            options: options,
-            selected: Binding<String>(
-                get: { selected.rawValue },
-                set: { newValue in
-                    if let newGender = Gender(rawValue: newValue) {
-                        selected = newGender
-                    }
-                }))
-    }
-}
-
 public struct AppearancePickerView: View {
     @Environment(\.colorScheme) var colorScheme
     @Binding var selected: String
@@ -116,7 +94,7 @@ public struct AppearancePickerView: View {
             .pickerStyle(SegmentedPickerStyle())
             .onChange(of: selected) { value in
                 DevTools.Log.debug(.valueChanged("\(Self.self)", "selectedOption", "\(value)"), .view)
-                InterfaceStyleManager.current = .init(rawValue: value)
+                InterfaceStyleManager.selectedByUser = .init(rawValue: value)
             }
         }
         .foregroundColor(.labelPrimary)
@@ -131,7 +109,6 @@ public struct AppearancePickerView: View {
 @available(iOS 17, *)
 #Preview {
     VStack {
-        GenderPickerView(selected: .constant(.female))
         AppearancePickerView(selected: .constant(.dark))
         CategoryPickerView(
             selected: HitHappensEventCategory.none.localized,

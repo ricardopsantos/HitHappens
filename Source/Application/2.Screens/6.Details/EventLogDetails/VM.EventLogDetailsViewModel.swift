@@ -206,7 +206,7 @@ fileprivate extension EventLogDetailsViewModel {
                     if table == "\(CDataTrackedLog.self)", id == self?.trackedLog?.id {
                         Common.ExecutionControlManager.debounce(operationId: "\(Self.self)\(#function)") { [weak self] in
                             self?.send(.reload)
-                            self?.userMessage = ("Updated\n\(Date().timeStyleMedium)".localizedMissing, ColorSemantic.allCool)
+                            // self?.userMessage = ("Updated\n\(Date().timeStyleMedium)".localizedMissing, ColorSemantic.allCool)
                         }
                     }
                 case .databaseDidDeletedContentOn(let table, let id):

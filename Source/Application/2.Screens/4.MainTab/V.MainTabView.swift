@@ -109,9 +109,12 @@ struct MainTabView: View, ViewProtocol {
             .tabItem { TabItemView(title: AppTab.tab5.title, icon: AppTab.tab5.icon) }
             .tag(AppTab.tab5)
         }
-        .accentColor(.primaryColor)
+        .tint(ColorSemantic.primary.color)
         .onAppear {
-            UITabBar.appearance().unselectedItemTintColor = ColorSemantic.backgroundTertiary.uiColor
+            updateAppearance()
+        }
+        .onChange(of: colorScheme) { value in
+            updateAppearance()
         }
         .onChange(of: tab1Router.navPath) { value in
             DevTools.Log.debug(.valueChanged("\(Self.self)", "tab1Router", "\(value)"), .view)
@@ -149,9 +152,25 @@ struct MainTabView: View, ViewProtocol {
     }
 }
 
-extension MainTabView {
+private extension MainTabView {
+    func updateAppearance() {
+        UITabBar.appearance().scrollEdgeAppearance = UITabBarAppearance()
+        switch InterfaceStyleManager.appInterfaceStyle {
+        case .light:
+            UITabBar.appearance().unselectedItemTintColor = ColorSemantic.warning.uiColor
+        case .dark:
+            UITabBar.appearance().unselectedItemTintColor = ColorSemantic.danger.uiColor
+        }
+        // UITabBar.appearance().tintColor = ColorSemantic.allCool.uiColor
+        if let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene {
+            windowScene.windows.forEach { window in
+                window.rootViewController = window.rootViewController
+            }
+        }
+    }
+
     // https://betterprogramming.pub/swiftui-navigation-stack-and-ideal-tab-view-behaviour-e514cc41a029
-    private func selectedTab() -> Binding<AppTab> {
+    func selectedTab() -> Binding<AppTab> {
         Binding {
             viewModel.selectedTab
         } set: { tappedTab in

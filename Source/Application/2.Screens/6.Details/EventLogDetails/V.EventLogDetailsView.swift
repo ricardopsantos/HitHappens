@@ -86,12 +86,15 @@ struct EventLogDetailsView: View, ViewProtocol {
     @Environment(\.dismiss) var dismiss
     private let onPerformRouteBack: () -> Void
     private let cancelBag: CancelBag = .init()
+    private let minDelta: Double = 0.005
     @StateObject var locationViewModel: Common.SharedLocationManagerViewModel = .shared
     @State var onEdit: Bool = false
     @State var eventDateCopy = Date()
     @State var noteCopy = ""
     @State var addressCopy = ""
     @State var mapRegion: MKCoordinateRegion?
+    @State var latitudeDelta: Double = 0
+
     // MARK: - Body & View
     var body: some View {
         BaseView.withLoading(
@@ -115,28 +118,28 @@ struct EventLogDetailsView: View, ViewProtocol {
 
     var content: some View {
         ZStack {
-            // ScrollView {
-            VStack(spacing: 0) {
-                Header(text: "\(AppConstants.entityLogNameSingle) details".localizedMissing, hasCloseButton: true) {
-                    dismiss()
+            ScrollView {
+                VStack(spacing: 0) {
+                    headerView
+                    SwiftUIUtils.FixedVerticalSpacer(height: SizeNames.defaultMarginSmall)
+                    recordDateView
+                    SwiftUIUtils.FixedVerticalSpacer(height: SizeNames.defaultMarginSmall)
+                    noteView
+                    SwiftUIUtils.FixedVerticalSpacer(height: SizeNames.defaultMarginSmall)
+                    mapView
+                    SwiftUIUtils.FixedVerticalSpacer(height: SizeNames.defaultMarginSmall)
+                    EditView(
+                        onEdit: $onEdit,
+                        onConfirmEdit: onConfirmEdit,
+                        onCancelEdit: onCancelEdit)
+                    SwiftUIUtils.FixedVerticalSpacer(height: SizeNames.defaultMarginSmall)
+                    Spacer()
+                    deleteView
+                    SwiftUIUtils.FixedVerticalSpacer(height: SizeNames.defaultMarginSmall)
                 }
-                SwiftUIUtils.FixedVerticalSpacer(height: SizeNames.defaultMarginSmall)
-                Divider()
-                SwiftUIUtils.FixedVerticalSpacer(height: SizeNames.defaultMarginSmall)
-                recordDateView
-                SwiftUIUtils.FixedVerticalSpacer(height: SizeNames.defaultMarginSmall)
-                noteView
-                SwiftUIUtils.FixedVerticalSpacer(height: SizeNames.defaultMarginSmall)
-                mapView
-                SwiftUIUtils.FixedVerticalSpacer(height: SizeNames.defaultMarginSmall)
-                saveEditionChangesView
-                SwiftUIUtils.FixedVerticalSpacer(height: SizeNames.defaultMarginSmall)
-                Spacer()
-                deleteView
-                SwiftUIUtils.FixedVerticalSpacer(height: SizeNames.defaultMarginSmall)
+                .animation(.default, value: onEdit)
+                .animation(.default, value: addressCopy)
             }
-            .animation(.default, value: onEdit)
-            .animation(.default, value: addressCopy)
             if viewModel.confirmationSheetType != nil {
                 confirmationSheet
             }
@@ -151,111 +154,13 @@ struct EventLogDetailsView: View, ViewProtocol {
             updateStateCopyWithViewModelCurrentState()
         }
     }
+}
 
-    @ViewBuilder
-    var editionActionsView: some View {
-        Group {
-            Divider()
-            if onEdit {
-                HStack(spacing: 0) {
-                    saveEditionChangesView
-                    Spacer()
-                    doEditionView
-                }
-            } else {
-                doEditionView
-            }
-            Divider()
-        }
-    }
+//
+// MARK: Confirmation Sheet View & UserMessage View
+//
 
-    var doEditionView: some View {
-        TextButton(
-            onClick: {
-                onEdit.toggle()
-                updateStateCopyWithViewModelCurrentState()
-            },
-            text: !onEdit ? "Edit \(AppConstants.entityLogNameSingle.lowercased())".localizedMissing : "Cancel changes".localizedMissing,
-            style: .textOnly,
-            accessibility: .editButton)
-    }
-
-    @ViewBuilder
-    var saveEditionChangesView: some View {
-        Group {
-            if onEdit {
-                TextButton(onClick: {
-                    saveState()
-                    onEdit.toggle()
-                }, text: "Save changes", style: .textOnly, accessibility: .editButton)
-            } else {
-                EmptyView()
-            }
-        }
-    }
-
-    var noteView: some View {
-        Group {
-            if onEdit {
-                CustomTitleAndCustomTextFieldWithBinding(
-                    title: "Note".localizedMissing,
-                    placeholder: "Add a note".localizedMissing,
-                    inputText: $noteCopy,
-                    accessibility: .undefined) { newValue in
-                        viewModel.send(.userDidChangedNote(value: newValue))
-                    }
-            } else {
-                TitleAndValueView(
-                    title: "Note".localizedMissing,
-                    value: viewModel.note,
-                    style: .vertical1)
-            }
-        }
-    }
-
-    @ViewBuilder
-    var recordDateView: some View {
-        Group {
-            if !onEdit {
-                TitleAndValueView(
-                    title: "Record Date".localizedMissing,
-                    value: viewModel.eventDate.dateMediumTimeShort,
-                    style: .vertical1)
-            } else {
-                VStack(spacing: SizeNames.defaultMarginSmall) {
-                    HStack(spacing: 0) {
-                        Text("Record Date".localizedMissing)
-                            .textColor(ColorSemantic.labelPrimary.color)
-                            .fontSemantic(.bodyBold)
-                        Spacer()
-                    }
-                    HStack(spacing: 0) {
-                        Text("Date".localizedMissing)
-                            .textColor(ColorSemantic.labelPrimary.color)
-                            .fontSemantic(.body)
-                        Spacer()
-                        DatePicker(
-                            "",
-                            selection: $eventDateCopy,
-                            displayedComponents: .date)
-                            .datePickerStyle(.compact)
-                    }
-                    HStack(spacing: 0) {
-                        Text("Time".localizedMissing)
-                            .textColor(ColorSemantic.labelPrimary.color)
-                            .fontSemantic(.body)
-                        Spacer()
-                        DatePicker(
-                            "",
-                            selection: $eventDateCopy,
-                            displayedComponents: .hourAndMinute)
-                            .datePickerStyle(.compact)
-                    }
-                }
-            }
-        }
-    }
-
+extension EventLogDetailsView {
     var userMessageView: some View {
         VStack {
             Spacer()
@@ -269,29 +174,6 @@ struct EventLogDetailsView: View, ViewProtocol {
                     viewModel.userMessage.text = ""
                 }
             Spacer()
-        }
-    }
-
-    @ViewBuilder
-    var deleteView: some View {
-        Group {
-            if !onEdit {
-                TextButton(
-                    onClick: {
-                        AnalyticsManager.shared.handleButtonClickEvent(
-                            buttonType: .primary,
-                            label: "Delete",
-                            sender: "\(Self.self)")
-                        viewModel.send(.delete(confirmed: false))
-                    },
-                    text: "Delete \(AppConstants.entityLogNameSingle.lowercased())".localizedMissing,
-                    alignment: .center,
-                    style: .secondary,
-                    background: .danger,
-                    accessibility: .undefined)
-            } else {
-                EmptyView()
-            }
         }
     }
 
@@ -316,9 +198,22 @@ struct EventLogDetailsView: View, ViewProtocol {
                 }
             })
     }
+}
 
-    let minDelta: Double = 0.005
-    @State var latitudeDelta: Double = 0
+//
+// MARK: - Auxiliar Views
+//
+
+extension EventLogDetailsView {
+    @ViewBuilder
+    var headerView: some View {
+        Header(text: "\(AppConstants.entityLogNameSingle) details".localizedMissing, hasCloseButton: true) {
+            dismiss()
+        }
+        SwiftUIUtils.FixedVerticalSpacer(height: SizeNames.defaultMarginSmall)
+        Divider()
+    }
+
     @ViewBuilder
     var mapView: some View {
         let distance = (minDelta - latitudeDelta) * 1000
@@ -370,18 +265,95 @@ struct EventLogDetailsView: View, ViewProtocol {
             EmptyView()
         }
     }
-}
 
-fileprivate extension EventLogDetailsView {
-    func saveState() {
-        viewModel.send(.userDidChangedLocation(
-            address: addressCopy,
-            latitude: mapRegion?.center.latitude ?? 0,
-            longitude: mapRegion?.center.longitude ?? 0))
-        viewModel.send(.userDidChangedDate(value: eventDateCopy))
-        viewModel.send(.userDidChangedNote(value: noteCopy))
+    var noteView: some View {
+        Group {
+            if onEdit {
+                CustomTitleAndCustomTextFieldWithBinding(
+                    title: "Note".localizedMissing,
+                    placeholder: "Add a note".localizedMissing,
+                    inputText: $noteCopy,
+                    accessibility: .undefined) { _ in }
+            } else {
+                TitleAndValueView(
+                    title: "Note".localizedMissing,
+                    value: !viewModel.note.isEmpty ? viewModel.note : "...",
+                    style: .vertical1)
+            }
+        }
     }
 
+    @ViewBuilder
+    var recordDateView: some View {
+        Group {
+            if !onEdit {
+                TitleAndValueView(
+                    title: "Record Date".localizedMissing,
+                    value: viewModel.eventDate.dateMediumTimeShort,
+                    style: .vertical1)
+            } else {
+                VStack(spacing: SizeNames.defaultMarginSmall) {
+                    HStack(spacing: 0) {
+                        Text("Record Date".localizedMissing)
+                            .textColor(ColorSemantic.labelPrimary.color)
+                            .fontSemantic(.bodyBold)
+                        Spacer()
+                    }
+                    HStack(spacing: 0) {
+                        Text("Date".localizedMissing)
+                            .textColor(ColorSemantic.labelPrimary.color)
+                            .fontSemantic(.body)
+                        Spacer()
+                        DatePicker(
+                            "",
+                            selection: $eventDateCopy,
+                            displayedComponents: .date)
+                            .datePickerStyle(.compact)
+                    }
+                    HStack(spacing: 0) {
+                        Text("Time".localizedMissing)
+                            .textColor(ColorSemantic.labelPrimary.color)
+                            .fontSemantic(.body)
+                        Spacer()
+                        DatePicker(
+                            "",
+                            selection: $eventDateCopy,
+                            displayedComponents: .hourAndMinute)
+                            .datePickerStyle(.compact)
+                    }
+                }
+            }
+        }
+    }
+
+    @ViewBuilder
+    var deleteView: some View {
+        Group {
+            if !onEdit {
+                TextButton(
+                    onClick: {
+                        AnalyticsManager.shared.handleButtonClickEvent(
+                            buttonType: .primary,
+                            label: "Delete",
+                            sender: "\(Self.self)")
+                        viewModel.send(.delete(confirmed: false))
+                    },
+                    text: "Delete \(AppConstants.entityLogNameSingle.lowercased())".localizedMissing,
+                    alignment: .center,
+                    style: .secondary,
+                    background: .danger,
+                    accessibility: .undefined)
+            } else {
+                EmptyView()
+            }
+        }
+    }
+}
+
+//
+// MARK: - Auxiliar
+//
+fileprivate extension EventLogDetailsView {
     func updateStateCopyWithViewModelCurrentState() {
         if viewModel.eventDate != eventDateCopy {
             eventDateCopy = viewModel.eventDate
@@ -392,6 +364,19 @@ fileprivate extension EventLogDetailsView {
         if viewModel.address != addressCopy {
             addressCopy = viewModel.address
         }
+    }
+
+    func onConfirmEdit() {
+        viewModel.send(.userDidChangedLocation(
+            address: addressCopy,
+            latitude: mapRegion?.center.latitude ?? 0,
+            longitude: mapRegion?.center.longitude ?? 0))
+        viewModel.send(.userDidChangedDate(value: eventDateCopy))
+        viewModel.send(.userDidChangedNote(value: noteCopy))
+    }
+
+    func onCancelEdit() {
+        updateStateCopyWithViewModelCurrentState()
     }
 }
 

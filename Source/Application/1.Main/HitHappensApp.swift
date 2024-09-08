@@ -24,7 +24,7 @@ struct HitHappensApp: App {
         if onTesting {
             config = .init(
                 sampleService: sampleService,
-                appConfigService: DependenciesManager.Services.appConfigService,
+                appConfigService: DependenciesManager.Services.appConfigServiceMock,
                 dataBaseRepository: dataBaseRepository,
                 nonSecureAppPreferences: nonSecureAppPreferences,
                 secureAppPreferences: secureAppPreferences
@@ -33,7 +33,7 @@ struct HitHappensApp: App {
         } else {
             config = .init(
                 sampleService: sampleService,
-                appConfigService: DependenciesManager.Services.appConfigServiceMock,
+                appConfigService: DependenciesManager.Services.appConfigService,
                 dataBaseRepository: dataBaseRepository,
                 nonSecureAppPreferences: nonSecureAppPreferences,
                 secureAppPreferences: secureAppPreferences
@@ -41,6 +41,7 @@ struct HitHappensApp: App {
             self.configuration = config
         }
         SetupManager.shared.setup(dataBaseRepository: dataBaseRepository)
+        InterfaceStyleManager.setup(nonSecureAppPreferences: configuration.nonSecureAppPreferences)
     }
 
     var body: some Scene {

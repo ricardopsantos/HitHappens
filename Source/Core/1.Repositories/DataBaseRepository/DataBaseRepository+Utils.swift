@@ -175,42 +175,6 @@ public extension DataBaseRepository {
                 cascadeEvents: cinemaEvents
             )
 
-            let chessEvents: [Model.TrackedLog] = [
-                .init(
-                    latitude: 52.3740,
-                    longitude: 4.8897,
-                    addressMin: "Wijk aan Zee, Netherlands",
-                    note: "Tata Steel Chess Tournament",
-                    recordDate: Date().add(days: -Int.random(in: 1...10))
-                ),
-                .init(
-                    latitude: 55.7558,
-                    longitude: 37.6176,
-                    addressMin: "Moscow, Russia",
-                    note: "Candidates Tournament",
-                    recordDate: Date().add(days: -Int.random(in: 1...10))
-                ),
-                .init(
-                    latitude: 38.6270,
-                    longitude: -90.1994,
-                    addressMin: "St. Louis, MO",
-                    note: "Sinquefield Cup",
-                    recordDate: Date().add(days: -Int.random(in: 1...10))
-                )
-            ]
-
-            let chess: Model.TrackedEntity = .init(
-                id: UUID().uuidString,
-                name: "Chess Tournaments",
-                info: "",
-                archived: false,
-                favorite: false,
-                locationRelevant: true,
-                category: .personal,
-                sound: .cheer1,
-                cascadeEvents: chessEvents
-            )
-
             let concertEvents: [Model.TrackedLog] = [
                 .init(
                     latitude: 51.5074,
@@ -301,7 +265,6 @@ public extension DataBaseRepository {
             trackedEntityInsert(trackedEntity: concerts)
             trackedEntityInsert(trackedEntity: coffee)
             trackedEntityInsert(trackedEntity: cinema)
-            trackedEntityInsert(trackedEntity: chess)
             trackedEntityInsert(trackedEntity: gymnasium)
         }
     }

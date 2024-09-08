@@ -405,6 +405,7 @@
 		D6C52F865B66653A2AC286F5 /* InAppPushNotManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB341F4A0BB290A0462DC258 /* InAppPushNotManager.swift */; };
 		D6EAB0DE6DF6282448E1C3A8 /* JSONDecoder+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45BD95649D15ED8631BC8961 /* JSONDecoder+Extensions.swift */; };
 		D6FAA4F0D2DBF963EE37A56F /* Common.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = FFF39C519E284BB9BED8F7C7 /* Common.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		D7235E5A2C8DC393008286D4 /* V.EditView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7235E592C8DC393008286D4 /* V.EditView.swift */; };
 		D7699558FE9C0D6CC79486C6 /* NonSecureAppPreferencesProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DAE85356E5D988971FA1B4F /* NonSecureAppPreferencesProtocol.swift */; };
 		D789C0F22BA6A8F2FF9B9EB6 /* UIViewController+ExtensionsUIKit.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE8192949F9D1AC10535CCD4 /* UIViewController+ExtensionsUIKit.swift */; };
 		D92CD7E287E6C85B258D9F48 /* TinyConstraints+superview.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13E4E71C430848F8ECF3BFD0 /* TinyConstraints+superview.swift */; };
@@ -1078,6 +1079,7 @@
 		D6282F0D57441100B3875E8A /* AsyncAwaitMainActor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AsyncAwaitMainActor.swift; sourceTree = "<group>"; };
 		D658F0A65F848A4860089341 /* UISearchTextField+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UISearchTextField+Extensions.swift"; sourceTree = "<group>"; };
 		D663ADA86AE4F77274907014 /* _CopyFrameworks.yml */ = {isa = PBXFileReference; lastKnownFileType = text.yaml; path = _CopyFrameworks.yml; sourceTree = "<group>"; };
+		D7235E592C8DC393008286D4 /* V.EditView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = V.EditView.swift; sourceTree = "<group>"; };
 		D7A6EB94964AD288E0A000C1 /* Model+CDataEvent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Model+CDataEvent.swift"; sourceTree = "<group>"; };
 		D7B7DA29E777D87D2A5EDDAC /* E.HttpMethod.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = E.HttpMethod.swift; sourceTree = "<group>"; };
 		D85A4C596CBB9274140C2FC6 /* DBVersion2.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = DBVersion2.xcdatamodel; sourceTree = "<group>"; };
@@ -1457,6 +1459,7 @@
 				7A89B11878960C3ECFCFC911 /* V.CounterView.swift */,
 				9C7298BB42F46A08752BE82A /* V.PickerViews.swift */,
 				F16BFD8F3A0FBB2DB2E6A250 /* VC.MailViewControllerRepresentable.swift */,
+				D7235E592C8DC393008286D4 /* V.EditView.swift */,
 			);
 			path = 5.Desigables;
 			sourceTree = "<group>";
@@ -1748,22 +1751,22 @@
 			path = Extensions;
 			sourceTree = "<group>";
 		};
-		4750E0C4782A2438B75FF8F4 /* 4.5.Tab4.EventsMap */ = {
+		4750E0C4782A2438B75FF8F4 /* Tab4.EventsMap */ = {
 			isa = PBXGroup;
 			children = (
 				A1F06837068B4EFB7407152D /* V.EventsMapView.swift */,
 				827A163DB0EA257785F9B9C6 /* VM.EventsMapViewModel.swift */,
 			);
-			path = 4.5.Tab4.EventsMap;
+			path = Tab4.EventsMap;
 			sourceTree = "<group>";
 		};
-		4BFB34AE6AA1134B8A0C34DC /* 4.2.Tab2.EventsList */ = {
+		4BFB34AE6AA1134B8A0C34DC /* Tab2.EventsList */ = {
 			isa = PBXGroup;
 			children = (
 				F06BE284975A712C69E0FC2F /* V.EventsListView.swift */,
 				7A0B6211202E46EFAC97447C /* VM.EventsListViewModel.swift */,
 			);
-			path = 4.2.Tab2.EventsList;
+			path = Tab2.EventsList;
 			sourceTree = "<group>";
 		};
 		4E65B4418244FA94518624DA /* BaseViewModel */ = {
@@ -1840,13 +1843,13 @@
 			path = 1.Source;
 			sourceTree = "<group>";
 		};
-		556173198434960193F195C8 /* 4.2.2.EventLogDetails */ = {
+		556173198434960193F195C8 /* EventLogDetails */ = {
 			isa = PBXGroup;
 			children = (
 				D1918A00A95171CF2326C68A /* V.EventLogDetailsView.swift */,
 				D11F4BE28AC3AEABB890EC9E /* VM.EventLogDetailsViewModel.swift */,
 			);
-			path = 4.2.2.EventLogDetails;
+			path = EventLogDetails;
 			sourceTree = "<group>";
 		};
 		5626FE0A3E040FCB192D7EC2 /* CombineCompatible */ = {
@@ -1962,17 +1965,12 @@
 		6EEF847B39F86B931CE030E2 /* 2.Screens */ = {
 			isa = PBXGroup;
 			children = (
+				D7235E582C8DC2E9008286D4 /* 6.Details */,
+				D7235E572C8DC2AA008286D4 /* 5.Tabs */,
 				2291FDD3105F36A190F56C5D /* 1.Root */,
 				3FDA5A513A8B9C85B4DBB0C4 /* 2.Splash */,
 				DFF5D82F9BDAA47C45812143 /* 3.Onboarding */,
-				9029C357C5744FE32B5DC53B /* 4.0.MainTab */,
-				E91A1357EFD799118C324989 /* 4.1.Tab1.FavoriteEvents */,
-				BAC8C4B382AE28F877FA199E /* 4.2.1.EventDetails */,
-				556173198434960193F195C8 /* 4.2.2.EventLogDetails */,
-				4BFB34AE6AA1134B8A0C34DC /* 4.2.Tab2.EventsList */,
-				C0E147B90F1C7A9E9DD57C5B /* 4.3.Tab3.EventsCalendar */,
-				4750E0C4782A2438B75FF8F4 /* 4.5.Tab4.EventsMap */,
-				EAAC2C315A8ACFEE9AFBAFB8 /* 4.6.Tab5.Settings */,
+				9029C357C5744FE32B5DC53B /* 4.MainTab */,
 				04D7D604EB22866F7C4E3075 /* Extra */,
 				856E1C5F3C35EF2169E97486 /* ScreenProtocols.swift */,
 			);
@@ -2092,14 +2090,14 @@
 			path = Headers;
 			sourceTree = "<group>";
 		};
-		9029C357C5744FE32B5DC53B /* 4.0.MainTab */ = {
+		9029C357C5744FE32B5DC53B /* 4.MainTab */ = {
 			isa = PBXGroup;
 			children = (
 				EF3B665E6A6763B08B05E8F4 /* AuxiliarViews */,
 				AECF8C56298298E0E92F6848 /* V.MainTabView.swift */,
 				83BBB138523E5439C65DD3C4 /* VM.MainTabViewModel.swift */,
 			);
-			path = 4.0.MainTab;
+			path = 4.MainTab;
 			sourceTree = "<group>";
 		};
 		91FFFA1FE08EA62BB4BDB7C9 /* 2.1.Models */ = {
@@ -2369,13 +2367,13 @@
 			path = Sources;
 			sourceTree = "<group>";
 		};
-		BAC8C4B382AE28F877FA199E /* 4.2.1.EventDetails */ = {
+		BAC8C4B382AE28F877FA199E /* EventDetails */ = {
 			isa = PBXGroup;
 			children = (
 				B2C9EA67EE98F36C9F7F7758 /* V.EventDetailsView.swift */,
 				95F69115ED41FE504ADB910A /* VM.EventDetailsViewModel.swift */,
 			);
-			path = 4.2.1.EventDetails;
+			path = EventDetails;
 			sourceTree = "<group>";
 		};
 		C014FAB63DCA7092EE1A5410 /* ColorsAndAppearance */ = {
@@ -2395,13 +2393,13 @@
 			path = Security;
 			sourceTree = "<group>";
 		};
-		C0E147B90F1C7A9E9DD57C5B /* 4.3.Tab3.EventsCalendar */ = {
+		C0E147B90F1C7A9E9DD57C5B /* Tab3.EventsCalendar */ = {
 			isa = PBXGroup;
 			children = (
 				01F20431FE0C8141141BBDA5 /* V.EventsCalendarView.swift */,
 				E1C71847B677D34BD8D4DAA3 /* VM.EventsCalendarViewModel.swift */,
 			);
-			path = 4.3.Tab3.EventsCalendar;
+			path = Tab3.EventsCalendar;
 			sourceTree = "<group>";
 		};
 		C19806AF2C106FA5BACD5D1D /* project_struct */ = {
@@ -2506,6 +2504,27 @@
 				168C14F2513585F25FAB0E2E /* XCTest.framework */,
 			);
 			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		D7235E572C8DC2AA008286D4 /* 5.Tabs */ = {
+			isa = PBXGroup;
+			children = (
+				E91A1357EFD799118C324989 /* Tab1.FavoriteEvents */,
+				4BFB34AE6AA1134B8A0C34DC /* Tab2.EventsList */,
+				C0E147B90F1C7A9E9DD57C5B /* Tab3.EventsCalendar */,
+				4750E0C4782A2438B75FF8F4 /* Tab4.EventsMap */,
+				EAAC2C315A8ACFEE9AFBAFB8 /* Tab5.Settings */,
+			);
+			path = 5.Tabs;
+			sourceTree = "<group>";
+		};
+		D7235E582C8DC2E9008286D4 /* 6.Details */ = {
+			isa = PBXGroup;
+			children = (
+				BAC8C4B382AE28F877FA199E /* EventDetails */,
+				556173198434960193F195C8 /* EventLogDetails */,
+			);
+			path = 6.Details;
 			sourceTree = "<group>";
 		};
 		DF3ECF5CA4ACC37BD930BE58 /* 3Party */ = {
@@ -2619,13 +2638,13 @@
 			path = ShowCaseViews;
 			sourceTree = "<group>";
 		};
-		E91A1357EFD799118C324989 /* 4.1.Tab1.FavoriteEvents */ = {
+		E91A1357EFD799118C324989 /* Tab1.FavoriteEvents */ = {
 			isa = PBXGroup;
 			children = (
 				54E831DB7A4454DCB4BF15DF /* V.FavoriteEventsView.swift */,
 				12D8A07B70675C7553E30F03 /* VM.FavoriteEventsViewModel.swift */,
 			);
-			path = 4.1.Tab1.FavoriteEvents;
+			path = Tab1.FavoriteEvents;
 			sourceTree = "<group>";
 		};
 		E96BBDE0DD0F6CE2F0056A46 /* Products */ = {
@@ -2643,13 +2662,13 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
-		EAAC2C315A8ACFEE9AFBAFB8 /* 4.6.Tab5.Settings */ = {
+		EAAC2C315A8ACFEE9AFBAFB8 /* Tab5.Settings */ = {
 			isa = PBXGroup;
 			children = (
 				122EAA22B9156942A742D3D3 /* V.SettingsScreen.swift */,
 				7C4EADFB7072201F42F36A0E /* VM.SettingsViewModel.swift */,
 			);
-			path = 4.6.Tab5.Settings;
+			path = Tab5.Settings;
 			sourceTree = "<group>";
 		};
 		EADED10549BEA86628B59784 /* Common */ = {
@@ -3039,6 +3058,9 @@
 				LastUpgradeCheck = 1540;
 				TargetAttributes = {
 					7FC1D4A9405E52C5CA9319C9 = {
+						TestTargetID = F7A7E879415146CCE92FA8DF;
+					};
+					ADF727D272C546FEA796F717 = {
 						TestTargetID = F7A7E879415146CCE92FA8DF;
 					};
 				};
@@ -3471,6 +3493,7 @@
 				0C40B5F362DC0D21AE65523F /* UITestingManager.swift in Sources */,
 				E4877B38E9317709D61C2B8E /* V.CounterView.swift in Sources */,
 				24460B2A25D97077FE06487A /* V.EventDetailsView.swift in Sources */,
+				D7235E5A2C8DC393008286D4 /* V.EditView.swift in Sources */,
 				4A68FF51F3C0825B5E81DF4D /* V.EventLogDetailsView.swift in Sources */,
 				520ECC92DB8ECFF3C6C3BFCE /* V.EventsCalendarView.swift in Sources */,
 				5BDD8D9759EEC9E17E2D479F /* V.EventsListView.swift in Sources */,
@@ -3968,7 +3991,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = hit.happens.app.id.UnitTests;
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/HitHappens.app/HitHappens";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/HitHappens.Dev.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/HitHappens.Dev";
 			};
 			name = "Production Debug";
 		};
@@ -3986,7 +4009,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = hit.happens.app.id.UnitTests;
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/HitHappens.app/HitHappens";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/HitHappens.Dev.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/HitHappens.Dev";
 			};
 			name = "QA Release";
 		};
@@ -4417,7 +4440,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = hit.happens.app.id.UnitTests;
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/HitHappens.app/HitHappens";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/HitHappens.Dev.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/HitHappens.Dev";
 			};
 			name = "Production Release";
 		};
@@ -4523,7 +4546,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = hit.happens.app.id.UnitTests;
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/HitHappens.app/HitHappens";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/HitHappens.Dev.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/HitHappens.Dev";
 			};
 			name = "Dev Debug";
 		};
@@ -4620,7 +4643,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = hit.happens.app.id.UnitTests;
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/HitHappens.app/HitHappens";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/HitHappens.Dev.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/HitHappens.Dev";
 			};
 			name = "Dev Release";
 		};
@@ -5111,7 +5134,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = hit.happens.app.id.UnitTests;
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/HitHappens.app/HitHappens";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/HitHappens.Dev.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/HitHappens.Dev";
 			};
 			name = "QA Debug";
 		};

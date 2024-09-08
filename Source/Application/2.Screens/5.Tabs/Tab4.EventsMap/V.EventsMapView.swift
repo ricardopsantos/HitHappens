@@ -149,7 +149,7 @@ struct EventsMapView: View, ViewProtocol {
                     .fontSemantic(.body)
                     .textColor(ColorSemantic.labelPrimary.color)
             } else {
-                Text("No events on region".localizedMissing)
+                Text("No \(AppConstants.entityNamePlural) on region".localizedMissing)
                     .fontSemantic(.body)
                     .textColor(ColorSemantic.labelPrimary.color)
             }

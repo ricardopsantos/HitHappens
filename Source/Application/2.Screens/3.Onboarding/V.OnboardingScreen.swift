@@ -80,23 +80,8 @@ struct OnboardingView: View {
     private let cancelBag: CancelBag = .init()
     @State private var selectedTab = 0
 
-    let images: [Image] = [
-        Image(.logo),
-        Image(.onboarding1),
-        Image(.onboarding2),
-        Image(.onboarding3),
-        Image(.onboarding4)
-    ]
-    let text: [String] = [
-        "Have you ever wondered how many times something happens on your life? Literally how many times...",
-        "Keep your favorite things to track in a handy place. Just tap the number and it will increase.",
-        "All the other tracked events exist organized by type and can have categories, sounds and more.",
-        "On the app calendar you can check whats been going on with the things you track.",
-        "And because some events can have a location associated, you can check them on the map!"
-    ]
-
     var buttonText: String {
-        selectedTab == (images.count - 1) ? "Get Started".localizedMissing : "Next".localizedMissing
+        selectedTab == (viewModel.onboardingModel.count - 1) ? "Get Started".localizedMissing : "Next".localizedMissing
     }
 
     // MARK: - Views
@@ -122,14 +107,18 @@ struct OnboardingView: View {
 
     var content: some View {
         VStack(spacing: 0) {
-            pageView
-            SwiftUIUtils.FixedVerticalSpacer(height: SizeNames.defaultMarginSmall)
-            TextButton(
-                onClick: onNextButtonPressed,
-                text: buttonText,
-                accessibility: .fwdButton
-            )
-        }
+            if !viewModel.loaded {
+                loadingView
+            } else {
+                pageView
+                SwiftUIUtils.FixedVerticalSpacer(height: SizeNames.defaultMarginSmall)
+                TextButton(
+                    onClick: onNextButtonPressed,
+                    text: buttonText,
+                    accessibility: .fwdButton
+                )
+            }
+        }.animation(.default, value: viewModel.loaded)
     }
 }
 
@@ -137,17 +126,22 @@ struct OnboardingView: View {
 // MARK: - Auxiliar Views
 //
 fileprivate extension OnboardingView {
+    var loadingView: some View {
+        EmptyView()
+    }
+
+    @ViewBuilder
     var pageView: some View {
         TabView(selection: $selectedTab) {
-            ForEach(0..<images.count, id: \.self) { index in
+            ForEach(viewModel.onboardingModel, id: \.self) { model in
                 VStack(spacing: 0) {
-                    images[index]
+                    Image(uiImage: model.image)
                         .resizable()
                         .cornerRadius(SizeNames.cornerRadius)
                         .scaledToFit()
                         .frame(width: screenWidth - 2 * SizeNames.defaultMargin)
                         .padding()
-                    Text(text[index])
+                    Text(model.text)
                         .textColor(ColorSemantic.labelPrimary.color)
                         .fontSemantic(.callout)
                     SwiftUIUtils.FixedVerticalSpacer(height: SizeNames.defaultMarginSmall)
@@ -167,10 +161,10 @@ fileprivate extension OnboardingView {
     private func onNextButtonPressed() {
         AnalyticsManager.shared.handleButtonClickEvent(
             buttonType: .primary,
-            label: selectedTab == (images.count - 1) ? "GetStarted" : "Next",
+            label: selectedTab == (viewModel.onboardingModel.count - 1) ? "GetStarted" : "Next",
             sender: "\(Self.self)"
         )
-        if selectedTab < (images.count - 1) {
+        if selectedTab < (viewModel.onboardingModel.count - 1) {
             withAnimation {
                 selectedTab += 1
             }

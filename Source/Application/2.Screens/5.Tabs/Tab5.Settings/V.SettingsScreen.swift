@@ -66,7 +66,7 @@ struct SettingsScreen: View, ViewProtocol {
     @State private var isShowingMailView = false
     @State private var showMailError = false
     @Environment(\.dismiss) var dismiss
-    @State private var selectedMode: Common.InterfaceStyle? = InterfaceStyleManager.current
+    @State private var selectedMode: Common.InterfaceStyle? = InterfaceStyleManager.selectedByUser
     private let cancelBag: CancelBag = .init()
     private let onShouldDisplayEditUserDetails: () -> Void
 
@@ -118,13 +118,13 @@ fileprivate extension SettingsScreen {
         let width = screenWidth * 0.5
         HStack {
             Spacer()
-            Image(.logo)
+            Image(.translucid874X837)
                 .resizable()
                 .scaledToFit()
                 .frame(width: width)
-                .opacity(0.0)
-                .cornerRadius2(width / 2)
-                .blur(radius: 1)
+                .opacity(0.1)
+            // .cornerRadius2(width / 2)
+            // .blur(radius: 1)
             Spacer()
         }
     }

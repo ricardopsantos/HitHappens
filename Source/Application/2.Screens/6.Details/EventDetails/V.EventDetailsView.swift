@@ -149,7 +149,11 @@ struct EventDetailsView: View, ViewProtocol {
                         SwiftUIUtils.FixedVerticalSpacer(height: SizeNames.defaultMarginSmall)
                         saveNewView
                     } else {
-                        editionActionsView
+                        EditView(
+                            onEdit: $onEdit,
+
+                            onConfirmEdit: onConfirmEdit,
+                            onCancelEdit: onCancelEdit)
                         Divider()
                         if !onEdit {
                             SwiftUIUtils.FixedVerticalSpacer(height: SizeNames.defaultMarginSmall)
@@ -187,7 +191,7 @@ fileprivate extension EventDetailsView {
         return .custom(onBackButtonTap: { onPerformRouteBack() }, title: title)
     }
 
-    func saveState() {
+    func onConfirmEdit() {
         /*    viewModel.send(.userDidChangedLocation(
              address: addressCopy,
              latitude: mapRegion?.center.latitude ?? 0,
@@ -196,7 +200,7 @@ fileprivate extension EventDetailsView {
          viewModel.send(.userDidChangedNote(value: noteCopy))*/
     }
 
-    func updateStateCopyWithViewModelCurrentState() {
+    func onCancelEdit() {
         /* if viewModel.eventDate != eventDateCopy {
              eventDateCopy = viewModel.eventDate
          }
@@ -213,63 +217,50 @@ fileprivate extension EventDetailsView {
 // MARK: - Auxiliar Views
 //
 fileprivate extension EventDetailsView {
-    @ViewBuilder
-    var editionActionsView: some View {
-        Group {
-            if onEdit {
-                Divider()
-                HStack(spacing: 0) {
-                    saveEditionChangesView
-                    Spacer()
-                    doEditionView
-                }
-            } else {
-                doEditionView
-            }
-            Divider()
-        }
-    }
+    /*
+     @ViewBuilder
+     var editionActionsView: some View {
+         Group {
+             if onEdit {
+                 Divider()
+                 HStack(spacing: 0) {
+                     saveEditionChangesView
+                     Spacer()
+                     doEditionView
+                 }
+             } else {
+                 doEditionView
+             }
+             Divider()
+         }
+     }
 
-    var doEditionView: some View {
-        TextButton(
-            onClick: {
-                onEdit.toggle()
-                updateStateCopyWithViewModelCurrentState()
-            },
-            text: !onEdit ? "Edit \(AppConstants.entityLogNameSingle.lowercased())".localizedMissing : "Cancel changes".localizedMissing,
-            style: .textOnly,
-            accessibility: .editButton)
-    }
+     var doEditionView: some View {
+         TextButton(
+             onClick: {
+                 onEdit.toggle()
+                 updateStateCopyWithViewModelCurrentState()
+             },
+             text: !onEdit ? "Edit details".localizedMissing : "Cancel".localizedMissing,
+             style: .textOnly,
+             accessibility: .editButton)
+     }
 
-    @ViewBuilder
-    var saveEditionChangesView: some View {
-        Group {
-            if onEdit {
-                TextButton(onClick: {
-                    saveState()
-                    onEdit.toggle()
-                }, text: "Save changes", style: .textOnly, accessibility: .editButton)
-            } else {
-                EmptyView()
-            }
-        }
-    }
+     @ViewBuilder
+     var saveEditionChangesView: some View {
+         Group {
+             if onEdit {
+                 TextButton(onClick: {
+                     saveState()
+                     onEdit.toggle()
+                 }, text: "Save changes", style: .textOnly, accessibility: .editButton)
+             } else {
+                 EmptyView()
+             }
+         }
+     }
 
-    var userMessageView: some View {
-        VStack(spacing: 0) {
-            Text(viewModel.userMessage.text)
-                .multilineTextAlignment(.center)
-                .textColor(viewModel.userMessage.color.color)
-                .fontSemantic(.body)
-                .shadow(radius: SizeNames.shadowRadiusRegular)
-                .animation(.linear(duration: Common.Constants.defaultAnimationsTime), value: viewModel.userMessage.text)
-                .onTapGesture {
-                    viewModel.userMessage.text = ""
-                }
-            Spacer()
-        }
-    }
-
+     */
     @ViewBuilder
     var detailsView: some View {
         HStack {
@@ -405,6 +396,7 @@ fileprivate extension EventDetailsView {
                     },
                     onTapGesture: {
                         viewModel.send(.addNewLog)
+                        model.sound.play()
                     })
             }
         } else {
@@ -474,6 +466,27 @@ fileprivate extension EventDetailsView {
             } else {
                 EmptyView()
             }
+        }
+    }
+}
+
+//
+// MARK: Confirmation Sheet View & UserMessage View
+//
+
+extension EventDetailsView {
+    var userMessageView: some View {
+        VStack(spacing: 0) {
+            Text(viewModel.userMessage.text)
+                .multilineTextAlignment(.center)
+                .textColor(viewModel.userMessage.color.color)
+                .fontSemantic(.body)
+                .shadow(radius: SizeNames.shadowRadiusRegular)
+                .animation(.linear(duration: Common.Constants.defaultAnimationsTime), value: viewModel.userMessage.text)
+                .onTapGesture {
+                    viewModel.userMessage.text = ""
+                }
+            Spacer()
         }
     }
 

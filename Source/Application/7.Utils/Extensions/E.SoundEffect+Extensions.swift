@@ -28,6 +28,7 @@ public extension SoundEffect {
                 DevTools.Log.error("Failed to set audio session category: \(error)", .generic)
             }
         }
+
         func playSound(_ sound: SoundEffect) {
             guard sound != .none else { return }
             guard let soundURL = Bundle.main.url(forResource: sound.rawValue, withExtension: nil) else {
