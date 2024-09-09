@@ -1,0 +1,16 @@
+/* 
+  Localizable.strings
+  HitHappens
+
+  Created by Ricardo Santos on 15/04/2024.
+
+ */
+
+"Login" = "Login";
+"Password" = "Password";
+
+"PleaseTryAgainLatter" = "Please try again latter";
+"NotInternetPleaseTryAgainLatter" = "No network connection. Please try again latter";
+"Loading" = "Loading";
+"Success" = "Success";
+"NoDataTryAgainLatter" = "No data. Please try again latter";

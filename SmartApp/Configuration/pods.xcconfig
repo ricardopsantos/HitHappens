@@ -1,7 +1,0 @@
-//
-// Configuration settings file format documentation can be found at:
-// https://help.apple.com/xcode/#/dev745c5c974
-//
-
-//CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = NO
-//FRAMEWORK_SEARCH_PATHS = $(inherited) "${PODS_CONFIGURATION_BUILD_DIR}/AFNetworking" "${PODS_CONFIGURATION_BUILD_DIR}/JSONModel" "${PODS_CONFIGURATION_BUILD_DIR}/ReactiveObjC" "${PODS_ROOT}/TspEdgeIOVSDK"
