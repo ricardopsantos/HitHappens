@@ -13,7 +13,7 @@ public extension ModelDto.AppConfigResponse {
         let jsonString = """
         {
           "hit_happens": {
-            "public_code_b64": "",
+            "public_code_url": "https://github.com/ricardopsantos/RJPS_AppsConfig/blob/main/HitHappens/PublicCode.md",
             "support_email_encrypted": "qxmbXiDuBh9gfJ8StXgyH0weyRMK5UbZ7IWGOAjvuCKbZtLLFlhggNo8xBWkwyq1jA==",
             "onboarding": {
                 "intro" : "Have you ever wondered how many times something happens on your life? Literally how many times...",

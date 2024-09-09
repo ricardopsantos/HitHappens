@@ -36,7 +36,7 @@ extension SettingsViewModel {
 
     struct Dependencies {
         let model: SettingsModel
-        let onShouldDisplayEditUserDetails: () -> Void
+        let onShouldDisplayPublicCode: (String) -> Void
         let appConfigService: AppConfigServiceProtocol
         let nonSecureAppPreferences: NonSecureAppPreferencesProtocol
     }
@@ -46,6 +46,7 @@ class SettingsViewModel: BaseViewModel {
     // MARK: - View Usage Attributes
     private var cancelBag = CancelBag()
     @Published var supportEmail: String = ""
+    @Published var publicCodeURL: String = ""
     private var nonSecureAppPreferences: NonSecureAppPreferencesProtocol?
     private var appConfigService: AppConfigServiceProtocol?
     public init(dependencies: Dependencies) {
@@ -61,8 +62,13 @@ class SettingsViewModel: BaseViewModel {
                 guard let self = self else { return }
                 loadingModel = .loading(message: "")
                 do {
-                    let appConfigService = try await appConfigService?.requestAppConfig(.init(), cachePolicy: .cacheElseLoad)
+                    let appConfigService = try await appConfigService?.requestAppConfig(
+                        .init(),
+
+                        cachePolicy: .load
+                    )
                     supportEmail = appConfigService?.hitHappens.supportEmailEncrypted.decrypted ?? ""
+                    publicCodeURL = appConfigService?.hitHappens.publicCodeURL ?? ""
                 } catch {
                     handle(error: error, sender: "\(action)")
                 }

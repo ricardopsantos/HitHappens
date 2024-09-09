@@ -83,9 +83,11 @@ public struct AppearancePickerView: View {
     }
 
     public var body: some View {
-        HStack {
+        VStack(alignment: .leading, spacing: 0) {
             Text("Appearance".localizedMissing)
-            Spacer()
+                .textColor(.labelPrimary)
+                .fontSemantic(.bodyBold)
+            SwiftUIUtils.FixedVerticalSpacer(height: SizeNames.defaultMarginSmall)
             Picker("Appearance".localizedMissing, selection: $selected) {
                 Text("System".localizedMissing).tag(Self.systemValue)
                 Text("Light".localizedMissing).tag(Common.InterfaceStyle.light.rawValue)

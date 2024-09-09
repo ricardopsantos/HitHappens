@@ -56,7 +56,10 @@ struct FavoriteEventsViewCoordinator: View, ViewCoordinatorProtocol {
             let dependencies: FavoriteEventsViewModel.Dependencies = .init(
                 model: .init(), onShouldDisplayTrackedLog: { trackerLog in
                     coordinator.coverLink = .eventLogDetails(model: .init(trackedLog: trackerLog))
-                }, onShouldDisplayNewTrackedEntity: {
+                }, onShouldDisplayTrackedEntity: { model in
+                    coordinator.coverLink = .eventDetails(model: .init(event: model))
+                },
+                onShouldDisplayNewTrackedEntity: {
                     coordinator.coverLink = .eventDetails(model: nil)
                 },
                 dataBaseRepository: configuration.dataBaseRepository)
@@ -89,10 +92,12 @@ struct FavoriteEventsView: View, ViewProtocol {
     @Environment(\.colorScheme) var colorScheme
     @StateObject var viewModel: FavoriteEventsViewModel
     let onShouldDisplayNewTrackedEntity: () -> Void
+    let onShouldDisplayTrackedEntity: (Model.TrackedEntity) -> Void
     public init(dependencies: FavoriteEventsViewModel.Dependencies) {
         DevTools.Log.debug(.viewInit("\(Self.self)"), .view)
         _viewModel = StateObject(wrappedValue: .init(dependencies: dependencies))
         self.onShouldDisplayNewTrackedEntity = dependencies.onShouldDisplayNewTrackedEntity
+        self.onShouldDisplayTrackedEntity = dependencies.onShouldDisplayTrackedEntity
     }
 
     // MARK: - Usage/Auxiliar Attributes
@@ -151,9 +156,11 @@ struct FavoriteEventsView: View, ViewProtocol {
                             onChange: { number in
                                 Common_Logs.debug(number)
                             },
-                            onTapGesture: {
+                            onDigitTapGesture: {
                                 model.sound.play()
                                 viewModel.send(.addNewEvent(trackedEntityId: model.id))
+                            }, onInfoTapGesture: { model in
+                                onShouldDisplayTrackedEntity(model)
                             })
                             .padding(.vertical, SizeNames.defaultMargin)
                     }

@@ -37,11 +37,18 @@ struct SettingsViewCoordinator: View, ViewCoordinatorProtocol {
         switch screen {
         case .settings:
             let dependencies: SettingsViewModel.Dependencies = .init(
-                model: .init(), onShouldDisplayEditUserDetails: {},
+                model: .init(), onShouldDisplayPublicCode: { url in
+                    coordinator.coverLink = .webView(model: .init(
+                        title: "Public Code".localizedMissing,
+                        url: url
+                    ))
+                },
                 appConfigService: configuration.appConfigService,
                 nonSecureAppPreferences: configuration.nonSecureAppPreferences
             )
             SettingsScreen(dependencies: dependencies)
+        case .webView(model: let model):
+            WebView(model: model)
         default:
             NotImplementedView(screen: screen)
         }
@@ -59,7 +66,7 @@ struct SettingsScreen: View, ViewProtocol {
     public init(dependencies: SettingsViewModel.Dependencies) {
         DevTools.Log.debug(.viewInit("\(Self.self)"), .view)
         _viewModel = StateObject(wrappedValue: .init(dependencies: dependencies))
-        self.onShouldDisplayEditUserDetails = dependencies.onShouldDisplayEditUserDetails
+        self.onShouldDisplayPublicCode = dependencies.onShouldDisplayPublicCode
     }
 
     // MARK: - Usage/Auxiliar Attributes
@@ -68,7 +75,7 @@ struct SettingsScreen: View, ViewProtocol {
     @Environment(\.dismiss) var dismiss
     @State private var selectedMode: Common.InterfaceStyle? = InterfaceStyleManager.selectedByUser
     private let cancelBag: CancelBag = .init()
-    private let onShouldDisplayEditUserDetails: () -> Void
+    private let onShouldDisplayPublicCode: (String) -> Void
 
     // MARK: - Body & View
     var body: some View {
@@ -93,16 +100,19 @@ struct SettingsScreen: View, ViewProtocol {
     var content: some View {
         VStack(spacing: 0) {
             Header(text: "Settings".localizedMissing)
-            SwiftUIUtils.FixedVerticalSpacer(height: SizeNames.defaultMargin)
+            SwiftUIUtils.FixedVerticalSpacer(height: SizeNames.defaultMargin * 2)
             AppearancePickerView(selected: $selectedMode)
-            SwiftUIUtils.FixedVerticalSpacer(height: SizeNames.defaultMargin)
             Spacer()
             logoView
             Spacer()
+            SwiftUIUtils.FixedVerticalSpacer(height: SizeNames.defaultMargin)
+            Divider()
+            SwiftUIUtils.FixedVerticalSpacer(height: SizeNames.defaultMarginSmall)
             contactSupportView
                 .animation(.default, value: viewModel.supportEmail)
-            onBoarding
-            SwiftUIUtils.FixedVerticalSpacer(height: SizeNames.defaultMargin)
+            publicCodeButtonView
+                .animation(.default, value: viewModel.publicCodeURL)
+            onBoardingButtonView
             versionView
             SwiftUIUtils.FixedVerticalSpacer(height: SizeNames.defaultMargin)
         }.paddingHorizontal(SizeNames.defaultMarginSmall)
@@ -123,8 +133,6 @@ fileprivate extension SettingsScreen {
                 .scaledToFit()
                 .frame(width: width)
                 .opacity(0.1)
-            // .cornerRadius2(width / 2)
-            // .blur(radius: 1)
             Spacer()
         }
     }
@@ -135,15 +143,39 @@ fileprivate extension SettingsScreen {
             .foregroundColorSemantic(.labelPrimary)
     }
 
-    var onBoarding: some View {
-        TextButton(
-            onClick: {
-                viewModel.send(action: .shouldDisplayOnboarding)
-            },
-            text: "See Onboarding".localizedMissing,
-            style: .textOnly,
-            accessibility: .undefined
-        )
+    @ViewBuilder
+    var publicCodeButtonView: some View {
+        if !viewModel.publicCodeURL.isEmpty {
+            TextButton(
+                onClick: {
+                    onShouldDisplayPublicCode(viewModel.publicCodeURL)
+                },
+                text: "Public Code".localizedMissing,
+                style: .textOnly,
+                accessibility: .undefined
+            )
+            SwiftUIUtils.FixedVerticalSpacer(height: SizeNames.defaultMarginSmall)
+            Divider()
+            SwiftUIUtils.FixedVerticalSpacer(height: SizeNames.defaultMarginSmall)
+        } else {
+            EmptyView()
+        }
+    }
+
+    var onBoardingButtonView: some View {
+        Group {
+            TextButton(
+                onClick: {
+                    viewModel.send(action: .shouldDisplayOnboarding)
+                },
+                text: "See Onboarding".localizedMissing,
+                style: .textOnly,
+                accessibility: .undefined
+            )
+            SwiftUIUtils.FixedVerticalSpacer(height: SizeNames.defaultMarginSmall)
+            Divider()
+            SwiftUIUtils.FixedVerticalSpacer(height: SizeNames.defaultMarginSmall)
+        }
     }
 
     @ViewBuilder
@@ -175,6 +207,9 @@ fileprivate extension SettingsScreen {
                     messageBody: "Hello, I need help with...".localizedMissing
                 )
             }
+            SwiftUIUtils.FixedVerticalSpacer(height: SizeNames.defaultMarginSmall)
+            Divider()
+            SwiftUIUtils.FixedVerticalSpacer(height: SizeNames.defaultMarginSmall)
         } else {
             EmptyView()
         }
@@ -194,6 +229,6 @@ fileprivate extension SettingsScreen {}
 @available(iOS 17, *)
 #Preview {
     SettingsViewCoordinator()
-        .environmentObject(ConfigurationViewModel.defaultForPreviews)
+        .environmentObject(ConfigurationViewModel.defaultForApp)
 }
 #endif

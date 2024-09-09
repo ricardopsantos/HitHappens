@@ -67,7 +67,7 @@ class OnboardingViewModel: BaseViewModel {
                 do {
                     if let appConfigService = try await appConfigService?.requestAppConfig(
                         .init(),
-                        cachePolicy: .load
+                        cachePolicy: .cacheElseLoad
                     ) {
                         handle(config: appConfigService)
                     } else {
@@ -96,21 +96,31 @@ fileprivate extension OnboardingViewModel {
         let intro = config.hitHappens.onboarding.intro
         let pages = config.hitHappens.onboarding.pages.count
         let imagesLightURL = config.hitHappens.onboarding.pages
-            .sorted(by: { $0.order > $1.order })
             .map(\.imageLight)
+        let imagesDarkURL = config.hitHappens.onboarding.pages
+            .map(\.imageDark)
         var onboardingModelAcc: [OnboardingModel] = []
-        imagesLightURL.forEach { url in
+        var imagesURL: [String] = []
+        switch InterfaceStyleManager.appInterfaceStyle {
+        case .light: imagesURL = imagesLightURL
+        case .dark: imagesURL = imagesDarkURL
+        }
+        imagesURL.forEach { url in
             CommonNetworking.ImageUtils.imageFrom(
                 url: URL(string: url),
                 caching: .none,
                 downsample: .zero
             ) { [weak self] image, url in
                 if let image = image,
-                   let page = config.hitHappens.onboarding.pages.filter({ $0.imageLight == url }).first {
+                   let page = config.hitHappens.onboarding.pages
+                   .filter({ $0.imageLight == url || $0.imageDark == url })
+                   .first {
                     onboardingModelAcc.append(.init(text: page.text, image: image, order: page.order))
                     if onboardingModelAcc.count == pages {
-                        let intro: OnboardingModel = .init(text: intro,
-                                                           image: UIImage(named: "logo")!)
+                        let intro: OnboardingModel = .init(
+                            text: intro,
+                            image: UIImage(named: "logo")!
+                        )
                         self?.onboardingModel = [intro] + onboardingModelAcc.sorted(by: { $0.order < $1.order })
                         self?.loadingModel = .notLoading
                         self?.loaded = true

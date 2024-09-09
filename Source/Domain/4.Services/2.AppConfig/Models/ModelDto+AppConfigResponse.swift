@@ -29,11 +29,11 @@ public extension ModelDto.AppConfigResponse {
     struct HitHappens: ModelDtoProtocol {
         public let onboarding: Onboarding
         public let supportEmailEncrypted: String
-        public let publicCodeB64: String
+        public let publicCodeURL: String
         enum CodingKeys: String, CodingKey {
             case onboarding
             case supportEmailEncrypted = "support_email_encrypted"
-            case publicCodeB64 = "public_code_b64"
+            case publicCodeURL = "public_code_url"
         }
 
         // MARK: - Onboarding

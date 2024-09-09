@@ -26,7 +26,7 @@ extension AppConfigService: AppConfigServiceProtocol {
         let cacheParams: [any Hashable] = [request.param]
         let responseType = ModelDto.AppConfigResponse.self
 
-        if let cached = await cacheManager.aSyncRetrieve(responseType, key: cacheKey, params: cacheParams), cachePolicy == .cacheElseLoad {
+        if cachePolicy == .cacheElseLoad, let cached = await cacheManager.aSyncRetrieve(responseType, key: cacheKey, params: cacheParams) {
             DevTools.Log.debug(.log("Returned cache for \(#function)"), .business)
             return cached.model
         }

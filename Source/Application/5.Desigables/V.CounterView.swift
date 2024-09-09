@@ -17,7 +17,7 @@ struct DigitTransitionView: View {
     @State private var timer: Timer?
     @Binding private var digit: Int
     private let animated: Bool = Common_Utils.true
-    private let onTapGesture: () -> Void
+    private let onDigitTapGesture: () -> Void
     private var images: [String] {
         let number = $digit.wrappedValue
         return [
@@ -29,8 +29,8 @@ struct DigitTransitionView: View {
         ]
     }
 
-    public init(digit: Binding<Int>, onTapGesture: @escaping () -> Void) {
-        self.onTapGesture = onTapGesture
+    public init(digit: Binding<Int>, onDigitTapGesture: @escaping () -> Void) {
+        self.onDigitTapGesture = onDigitTapGesture
         if animated {
             self._digit = digit
             self.imageName = "\(digit.wrappedValue)00"
@@ -58,7 +58,7 @@ struct DigitTransitionView: View {
                     imageName = "\($digit.wrappedValue)00"
                 }
             }.onTapGesture {
-                onTapGesture()
+                onDigitTapGesture()
             }
     }
 
@@ -86,14 +86,14 @@ struct NumberTransitionView: View {
     @Binding private var digitIndex0: Int
     @Binding private var digitIndex1: Int
     @Binding private var digitIndex2: Int
-    private let onTapGesture: () -> Void
+    private let onDigitTapGesture: () -> Void
     public init(
         digitIndex0: Binding<Int>,
         digitIndex1: Binding<Int>,
         digitIndex2: Binding<Int>,
-        onTapGesture: @escaping () -> Void
+        onDigitTapGesture: @escaping () -> Void
     ) {
-        self.onTapGesture = onTapGesture
+        self.onDigitTapGesture = onDigitTapGesture
         self._digitIndex0 = digitIndex0
         self._digitIndex1 = digitIndex1
         self._digitIndex2 = digitIndex2
@@ -101,9 +101,9 @@ struct NumberTransitionView: View {
 
     var body: some View {
         HStack(spacing: 0) {
-            DigitTransitionView(digit: $digitIndex0, onTapGesture: onTapGesture)
-            DigitTransitionView(digit: $digitIndex1, onTapGesture: onTapGesture)
-            DigitTransitionView(digit: $digitIndex2, onTapGesture: onTapGesture)
+            DigitTransitionView(digit: $digitIndex0, onDigitTapGesture: onDigitTapGesture)
+            DigitTransitionView(digit: $digitIndex1, onDigitTapGesture: onDigitTapGesture)
+            DigitTransitionView(digit: $digitIndex2, onDigitTapGesture: onDigitTapGesture)
         }
     }
 }
@@ -121,18 +121,22 @@ struct CounterView: View {
     @State private var digitIndex1: Int
     @State private var digitIndex2: Int
     private let onChange: (Int) -> Void
-    private let onTapGesture: () -> Void
+    private let onDigitTapGesture: () -> Void
+    private let onInfoTapGesture: (Model.TrackedEntity) -> Void
     private let info: String
     private let name: String
     private let id: String
     private let minimalDisplay: Bool
+    private let model: Model.TrackedEntity
     init(
         model: Model.TrackedEntity,
         minimalDisplay: Bool,
         onChange: @escaping (Int) -> Void,
-        onTapGesture: @escaping () -> Void
+        onDigitTapGesture: @escaping () -> Void,
+        onInfoTapGesture: @escaping (Model.TrackedEntity) -> Void
     ) {
         let counter = model.cascadeEvents?.count ?? 0
+        self.model = model
         self.minimalDisplay = minimalDisplay
         self.id = model.id
         self.name = model.name
@@ -142,7 +146,8 @@ struct CounterView: View {
         self.digitIndex1 = Self.digitsArray(number: counter)[1]
         self.digitIndex2 = Self.digitsArray(number: counter)[2]
         self.onChange = onChange
-        self.onTapGesture = onTapGesture
+        self.onDigitTapGesture = onDigitTapGesture
+        self.onInfoTapGesture = onInfoTapGesture
     }
 
     public var body: some View {
@@ -156,7 +161,7 @@ struct CounterView: View {
                 digitIndex0: $digitIndex0,
                 digitIndex1: $digitIndex1,
                 digitIndex2: $digitIndex2,
-                onTapGesture: onTapGesture
+                onDigitTapGesture: onDigitTapGesture
             )
             .onChange(of: number) { _ in
                 digitIndex0 = Self.digitsArray(number: number)[0]
@@ -170,6 +175,9 @@ struct CounterView: View {
                     .textColor(ColorSemantic.labelPrimary.color)
                     .lineLimit(2)
                     .multilineTextAlignment(.center)
+                    .onTapGesture {
+                        onInfoTapGesture(model)
+                    }
             }
             if !minimalDisplay, !info.isEmpty {
                 Text("(" + info + ")")
@@ -177,6 +185,9 @@ struct CounterView: View {
                     .textColor(ColorSemantic.labelSecondary.color)
                     .lineLimit(2)
                     .multilineTextAlignment(.center)
+                    .onTapGesture {
+                        onInfoTapGesture(model)
+                    }
             }
         }
     }
@@ -195,7 +206,7 @@ struct ContentView_Previews: PreviewProvider {
                 onChange: { number in
                     Common_Logs.debug(number)
                 },
-                onTapGesture: {}
+                onDigitTapGesture: {}, onInfoTapGesture: { _ in }
             )
             CounterView(
                 model: .random(cascadeEvents: [.random, .random, .random]),
@@ -203,7 +214,7 @@ struct ContentView_Previews: PreviewProvider {
                 onChange: { number in
                     Common_Logs.debug(number)
                 },
-                onTapGesture: {}
+                onDigitTapGesture: {}, onInfoTapGesture: { _ in }
             )
         }
     }

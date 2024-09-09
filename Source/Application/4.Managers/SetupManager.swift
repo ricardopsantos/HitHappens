@@ -25,7 +25,10 @@ public class SetupManager {
         CPPWrapper.disable_gdb() // Security: Detach debugger for real device
         CPPWrapper.crash_if_debugged() // Security: Crash app if debugger Detach failed
         DevTools.Log.setup()
-        UITestingManager.setup()
+        if numberOfLogins == 1 {
+            // First login
+            dataBaseRepository.initDataBase()
+        }
         #if FIREBASE_ENABLED
         if FirebaseApp.configIsValidAndAvailable {
             FirebaseApp.configure()
@@ -41,9 +44,6 @@ public class SetupManager {
             UserDefaults.standard.set(false, forKey: "com.apple.CoreData.ConcurrencyDebug")
             UserDefaults.standard.set(0, forKey: "com.apple.CoreData.SQLDebug")
         }
-        if numberOfLogins == 1 {
-            // First login
-            dataBaseRepository.initDataBase()
-        }
+        UITestingManager.setup()
     }
 }

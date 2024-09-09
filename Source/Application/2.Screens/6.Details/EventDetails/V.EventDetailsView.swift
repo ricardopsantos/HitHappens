@@ -277,7 +277,7 @@ fileprivate extension EventDetailsView {
                     title: "Name".localizedMissing,
                     placeholder: "Name".localizedMissing,
                     inputText: $viewModel.name,
-                    accessibility: .undefined) { newValue in
+                    accessibility: .txtName) { newValue in
                         viewModel.send(.userDidChangedName(value: newValue))
                     }
             } else {
@@ -394,9 +394,11 @@ fileprivate extension EventDetailsView {
                     onChange: { number in
                         Common_Logs.debug(number)
                     },
-                    onTapGesture: {
+                    onDigitTapGesture: {
                         viewModel.send(.addNewLog)
                         model.sound.play()
+                    }, onInfoTapGesture: { _ in
+
                     })
             }
         } else {
@@ -433,7 +435,7 @@ fileprivate extension EventDetailsView {
                 alignment: .center,
                 style: .secondary,
                 background: .danger,
-                accessibility: .undefined)
+                accessibility: .deleteButton)
         }
         .paddingRight(SizeNames.size_1.cgFloat)
         .paddingLeft(SizeNames.size_1.cgFloat)

@@ -58,4 +58,14 @@ extension ConfigurationViewModel {
             secureAppPreferences: DependenciesManager.Repository.secureAppPreferences
         )
     }
+
+    static var defaultForApp: ConfigurationViewModel {
+        ConfigurationViewModel(
+            sampleService: DependenciesManager.Services.sampleService,
+            appConfigService: DependenciesManager.Services.appConfigService,
+            dataBaseRepository: DependenciesManager.Repository.dataBaseRepository,
+            nonSecureAppPreferences: DependenciesManager.Repository.nonSecureAppPreferences,
+            secureAppPreferences: DependenciesManager.Repository.secureAppPreferences
+        )
+    }
 }

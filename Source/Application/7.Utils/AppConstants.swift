@@ -11,8 +11,8 @@ import DevTools
 public enum AppConstants {
     static let entityNameSingle = "Tracker"
     static let entityNamePlural = "\(entityNameSingle)(s)"
-    static let entityLogNameSingle = "Event"
-    static let entityOccurrenceNamePlural = "\(entityLogNameSingle)(s)"
+    static let entityOccurrenceSingle = "Event"
+    static let entityOccurrenceNamePlural = "\(entityOccurrenceSingle)(s)"
 
     // static let entityNameSingle = "AAAAA"
     // static let entityNamePlural = "\(entityNameSingle)s"

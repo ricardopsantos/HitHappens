@@ -28,7 +28,7 @@ public extension Common.InternalUserDefaults {
 
 public extension Common {
     enum Storage {
-        static func cleanAll() {
+        public static func cleanAll() {
             CommonNetworking.ImageUtils.cleanCache()
             CronometerAverageMetrics.shared.clear()
             Common.LocationUtils.clear()

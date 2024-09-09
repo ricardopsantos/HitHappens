@@ -25,6 +25,7 @@ public enum AppScreen: Hashable, Identifiable, Sendable {
     case eventsList
     case eventDetails(model: EventDetailsModel?)
     case eventLogDetails(model: EventLogDetailsModel)
+    case webView(model: WebViewModel)
     //
     case templateWith(model: ___Template___Model)
     // Template App

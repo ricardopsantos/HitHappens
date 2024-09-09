@@ -126,33 +126,32 @@ struct OnboardingView: View {
 // MARK: - Auxiliar Views
 //
 fileprivate extension OnboardingView {
-
     var pageView: some View {
-         TabView(selection: $selectedTab) {
-             ForEach(0..<viewModel.onboardingModel.count, id: \.self) { index in
-                 VStack(spacing: 0) {
-                     if let uiImage = viewModel.onboardingModel.safeItem(at: index)?.image {
-                         Image(uiImage: uiImage)
-                             .resizable()
-                             .cornerRadius(SizeNames.cornerRadius)
-                             .scaledToFit()
-                             .frame(width: screenWidth - 2 * SizeNames.defaultMargin)
-                             .padding()
-                     }
-                     if let text = viewModel.onboardingModel.safeItem(at: index)?.text {
-                         Text(text)
-                             .textColor(ColorSemantic.labelPrimary.color)
-                             .fontSemantic(.callout)
-                     }
+        TabView(selection: $selectedTab) {
+            ForEach(0..<viewModel.onboardingModel.count, id: \.self) { index in
+                VStack(spacing: 0) {
+                    if let uiImage = viewModel.onboardingModel.safeItem(at: index)?.image {
+                        Image(uiImage: uiImage)
+                            .resizable()
+                            .cornerRadius(SizeNames.cornerRadius)
+                            .scaledToFit()
+                            .frame(width: screenWidth - 2 * SizeNames.defaultMargin)
+                            .padding()
+                    }
+                    if let text = viewModel.onboardingModel.safeItem(at: index)?.text {
+                        Text(text)
+                            .textColor(ColorSemantic.labelPrimary.color)
+                            .fontSemantic(.callout)
+                    }
 
-                     SwiftUIUtils.FixedVerticalSpacer(height: SizeNames.defaultMarginSmall)
-                     Divider()
-                     SwiftUIUtils.FixedVerticalSpacer(height: SizeNames.defaultMarginSmall)
-                 }
-             }
-         }
-         .tabViewStyle(PageTabViewStyle(indexDisplayMode: .never))
-     }
+                    SwiftUIUtils.FixedVerticalSpacer(height: SizeNames.defaultMarginSmall)
+                    Divider()
+                    SwiftUIUtils.FixedVerticalSpacer(height: SizeNames.defaultMarginSmall)
+                }
+            }
+        }
+        .tabViewStyle(PageTabViewStyle(indexDisplayMode: .never))
+    }
 }
 
 //

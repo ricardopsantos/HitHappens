@@ -42,7 +42,7 @@ extension EventLogDetailsViewModel {
         var subTitle: String {
             switch self {
             case .delete:
-                "Are you sure you want to delete \(AppConstants.entityLogNameSingle.lowercased())?".localizedMissing
+                "Are you sure you want to delete \(AppConstants.entityOccurrenceSingle.lowercased())?".localizedMissing
             }
         }
     }

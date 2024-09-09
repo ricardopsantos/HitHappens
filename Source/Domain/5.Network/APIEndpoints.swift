@@ -6,11 +6,11 @@
 //
 import Common
 
-enum APIEndpoints {
+public enum APIEndpoints {
     case getAppConfiguration(_ request: ModelDto.AppConfigRequest)
 }
 
-extension APIEndpoints {
+public extension APIEndpoints {
     /// Sugar name used on chronometer
     var name: String {
         switch self {

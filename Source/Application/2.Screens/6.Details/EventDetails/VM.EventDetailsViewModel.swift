@@ -389,7 +389,7 @@ fileprivate extension EventDetailsViewModel {
                                 self?.alertModel = .init(
                                     type: .success,
                                     location: .bottom,
-                                    message: "\(AppConstants.entityLogNameSingle) tracked!\nTap for edit/add details.",
+                                    message: "\(AppConstants.entityOccurrenceSingle) tracked!\nTap for edit/add details.",
                                     onUserTapGesture: { [weak self] in
                                         self?.onShouldDisplayTrackedLog(trackedEntity)
                                     })

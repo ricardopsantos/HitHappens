@@ -8,13 +8,14 @@ import UIKit
 //
 import Common
 import Core
+import Domain
 
 public extension UITestingManager {
     enum Options: String {
         case onUITesting
         case shouldDisableAnimations
-        case shouldResetAllPreferences
-        case isAuthenticated
+        case shouldResetAllContent
+        case isOnboardingCompleted
         case firebaseDisabled
 
         var enabled: Bool {
@@ -47,13 +48,16 @@ public enum UITestingManager {
             UIView.setAnimationsEnabled(false)
         }
 
-        if enabled(option: .shouldResetAllPreferences) {
+        if enabled(option: .shouldResetAllContent) {
             DependenciesManager.Repository.nonSecureAppPreferences.deleteAll()
             DependenciesManager.Repository.secureAppPreferences.deleteAll()
+            DependenciesManager.Repository.dataBaseRepository.trackedEntityDeleteAll()
+            DependenciesManager.Repository.dataBaseRepository.initDataBase()
+            Common.Storage.cleanAll()
             UserDefaults.resetStandardUserDefaults()
         }
 
-        if enabled(option: .isAuthenticated) {
+        if enabled(option: .isOnboardingCompleted) {
             var nonSecureAppPreferences = DependenciesManager.Repository.nonSecureAppPreferences
             nonSecureAppPreferences.isOnboardingCompleted = true
         }

@@ -38,6 +38,7 @@ extension FavoriteEventsViewModel {
     struct Dependencies {
         let model: FavoriteEventsModel
         let onShouldDisplayTrackedLog: (Model.TrackedLog) -> Void
+        let onShouldDisplayTrackedEntity: (Model.TrackedEntity) -> Void
         let onShouldDisplayNewTrackedEntity: () -> Void
         let dataBaseRepository: DataBaseRepositoryProtocol
     }
@@ -127,7 +128,7 @@ fileprivate extension FavoriteEventsViewModel {
                                 self?.alertModel = .init(
                                     type: .success,
                                     location: .bottom,
-                                    message: "\(AppConstants.entityLogNameSingle) tracked!\n\n(Tap here to edit/add details.)",
+                                    message: "\(AppConstants.entityOccurrenceSingle) tracked!\n\n(Tap here to edit/add details.)",
                                     onUserTapGesture: { [weak self] in
                                         self?.onShouldDisplayTrackedLog(trackedEntity)
                                     })

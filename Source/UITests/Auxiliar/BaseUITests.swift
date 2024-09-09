@@ -32,53 +32,25 @@ class BaseUITests: XCTestCase {
 }
 
 extension BaseUITests {
-    // Will fill user email and password.
-    // User needs to be unauthenticated
-    func auxiliar_performLogin() {
-        exists(staticText: "Welcome", on: app)
-        tap(
-            textField: Accessibility.txtEmail.identifier,
-            andType: "mail@gmail.com",
-            dismissKeyboard: false,
-            on: app
-        )
-        tap(
-            secureTextField: Accessibility.txtPassword.identifier,
-            andType: "123",
-            dismissKeyboard: false,
-            on: app
-        )
-        tap(button: Accessibility.loginButton.identifier, on: app)
-    }
-
     // Will perform the onboarding flow.
     // User needs to authenticated, and on the correct flow
-    func auxiliar_performOnBoarding() {
-        //
-        // User details screen
-        //
-        exists(staticText: "UserDetails", on: app)
-        tap(
-            textField: Accessibility.txtName.identifier,
-            andType: "Testing Joe",
-            dismissKeyboard: false,
-            on: app
-        )
-        tap(
-            button: Accessibility.fwdButton.identifier,
-            andWaitForStaticText: "Terms & Conditions",
-            on: app
-        )
-        //
-        // Terms and Conditions screen
-        //
-        tap(button: Accessibility.readTermsAndConditions.identifier, on: app)
-        tap(button: Accessibility.fwdButton.identifier, andWaitForStaticText: "Onboarding", on: app)
 
+    func tapCounterWith(number: Int) {
+        if number < 10 {
+            app.scrollViews.otherElements.images["\(number)00"].tap()
+        } else {
+            app.scrollViews.otherElements.images["\(number)0"].tap()
+        }
+    }
+
+    func auxiliar_performOnBoarding() {
         //
         // Onboarding screen
         //
-        tap(button: Accessibility.fwdButton.identifier, on: app) // Second
-        tap(button: Accessibility.fwdButton.identifier, andWaitForStaticText: Constants.tab1ListItem1, on: app) // Third
+        tap(button: Accessibility.fwdButton.identifier, on: app) // 2º page
+        tap(button: Accessibility.fwdButton.identifier, on: app) // 3º page
+        tap(button: Accessibility.fwdButton.identifier, on: app) // 4º page
+        tap(button: Accessibility.fwdButton.identifier, on: app) // 5º page
+        tap(button: Accessibility.fwdButton.identifier, andWaitForStaticText: Constants.tab1Title, on: app)
     }
 }

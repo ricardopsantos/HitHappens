@@ -32,16 +32,12 @@ final class ApplicationLaunchPerformanceTests: BaseUITests {
 
     override func tearDownWithError() throws {}
 
-    //
-    // MARK: - testAxxx : Splash Screen
-    //
-
     func testA1_launch() {
         guard enabled else {
             XCTAssert(true)
             return
         }
-        // Duration (AppLaunch): 1.093 s
+        // Duration (AppLaunch): 1.445 s
         measure(metrics: [XCTApplicationLaunchMetric()]) {
             XCUIApplication().launch()
         }

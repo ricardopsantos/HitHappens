@@ -102,7 +102,7 @@ struct EventLogDetailsView: View, ViewProtocol {
             appScreen: .eventLogDetails(model: .init(trackedLog: .random)),
             navigationViewModel: .custom(onBackButtonTap: {
                 onPerformRouteBack()
-            }, title: "\(AppConstants.entityLogNameSingle) details".localizedMissing),
+            }, title: "\(AppConstants.entityOccurrenceSingle) details".localizedMissing),
             ignoresSafeArea: false,
             background: .defaultBackground,
             loadingModel: viewModel.loadingModel,
@@ -207,7 +207,7 @@ extension EventLogDetailsView {
 extension EventLogDetailsView {
     @ViewBuilder
     var headerView: some View {
-        Header(text: "\(AppConstants.entityLogNameSingle) details".localizedMissing, hasCloseButton: true) {
+        Header(text: "\(AppConstants.entityOccurrenceSingle) details".localizedMissing, hasCloseButton: true) {
             dismiss()
         }
         SwiftUIUtils.FixedVerticalSpacer(height: SizeNames.defaultMarginSmall)
@@ -338,11 +338,11 @@ extension EventLogDetailsView {
                             sender: "\(Self.self)")
                         viewModel.send(.delete(confirmed: false))
                     },
-                    text: "Delete \(AppConstants.entityLogNameSingle.lowercased())".localizedMissing,
+                    text: "Delete \(AppConstants.entityOccurrenceSingle.lowercased())".localizedMissing,
                     alignment: .center,
                     style: .secondary,
                     background: .danger,
-                    accessibility: .undefined)
+                    accessibility: .deleteButton)
             } else {
                 EmptyView()
             }

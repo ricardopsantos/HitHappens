@@ -106,6 +106,7 @@ struct EventsMapView: View, ViewProtocol {
     @ViewBuilder
     var content: some View {
         ScrollView {
+            Header(text: "\(AppConstants.entityOccurrenceNamePlural) by region".localizedMissing)
             LazyVStack(spacing: 0) {
                 GenericMapView(
                     items: $viewModel.mapItems,
@@ -115,15 +116,27 @@ struct EventsMapView: View, ViewProtocol {
                     })
                     .frame(height: screenSize.width - 2 * SizeNames.defaultMarginSmall)
                 Divider().padding(.vertical, SizeNames.defaultMarginSmall)
-                listTitle
-                SwiftUIUtils.FixedVerticalSpacer(height: SizeNames.defaultMarginSmall)
                 listView
             }
         }
     }
+}
 
+//
+// MARK: - Auxiliar Views
+//
+extension EventsMapView {
     var listView: some View {
         Group {
+            if let logs = viewModel.logs, !logs.isEmpty {
+                Text("\(logs.count) event(s) on region")
+                    .fontSemantic(.body)
+                    .textColor(ColorSemantic.labelPrimary.color)
+            } else {
+                Text("No \(AppConstants.entityNamePlural) on region".localizedMissing)
+                    .fontSemantic(.body)
+                    .textColor(ColorSemantic.labelPrimary.color)
+            }
             if let logs = viewModel.logs, !logs.isEmpty {
                 LazyVStack {
                     ForEach(logs, id: \.self) { model in
@@ -138,20 +151,6 @@ struct EventsMapView: View, ViewProtocol {
                 }
             } else {
                 EmptyView()
-            }
-        }
-    }
-
-    var listTitle: some View {
-        Group {
-            if let logs = viewModel.logs, !logs.isEmpty {
-                Text("\(logs.count) event(s) on region")
-                    .fontSemantic(.body)
-                    .textColor(ColorSemantic.labelPrimary.color)
-            } else {
-                Text("No \(AppConstants.entityNamePlural) on region".localizedMissing)
-                    .fontSemantic(.body)
-                    .textColor(ColorSemantic.labelPrimary.color)
             }
         }
     }
