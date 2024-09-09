@@ -8,10 +8,6 @@
    </a>
 </p>
 
-# Abstract
-
-SmartApp is a __template iOS__ application built with __SwiftUI__ using __MVVM__ and inspired by [iOSKickstart: Create iOS App Boilerplate in Just 20 Seconds](https://medium.com/shuru-tech/ioskickstart-create-ios-app-boilerplate-in-just-20-seconds-b793ed911705) and the navigation was inspired by [Modular Navigation in SwiftUI: A Comprehensive Guide](https://medium.com/gitconnected/modular-navigation-in-swiftui-a-comprehensive-guide-5eeb8a511583).
-
 # Index
 
 * __About__: _Into_ | _Architecture Overview_ | _Additional Modules_ | _Dependencies Manager_ 
@@ -23,15 +19,16 @@ SmartApp is a __template iOS__ application built with __SwiftUI__ using __MVVM__
 
 ## Intro 
 
-SmartApp is a __template iOS__ application built with __SwiftUI__ using __MVVM__, and was mainly designed to serve as a template while integrating various frameworks and features in a well-organized structure with support for __Unit Testing__, __UI Testing__. Also makes use of other tools like __[XcodeGen](https://github.com/yonaskolb/XcodeGen)__, __[SwiftLint](https://github.com/realm/SwiftLint)__ and __[SwiftFormat](https://github.com/nicklockwood/SwiftFormat)__
+_Hit Happens_ is an application built with __SwiftUI__ using __MVVM__, and was mainly designed to serve as a template while integrating various frameworks and features in a well-organized structure with support for __Unit Testing__, __UI Testing__. Also makes use of other tools like __[XcodeGen](https://github.com/yonaskolb/XcodeGen)__, __[SwiftLint](https://github.com/realm/SwiftLint)__ and __[SwiftFormat](https://github.com/nicklockwood/SwiftFormat)__
 
 __SwiftUI__ because is Apple's current standart and offers several advantages like including a declarative syntax that simplifies UI design, real-time previews for faster iteration, and seamless integration with Swift for a unified coding experience while also enabling cross-platform development with a single codebase, significantly reducing development time and effort.
 
 __MVVM__ (Model-View-ViewModel) because separates concerns by dividing code into _Model_, _View_, and _ViewModel_, making maintenance easier. Also improves testability by isolating the _ViewModel_ for _unit tests_, enhancing code reliability. It also boosts reusability, allowing _ViewModels_ and _Views_ to be used across different contexts. Additionally, _MVVM_ simplifies data binding, integrating smoothly with _SwiftUI_ and _Combine_ for reactive and responsive user interfaces.
 
+Navigation was inspired by [Modular Navigation in SwiftUI: A Comprehensive Guide](https://medium.com/gitconnected/modular-navigation-in-swiftui-a-comprehensive-guide-5eeb8a511583).
 
 <center>
-<img src=SmartApp/_Documents/Graph_prety.viz width=800/>
+<img src=Source/_Documents/Graph_prety.viz.png width=800/>
 </center>
 
 
@@ -39,7 +36,7 @@ __MVVM__ (Model-View-ViewModel) because separates concerns by dividing code into
 
 The app is built using _Clean Architecture_ principles and separation of concerns, ensuring a maintainable and scalable codebase. It leverages dependency injection and interfaces for easy testing and seamless implementation changes.
 
-* __SmartApp:__ The main application containing _Views_, _ViewModels_, _Managers_ (e.g., Analytics), _Assets_, and handling the app's life cycle.
+* __Hit Happens:__ The main application containing _Views_, _ViewModels_, _Managers_ (e.g., Analytics), _Assets_, and handling the app's life cycle.
 
 * __Domain:__ Defines the app's _Models_ and _Interfaces_.
 
@@ -62,10 +59,6 @@ This modular structure ensures each component is focused on a specific responsib
 
 [__Swift Package Manager__](https://www.swift.org/documentation/package-manager/) simplifies dependency management and project organization for Swift developers. It enables you to easily add, update, and manage third-party libraries and frameworks. Integrated seamlessly with Xcode, Swift Package Manager promotes modularity, improves build performance, and ensures that your dependencies are up-to-date, making it an essential tool for modern Swift development.
 
-<center>
-<img src=SmartApp/_Documents/images/features/spm.png width=800/>
-</center>
-
 Our philosophy emphasizes avoiding the addition of large dependencies for simple tasks (e.g., using Alamofire for a basic REST GET method). Instead, we carefully selected only three essential dependencies to handle complex or time-consuming (to implement) tasks:
 
 * __Firebase__: Integrated for various backend services, including authentication, real-time database, messaging, and analytics.
@@ -76,42 +69,10 @@ Our philosophy emphasizes avoiding the addition of large dependencies for simple
 # Architecture
 
 <center>
-<img src=SmartApp/_Documents/images/Xcode.png width=800/>
+<img src=Source/_Documents/images/Xcode.png width=800/>
 </center>
 
-The project is organized into several key directories/targets, each serving a specific purpose: __SmartApp__, __Domain__, __Core__, __Common__, __DesignSystem__, __DevTools__, __SmartAppUnitTests__, __SmartAppUITests__ 
-
-<center>
-<table>
-<tr>
-<td>
-<img src=SmartApp/_Documents/images/project_struct/Application.png width=200/>
-</td>
-<td>
-<center>
-<img src=SmartApp/_Documents/images/project_struct/Core.png width=200/>
-</center>
-</td>
-<td>
-<img src=SmartApp/_Documents/images/project_struct/Domain.png width=200/>
-</td>
-</tr>
-<tr>
-<td>
-<img src=SmartApp/_Documents/images/project_struct/DevTools.png width=200/>
-</td>
-<td>
-<center>
-<img src=SmartApp/_Documents/images/project_struct/SmartAppUnitTests.png width=200/>
-<img src=SmartApp/_Documents/images/project_struct/SmartAppUITests.png width=200/>
-</center>
-</td>
-<td>
-<img src=SmartApp/_Documents/images/project_struct/DesignSystem.png width=200/>
-</td>
-</tr>
-</table>
-</center>
+The project is organized into several key directories/targets, each serving a specific purpose: __HitHappens__, __Domain__, __Core__, __Common__, __DesignSystem__, __DevTools__, __UnitTests__, __UITests__ 
 
 ## Application
 
@@ -150,8 +111,6 @@ Includes various development tools and utilities such as logging, facilitating s
 
 The app includes comprehensive testing coverage with both UI Tests and Unit Tests. These tests are designed to cover a wide range of daily development scenarios, ensuring the app's reliability and performance. Additionally, we have incorporated measure/performance tests to monitor and optimize the app's efficiency.
 
-<img src=SmartApp/_Documents/images/tests/tests.png width=800/>
-
 This revision aims to clearly communicate the purpose and scope of the tests while emphasizing their importance in maintaining app quality and performance.
 
 
@@ -159,17 +118,17 @@ This revision aims to clearly communicate the purpose and scope of the tests whi
 
 The app includes UI Tests for views and routing logic
 
-<img src=SmartApp/_Documents/images/features/uiTesting.png width=800/>
+<img src=Source/_Documents/images/UITests.png width=800/>
     
 ### Unit Testing (ViewModels & Services)
 
 The app _ViewModels_ are built on a way that can be tested.
 
-<img src=SmartApp/_Documents/images/features/unitTesting1.png width=800/>
+<img src=Source/_Documents/images/UnitTests.vm.png width=800/>
 
 The app _Services_ are built on a way that can be tested.
 
-<img src=SmartApp/_Documents/images/features/unitTesting2.png width=800/>
+<img src=Source/_Documents/images/UnitTests.services.png width=800/>
 
 # Misc
 
@@ -181,39 +140,28 @@ More about at [Adding a Design Language to your Xcode project.](https://medium.c
 
 ### Custom Colors (for Ligth/Dark mode)
 
-<img src=SmartApp/_Documents/images/features/colors.png width=800/>
+<img src=Source/_Documents/images/Colors.png width=800/>
 
 ### Custom Fonts 
 
-<img src=SmartApp/_Documents/images/features/fonts.png width=800/>
+<img src=Source/_Documents/images/Fonts.png width=800/>
 
 ### Custom Designables 
 
-<img src=SmartApp/_Documents/images/features/designables.png width=800/>
+<img src=Source/_Documents/images/Designables.png width=800/>
 
 ##  XcodeGen
 
 __XcodeGen__ treamlines project management by allowing you to generate Xcode project files from a simple YAML or JSON specification. This approach reduces merge conflicts, ensures consistency across teams, and makes it easier to version control project settings. By automating project setup, XcodeGen enhances productivity and maintains a cleaner, more organized codebase.
 
-<center>
-<img src=SmartApp/_Documents/images/features/xcodegen.png width=800/>
-</center>
 
 ## SwiftLint and SwiftFormat
 
 [SwiftLint](https://github.com/realm/SwiftLint) and [SwiftFormat](https://github.com/nicklockwood/SwiftFormat) are essential tools for maintaining code quality in Swift projects. SwiftLint enforces coding style and conventions by analyzing your code for potential issues and inconsistencies, ensuring adherence to best practices. SwiftFormat, on the other hand, automatically formats your Swift code to conform to a consistent style, making it more readable and maintainable. Together, they help streamline development workflows and uphold code standards across teams.
 
-<center>
-<img src=SmartApp/_Documents/images/features/lint.png width=400/>
-</center>
-
 ## Profiling
 
 At the present day the project is [leaks](https://developer.apple.com/documentation/xcode/diagnosing-memory-thread-and-crash-issues-early) free.
-
-<center>
-<img src=SmartApp/_Documents/images/tests/leaks.png width=800/>
-</center>
 
 ## Install 
 
@@ -221,9 +169,6 @@ No need to install anything, as all app dependencies are managed via [Swift Pack
 
 However, the project can be fully rebuilt with `./makefile.sh` (for a total cleanup and conflict fixing) using [XcodeGen](https://github.com/yonaskolb/XcodeGen). If you are not familiar with XcodeGen, please check [Avoiding merge conflicts with XcodeGen](https://medium.com/@ricardojpsantos/avoiding-merge-conflicts-with-xcodegen-a0e2a1647bcb).
 
-The scripts can be found at [`SmartApp/XcodeGen`](https://github.com/ricardopsantos/RJPS_SwiftUIArchitecture/tree/main/SmartApp/Xcodegen).
+The scripts can be found at `Source/XcodeGen`
 
-
-<center>
-<img src=SmartApp/_Documents/install.png width=400/>
-</center>
+<img src=Source/_Documents/images/Install.png width=800/>

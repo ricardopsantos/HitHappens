@@ -210,10 +210,6 @@ enum ColorPalletSmart: CaseIterable {
     case yellow
 
     //
-    // Private / Auxiliary
-    //
-
-    //
     // Public
     //
 

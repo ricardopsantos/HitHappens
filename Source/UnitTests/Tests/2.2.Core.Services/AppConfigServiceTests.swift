@@ -32,8 +32,8 @@ final class AppConfigServiceTests: XCTestCase {
 //
 
 extension AppConfigServiceTests {
-    // Test to verify that PopulationStateDataResponse mock
-    func test_mockPopulationStateData() async {
+    // Test to verify mock
+    func test_mock() async {
         guard enabled else {
             XCTAssert(true)
             return
@@ -41,17 +41,16 @@ extension AppConfigServiceTests {
         XCTAssertTrue(ModelDto.AppConfigResponse.mock != nil, "mock data should be loaded successfully.")
     }
 
-    // Test to verify that PopulationStateData information can be fetched
-    func test_requestPopulationStateData() async {
+    func test_requestAppConfig() async {
         guard enabled else {
             XCTAssert(true)
             return
         }
         do {
-            // Attempt to fetch PopulationNationData
+            // Attempt to fetch
             loadedAny = try await service.requestAppConfig(.init(), cachePolicy: .load)
 
-            // Verify that PopulationStateData was successfully loaded
+            // Verify was successfully loaded
             XCTAssertTrue(loadedAny != nil, "data should be loaded successfully.")
         } catch {
             // In case of an error, fail the test

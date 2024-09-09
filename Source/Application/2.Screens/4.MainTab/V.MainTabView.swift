@@ -113,7 +113,7 @@ struct MainTabView: View, ViewProtocol {
         .onAppear {
             updateAppearance()
         }
-        .onChange(of: colorScheme) { value in
+        .onChange(of: colorScheme) { _ in
             updateAppearance()
         }
         .onChange(of: tab1Router.navPath) { value in
