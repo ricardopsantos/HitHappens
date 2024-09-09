@@ -75,7 +75,7 @@ class EventLogDetailsViewModel: BaseViewModel {
     // MARK: - Usage/Auxiliar Attributes
     @Published private(set) var trackedLog: Model.TrackedLog?
     @Published var confirmationSheetType: ConfirmationSheet?
-    @Published var userMessage: (text: String, color: ColorSemantic) = ("", .clear)
+    @Published var tip: (text: String, color: ColorSemantic) = ("", .clear)
     @Published var note: String = ""
     @Published var eventDate: Date = .now
     @Published var address: String = ""
@@ -125,7 +125,7 @@ class EventLogDetailsViewModel: BaseViewModel {
             }
 
         case .userDidChangedNote(value: let value):
-            userMessage = ("", .clear)
+            tip = ("", .clear)
             Task { [weak self] in
                 guard let self = self, var trackedLog = trackedLog, trackedLog.note != value else { return }
                 trackedLog.note = value
@@ -134,7 +134,7 @@ class EventLogDetailsViewModel: BaseViewModel {
                     trackedEntityId: trackedLog.cascadeEntity?.id ?? "")
             }
         case .userDidChangedLocation(address: let address, latitude: let latitude, longitude: let longitude):
-            userMessage = ("", .clear)
+            tip = ("", .clear)
             Task { [weak self] in
                 guard let self = self,
                       var trackedLog = trackedLog,
@@ -149,7 +149,7 @@ class EventLogDetailsViewModel: BaseViewModel {
                     trackedEntityId: trackedLog.cascadeEntity?.id ?? "")
             }
         case .userDidChangedDate(value: let value):
-            userMessage = ("", .clear)
+            tip = ("", .clear)
             Task { [weak self] in
                 guard let self = self, var trackedLog = trackedLog, trackedLog.recordDate != value else { return }
                 trackedLog.recordDate = value

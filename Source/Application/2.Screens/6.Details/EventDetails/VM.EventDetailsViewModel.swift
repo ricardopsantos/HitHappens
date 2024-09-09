@@ -100,7 +100,6 @@ class EventDetailsViewModel: BaseViewModel {
     // MARK: - Usage/Auxiliar Attributes
     @Published var trackedEntity: Model.TrackedEntity?
     @Published var isNewEvent: Bool = false
-    @Published var canSaveNewEvent: Bool = false
     @Published private(set) var logs: [CascadeEventListItem]?
     @Published var soundEffect: String = SoundEffect.none.name
     @Published var category: String = HitHappensEventCategory.none.localized
@@ -111,7 +110,7 @@ class EventDetailsViewModel: BaseViewModel {
     @Published var id: String = ""
     @Published var counter: Int = 0
     @Published var locationRelevant: Bool = false
-    @Published var userMessage: (text: String, color: ColorSemantic) = ("", .clear)
+    @Published var tip: (text: String, color: ColorSemantic) = ("", .clear)
     private let cancelBag = CancelBag()
     private let dataBaseRepository: DataBaseRepositoryProtocol?
     private let onPerformRouteBack: () -> Void
@@ -151,121 +150,131 @@ class EventDetailsViewModel: BaseViewModel {
                 }
             }
         case .userDidChangedSoundEffect(value: let value):
-            displayUserMessage("")
+            displayTip("")
             value.play()
             if isNewEvent {
                 trackedEntity?.sound = value
 
             } else {
                 Task { [weak self] in
-                    guard let self = self, var trackedEntity = trackedEntity else { return }
+                    guard let self = self, var trackedEntity = trackedEntity,
+                          value != trackedEntity.sound else { return }
                     trackedEntity.sound = value
+                    trackedEntity.cascadeEvents = nil // So it does not update cascade events
                     dataBaseRepository?.trackedEntityUpdate(
                         trackedEntity: trackedEntity)
                 }
             }
 
         case .userDidChangedEventCategory(value: let value):
-            displayUserMessage("")
+            displayTip("")
             if isNewEvent {
                 trackedEntity?.category = value
 
             } else {
                 Task { [weak self] in
-                    guard let self = self, var trackedEntity = trackedEntity else { return }
+                    guard let self = self, var trackedEntity = trackedEntity,
+                          value != trackedEntity.category else { return }
                     trackedEntity.category = value
+                    trackedEntity.cascadeEvents = nil // So it does not update cascade events
                     dataBaseRepository?.trackedEntityUpdate(
                         trackedEntity: trackedEntity)
                 }
             }
 
         case .userDidChangedLocationRelevant(value: let value):
-            displayUserMessage("")
+            displayTip("")
             if isNewEvent {
                 trackedEntity?.locationRelevant = value
 
             } else {
                 Task { [weak self] in
-                    guard let self = self, var trackedEntity = trackedEntity else { return }
+                    guard let self = self, var trackedEntity = trackedEntity,
+                          value != trackedEntity.locationRelevant else { return }
                     trackedEntity.locationRelevant = value
+                    trackedEntity.cascadeEvents = nil // So it does not update cascade events
                     dataBaseRepository?.trackedEntityUpdate(
                         trackedEntity: trackedEntity)
-                    if value {
-                        userMessage.text = "Every time the user add a new event, the event details screen will appear"
-                    }
                 }
             }
 
         case .userDidChangedName(value: let value):
-            displayUserMessage("")
+            displayTip("")
             if isNewEvent {
                 trackedEntity?.name = value
-                canSaveNewEvent = !value.trim.isEmpty
             } else {
                 Task { [weak self] in
-                    guard let self = self, var trackedEntity = trackedEntity else { return }
+                    guard let self = self, var trackedEntity = trackedEntity,
+                          value != trackedEntity.name else { return }
                     trackedEntity.name = value
+                    trackedEntity.cascadeEvents = nil // So it does not update cascade events
                     dataBaseRepository?.trackedEntityUpdate(
                         trackedEntity: trackedEntity)
                 }
             }
 
         case .userDidChangedArchived(value: let value):
-            displayUserMessage("")
+            displayTip("")
             if isNewEvent {
                 trackedEntity?.archived = value
 
             } else {
                 Task { [weak self] in
-                    guard let self = self, var trackedEntity = trackedEntity else { return }
+                    guard let self = self, var trackedEntity = trackedEntity,
+                          value != trackedEntity.archived else { return }
                     trackedEntity.archived = value
                     if value {
                         // archived cant be favorite
                         trackedEntity.favorite = false
                     }
+                    trackedEntity.cascadeEvents = nil // So it does not update cascade events
                     dataBaseRepository?.trackedEntityUpdate(
                         trackedEntity: trackedEntity)
                     if value {
-                        displayUserMessage("On the events list, this event will now appear on the last section".localizedMissing)
+                        displayTip("On the \(AppConstants.entityNamePlural) list, this event will now appear on the last section".localizedMissing)
                     }
                 }
             }
 
         case .userDidChangedFavorite(value: let value):
-            displayUserMessage("")
+            displayTip("")
             if isNewEvent {
                 trackedEntity?.favorite = value
             } else {
                 Task { [weak self] in
-                    guard let self = self, var trackedEntity = trackedEntity else { return }
+                    guard let self = self, var trackedEntity = trackedEntity,
+                          value != trackedEntity.favorite else { return }
                     trackedEntity.favorite = value
                     if value {
                         // archived cant be favorite
                         trackedEntity.archived = false
                     }
+                    trackedEntity.cascadeEvents = nil // So it does not update cascade events
                     dataBaseRepository?.trackedEntityUpdate(
                         trackedEntity: trackedEntity)
                     if value {
-                        displayUserMessage("On the events list, this event will now appear on the first section".localizedMissing)
+                        displayTip("On the events list, this event will now appear on the first section".localizedMissing)
                     }
                 }
             }
 
         case .userDidChangedInfo(value: let value):
-            displayUserMessage("")
+            displayTip("")
             if isNewEvent {
                 trackedEntity?.info = value
             } else {
                 Task { [weak self] in
-                    guard let self = self, var trackedEntity = trackedEntity else { return }
+                    guard let self = self, var trackedEntity = trackedEntity,
+                          value != trackedEntity.info else { return }
                     trackedEntity.info = value
+                    trackedEntity.cascadeEvents = nil // So it does not update cascade events
                     dataBaseRepository?.trackedEntityUpdate(
                         trackedEntity: trackedEntity)
                 }
             }
 
         case .usedDidTappedLogEvent(trackedLogId: let trackedLogId):
-            displayUserMessage("")
+            displayTip("")
             guard !isNewEvent else { return }
             Task { [weak self] in
                 guard let self = self else { return }
@@ -275,7 +284,7 @@ class EventDetailsViewModel: BaseViewModel {
             }
 
         case .addNewLog:
-            displayUserMessage("")
+            displayTip("")
             guard !isNewEvent else { return }
             Task { [weak self] in
                 guard let self = self else { return }
@@ -290,7 +299,6 @@ class EventDetailsViewModel: BaseViewModel {
                                 latitude: location.latitude,
                                 longitude: location.longitude,
                                 addressMin: result.addressMin,
-
                                 note: "")
                             self?.dataBaseRepository?.trackedLogInsertOrUpdate(trackedLog: event, trackedEntityId: trackedEntityId)
                         }
@@ -300,7 +308,7 @@ class EventDetailsViewModel: BaseViewModel {
                 }
             }
         case .handleConfirmation:
-            displayUserMessage("")
+            displayTip("")
             switch confirmationSheetType {
             case .delete:
                 send(.deleteEvent(confirmed: true))
@@ -313,7 +321,7 @@ class EventDetailsViewModel: BaseViewModel {
             }
 
         case .deleteEvent(confirmed: let confirmed):
-            displayUserMessage("")
+            displayTip("")
             guard !isNewEvent else { return }
             if !confirmed {
                 confirmationSheetType = .delete
@@ -333,7 +341,6 @@ class EventDetailsViewModel: BaseViewModel {
                     if let trackedEntityId = dataBaseRepository?.trackedEntityInsert(trackedEntity: trackedEntity) {
                         self.trackedEntity = dataBaseRepository?.trackedEntityGet(trackedEntityId: trackedEntityId, cascade: true)
                         self.isNewEvent = false
-                        self.canSaveNewEvent = false
                     }
                 }
             }
@@ -346,9 +353,9 @@ class EventDetailsViewModel: BaseViewModel {
 //
 
 fileprivate extension EventDetailsViewModel {
-    func displayUserMessage(_ message: String) {
-        userMessage.text = message
-        userMessage.color = .allCool
+    func displayTip(_ message: String) {
+        tip.text = message
+        tip.color = .allCool
     }
 
     func updateUI(event model: Model.TrackedEntity) {

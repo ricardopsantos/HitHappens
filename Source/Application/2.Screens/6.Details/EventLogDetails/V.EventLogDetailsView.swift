@@ -143,7 +143,7 @@ struct EventLogDetailsView: View, ViewProtocol {
             if viewModel.confirmationSheetType != nil {
                 confirmationSheet
             }
-            userMessageView
+            TipView(tip: $viewModel.tip)
         }.onChange(of: viewModel.eventDate) { _ in
             updateStateCopyWithViewModelCurrentState()
         }.onChange(of: viewModel.note) { _ in
@@ -161,22 +161,6 @@ struct EventLogDetailsView: View, ViewProtocol {
 //
 
 extension EventLogDetailsView {
-    var userMessageView: some View {
-        VStack {
-            Spacer()
-            Text(viewModel.userMessage.text)
-                .multilineTextAlignment(.center)
-                .textColor(viewModel.userMessage.color.color)
-                .fontSemantic(.body)
-                .shadow(radius: SizeNames.shadowRadiusRegular)
-                .animation(.linear(duration: Common.Constants.defaultAnimationsTime), value: viewModel.userMessage.text)
-                .onTapGesture {
-                    viewModel.userMessage.text = ""
-                }
-            Spacer()
-        }
-    }
-
     var confirmationSheet: some View {
         @State var isOpen = Binding<Bool>(
             get: { viewModel.confirmationSheetType != nil },
