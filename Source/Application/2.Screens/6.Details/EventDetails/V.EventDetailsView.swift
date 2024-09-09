@@ -316,74 +316,49 @@ fileprivate extension EventDetailsView {
         }
     }
 
-    @ViewBuilder
     var nameView: some View {
-        if onEdit {
-            CustomTitleAndCustomTextFieldWithBinding(
-                title: "Name".localizedMissing,
-                placeholder: "Name".localizedMissing,
-                inputText: $eventNameCopy,
-                accessibility: .txtName) { newValue in
-                }
-        } else {
-            TitleAndValueView(
-                title: "Name".localizedMissing,
-                value: viewModel.name,
-                style: .horizontal)
-        }
+        EditableTitleAndValueView(
+            title: "Name".localizedMissing,
+            placeholder: "Name".localizedMissing,
+            onEdit: $onEdit,
+            originalValue: viewModel.name,
+            changedValue: $eventNameCopy,
+            accessibility: .txtName)
     }
 
-    @ViewBuilder
     var infoView: some View {
-        if onEdit {
-            CustomTitleAndCustomTextFieldWithBinding(
-                title: "Info".localizedMissing,
-                placeholder: "Info".localizedMissing,
-                inputText: $eventInfoCopy,
-                accessibility: .undefined) { _ in }
-        } else {
-            TitleAndValueView(
-                title: "Info".localizedMissing,
-                value: viewModel.info,
-                style: .horizontal)
-        }
+        EditableTitleAndValueView(
+            title: "Info".localizedMissing,
+            placeholder: "Info".localizedMissing,
+            onEdit: $onEdit,
+            originalValue: viewModel.info,
+            changedValue: $eventInfoCopy,
+            accessibility: .txtName)
     }
 
     @ViewBuilder
     var favoriteView: some View {
-        if onEdit {
-            ToggleWithBinding(
-                title: "Favorite".localizedMissing,
-                isOn: $eventFavoriteCopy,
-                onChanged: { newValue in
-                })
-        } else {
-            TitleAndValueView(
-                title: "Favorite".localizedMissing,
-                value: viewModel.favorite ? "Yes".localizedMissing : "No".localizedMissing,
-                style: .horizontal)
-        }
+        EditableTitleAndValueToggleView(
+            title: "Favorite".localizedMissing,
+            onEdit: $onEdit,
+            originalValue: viewModel.favorite,
+            changedValue: $eventFavoriteCopy)
     }
 
     @ViewBuilder
     var userLocationView: some View {
-        if onEdit {
-            ToggleWithBinding(
-                title: "Grab user location when adding new".localizedMissing,
-                isOn: $eventLocationRelevantCopy,
-                onChanged: { _ in })
-        } else {
-            TitleAndValueView(
-                title: "Grab user location when adding new".localizedMissing,
-                value: viewModel.locationRelevant ? "Yes".localizedMissing : "No".localizedMissing)
-        }
+        EditableTitleAndValueToggleView(
+            title: "Grab user location when adding new".localizedMissing,
+            onEdit: $onEdit,
+            originalValue: viewModel.locationRelevant,
+            changedValue: $eventLocationRelevantCopy)
     }
 
     @ViewBuilder
     var categoryView: some View {
         if onEdit {
             CategoryPickerView(selected: eventCategoryCopy) { newValue in
-               // viewModel.send(.userDidChangedEventCategory(value: newValue))
+                // viewModel.send(.userDidChangedEventCategory(value: newValue))
             }
         } else {
             TitleAndValueView(

@@ -407,6 +407,7 @@
 		D6FAA4F0D2DBF963EE37A56F /* Common.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = FFF39C519E284BB9BED8F7C7 /* Common.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		D7699558FE9C0D6CC79486C6 /* NonSecureAppPreferencesProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DAE85356E5D988971FA1B4F /* NonSecureAppPreferencesProtocol.swift */; };
 		D7865BF32C8F498000ACFDCF /* V.UserMessageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7865BF22C8F498000ACFDCF /* V.UserMessageView.swift */; };
+		D7865BF52C8F8CEE00ACFDCF /* V.EditableTitleAndValueView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7865BF42C8F8CEE00ACFDCF /* V.EditableTitleAndValueView.swift */; };
 		D789C0F22BA6A8F2FF9B9EB6 /* UIViewController+ExtensionsUIKit.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE8192949F9D1AC10535CCD4 /* UIViewController+ExtensionsUIKit.swift */; };
 		D92CD7E287E6C85B258D9F48 /* TinyConstraints+superview.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13E4E71C430848F8ECF3BFD0 /* TinyConstraints+superview.swift */; };
 		D99F293FD939A6B3709EC722 /* CALayer+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = DFD437DC52B2BD2143C57759 /* CALayer+Extensions.swift */; };
@@ -1071,6 +1072,7 @@
 		D658F0A65F848A4860089341 /* UISearchTextField+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UISearchTextField+Extensions.swift"; sourceTree = "<group>"; };
 		D663ADA86AE4F77274907014 /* _CopyFrameworks.yml */ = {isa = PBXFileReference; lastKnownFileType = text.yaml; path = _CopyFrameworks.yml; sourceTree = "<group>"; };
 		D7865BF22C8F498000ACFDCF /* V.UserMessageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = V.UserMessageView.swift; sourceTree = "<group>"; };
+		D7865BF42C8F8CEE00ACFDCF /* V.EditableTitleAndValueView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = V.EditableTitleAndValueView.swift; sourceTree = "<group>"; };
 		D7A6EB94964AD288E0A000C1 /* Model+CDataEvent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Model+CDataEvent.swift"; sourceTree = "<group>"; };
 		D7B7DA29E777D87D2A5EDDAC /* E.HttpMethod.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = E.HttpMethod.swift; sourceTree = "<group>"; };
 		D85A4C596CBB9274140C2FC6 /* DBVersion2.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = DBVersion2.xcdatamodel; sourceTree = "<group>"; };
@@ -1461,6 +1463,7 @@
 				9C7298BB42F46A08752BE82A /* V.PickerViews.swift */,
 				530FCC35A3770B2A8364005E /* V.WebView.swift */,
 				F16BFD8F3A0FBB2DB2E6A250 /* VC.MailViewControllerRepresentable.swift */,
+				D7865BF42C8F8CEE00ACFDCF /* V.EditableTitleAndValueView.swift */,
 			);
 			path = 5.Desigables;
 			sourceTree = "<group>";
@@ -3465,6 +3468,7 @@
 				B1EF18BE11233FAF091EC129 /* SetupManager.swift in Sources */,
 				EEA1304F8FD62F1B4172AF4E /* String+Extensions.swift in Sources */,
 				0C40B5F362DC0D21AE65523F /* UITestingManager.swift in Sources */,
+				D7865BF52C8F8CEE00ACFDCF /* V.EditableTitleAndValueView.swift in Sources */,
 				E4877B38E9317709D61C2B8E /* V.CounterView.swift in Sources */,
 				6DAEB78A9714A37C8EE5C894 /* V.EditView.swift in Sources */,
 				E915BD884B76549DDCFB639C /* V.EventDetailsView.swift in Sources */,

@@ -251,20 +251,12 @@ extension EventLogDetailsView {
     }
 
     var noteView: some View {
-        Group {
-            if onEdit {
-                CustomTitleAndCustomTextFieldWithBinding(
-                    title: "Note".localizedMissing,
-                    placeholder: "Add a note".localizedMissing,
-                    inputText: $noteCopy,
-                    accessibility: .undefined) { _ in }
-            } else {
-                TitleAndValueView(
-                    title: "Note".localizedMissing,
-                    value: !viewModel.note.isEmpty ? viewModel.note : "...",
-                    style: .vertical1)
-            }
-        }
+        EditableTitleAndValueView(
+            title: "Note".localizedMissing,
+            placeholder: "Add a note".localizedMissing,
+            onEdit: $onEdit,
+            originalValue: !viewModel.note.isEmpty ? viewModel.note : "...",
+            changedValue: $noteCopy)
     }
 
     @ViewBuilder
