@@ -16,6 +16,9 @@ public enum Accessibility: String, CaseIterable {
     case txtEmail
     case txtPassword
 
+    // Toggle
+    case toggleFavorits
+
     // Buttons
     case loginButton
     case logoutButton

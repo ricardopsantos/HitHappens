@@ -56,6 +56,29 @@ public extension XCTestCase {
 }
 
 //
+// MARK: - Toggles
+//
+public extension XCTestCase {
+    func tap(
+        toggle: String,
+        andWaitForStaticText nextStaticText: String = "",
+        on app: XCUIApplication,
+        timeout: TimeInterval = XCTestCase.timeout
+    ) {
+        let expectation = expectation(
+            for: NSPredicate.exists,
+            evaluatedWith: app.toggles[toggle],
+            handler: nil
+        )
+        wait(for: [expectation], timeout: timeout)
+        app.toggles[toggle].tap()
+        if !nextStaticText.isEmpty {
+            waitFor(staticText: nextStaticText, on: app, timeout: timeout)
+        }
+    }
+}
+
+//
 // MARK: - Button
 //
 public extension XCTestCase {

@@ -12,6 +12,30 @@ let cancelBag = CancelBag()
 var timeout: Int = 5
 var loadedAny: Any?
 
+extension Constants {
+    enum Entities {
+        enum Coffee {
+            static let name = "Coffee"
+        }
+
+        enum Concerts {
+            static let name = "Concerts \(Date().year)"
+        }
+
+        enum Book {
+            static let alternativeCategory = "Cultural"
+            static let category = "Personal"
+            static let alternativeSoundEffect = "Duck"
+            static let soundEffect = "Cheer 1"
+            static let logsCount = 3
+            static let name = "Books \(Date().year)"
+            static let alternativeName = "Books \(Date().year)_V2"
+            static let listItem = "\(name) | \(category)"
+            static let alternativeListItem = "\(alternativeName) | \(alternativeCategory)"
+        }
+    }
+}
+
 enum Constants {
     static let entityNameSingle = "Tracker"
     static let entityNamePlural = "\(entityNameSingle)(s)"
@@ -19,16 +43,8 @@ enum Constants {
     static let entityOccurrenceNamePlural = "\(entityOccurrenceSingle)(s)"
     //
     //
-    static let booksEntityAlternativeCategory = "Cultural"
-    static let booksEntityCategory = "Personal"
-    static let booksAlternativeSoundEffect = "Duck"
-    static let booksSoundEffect = "Cheer 1"
-    static let bookLogsCount = 3
-    static let booksEntityName = "Books \(Date().year)"
-    static let booksAlternativeEntityName = "Books \(Date().year)_V2"
-    static let booksListItem = "\(booksEntityName) | \(booksEntityCategory)"
-    static let booksAlternativeListItem = "\(booksAlternativeEntityName) | \(booksEntityAlternativeCategory)"
     static let alertWhenAddNewEvent = "\(Constants.entityOccurrenceSingle) tracked!\n\n(Tap here to edit/add details.)"
+    static let noFavoritsMessage = "You don't have any \(entityNamePlural.lowercased()) marked as favorite\n\nTap to add one!"
     //
     //
     static let tab1 = 0
@@ -73,6 +89,9 @@ public enum Accessibility: String, CaseIterable {
     case txtUserName
     case txtEmail
     case txtPassword
+
+    // Toggle
+    case toggleFavorits
 
     // Buttons
     case loginButton

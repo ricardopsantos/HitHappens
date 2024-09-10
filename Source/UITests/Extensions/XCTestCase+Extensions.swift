@@ -26,7 +26,22 @@ public extension XCTestCase {
             .map { $0.describe(false) }
         let buttons = app.buttons.allElementsBoundByIndex
             .map { $0.describe(false) }
+        let toggles = app.toggles.allElementsBoundByIndex
+            .map { $0.describe(false) }
+        let otherElements = app.otherElements.allElementsBoundByIndex
+            .map { $0.describe(false) }
+        let scrollViews = app.scrollViews.allElementsBoundByIndex
+            .map { $0.describe(false) }
         var result = "\n"
+        if !scrollViews.isEmpty {
+            result += "# scrollViews[\(scrollViews.count)]: \(scrollViews)" + "\n"
+        }
+        if !otherElements.isEmpty {
+            result += "# otherElements[\(otherElements.count)]: \(otherElements)" + "\n"
+        }
+        if !toggles.isEmpty {
+            result += "# toggles[\(toggles.count)]: \(toggles)" + "\n"
+        }
         if !secureTextFields.isEmpty {
             result += "# secureTextFields[\(secureTextFields.count)]: \(secureTextFields)" + "\n"
         }

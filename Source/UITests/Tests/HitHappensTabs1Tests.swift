@@ -41,7 +41,7 @@ final class HitHappensTabs1Tests: BaseUITests {
             .shouldResetAllContent,
             .isOnboardingCompleted
         ])
-        tap(staticText: Constants.booksEntityName, on: app)
+        tap(staticText: Constants.Entities.Book.name, on: app)
         exists(staticText: "\(Constants.entityNameSingle) details", on: app)
         tap(button: Accessibility.backButton.identifier, on: app)
         exists(staticText: Constants.tab1Title, on: app)
@@ -56,14 +56,10 @@ final class HitHappensTabs1Tests: BaseUITests {
             .shouldResetAllContent,
             .isOnboardingCompleted
         ])
-        tap(
-            tabBarIndex: Constants.tab2,
-            andWaitForStaticText: Constants.tab2Title,
-            on: app
-        )
-        let newName = Constants.booksEntityName + "_V2"
+
+        let newName = Constants.Entities.Book.name + "_V2"
         let newInfo = "New info"
-        tap(staticText: Constants.booksListItem, on: app)
+        tap(staticText: Constants.Entities.Book.name, on: app)
         exists(staticText: "\(Constants.entityNameSingle) details", on: app)
         tap(button: Accessibility.editButton.identifier, on: app)
         tap(
@@ -82,7 +78,7 @@ final class HitHappensTabs1Tests: BaseUITests {
         tap(button: "Yes", on: app) // Confirmation alert
         tap(button: Accessibility.backButton.identifier, on: app) // Close details
         exists(staticText: Constants.tab2Title, on: app)
-        let newListItem = Constants.booksListItem.replace(Constants.booksEntityName, with: newName)
+        let newListItem = Constants.Entities.Book.listItem.replace(Constants.Entities.Book.name, with: newName)
         exists(staticText: newListItem, on: app) // New name on favorits screen
     }
 
@@ -96,7 +92,7 @@ final class HitHappensTabs1Tests: BaseUITests {
             .isOnboardingCompleted
         ])
 
-        tapCounterWith(number: Constants.bookLogsCount)
+        tapCounterWith(number: Constants.Entities.Book.logsCount)
         waitFor(staticText: Constants.alertWhenAddNewEvent, on: app)
         tap(
             staticText: Constants.alertWhenAddNewEvent,
@@ -105,7 +101,7 @@ final class HitHappensTabs1Tests: BaseUITests {
         )
         tap(button: Accessibility.deleteButton.identifier, on: app)
         tap(button: "Yes", on: app) // Confirmation alert
-        tapCounterWith(number: Constants.bookLogsCount) // We should have the same amount of book
+        tapCounterWith(number: Constants.Entities.Book.logsCount) // We should have the same amount of book
     }
 
     func test_trackAddNewLog() {
@@ -118,7 +114,7 @@ final class HitHappensTabs1Tests: BaseUITests {
             .isOnboardingCompleted
         ])
 
-        tapCounterWith(number: Constants.bookLogsCount)
+        tapCounterWith(number: Constants.Entities.Book.logsCount)
         waitFor(staticText: Constants.alertWhenAddNewEvent, on: app)
         tap(
             staticText: Constants.alertWhenAddNewEvent,
@@ -137,7 +133,7 @@ final class HitHappensTabs1Tests: BaseUITests {
             .isOnboardingCompleted
         ])
 
-        tapCounterWith(number: Constants.bookLogsCount)
+        tapCounterWith(number: Constants.Entities.Book.logsCount)
         waitFor(staticText: Constants.alertWhenAddNewEvent, on: app)
         tap(
             staticText: Constants.alertWhenAddNewEvent,
@@ -166,18 +162,72 @@ final class HitHappensTabs1Tests: BaseUITests {
             .isOnboardingCompleted
         ])
 
-        tap(staticText: Constants.booksEntityName, on: app)
+        tap(staticText: Constants.Entities.Book.name, on: app)
         exists(staticText: "\(Constants.entityNameSingle) details", on: app)
 
         tap(button: Accessibility.deleteButton.identifier, on: app)
         tap(button: "Yes", on: app) // Confirmation alert
 
-        notExists(staticText: Constants.booksEntityName, on: app) // Deleted from favorits
+        notExists(staticText: Constants.Entities.Book.name, on: app) // Deleted from favorits
         tap(
             tabBarIndex: Constants.tab2,
             andWaitForStaticText: Constants.tab2Title,
             on: app
         )
-        notExists(listItemStaticText: Constants.booksListItem, on: app) // Deleted from list
+        notExists(listItemStaticText: Constants.Entities.Book.listItem, on: app) // Deleted from list
+    }
+
+    func test_deleteAllFavoritsAndAddNew() {
+        guard enabled else {
+            XCTAssert(true)
+            return
+        }
+        appLaunch(launchArguments: [
+            .shouldResetAllContent,
+            .isOnboardingCompleted
+        ])
+
+        // Book
+        tap(staticText: Constants.Entities.Book.name, on: app)
+        exists(staticText: "\(Constants.entityNameSingle) details", on: app)
+        tap(button: Accessibility.deleteButton.identifier, on: app)
+        tap(button: "Yes", on: app) // Confirmation alert
+        notExists(staticText: Constants.Entities.Book.name, on: app)
+
+        // Book
+        tap(staticText: Constants.Entities.Coffee.name, on: app)
+        exists(staticText: "\(Constants.entityNameSingle) details", on: app)
+        tap(button: Accessibility.deleteButton.identifier, on: app)
+        tap(button: "Yes", on: app) // Confirmation alert
+        notExists(staticText: Constants.Entities.Coffee.name, on: app)
+
+        // Concerts
+        tap(staticText: Constants.Entities.Concerts.name, on: app)
+        exists(staticText: "\(Constants.entityNameSingle) details", on: app)
+        tap(button: Accessibility.deleteButton.identifier, on: app)
+        tap(button: "Yes", on: app) // Confirmation alert
+        notExists(staticText: Constants.Entities.Concerts.name, on: app)
+
+        // Check message
+        exists(staticText: Constants.noFavoritsMessage, on: app)
+        tap(staticText: Constants.noFavoritsMessage, on: app)
+
+        // Add new
+        tap(
+            textField: Accessibility.txtName.identifier,
+            andType: Constants.Entities.Book.name,
+            dismissKeyboard: false,
+            on: app
+        )
+
+        tap(staticText: "Favorite", on: app) // Toggle favorite ON
+
+        tap(button: Accessibility.saveButton.identifier, on: app)
+        tap(button: "Yes", on: app) // Confirmation alert
+        tap(button: Accessibility.backButton.identifier, on: app) // Close details
+
+        // Route back
+        exists(staticText: Constants.tab1Title, on: app)
+        exists(staticText: Constants.Entities.Book.name, on: app)
     }
 }

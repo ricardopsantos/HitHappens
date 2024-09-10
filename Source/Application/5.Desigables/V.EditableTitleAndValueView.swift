@@ -63,17 +63,20 @@ public struct EditableTitleAndValueToggleView: View {
     private let originalValue: Bool
     private let title: String
     private let style: TitleAndValueView.Style
+    private let accessibility: DesignSystem.Accessibility
     public init(
         title: String,
         onEdit: Binding<Bool>,
         originalValue: Bool,
         changedValue: Binding<Bool>,
-        style: TitleAndValueView.Style = .horizontal) {
+        style: TitleAndValueView.Style = .horizontal,
+        accessibility: DesignSystem.Accessibility) {
         self._onEdit = onEdit
         self._changedValue = changedValue
         self.title = title
         self.originalValue = originalValue
         self.style = style
+        self.accessibility = accessibility
     }
 
     public var body: some View {
@@ -82,6 +85,7 @@ public struct EditableTitleAndValueToggleView: View {
                 ToggleWithBinding(
                     title: title,
                     isOn: $changedValue,
+                    accessibility: accessibility,
                     onChanged: { _ in })
             } else {
                 TitleAndValueView(
@@ -121,7 +125,8 @@ struct EditableTitleAndValueViewSample: View {
                 title: "Title_2",
                 onEdit: $onEdit,
                 originalValue: true,
-                changedValue: $changeValueBool)
+                changedValue: $changeValueBool,
+                accessibility: .undefined)
             Spacer()
         }
     }

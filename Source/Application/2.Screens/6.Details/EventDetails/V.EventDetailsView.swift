@@ -213,13 +213,15 @@ fileprivate extension EventDetailsView {
                 title: "Favorite".localizedMissing,
                 onEdit: $onEdit,
                 originalValue: viewModel.trackedEntity?.favorite ?? false,
-                changedValue: $eventFavoriteCopy)
+                changedValue: $eventFavoriteCopy,
+                accessibility: .toggleFavorits)
             SwiftUIUtils.FixedVerticalSpacer(height: SizeNames.defaultMarginSmall)
             EditableTitleAndValueToggleView(
                 title: "Grab user location when adding new".localizedMissing,
                 onEdit: $onEdit,
                 originalValue: viewModel.trackedEntity?.locationRelevant ?? false,
-                changedValue: $eventLocationRelevantCopy)
+                changedValue: $eventLocationRelevantCopy,
+                accessibility: .undefined)
             SwiftUIUtils.FixedVerticalSpacer(height: SizeNames.defaultMarginSmall)
             categoryView
             SwiftUIUtils.FixedVerticalSpacer(height: SizeNames.defaultMarginSmall)
