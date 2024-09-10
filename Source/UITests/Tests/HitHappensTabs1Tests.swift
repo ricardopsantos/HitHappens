@@ -155,4 +155,29 @@ final class HitHappensTabs1Tests: BaseUITests {
         tap(button: Accessibility.confirmButton.identifier, on: app)
         exists(staticText: info, on: app)
     }
+    
+    func test_deleteEntity() {
+        guard enabled else {
+            XCTAssert(true)
+            return
+        }
+        appLaunch(launchArguments: [
+            .shouldResetAllContent,
+            .isOnboardingCompleted
+        ])
+
+        tap(staticText: Constants.booksEntityName, on: app)
+        exists(staticText: "\(Constants.entityNameSingle) details", on: app)
+        
+        tap(button: Accessibility.deleteButton.identifier, on: app)
+        tap(button: "Yes", on: app) // Confirmation alert
+
+        notExists(staticText: Constants.booksEntityName, on: app) // Deleted from favorits
+        tap(
+            tabBarIndex: Constants.tab2,
+            andWaitForStaticText: Constants.tab2Title,
+            on: app
+        )
+        notExists(listItemStaticText: Constants.booksListItem, on: app) // Deleted from list
+    }
 }

@@ -12,12 +12,12 @@ import Common
 import DevTools
 
 public class AppConfigService {
-    private init() {}
-    public static let shared = AppConfigService()
-
-    //    private let cacheManager = Common.CacheManagerForCodableUserDefaultsRepository.shared
+    // private let cacheManager = Common.CacheManagerForCodableUserDefaultsRepository.shared
     private let cacheManager = Common.CacheManagerForCodableCoreDataRepository.shared
-    private let webAPI: NetworkManager = .shared
+    public let webAPI: NetworkManagerProtocol
+    public init(webAPI: NetworkManagerProtocol) {
+        self.webAPI = webAPI
+    }
 }
 
 extension AppConfigService: AppConfigServiceProtocol {

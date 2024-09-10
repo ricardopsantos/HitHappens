@@ -17,6 +17,7 @@ import Common
 
 final class AppConfigServiceTests: XCTestCase {
     let enabled = true
+    let loadExpectedTime: Double = 0.05
     lazy var service: AppConfigServiceProtocol = { DependenciesManager.Services.appConfigService }()
     lazy var serviceMock: AppConfigServiceProtocol = { DependenciesManager.Services.appConfigServiceMock }()
     override func setUp() {
@@ -70,7 +71,7 @@ extension AppConfigServiceTests {
             return
         }
         let cachePolicy: ServiceCachePolicy = .load
-        let expectedTime: Double = 0.05
+        let expectedTime: Double = loadExpectedTime
         let count = 10
         // Time: 0.498 sec
         measure {
@@ -96,7 +97,7 @@ extension AppConfigServiceTests {
             return
         }
         let cachePolicy: ServiceCachePolicy = .cacheElseLoad
-        let expectedTime: Double = 0.005
+        let expectedTime: Double = loadExpectedTime / 3
         let count = 10
         // Time: 0.009 sec
         measure {

@@ -32,9 +32,27 @@ class BaseUITests: XCTestCase {
 }
 
 extension BaseUITests {
-    // Will perform the onboarding flow.
-    // User needs to authenticated, and on the correct flow
 
+    func editEntity(newName: String, newInfo: String, newCategory: String, newSoundEffect: String) {
+        tap(button: Accessibility.editButton.identifier, on: app)
+        tap(
+            textField: Accessibility.txtName.identifier,
+            andType: newName,
+            dismissKeyboard: false,
+            on: app
+        )
+        tap(
+            textField: Accessibility.txtInfo.identifier,
+            andType: newInfo,
+            dismissKeyboard: false,
+            on: app
+        )
+        tap(staticText: Constants.booksSoundEffect, on: app)
+        tap(button: newSoundEffect, on: app)
+        tap(staticText: Constants.booksEntityCategory, on: app)
+        tap(button: newCategory, on: app)
+    }
+    
     func tapCounterWith(number: Int) {
         if number < 10 {
             app.scrollViews.otherElements.images["\(number)00"].tap()

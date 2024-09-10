@@ -185,6 +185,24 @@ public extension XCTestCase {
 // MARK: - Static Text
 //
 public extension XCTestCase {
+    
+    func tap(listItemStaticText: String,
+        andWaitForStaticText nextStaticText: String = "",
+        on app: XCUIApplication,
+        timeout: TimeInterval = XCTestCase.timeout
+    ) {
+        let expectation = expectation(
+            for: NSPredicate.exists,
+            evaluatedWith: app.scrollViews.otherElements.staticTexts[listItemStaticText],
+            handler: nil
+        )
+        wait(for: [expectation], timeout: timeout)
+        app.scrollViews.otherElements.staticTexts[listItemStaticText].tap()
+        if !nextStaticText.isEmpty {
+            waitFor(staticText: nextStaticText, on: app, timeout: timeout)
+        }
+    }
+    
     func tap(
         staticText: String,
         andWaitForStaticText nextStaticText: String = "",
