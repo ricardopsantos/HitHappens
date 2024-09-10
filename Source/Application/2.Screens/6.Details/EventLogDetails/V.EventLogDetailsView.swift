@@ -130,7 +130,7 @@ struct EventLogDetailsView: View, ViewProtocol {
                         onEdit: $onEdit,
                         originalValue: !viewModel.note.isEmpty ? viewModel.note : "...",
                         changedValue: $noteCopy,
-                        accessibility: .undefined)
+                        accessibility: .txtNote)
                     SwiftUIUtils.FixedVerticalSpacer(height: SizeNames.defaultMarginSmall)
                     mapView
                     SwiftUIUtils.FixedVerticalSpacer(height: SizeNames.defaultMarginSmall)

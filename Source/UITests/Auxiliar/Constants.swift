@@ -19,7 +19,9 @@ enum Constants {
     static let entityOccurrenceNamePlural = "\(entityOccurrenceSingle)(s)"
     //
     //
-    static let books = "Books | Personal"
+    static let bookLogsCount = 3
+    static let booksEntityName = "Books \(Date().year)"
+    static let booksListItem = "\(booksEntityName) | Personal"
     static let alertWhenAddNewEvent = "\(Constants.entityOccurrenceSingle) tracked!\n\n(Tap here to edit/add details.)"
     //
     //
@@ -60,6 +62,8 @@ enum UITestingOptions: String {
 public enum Accessibility: String, CaseIterable {
     // Text Fields
     case txtName
+    case txtInfo
+    case txtNote
     case txtUserName
     case txtEmail
     case txtPassword

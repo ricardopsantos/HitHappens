@@ -207,7 +207,7 @@ fileprivate extension EventDetailsView {
                 onEdit: $onEdit,
                 originalValue: (viewModel.trackedEntity?.info ?? "").isEmpty ? "..." : viewModel.trackedEntity?.info ?? "",
                 changedValue: $eventInfoCopy,
-                accessibility: .undefined)
+                accessibility: .txtInfo)
             SwiftUIUtils.FixedVerticalSpacer(height: SizeNames.defaultMarginSmall)
             EditableTitleAndValueToggleView(
                 title: "Favorite".localizedMissing,

@@ -58,7 +58,7 @@ public struct EditView: View {
                 TextButton(onClick: {
                     onEdit.toggle()
                     onConfirmEdit()
-                }, text: "Confirm changes", style: .textOnly, accessibility: .editButton)
+                }, text: "Confirm changes", style: .textOnly, accessibility: .confirmButton)
             } else {
                 EmptyView()
             }
