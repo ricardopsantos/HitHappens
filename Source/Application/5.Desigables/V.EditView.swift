@@ -46,7 +46,7 @@ public struct EditView: View {
                 onEdit.toggle()
                 onCancelEdit()
             },
-            text: !onEdit ? "Edit details".localizedMissing : "Cancel".localizedMissing,
+            text: !onEdit ? "Edit".localizedMissing : "Cancel".localizedMissing,
             style: .textOnly,
             accessibility: .editButton)
     }
@@ -58,7 +58,7 @@ public struct EditView: View {
                 TextButton(onClick: {
                     onEdit.toggle()
                     onConfirmEdit()
-                }, text: "Save changes", style: .textOnly, accessibility: .editButton)
+                }, text: "Confirm changes", style: .textOnly, accessibility: .editButton)
             } else {
                 EmptyView()
             }

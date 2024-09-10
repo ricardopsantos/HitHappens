@@ -11,11 +11,10 @@ import SwiftUI
 import Domain
 
 extension HitHappensEventCategory {
-    
     static func with(localized: String) -> HitHappensEventCategory? {
-        HitHappensEventCategory.allCases.filter({ $0.localized == localized }).first
+        HitHappensEventCategory.allCases.filter { $0.localized == localized }.first
     }
-    
+
     var localized: String {
         switch self {
         case .none: return "None".localizedMissing

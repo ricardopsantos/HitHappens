@@ -48,7 +48,7 @@ public class BaseViewModel: ObservableObject {
         tip.text = message
         tip.color = .allCool
     }
-    
+
     // Function to handle errors
     func handle(error: Error, sender: String) {
         // Set the loading model to indicate loading has stopped

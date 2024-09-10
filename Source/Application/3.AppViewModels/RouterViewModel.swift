@@ -31,6 +31,7 @@ public final class RouterViewModel: ObservableObject {
         navPath.append(destination)
     }
 
+    @discardableResult
     public func navigateBack() -> Bool {
         if !navPath.isEmpty {
             navPath.removeLast()

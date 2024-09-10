@@ -30,7 +30,7 @@ public enum SoundEffect: String, Sendable, CaseIterable {
 }
 
 public extension SoundEffect {
-    var name: String {
+    var localized: String {
         switch self {
         case .none: return "None"
         case .amb1: return "Ambulance"
