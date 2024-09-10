@@ -46,9 +46,9 @@ extension BaseUITests {
             dismissKeyboard: false,
             on: app
         )
-        tap(staticText: Constants.booksSoundEffect, on: app)
+        tap(staticText: Constants.Entities.Book.soundEffect, on: app)
         tap(button: newSoundEffect, on: app)
-        tap(staticText: Constants.booksEntityCategory, on: app)
+        tap(staticText: Constants.Entities.Book.category, on: app)
         tap(button: newCategory, on: app)
     }
 

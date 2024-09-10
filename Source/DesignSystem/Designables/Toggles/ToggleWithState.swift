@@ -15,15 +15,17 @@ public struct ToggleWithBinding: View {
     private let title: String
     private let titleStyle: TextStyleTuple = (.bodyBold, .labelPrimary)
     private let onChanged: (Bool) -> Void
+    private let accessibility: Accessibility
     public init(
         title: String,
-
         isOn: Binding<Bool>,
+        accessibility: Accessibility,
         onChanged: @escaping (Bool) -> Void
     ) {
         self.title = title
         self._isOn = isOn
         self.onChanged = onChanged
+        self.accessibility = accessibility
     }
 
     public var body: some View {
@@ -32,7 +34,10 @@ public struct ToggleWithBinding: View {
         }) {
             Text(title)
                 .applyStyle(titleStyle)
-        }
+                .onTapGesture {
+                    isOn.toggle()
+                }
+        }.accessibilityIdentifier(accessibility.identifier)
         if #available(iOS 16.0, *) {
             view
                 .tint(ColorSemantic.primary.color)

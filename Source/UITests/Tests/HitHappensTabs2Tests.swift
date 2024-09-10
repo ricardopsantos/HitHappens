@@ -47,11 +47,11 @@ final class HitHappensTabs2Tests: BaseUITests {
             andWaitForStaticText: Constants.tab2Title,
             on: app
         )
-        let newName = Constants.booksAlternativeEntityName
+        let newName = Constants.Entities.Book.name
         let newInfo = "New info"
-        let newCategory = Constants.booksEntityAlternativeCategory
-        let newSoundEffect = Constants.booksAlternativeSoundEffect
-        tap(listItemStaticText: Constants.booksListItem, on: app)
+        let newCategory = Constants.Entities.Book.alternativeCategory
+        let newSoundEffect = Constants.Entities.Book.alternativeSoundEffect
+        tap(listItemStaticText: Constants.Entities.Book.listItem, on: app)
 
         exists(staticText: "\(Constants.entityNameSingle) details", on: app)
 
@@ -61,8 +61,8 @@ final class HitHappensTabs2Tests: BaseUITests {
         tap(button: "Yes", on: app) // Confirmation alert
 
         tap(button: Accessibility.backButton.identifier, on: app) // Close details
-        exists(listItemStaticText: Constants.booksAlternativeListItem, on: app) // New name on favorits screen
-        tap(listItemStaticText: Constants.booksAlternativeListItem, on: app) // Go back to details
+        exists(listItemStaticText: Constants.Entities.Book.listItem, on: app) // New name on favorits screen
+        tap(listItemStaticText: Constants.Entities.Book.alternativeListItem, on: app) // Go back to details
 
         exists(staticText: newName, on: app)
         exists(staticText: newCategory, on: app)
@@ -84,11 +84,11 @@ final class HitHappensTabs2Tests: BaseUITests {
             andWaitForStaticText: Constants.tab2Title,
             on: app
         )
-        let newName = Constants.booksAlternativeEntityName
+        let newName = Constants.Entities.Book.alternativeName
         let newInfo = "New info"
-        let newCategory = Constants.booksEntityAlternativeCategory
-        let newSoundEffect = Constants.booksAlternativeSoundEffect
-        tap(listItemStaticText: Constants.booksListItem, on: app)
+        let newCategory = Constants.Entities.Book.alternativeCategory
+        let newSoundEffect = Constants.Entities.Book.alternativeSoundEffect
+        tap(listItemStaticText: Constants.Entities.Book.listItem, on: app)
 
         exists(staticText: "\(Constants.entityNameSingle) details", on: app)
 
@@ -101,9 +101,9 @@ final class HitHappensTabs2Tests: BaseUITests {
         notExists(staticText: newCategory, on: app)
         notExists(staticText: newSoundEffect, on: app)
 
-        exists(staticText: Constants.booksEntityName, on: app)
-        exists(staticText: Constants.booksSoundEffect, on: app)
-        exists(staticText: Constants.booksEntityCategory, on: app)
+        exists(staticText: Constants.Entities.Book.name, on: app)
+        exists(staticText: Constants.Entities.Book.soundEffect, on: app)
+        exists(staticText: Constants.Entities.Book.category, on: app)
     }
 
     func test_deleteEntity() {
@@ -120,18 +120,18 @@ final class HitHappensTabs2Tests: BaseUITests {
             andWaitForStaticText: Constants.tab2Title,
             on: app
         )
-        tap(listItemStaticText: Constants.booksListItem, on: app)
+        tap(listItemStaticText: Constants.Entities.Book.listItem, on: app)
         exists(staticText: "\(Constants.entityNameSingle) details", on: app)
 
         tap(button: Accessibility.deleteButton.identifier, on: app)
         tap(button: "Yes", on: app) // Confirmation alert
 
-        notExists(listItemStaticText: Constants.booksListItem, on: app) // Deleted from list
+        notExists(listItemStaticText: Constants.Entities.Book.listItem, on: app) // Deleted from list
         tap(
             tabBarIndex: Constants.tab1,
             andWaitForStaticText: Constants.tab1Title,
             on: app
         )
-        notExists(staticText: Constants.booksEntityName, on: app) // Deleted from favorits
+        notExists(staticText: Constants.Entities.Book.name, on: app) // Deleted from favorits
     }
 }
