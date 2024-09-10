@@ -32,7 +32,6 @@ class BaseUITests: XCTestCase {
 }
 
 extension BaseUITests {
-
     func editEntity(newName: String, newInfo: String, newCategory: String, newSoundEffect: String) {
         tap(button: Accessibility.editButton.identifier, on: app)
         tap(
@@ -52,7 +51,7 @@ extension BaseUITests {
         tap(staticText: Constants.booksEntityCategory, on: app)
         tap(button: newCategory, on: app)
     }
-    
+
     func tapCounterWith(number: Int) {
         if number < 10 {
             app.scrollViews.otherElements.images["\(number)00"].tap()

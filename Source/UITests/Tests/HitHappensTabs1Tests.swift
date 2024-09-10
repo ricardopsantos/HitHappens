@@ -155,7 +155,7 @@ final class HitHappensTabs1Tests: BaseUITests {
         tap(button: Accessibility.confirmButton.identifier, on: app)
         exists(staticText: info, on: app)
     }
-    
+
     func test_deleteEntity() {
         guard enabled else {
             XCTAssert(true)
@@ -168,7 +168,7 @@ final class HitHappensTabs1Tests: BaseUITests {
 
         tap(staticText: Constants.booksEntityName, on: app)
         exists(staticText: "\(Constants.entityNameSingle) details", on: app)
-        
+
         tap(button: Accessibility.deleteButton.identifier, on: app)
         tap(button: "Yes", on: app) // Confirmation alert
 

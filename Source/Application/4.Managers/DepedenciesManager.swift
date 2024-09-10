@@ -16,6 +16,7 @@ public class DependenciesManager {
     enum WebAPI {
         public static var webAPI: NetworkManagerProtocol { NetworkManager.shared }
     }
+
     enum Services {
         public static var appConfigServiceMock: AppConfigServiceProtocol { AppConfigServiceMock.shared }
         public static var appConfigService: AppConfigServiceProtocol { AppConfigService(webAPI: WebAPI.webAPI) }
