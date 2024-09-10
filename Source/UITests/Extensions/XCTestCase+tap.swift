@@ -185,8 +185,8 @@ public extension XCTestCase {
 // MARK: - Static Text
 //
 public extension XCTestCase {
-    
-    func tap(listItemStaticText: String,
+    func tap(
+        listItemStaticText: String,
         andWaitForStaticText nextStaticText: String = "",
         on app: XCUIApplication,
         timeout: TimeInterval = XCTestCase.timeout
@@ -202,7 +202,7 @@ public extension XCTestCase {
             waitFor(staticText: nextStaticText, on: app, timeout: timeout)
         }
     }
-    
+
     func tap(
         staticText: String,
         andWaitForStaticText nextStaticText: String = "",

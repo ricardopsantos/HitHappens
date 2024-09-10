@@ -142,10 +142,10 @@ fileprivate extension GenericMapView {
                         userInteractedWithMap()
                     }
             )
-            //.simultaneousGesture(LongPressGesture().onChanged { some in
+            // .simultaneousGesture(LongPressGesture().onChanged { some in
             //    print(some)
             //    userInteractedWithMap()
-            //})
+            // })
             .simultaneousGesture(DragGesture().onChanged { _ in
                 userInteractedWithMap()
             })

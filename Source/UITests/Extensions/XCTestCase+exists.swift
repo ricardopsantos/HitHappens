@@ -19,7 +19,7 @@ public extension XCTestCase {
     ) {
         XCTAssertTrue(app.scrollViews.otherElements.staticTexts[listItemStaticText].waitForExistence(timeout: timeout))
     }
-    
+
     func exists(
         staticText: String,
         on app: XCUIApplication,
@@ -27,7 +27,7 @@ public extension XCTestCase {
     ) {
         XCTAssertTrue(app.staticTexts[staticText].waitForExistence(timeout: timeout))
     }
-    
+
     func notExists(
         staticText: String,
         on app: XCUIApplication,
@@ -35,7 +35,7 @@ public extension XCTestCase {
     ) {
         XCTAssertFalse(app.staticTexts[staticText].waitForExistence(timeout: timeout))
     }
-    
+
     func notExists(
         listItemStaticText: String,
         on app: XCUIApplication,

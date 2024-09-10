@@ -37,7 +37,7 @@ final class HitHappensTabs2Tests: BaseUITests {
             XCTAssert(true)
             return
         }
-        
+
         appLaunch(launchArguments: [
             .shouldResetAllContent,
             .isOnboardingCompleted
@@ -52,29 +52,29 @@ final class HitHappensTabs2Tests: BaseUITests {
         let newCategory = Constants.booksEntityAlternativeCategory
         let newSoundEffect = Constants.booksAlternativeSoundEffect
         tap(listItemStaticText: Constants.booksListItem, on: app)
-        
+
         exists(staticText: "\(Constants.entityNameSingle) details", on: app)
-        
+
         editEntity(newName: newName, newInfo: newInfo, newCategory: newCategory, newSoundEffect: newSoundEffect)
         tap(button: Accessibility.confirmButton.identifier, on: app)
-        
+
         tap(button: "Yes", on: app) // Confirmation alert
 
         tap(button: Accessibility.backButton.identifier, on: app) // Close details
         exists(listItemStaticText: Constants.booksAlternativeListItem, on: app) // New name on favorits screen
         tap(listItemStaticText: Constants.booksAlternativeListItem, on: app) // Go back to details
-        
+
         exists(staticText: newName, on: app)
         exists(staticText: newCategory, on: app)
         exists(staticText: newSoundEffect, on: app)
     }
-    
+
     func test_routeToEntityDetailsAndEditCancel() {
         guard enabled else {
             XCTAssert(true)
             return
         }
-        
+
         appLaunch(launchArguments: [
             .shouldResetAllContent,
             .isOnboardingCompleted
@@ -89,24 +89,23 @@ final class HitHappensTabs2Tests: BaseUITests {
         let newCategory = Constants.booksEntityAlternativeCategory
         let newSoundEffect = Constants.booksAlternativeSoundEffect
         tap(listItemStaticText: Constants.booksListItem, on: app)
-        
+
         exists(staticText: "\(Constants.entityNameSingle) details", on: app)
-        
+
         editEntity(newName: newName, newInfo: newInfo, newCategory: newCategory, newSoundEffect: newSoundEffect)
         tap(button: Accessibility.confirmButton.identifier, on: app)
-        
+
         tap(button: "No", on: app) // Confirmation alert
-        
+
         notExists(staticText: newName, on: app)
         notExists(staticText: newCategory, on: app)
         notExists(staticText: newSoundEffect, on: app)
-        
+
         exists(staticText: Constants.booksEntityName, on: app)
         exists(staticText: Constants.booksSoundEffect, on: app)
         exists(staticText: Constants.booksEntityCategory, on: app)
     }
-    
-    
+
     func test_deleteEntity() {
         guard enabled else {
             XCTAssert(true)
@@ -123,7 +122,7 @@ final class HitHappensTabs2Tests: BaseUITests {
         )
         tap(listItemStaticText: Constants.booksListItem, on: app)
         exists(staticText: "\(Constants.entityNameSingle) details", on: app)
-        
+
         tap(button: Accessibility.deleteButton.identifier, on: app)
         tap(button: "Yes", on: app) // Confirmation alert
 
