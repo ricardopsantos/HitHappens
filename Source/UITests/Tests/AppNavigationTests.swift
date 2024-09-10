@@ -177,7 +177,6 @@ final class AppNavigationTests: BaseUITests {
         tap(button: Accessibility.addButton.identifier, on: app)
         tap(
             textField: Accessibility.txtName.identifier,
-
             andType: newEventName,
             dismissKeyboard: false,
             on: app
