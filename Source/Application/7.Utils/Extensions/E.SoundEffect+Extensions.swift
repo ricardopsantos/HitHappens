@@ -12,6 +12,11 @@ import DevTools
 import Domain
 
 public extension SoundEffect {
+    
+    static func with(localized: String) -> SoundEffect? {
+        SoundEffect.allCases.filter({ $0.name == localized }).first
+    }
+    
     func play() {
         let soundPlayer = SoundPlayer()
         soundPlayer.configureAudioSession()

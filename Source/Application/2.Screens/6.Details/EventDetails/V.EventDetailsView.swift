@@ -177,55 +177,6 @@ struct EventDetailsView: View, ViewProtocol {
     }
 }
 
-//
-// MARK: - Auxiliar
-//
-fileprivate extension EventDetailsView {
-    var title: String {
-        "\(AppConstants.entityNameSingle) details".localizedMissing
-    }
-
-    var navigationViewModel: BaseView.NavigationViewModel? {
-        guard presentationStyle == .navigation else {
-            return nil
-        }
-        return .custom(onBackButtonTap: { onPerformRouteBack() }, title: title)
-    }
-
-    func updateStateCopyWithViewModelCurrentState() {
-        if viewModel.name != eventNameCopy {
-            eventNameCopy = viewModel.name
-        }
-        if viewModel.info != eventInfoCopy {
-            eventInfoCopy = viewModel.info
-        }
-        if viewModel.favorite != eventFavoriteCopy {
-            eventFavoriteCopy = viewModel.favorite
-        }
-        if viewModel.locationRelevant != eventLocationRelevantCopy {
-            eventLocationRelevantCopy = viewModel.locationRelevant
-        }
-        if viewModel.soundEffect != eventSoundEffectCopy {
-            eventSoundEffectCopy = viewModel.soundEffect
-        }
-        if viewModel.category != eventCategoryCopy {
-            eventCategoryCopy = viewModel.category
-        }
-    }
-
-    func onConfirmEdit() {
-        viewModel.send(.userDidChangedName(value: eventNameCopy))
-        viewModel.send(.userDidChangedInfo(value: eventInfoCopy))
-        viewModel.send(.userDidChangedFavorite(value: eventFavoriteCopy))
-        viewModel.send(.userDidChangedLocationRelevant(value: eventLocationRelevantCopy))
-        viewModel.send(.userDidChangedSoundEffect(value: SoundEffect(rawValue: eventSoundEffectCopy) ?? .none))
-        viewModel.send(.userDidChangedEventCategory(value: HitHappensEventCategory(rawValue: eventCategoryCopy.intValue ?? 0) ?? .none))
-    }
-
-    func onCancelEdit() {
-        updateStateCopyWithViewModelCurrentState()
-    }
-}
 
 //
 // MARK: - Auxiliar Views
@@ -253,13 +204,33 @@ fileprivate extension EventDetailsView {
         }
         SwiftUIUtils.FixedVerticalSpacer(height: SizeNames.defaultMargin)
         LazyVStack(spacing: 0) {
-            nameView
+            EditableTitleAndValueView(
+                title: "Name".localizedMissing,
+                placeholder: "Name".localizedMissing,
+                onEdit: $onEdit,
+                originalValue: viewModel.name,
+                changedValue: $eventNameCopy,
+                accessibility: .txtName)
             SwiftUIUtils.FixedVerticalSpacer(height: SizeNames.defaultMarginSmall)
-            infoView
+            EditableTitleAndValueView(
+                title: "Info".localizedMissing,
+                placeholder: "Info".localizedMissing,
+                onEdit: $onEdit,
+                originalValue: viewModel.info,
+                changedValue: $eventInfoCopy,
+                accessibility: .txtName)
             SwiftUIUtils.FixedVerticalSpacer(height: SizeNames.defaultMarginSmall)
-            favoriteView
+            EditableTitleAndValueToggleView(
+                title: "Favorite".localizedMissing,
+                onEdit: $onEdit,
+                originalValue: viewModel.favorite,
+                changedValue: $eventFavoriteCopy)
             SwiftUIUtils.FixedVerticalSpacer(height: SizeNames.defaultMarginSmall)
-            userLocationView
+            EditableTitleAndValueToggleView(
+                title: "Grab user location when adding new".localizedMissing,
+                onEdit: $onEdit,
+                originalValue: viewModel.locationRelevant,
+                changedValue: $eventLocationRelevantCopy)
             SwiftUIUtils.FixedVerticalSpacer(height: SizeNames.defaultMarginSmall)
             categoryView
             SwiftUIUtils.FixedVerticalSpacer(height: SizeNames.defaultMarginSmall)
@@ -269,7 +240,20 @@ fileprivate extension EventDetailsView {
         .paddingRight(SizeNames.size_1.cgFloat)
         .paddingLeft(SizeNames.size_1.cgFloat)
         if viewModel.isNewEvent {
-            saveNewEventView
+            TextButton(
+                onClick: {
+                    AnalyticsManager.shared.handleButtonClickEvent(
+                        buttonType: .primary,
+                        label: "Save \(AppConstants.entityNameSingle)",
+                        sender: "\(Self.self)")
+                    onConfirmEdit()
+                },
+                text: "Save \(AppConstants.entityNameSingle)".localizedMissing,
+                alignment: .center,
+                style: .secondary,
+                background: .primary,
+                enabled: canSaveNewEvent,
+                accessibility: .saveButton)
         } else {
             EditView(
                 onEdit: $onEdit,
@@ -295,65 +279,7 @@ fileprivate extension EventDetailsView {
     var canSaveNewEvent: Bool {
         !eventNameCopy.trim.isEmpty
     }
-
-    @ViewBuilder
-    var saveNewEventView: some View {
-        if viewModel.isNewEvent {
-            TextButton(
-                onClick: {
-                    AnalyticsManager.shared.handleButtonClickEvent(
-                        buttonType: .primary,
-                        label: "Save \(AppConstants.entityNameSingle)",
-                        sender: "\(Self.self)")
-                    viewModel.send(.saveNewEvent(confirmed: false))
-                },
-                text: "Save \(AppConstants.entityNameSingle)".localizedMissing,
-                alignment: .center,
-                style: .secondary,
-                background: .primary,
-                enabled: canSaveNewEvent,
-                accessibility: .saveButton)
-        }
-    }
-
-    var nameView: some View {
-        EditableTitleAndValueView(
-            title: "Name".localizedMissing,
-            placeholder: "Name".localizedMissing,
-            onEdit: $onEdit,
-            originalValue: viewModel.name,
-            changedValue: $eventNameCopy,
-            accessibility: .txtName)
-    }
-
-    var infoView: some View {
-        EditableTitleAndValueView(
-            title: "Info".localizedMissing,
-            placeholder: "Info".localizedMissing,
-            onEdit: $onEdit,
-            originalValue: viewModel.info,
-            changedValue: $eventInfoCopy,
-            accessibility: .txtName)
-    }
-
-    @ViewBuilder
-    var favoriteView: some View {
-        EditableTitleAndValueToggleView(
-            title: "Favorite".localizedMissing,
-            onEdit: $onEdit,
-            originalValue: viewModel.favorite,
-            changedValue: $eventFavoriteCopy)
-    }
-
-    @ViewBuilder
-    var userLocationView: some View {
-        EditableTitleAndValueToggleView(
-            title: "Grab user location when adding new".localizedMissing,
-            onEdit: $onEdit,
-            originalValue: viewModel.locationRelevant,
-            changedValue: $eventLocationRelevantCopy)
-    }
-
+    
     @ViewBuilder
     var categoryView: some View {
         if onEdit {
@@ -479,6 +405,77 @@ fileprivate extension EventDetailsView {
 }
 
 //
+// MARK: - Auxiliar
+//
+fileprivate extension EventDetailsView {
+    var title: String {
+        "\(AppConstants.entityNameSingle) details".localizedMissing
+    }
+
+    var navigationViewModel: BaseView.NavigationViewModel? {
+        guard presentationStyle == .navigation else {
+            return nil
+        }
+        return .custom(onBackButtonTap: { onPerformRouteBack() }, title: title)
+    }
+
+    func updateViewModelWithStateCopy() {
+        if viewModel.name != eventNameCopy {
+            viewModel.trackedEntity?.name = eventNameCopy
+        }
+        if viewModel.info != eventInfoCopy {
+            viewModel.trackedEntity?.info = eventInfoCopy
+        }
+        if viewModel.favorite != eventFavoriteCopy {
+            viewModel.trackedEntity?.favorite = eventFavoriteCopy
+        }
+        if viewModel.locationRelevant != eventLocationRelevantCopy {
+            viewModel.trackedEntity?.locationRelevant = eventLocationRelevantCopy
+        }
+        if viewModel.soundEffect != eventSoundEffectCopy {
+            viewModel.trackedEntity?.sound = SoundEffect.with(localized: eventSoundEffectCopy) ?? .none
+        }
+        if viewModel.category != eventCategoryCopy {
+            viewModel.trackedEntity?.category = HitHappensEventCategory.with(localized: eventCategoryCopy) ?? .none
+        }
+    }
+    
+    func updateStateCopyWithViewModelCurrentState() {
+        if viewModel.name != eventNameCopy {
+            eventNameCopy = viewModel.name
+        }
+        if viewModel.info != eventInfoCopy {
+            eventInfoCopy = viewModel.info
+        }
+        if viewModel.favorite != eventFavoriteCopy {
+            eventFavoriteCopy = viewModel.favorite
+        }
+        if viewModel.locationRelevant != eventLocationRelevantCopy {
+            eventLocationRelevantCopy = viewModel.locationRelevant
+        }
+        if viewModel.soundEffect != eventSoundEffectCopy {
+            eventSoundEffectCopy = viewModel.soundEffect
+        }
+        if viewModel.category != eventCategoryCopy {
+            eventCategoryCopy = viewModel.category
+        }
+    }
+
+    func onConfirmEdit() {
+        if viewModel.isNewEvent {
+            viewModel.send(.saveNewEvent(confirmed: false))
+        } else {
+            updateViewModelWithStateCopy()
+        }
+    }
+
+    func onCancelEdit() {
+        updateStateCopyWithViewModelCurrentState()
+    }
+}
+
+
+//
 // MARK: Confirmation Sheet View & UserMessage View
 //
 
@@ -499,7 +496,13 @@ extension EventDetailsView {
                 case .delete:
                     viewModel.send(.deleteEvent(confirmed: true))
                 case .save:
-                    viewModel.send(.saveNewEvent(confirmed: true))
+                    if viewModel.isNewEvent {
+                        updateViewModelWithStateCopy()
+                        viewModel.send(.saveNewEvent(confirmed: true))
+                    } else {
+                        updateViewModelWithStateCopy()
+                        viewModel.send(.saveNewEvent(confirmed: true))
+                    }
                 }
             })
     }

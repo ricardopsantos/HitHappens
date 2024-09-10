@@ -50,7 +50,9 @@ struct EventsListViewCoordinator: View, ViewCoordinatorProtocol {
         case .eventDetails(model: let model):
             let dependencies: EventDetailsViewModel.Dependencies = .init(
                 model: model, onPerformRouteBack: {
-                    coordinatorTab2.navigateBack()
+                    if !coordinatorTab2.navigateBack() {
+                        coordinator.coverLink = nil
+                    }
                 }, onShouldDisplayTrackedLog: { trackedLog in
                     coordinatorTab2.coverLink = .eventLogDetails(model: .init(trackedLog: trackedLog))
                 },

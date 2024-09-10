@@ -75,7 +75,6 @@ class EventLogDetailsViewModel: BaseViewModel {
     // MARK: - Usage/Auxiliar Attributes
     @Published private(set) var trackedLog: Model.TrackedLog?
     @Published var confirmationSheetType: ConfirmationSheet?
-    @Published var tip: (text: String, color: ColorSemantic) = ("", .clear)
     @Published var note: String = ""
     @Published var eventDate: Date = .now
     @Published var address: String = ""

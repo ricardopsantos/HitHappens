@@ -31,11 +31,13 @@ public final class RouterViewModel: ObservableObject {
         navPath.append(destination)
     }
 
-    public func navigateBack() {
+    public func navigateBack() -> Bool {
         if !navPath.isEmpty {
             navPath.removeLast()
+            return true
         } else {
             DevTools.Log.error("navPath is empty. can route back", .view)
+            return false
         }
     }
 

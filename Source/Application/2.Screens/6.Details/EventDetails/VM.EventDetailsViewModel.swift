@@ -70,13 +70,13 @@ extension EventDetailsViewModel {
         case didAppear
         case didDisappear
         case reload
-        case userDidChangedSoundEffect(value: SoundEffect)
-        case userDidChangedEventCategory(value: HitHappensEventCategory)
-        case userDidChangedLocationRelevant(value: Bool)
-        case userDidChangedFavorite(value: Bool)
+        //case userDidChangedSoundEffect(value: SoundEffect)
+        //case userDidChangedEventCategory(value: HitHappensEventCategory)
+        //case userDidChangedLocationRelevant(value: Bool)
+        //case userDidChangedFavorite(value: Bool)
         case userDidChangedArchived(value: Bool)
-        case userDidChangedName(value: String)
-        case userDidChangedInfo(value: String)
+        //case userDidChangedName(value: String)
+        //case userDidChangedInfo(value: String)
         case usedDidTappedLogEvent(trackedLogId: String)
         case handleConfirmation
         case addNewLog
@@ -110,7 +110,6 @@ class EventDetailsViewModel: BaseViewModel {
     @Published var id: String = ""
     @Published var counter: Int = 0
     @Published var locationRelevant: Bool = false
-    @Published var tip: (text: String, color: ColorSemantic) = ("", .clear)
     private let cancelBag = CancelBag()
     private let dataBaseRepository: DataBaseRepositoryProtocol?
     private let onPerformRouteBack: () -> Void
@@ -149,6 +148,7 @@ class EventDetailsViewModel: BaseViewModel {
                     updateUI(event: record)
                 }
             }
+            /*
         case .userDidChangedSoundEffect(value: let value):
             displayTip("")
             value.play()
@@ -205,14 +205,14 @@ class EventDetailsViewModel: BaseViewModel {
             } else {
                 Task { [weak self] in
                     guard let self = self, var trackedEntity = trackedEntity,
-                          value != trackedEntity.name else { return }
+                          value != trackedEntity.name, !value.isEmpty else { return }
                     trackedEntity.name = value
                     trackedEntity.cascadeEvents = nil // So it does not update cascade events
                     dataBaseRepository?.trackedEntityUpdate(
                         trackedEntity: trackedEntity)
                 }
             }
-
+*/
         case .userDidChangedArchived(value: let value):
             displayTip("")
             if isNewEvent {
@@ -235,7 +235,7 @@ class EventDetailsViewModel: BaseViewModel {
                     }
                 }
             }
-
+/*
         case .userDidChangedFavorite(value: let value):
             displayTip("")
             if isNewEvent {
@@ -272,7 +272,7 @@ class EventDetailsViewModel: BaseViewModel {
                         trackedEntity: trackedEntity)
                 }
             }
-
+*/
         case .usedDidTappedLogEvent(trackedLogId: let trackedLogId):
             displayTip("")
             guard !isNewEvent else { return }
@@ -353,10 +353,7 @@ class EventDetailsViewModel: BaseViewModel {
 //
 
 fileprivate extension EventDetailsViewModel {
-    func displayTip(_ message: String) {
-        tip.text = message
-        tip.color = .allCool
-    }
+
 
     func updateUI(event model: Model.TrackedEntity) {
         let count = model.cascadeEvents?.count ?? 0
@@ -407,7 +404,9 @@ fileprivate extension EventDetailsViewModel {
                 case .databaseDidDeletedContentOn(let table, let id):
                     // Record deleted! Route back
                     if table == "\(CDataTrackedEntity.self)", id == self?.trackedEntity?.id {
-                        self?.onPerformRouteBack()
+                        Common.ExecutionControlManager.debounce(operationId: "\(Self.self)\(#function).Deleted") { [weak self] in
+                            self?.onPerformRouteBack()
+                        }
                     }
                 case .databaseDidChangedContentItemOn: break
                 case .databaseDidFinishChangeContentItemsOn(let table):
