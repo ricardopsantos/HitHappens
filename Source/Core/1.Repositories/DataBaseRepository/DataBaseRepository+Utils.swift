@@ -19,35 +19,35 @@ public extension DataBaseRepository {
                     longitude: -122.3331,
                     addressMin: "Starbucks, Seattle, WA",
                     note: "Starbucks",
-                    recordDate: Date().add(days: -Int.random(in: 1...10))
+                    recordDate: Date().add(days: -Int.random(in: 1...60))
                 ),
                 .init(
                     latitude: 43.6532,
                     longitude: -79.3832,
                     addressMin: "Tim Hortons, Toronto, ON",
                     note: "Tim Hortons",
-                    recordDate: Date().add(days: -Int.random(in: 1...10))
+                    recordDate: Date().add(days: -Int.random(in: 1...60))
                 ),
                 .init(
                     latitude: 42.3601,
                     longitude: -71.0589,
                     addressMin: "Dunkin', Boston, MA",
                     note: "Dunkin",
-                    recordDate: Date().add(days: -Int.random(in: 1...10))
+                    recordDate: Date().add(days: -Int.random(in: 1...60))
                 ),
                 .init(
                     latitude: 51.5074,
                     longitude: -0.1278,
                     addressMin: "Costa Coffee, London, UK",
                     note: "Costa Coffee",
-                    recordDate: Date().add(days: -Int.random(in: 1...10))
+                    recordDate: Date().add(days: -Int.random(in: 1...60))
                 ),
                 .init(
                     latitude: 34.0522,
                     longitude: -118.2437,
                     addressMin: "The Coffee Bean & Tea Leaf, Los Angeles, CA",
                     note: "The Coffee Bean & Tea Leaf",
-                    recordDate: Date().add(days: -Int.random(in: 1...10))
+                    recordDate: Date().add(days: -Int.random(in: 1...60))
                 )
             ]
             let coffee: Model.TrackedEntity = .init(
@@ -68,28 +68,28 @@ public extension DataBaseRepository {
                     longitude: 13.4050,
                     addressMin: "Holmes Place, Berlin, Germany",
                     note: "Holmes Place",
-                    recordDate: Date().add(days: -Int.random(in: 1...10))
+                    recordDate: Date().add(days: -Int.random(in: 1...60))
                 ),
                 .init(
                     latitude: 40.7128,
                     longitude: -74.0060,
                     addressMin: "Central Park, New York, NY",
                     note: "Outdoor",
-                    recordDate: Date().add(days: -Int.random(in: 1...10))
+                    recordDate: Date().add(days: -Int.random(in: 1...60))
                 ),
                 .init(
                     latitude: 52.5200,
                     longitude: 13.4050,
                     addressMin: "Holmes Place, Berlin, Germany",
                     note: "Holmes Place",
-                    recordDate: Date().add(days: -Int.random(in: 1...10))
+                    recordDate: Date().add(days: -Int.random(in: 1...60))
                 ),
                 .init(
                     latitude: 40.7128,
                     longitude: -74.0060,
                     addressMin: "Central Park, New York, NY",
                     note: "Outdoor",
-                    recordDate: Date().add(days: -Int.random(in: 1...10))
+                    recordDate: Date().add(days: -Int.random(in: 1...60))
                 ),
                 .init(
                     latitude: 40.7128,
@@ -117,56 +117,56 @@ public extension DataBaseRepository {
                     longitude: -118.2437,
                     addressMin: "AMC Theatres, Los Angeles, CA",
                     note: "Avengers: Endgame",
-                    recordDate: Date().add(days: -Int.random(in: 1...10))
+                    recordDate: Date().add(days: -Int.random(in: 1...60))
                 ),
                 .init(
                     latitude: 33.7675,
                     longitude: -84.4207,
                     addressMin: "Regal Cinemas, Atlanta, GA",
                     note: "Jurassic World",
-                    recordDate: Date().add(days: -Int.random(in: 1...10))
+                    recordDate: Date().add(days: -Int.random(in: 1...60))
                 ),
                 .init(
                     latitude: 40.7128,
                     longitude: -74.0060,
                     addressMin: "AMC Empire 25, New York, NY",
                     note: "The Dark Knight",
-                    recordDate: Date().add(days: -Int.random(in: 1...10))
+                    recordDate: Date().add(days: -Int.random(in: 1...60))
                 ),
                 .init(
                     latitude: -37.8136,
                     longitude: 144.9631,
                     addressMin: "Hoyts Cinema, Melbourne, Australia",
                     note: "Avatar",
-                    recordDate: Date().add(days: -Int.random(in: 1...10))
+                    recordDate: Date().add(days: -Int.random(in: 1...60))
                 ),
                 .init(
                     latitude: 51.5074,
                     longitude: -0.1278,
                     addressMin: "Odeon Cinema, London, UK",
                     note: "Inception",
-                    recordDate: Date().add(days: -Int.random(in: 1...10))
+                    recordDate: Date().add(days: -Int.random(in: 1...60))
                 ),
                 .init(
                     latitude: 35.6895,
                     longitude: 139.6917,
                     addressMin: "TOHO Cinemas, Tokyo, Japan",
                     note: "Black Panther",
-                    recordDate: Date().add(days: -Int.random(in: 1...10))
+                    recordDate: Date().add(days: -Int.random(in: 1...60))
                 ),
                 .init(
                     latitude: 34.0522,
                     longitude: -118.2437,
                     addressMin: "AMC Theatres, Los Angeles, CA",
                     note: "Star Wars: The Force Awakens",
-                    recordDate: Date().add(days: -Int.random(in: 1...10))
+                    recordDate: Date().add(days: -Int.random(in: 1...60))
                 )
             ]
 
             let cinema: Model.TrackedEntity = .init(
                 id: UUID().uuidString,
                 name: "Cinema \(Date().year)",
-                info: "The number of movies I have saw at Cinema this eyear",
+                info: "The number of movies I have saw at Cinema this year",
                 archived: false,
                 favorite: false,
                 locationRelevant: true,
@@ -181,35 +181,35 @@ public extension DataBaseRepository {
                     longitude: -0.1278,
                     addressMin: "Wembley Stadium, London, UK",
                     note: "Coldplay Live",
-                    recordDate: Date().add(days: -Int.random(in: 1...10))
+                    recordDate: Date().add(days: -Int.random(in: 1...60))
                 ),
                 .init(
                     latitude: 40.7505,
                     longitude: -73.9934,
                     addressMin: "Madison Square Garden, New York, NY",
                     note: "Beyoncé Concert",
-                    recordDate: Date().add(days: -Int.random(in: 1...10))
+                    recordDate: Date().add(days: -Int.random(in: 1...60))
                 ),
                 .init(
                     latitude: 51.5074,
                     longitude: -0.1278,
                     addressMin: "Wembley Stadium, London, UK",
                     note: "Ed Sheeran Tour",
-                    recordDate: Date().add(days: -Int.random(in: 1...10))
+                    recordDate: Date().add(days: -Int.random(in: 1...60))
                 ),
                 .init(
                     latitude: 34.0522,
                     longitude: -118.2437,
                     addressMin: "Rose Bowl, Los Angeles, CA",
                     note: "Taylor Swift Concert",
-                    recordDate: Date().add(days: -Int.random(in: 1...10))
+                    recordDate: Date().add(days: -Int.random(in: 1...60))
                 ),
                 .init(
                     latitude: 43.6532,
                     longitude: -79.3832,
                     addressMin: "Rogers Centre, Toronto, ON",
                     note: "The Weeknd Live",
-                    recordDate: Date().add(days: -Int.random(in: 1...10))
+                    recordDate: Date().add(days: -Int.random(in: 1...60))
                 )
             ]
 
@@ -231,28 +231,28 @@ public extension DataBaseRepository {
                     longitude: -112.0740,
                     addressMin: "Phoenix Public Library, Phoenix, AZ",
                     note: "Finished reading 'The Catcher in the Rye'",
-                    recordDate: Date().add(days: -Int.random(in: 1...10))
+                    recordDate: Date().add(days: -Int.random(in: 1...60))
                 ),
                 .init(
                     latitude: 37.7749,
                     longitude: -122.4194,
                     addressMin: "City Lights Bookstore, San Francisco, CA",
                     note: "Finished '1984' by George Orwell",
-                    recordDate: Date().add(days: -Int.random(in: 1...10))
+                    recordDate: Date().add(days: -Int.random(in: 1...60))
                 ),
                 .init(
                     latitude: 40.7128,
                     longitude: -74.0060,
                     addressMin: "The Strand, New York, NY",
                     note: "Finished 'To Kill a Mockingbird'",
-                    recordDate: Date().add(days: -Int.random(in: 1...10))
+                    recordDate: Date().add(days: -Int.random(in: 1...60))
                 )
             ]
 
             let books: Model.TrackedEntity = .init(
                 id: UUID().uuidString,
-                name: "Books",
-                info: "The number of books I have completed",
+                name: "Books \(Date().year)",
+                info: "The books I have completed in \(Date().year)",
                 archived: false,
                 favorite: true,
                 locationRelevant: false,

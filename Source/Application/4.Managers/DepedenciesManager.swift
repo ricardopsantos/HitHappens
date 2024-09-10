@@ -13,10 +13,13 @@ import Common
 
 public class DependenciesManager {
     private init() {}
+    enum WebAPI {
+        public static var webAPI: NetworkManagerProtocol { NetworkManager.shared }
+    }
     enum Services {
         public static var appConfigServiceMock: AppConfigServiceProtocol { AppConfigServiceMock.shared }
-        public static var appConfigService: AppConfigServiceProtocol { AppConfigService.shared }
-        public static var sampleService: SampleServiceProtocol { SampleService.shared }
+        public static var appConfigService: AppConfigServiceProtocol { AppConfigService(webAPI: WebAPI.webAPI) }
+        public static var sampleService: SampleServiceProtocol { SampleService(webAPI: WebAPI.webAPI) }
     }
 
     public enum Repository {

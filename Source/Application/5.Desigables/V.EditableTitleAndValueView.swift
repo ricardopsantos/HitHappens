@@ -28,13 +28,12 @@ public struct EditableTitleAndValueView: View {
         originalValue: String,
         changedValue: Binding<String>,
         style: TitleAndValueView.Style = .horizontal,
-        accessibility: DesignSystem.Accessibility = .undefined) {
+        accessibility: DesignSystem.Accessibility) {
         self._onEdit = onEdit
         self._changedValue = changedValue
         self.title = title
         self.placeholder = placeholder
         self.originalValue = originalValue
-
         self.style = style
         self.accessibility = accessibility
     }
@@ -115,7 +114,8 @@ struct EditableTitleAndValueViewSample: View {
                 placeholder: "placeholder",
                 onEdit: $onEdit,
                 originalValue: originalValueString,
-                changedValue: $changedValue)
+                changedValue: $changedValue,
+                accessibility: .undefined)
             Divider()
             EditableTitleAndValueToggleView(
                 title: "Title_2",

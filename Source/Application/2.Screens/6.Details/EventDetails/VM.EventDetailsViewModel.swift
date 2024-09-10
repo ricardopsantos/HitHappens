@@ -218,11 +218,12 @@ class EventDetailsViewModel: BaseViewModel {
                 confirmationSheetType = .save
             } else {
                 Task { [weak self] in
-                    guard let self = self, let trackedEntity = trackedEntity else { return }
-                    if let trackedEntityId = dataBaseRepository?.trackedEntityInsert(trackedEntity: trackedEntity) {
+                    guard let self = self, var trackedEntity = trackedEntity else { return }
+                    trackedEntity.cascadeEvents = nil // So it does not update cascade events
+                    if let trackedEntityId = dataBaseRepository?.trackedEntityInsertOrUpdate(trackedEntity: trackedEntity) {
                         self.isNewEvent = false
                         self.confirmationSheetType = nil
-                        self.trackedEntity = dataBaseRepository?.trackedEntityGet(trackedEntityId: trackedEntityId, cascade: true)
+                        //   self.trackedEntity = dataBaseRepository?.trackedEntityGet(trackedEntityId: trackedEntityId, cascade: true)
                     }
                 }
             }
@@ -236,21 +237,20 @@ class EventDetailsViewModel: BaseViewModel {
 
 fileprivate extension EventDetailsViewModel {
     func updateUI(event model: Model.TrackedEntity) {
-        let count = model.cascadeEvents?.count ?? 0
-        logs = model.cascadeEvents?
-            .sorted(by: { $0.recordDate > $1.recordDate })
-            .enumerated()
-            .map { index, event in
-                .init(
-                    id: event.id,
-                    title: "\(count - index). \(event.localizedListItemTitleV1)",
-                    value: event.localizedListItemValueV1)
-            }
-        guard trackedEntity != model else {
-            return
+        Common.ExecutionControlManager.debounce(operationId: "\(Self.self)|\(#function)") { [weak self] in
+            self?.trackedEntityUpdated = Date()
+            let count = model.cascadeEvents?.count ?? 0
+            self?.logs = model.cascadeEvents?
+                .sorted(by: { $0.recordDate > $1.recordDate })
+                .enumerated()
+                .map { index, event in
+                    .init(
+                        id: event.id,
+                        title: "\(count - index). \(event.localizedListItemTitleV1)",
+                        value: event.localizedListItemValueV1)
+                }
+            self?.trackedEntity = model
         }
-        trackedEntityUpdated = Date()
-        trackedEntity = model
     }
 
     func startListeningDBChanges() {

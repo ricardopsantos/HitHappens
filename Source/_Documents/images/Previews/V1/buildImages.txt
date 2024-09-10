@@ -1,0 +1,10 @@
+brew install imagemagick
+
+magick montage t1.dark.png t2.dark.png t3.dark.png t4.dark.png -tile 4x1 -geometry +0+0 dark_0.png
+magick montage t1.light.png t2.light.png t3.light.png t4.light.png -tile 4x1 -geometry +0+0 light_0.png
+
+magick montage t1.dark.png t2.dark.png t3.dark.png t3.dark.png -tile 4x1 -geometry +1+0 dark_1.png
+magick montage t1.light.png t2.light.png t3.light.png t3.light.png -tile 4x1 -geometry +1+0 light_1.png
+
+magick montage t1.dark.png t2.dark.png t3.dark.png t4.dark.png -tile 4x1 -geometry +5+0 dark_5.png
+magick montage t1.light.png t2.light.png t3.light.png t4.light.png -tile 4x1 -geometry +5+0 light_5.png

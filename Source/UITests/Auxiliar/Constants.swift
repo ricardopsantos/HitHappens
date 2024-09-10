@@ -19,7 +19,15 @@ enum Constants {
     static let entityOccurrenceNamePlural = "\(entityOccurrenceSingle)(s)"
     //
     //
-    static let books = "Books | Personal"
+    static let booksEntityAlternativeCategory = "Cultural"
+    static let booksEntityCategory = "Personal"
+    static let booksAlternativeSoundEffect = "Duck"
+    static let booksSoundEffect = "Cheer 1"
+    static let bookLogsCount = 3
+    static let booksEntityName = "Books \(Date().year)"
+    static let booksAlternativeEntityName = "Books \(Date().year)_V2"
+    static let booksListItem = "\(booksEntityName) | \(booksEntityCategory)"
+    static let booksAlternativeListItem = "\(booksAlternativeEntityName) | \(booksEntityAlternativeCategory)"
     static let alertWhenAddNewEvent = "\(Constants.entityOccurrenceSingle) tracked!\n\n(Tap here to edit/add details.)"
     //
     //
@@ -60,6 +68,8 @@ enum UITestingOptions: String {
 public enum Accessibility: String, CaseIterable {
     // Text Fields
     case txtName
+    case txtInfo
+    case txtNote
     case txtUserName
     case txtEmail
     case txtPassword

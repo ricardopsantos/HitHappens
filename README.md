@@ -17,6 +17,10 @@
 	
 # About 
 
+<center>
+<img src=Source/_Documents/images/Previews/V1/dark_5.png width=800/>
+</center>
+
 ## Intro 
 
 _Hit Happens_ is an application built with __SwiftUI__ using __MVVM__, and was mainly designed to serve as a template while integrating various frameworks and features in a well-organized structure with support for __Unit Testing__, __UI Testing__. Also makes use of other tools like __[XcodeGen](https://github.com/yonaskolb/XcodeGen)__, __[SwiftLint](https://github.com/realm/SwiftLint)__ and __[SwiftFormat](https://github.com/nicklockwood/SwiftFormat)__
@@ -131,6 +135,16 @@ The app _Services_ are built on a way that can be tested.
 <img src=Source/_Documents/images/UnitTests.services.png width=800/>
 
 # Misc
+
+## Ligth / Dark mode support 
+
+<center>
+<img src=Source/_Documents/images/Previews/V1/light_5.png width=800/>
+</center>
+
+<center>
+<img src=Source/_Documents/images/Previews/V1/dark_5.png width=800/>
+</center>
 
 ## Design Language 
 

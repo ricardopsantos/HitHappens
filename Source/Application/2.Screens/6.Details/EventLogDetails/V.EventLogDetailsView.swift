@@ -124,7 +124,13 @@ struct EventLogDetailsView: View, ViewProtocol {
                     SwiftUIUtils.FixedVerticalSpacer(height: SizeNames.defaultMarginSmall)
                     recordDateView
                     SwiftUIUtils.FixedVerticalSpacer(height: SizeNames.defaultMarginSmall)
-                    noteView
+                    EditableTitleAndValueView(
+                        title: "Note".localizedMissing,
+                        placeholder: "Add a note".localizedMissing,
+                        onEdit: $onEdit,
+                        originalValue: !viewModel.note.isEmpty ? viewModel.note : "...",
+                        changedValue: $noteCopy,
+                        accessibility: .txtNote)
                     SwiftUIUtils.FixedVerticalSpacer(height: SizeNames.defaultMarginSmall)
                     mapView
                     SwiftUIUtils.FixedVerticalSpacer(height: SizeNames.defaultMarginSmall)
@@ -248,15 +254,6 @@ extension EventLogDetailsView {
         } else {
             EmptyView()
         }
-    }
-
-    var noteView: some View {
-        EditableTitleAndValueView(
-            title: "Note".localizedMissing,
-            placeholder: "Add a note".localizedMissing,
-            onEdit: $onEdit,
-            originalValue: !viewModel.note.isEmpty ? viewModel.note : "...",
-            changedValue: $noteCopy)
     }
 
     @ViewBuilder
