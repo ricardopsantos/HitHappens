@@ -13,34 +13,34 @@ public extension ModelDto.AppConfigResponse {
         let jsonString = """
         {
           "hit_happens": {
-            "public_code_url": "https://github.com/ricardopsantos/RJPS_AppsConfig/blob/main/HitHappens/PublicCode.md",
+            "public_code_url": "https://raw.githubusercontent.com/ricardopsantos/RJPS_AppsConfig/main/HitHappens/PublicCode.md",
             "support_email_encrypted": "qxmbXiDuBh9gfJ8StXgyH0weyRMK5UbZ7IWGOAjvuCKbZtLLFlhggNo8xBWkwyq1jA==",
             "onboarding": {
-                "intro" : "Have you ever wondered how many times something happens on your life? Literally how many times...",
+              "intro": "Hit Happens lets you capture life’s moments with ease. Track the little things that matter and see how often they happen over time.",
               "pages": [
                 {
                   "order": 1,
-                  "text": "Keep your favorite things to track in a handy place. Just tap the number and it will increase.",
-                  "image_light": "https://github.com/ricardopsantos/RJPS_AppsConfig/blob/a6ce5f0a34a2635da482ca87ecd4f1dd0bc970ba/HitHappens/images/onboarding/tab1.png?raw=true",
-                  "image_dark": "https://github.com/ricardopsantos/RJPS_AppsConfig/blob/a6ce5f0a34a2635da482ca87ecd4f1dd0bc970ba/HitHappens/images/onboarding/tab1.png?raw=true"
+                  "text": "Keep track of your favorite activities in one convenient place. Just tap to increment the counter and watch your progress grow.",
+                  "image_light": "https://raw.githubusercontent.com/ricardopsantos/RJPS_AppsConfig/main/HitHappens/images/onboardingV2/t1.light.jpg",
+                  "image_dark": "https://raw.githubusercontent.com/ricardopsantos/RJPS_AppsConfig/main/HitHappens/images/onboardingV2/t1.dark.jpg"
                 },
                 {
                   "order": 2,
-                  "text": "All the other tracked events exist organized by type and can have categories, sounds and more.",
-                  "image_light": "https://github.com/ricardopsantos/RJPS_AppsConfig/blob/a6ce5f0a34a2635da482ca87ecd4f1dd0bc970ba/HitHappens/images/onboarding/tab2.png?raw=true",
-                  "image_dark": "https://github.com/ricardopsantos/RJPS_AppsConfig/blob/a6ce5f0a34a2635da482ca87ecd4f1dd0bc970ba/HitHappens/images/onboarding/tab2.png?raw=true"
+                  "text": "Organize all your tracked events by type. Add categories, sounds, and more to personalize your experience.",
+                  "image_light": "https://raw.githubusercontent.com/ricardopsantos/RJPS_AppsConfig/main/HitHappens/images/onboardingV2/t2.light.jpg",
+                  "image_dark": "https://raw.githubusercontent.com/ricardopsantos/RJPS_AppsConfig/main/HitHappens/images/onboardingV2/t2.dark.jpg"
                 },
                 {
                   "order": 3,
-                  "text": "On the app calendar you can check whats been going on with the things you track.",
-                  "image_light": "https://github.com/ricardopsantos/RJPS_AppsConfig/blob/a6ce5f0a34a2635da482ca87ecd4f1dd0bc970ba/HitHappens/images/onboarding/tab3.png?raw=true",
-                  "image_dark": "https://github.com/ricardopsantos/RJPS_AppsConfig/blob/a6ce5f0a34a2635da482ca87ecd4f1dd0bc970ba/HitHappens/images/onboarding/tab3.png?raw=true"
+                  "text": "Use the built-in calendar to review everything you’ve been tracking at a glance.",
+                  "image_light": "https://raw.githubusercontent.com/ricardopsantos/RJPS_AppsConfig/main/HitHappens/images/onboardingV2/t3.light.jpg",
+                  "image_dark": "https://raw.githubusercontent.com/ricardopsantos/RJPS_AppsConfig/main/HitHappens/images/onboardingV2/t3.dark.jpg"
                 },
                 {
                   "order": 4,
-                  "text": "And because some events can have a location associated, you can check them on the map!",
-                  "image_light": "https://github.com/ricardopsantos/RJPS_AppsConfig/blob/a6ce5f0a34a2635da482ca87ecd4f1dd0bc970ba/HitHappens/images/onboarding/tab4.png?raw=true",
-                  "image_dark": "https://github.com/ricardopsantos/RJPS_AppsConfig/blob/a6ce5f0a34a2635da482ca87ecd4f1dd0bc970ba/HitHappens/images/onboarding/tab4.png?raw=true"
+                  "text": "For events tied to locations, check them out on the map to see where they happened!",
+                  "image_light": "https://raw.githubusercontent.com/ricardopsantos/RJPS_AppsConfig/main/HitHappens/images/onboardingV2/t4.light.jpg",
+                  "image_dark": "https://raw.githubusercontent.com/ricardopsantos/RJPS_AppsConfig/main/HitHappens/images/onboardingV2/t4.dark.jpg"
                 }
               ]
             }

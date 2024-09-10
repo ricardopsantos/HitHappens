@@ -133,7 +133,8 @@ fileprivate extension OnboardingView {
                     if let uiImage = viewModel.onboardingModel.safeItem(at: index)?.image {
                         Image(uiImage: uiImage)
                             .resizable()
-                            .cornerRadius(SizeNames.cornerRadius)
+                            .cornerRadius2(SizeNames.cornerRadius)
+                            .shadow(radius: SizeNames.shadowRadiusRegular)
                             .scaledToFit()
                             .frame(width: screenWidth - 2 * SizeNames.defaultMargin)
                             .padding()
