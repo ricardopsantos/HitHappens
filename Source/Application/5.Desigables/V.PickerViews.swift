@@ -16,12 +16,12 @@ import DevTools
 /// Picker with closure (example)
 public struct CategoryPickerView: View {
     @Environment(\.colorScheme) var colorScheme
-    @State var selectedOption: String
+    @Binding var selectedOption: String
     private let onChange: (HitHappensEventCategory) -> Void
     public init(
-        selected: String,
+        selected: Binding<String>,
         onChange: @escaping (HitHappensEventCategory) -> Void) {
-        self.selectedOption = selected
+        self._selectedOption = selected
         self.onChange = onChange
     }
 
@@ -56,11 +56,11 @@ public struct SoundPickerView: View {
     public var body: some View {
         DefaultPickerView(
             title: "Sound effect".localizedMissing,
-            options: SoundEffect.allCases.map(\.name),
+            options: SoundEffect.allCases.map(\.localized),
             selectedOption: $selectedOption)
             .onChange(of: selectedOption) { newValue in
                 if let value = SoundEffect.allCases.filter({
-                    $0.name == newValue
+                    $0.localized == newValue
                 }).first {
                     DevTools.Log.debug(.valueChanged("\(Self.self)", "selectedOption", "\(value)"), .view)
                     value.play()
@@ -113,7 +113,7 @@ public struct AppearancePickerView: View {
     VStack {
         AppearancePickerView(selected: .constant(.dark))
         CategoryPickerView(
-            selected: HitHappensEventCategory.none.localized,
+            selected: .constant(HitHappensEventCategory.none.localized),
             onChange: { _ in
 
             })

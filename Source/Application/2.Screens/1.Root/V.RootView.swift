@@ -35,7 +35,6 @@ struct RootViewCoordinator: View, ViewCoordinatorProtocol {
     func buildScreen(_ screen: AppScreen, presentationStyle: ViewPresentationStyle) -> some View {
         switch screen {
         case .root:
-            let nonSecureAppPreferences = configuration.nonSecureAppPreferences
             RootView(dependencies: .init(
                 model: .init(isAppStartCompleted: false),
                 nonSecureAppPreferences: configuration.nonSecureAppPreferences

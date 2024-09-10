@@ -53,3 +53,5 @@ Carthage/*
 
 fastlane/report.xml
 
+.swiftformat.yml
+.swiftlint.yml

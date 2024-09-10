@@ -11,10 +11,12 @@ import SwiftUI
 import Common
 import Domain
 import DevTools
+import DesignSystem
 
 @MainActor
 public class BaseViewModel: ObservableObject {
     // MARK: - Usage/Auxiliar Attributes
+    @Published var tip: (text: String, color: ColorSemantic) = ("", .clear)
     @Published var loadingModel: Model.LoadingModel?
     @Published var alertModel: Model.AlertModel? {
         didSet {
@@ -41,6 +43,11 @@ public class BaseViewModel: ObservableObject {
     }
 
     // MARK: - Helpers
+
+    func displayTip(_ message: String) {
+        tip.text = message
+        tip.color = .allCool
+    }
 
     // Function to handle errors
     func handle(error: Error, sender: String) {
