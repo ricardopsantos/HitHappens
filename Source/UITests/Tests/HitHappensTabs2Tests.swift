@@ -69,6 +69,31 @@ final class HitHappensTabs2Tests: BaseUITests {
         exists(staticText: newSoundEffect, on: app)
     }
 
+    func test_doubleTapToRouteBackT1() {
+        guard enabled else {
+            XCTAssert(true)
+            return
+        }
+        
+        appLaunch(launchArguments: [
+            .shouldResetAllContent,
+            .isOnboardingCompleted
+        ])
+        
+        tap(
+            tabBarIndex: Constants.tab2,
+            andWaitForStaticText: Constants.tab2Title,
+            on: app
+        )
+        tap(listItemStaticText: Constants.Entities.Book.listItem, on: app)
+        tap( // second tap
+            tabBarIndex: Constants.tab2,
+            andWaitForStaticText: Constants.tab2Title,
+            on: app
+        )
+        exists(staticText: Constants.tab2Title, on: app)
+    }
+        
     func test_routeToEntityDetailsAndEditCancel() {
         guard enabled else {
             XCTAssert(true)

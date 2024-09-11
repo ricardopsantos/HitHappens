@@ -18,6 +18,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         _ application: UIApplication,
         didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?
     ) -> Bool {
+        print("rjps.dev@gmail.com".encrypted)
         DevTools.Log.debug(.appLifeCycle("\(#function)"), .appDelegate)
         AnalyticsManager.shared.handleAppLifeCycleEvent(label: #function, sender: "\(Self.self)")
         return true

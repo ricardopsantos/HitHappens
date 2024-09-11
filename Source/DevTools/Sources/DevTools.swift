@@ -11,8 +11,6 @@ import UIKit
 import Common
 
 public enum DevTools {
-    // public static var onDarkMode: Bool { UIView().traitCollection.userInterfaceStyle == .dark }
-    // public static var onLightMode: Bool { UIView().traitCollection.userInterfaceStyle == .light }
     public static var onRunningPreview: Bool {
         ProcessInfo.processInfo.environment["XCODE_RUNNING_FOR_PREVIEWS"] == "1"
     }
