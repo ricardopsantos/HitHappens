@@ -67,7 +67,7 @@ class OnboardingViewModel: BaseViewModel {
                 do {
                     if let appConfigService = try await appConfigService?.requestAppConfig(
                         .init(),
-                        cachePolicy: .cacheElseLoad
+                        cachePolicy: .load
                     ) {
                         handle(config: appConfigService)
                     } else {

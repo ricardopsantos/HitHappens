@@ -51,6 +51,10 @@ enum BaseView {
                         }
                     }
                 content()
+                    .doIf(ignoresSafeArea, transform: {
+                        $0.ignoresSafeArea()
+
+                    })
                     .doIf(!ignoresSafeArea, transform: {
                         $0.padding(.all) // This will ensure the content stays within the safe area
                     })
@@ -147,20 +151,21 @@ struct TestView: View {
     @State var loadingModel: Model.LoadingModel?
     @State var networkStatus: CommonNetworking.NetworkStatus?
     @State var alertModel: Model.AlertModel?
-    @State var text = String.randomWithSpaces(50)
+    @State var text = String.randomWithSpaces(500)
     var animationDuration = 0.3
     var body: some View {
         BaseView.withLoading(
             sender: "sender",
             appScreen: .na,
             navigationViewModel: .disabled,
-            ignoresSafeArea: false,
+            ignoresSafeArea: true,
             background: .gradient,
             loadingModel: loadingModel,
             alertModel: alertModel,
             networkStatus: networkStatus,
             content: {
                 contentView
+                    .background(Color.red)
             }
         )
     }
@@ -197,7 +202,7 @@ struct TestView: View {
             SwiftUIUtils.FixedVerticalSpacer(height: SizeNames.defaultMargin)
             Text(text)
             Spacer()
-        }.padding()
+        }
     }
 }
 

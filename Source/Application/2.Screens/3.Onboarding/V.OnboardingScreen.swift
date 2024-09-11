@@ -91,7 +91,7 @@ struct OnboardingView: View {
             sender: "\(Self.self)",
             appScreen: .onboarding(model: .init()),
             navigationViewModel: .disabled,
-            ignoresSafeArea: false,
+            ignoresSafeArea: true,
             background: .defaultBackground,
             loadingModel: viewModel.loadingModel,
             alertModel: viewModel.alertModel,
@@ -117,6 +117,8 @@ struct OnboardingView: View {
                     text: buttonText,
                     accessibility: .fwdButton
                 )
+                .paddingHorizontal(SizeNames.defaultMargin)
+                SwiftUIUtils.FixedVerticalSpacer(height: SizeNames.defaultMargin * 2)
             }
         }.animation(.default, value: viewModel.loaded)
     }
@@ -136,13 +138,19 @@ fileprivate extension OnboardingView {
                             .cornerRadius2(SizeNames.cornerRadius)
                             .shadow(radius: SizeNames.shadowRadiusRegular)
                             .scaledToFit()
-                            .frame(width: screenWidth - 2 * SizeNames.defaultMargin)
+                            .doIf(index == 0, transform: {
+                                $0.frame(width: screenWidth - 4 * SizeNames.defaultMargin)
+                            })
+                            .doIf(index > 0, transform: {
+                                $0.frame(width: screenWidth - 2 * SizeNames.defaultMargin)
+                            })
                             .padding()
                     }
                     if let text = viewModel.onboardingModel.safeItem(at: index)?.text {
                         Text(text)
                             .textColor(ColorSemantic.labelPrimary.color)
                             .fontSemantic(.callout)
+                            .paddingHorizontal(SizeNames.defaultMargin)
                     }
 
                     SwiftUIUtils.FixedVerticalSpacer(height: SizeNames.defaultMarginSmall)

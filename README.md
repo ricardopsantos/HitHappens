@@ -18,7 +18,7 @@
 # About 
 
 <center>
-<img src=Source/_Documents/images/Previews/V1/generated/5x1_onboarding_5.png width=800/>
+<img src=Source/_Documents/images/PreviewOnboarding.jpg width=800/>
 </center>
 
 ## Intro 
@@ -139,11 +139,11 @@ The app _Services_ are built on a way that can be tested.
 ## Ligth / Dark mode support 
 
 <center>
-<img src=Source/_Documents/images/Previews/V1/generated/4x1_dark_1.png width=800/>
+<img src=Source/_Documents/images/PreviewDark.jpg width=800/>
 </center>
 
 <center>
-<img src=Source/_Documents/images/Previews/V1/generated/4x1_light_1.png width=800/>
+<img src=Source/_Documents/images/PreviewLight.jpg width=800/>
 </center>
 
 ## Design Language 
