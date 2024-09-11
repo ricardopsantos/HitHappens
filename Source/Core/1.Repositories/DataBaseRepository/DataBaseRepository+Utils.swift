@@ -53,7 +53,7 @@ public extension DataBaseRepository {
             let coffee: Model.TrackedEntity = .init(
                 id: UUID().uuidString,
                 name: "Coffee",
-                info: "To track the amount of coffee I drink",
+                info: "Tracking my coffee consumption journey, one cup at a time.",
                 archived: false,
                 favorite: true,
                 locationRelevant: true,
@@ -102,7 +102,7 @@ public extension DataBaseRepository {
             let gymnasium: Model.TrackedEntity = .init(
                 id: UUID().uuidString,
                 name: "Gymnasium",
-                info: "My workouts list",
+                info: "A record of my workout sessions and progress.",
                 archived: false,
                 favorite: false,
                 locationRelevant: true,
@@ -166,7 +166,7 @@ public extension DataBaseRepository {
             let cinema: Model.TrackedEntity = .init(
                 id: UUID().uuidString,
                 name: "Cinema \(Date().year)",
-                info: "The number of movies I have saw at Cinema this year",
+                info: "Documenting all the films I’ve enjoyed on the big screen this year.",
                 archived: false,
                 favorite: false,
                 locationRelevant: true,
@@ -216,7 +216,7 @@ public extension DataBaseRepository {
             let concerts: Model.TrackedEntity = .init(
                 id: UUID().uuidString,
                 name: "Concerts \(Date().year)",
-                info: "The number of concerts I have saw this year",
+                info: "Capturing my live music experiences and favorite performances of the year.",
                 archived: false,
                 favorite: true,
                 locationRelevant: true,
@@ -252,7 +252,7 @@ public extension DataBaseRepository {
             let books: Model.TrackedEntity = .init(
                 id: UUID().uuidString,
                 name: "Books \(Date().year)",
-                info: "The books I have completed in \(Date().year)",
+                info: "Tracking the books I’ve completed throughout \(Date().year), one story at a time.",
                 archived: false,
                 favorite: true,
                 locationRelevant: false,

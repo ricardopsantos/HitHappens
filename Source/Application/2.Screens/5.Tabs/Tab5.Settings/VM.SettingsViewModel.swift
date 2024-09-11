@@ -64,7 +64,6 @@ class SettingsViewModel: BaseViewModel {
                 do {
                     let appConfigService = try await appConfigService?.requestAppConfig(
                         .init(),
-
                         cachePolicy: .load
                     )
                     supportEmail = appConfigService?.hitHappens.supportEmailEncrypted.decrypted ?? ""
