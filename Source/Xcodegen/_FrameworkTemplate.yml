@@ -8,5 +8,6 @@ targetTemplates:
         MARKETING_VERSION: 1.0
         ENABLE_MODULE_VERIFIER: YES
         MODULE_VERIFIER_SUPPORTED_LANGUAGE_STANDARDS: 'gnu11 gnu++14'
+        ENABLE_USER_SCRIPT_SANDBOXING: YES
     #settings:
     #  FRAMEWORK_SEARCH_PATHS: $(inherited) $(SRCROOT)/Carthage/Build/iOS

@@ -74,12 +74,12 @@ final class HitHappensTabs2Tests: BaseUITests {
             XCTAssert(true)
             return
         }
-        
+
         appLaunch(launchArguments: [
             .shouldResetAllContent,
             .isOnboardingCompleted
         ])
-        
+
         tap(
             tabBarIndex: Constants.tab2,
             andWaitForStaticText: Constants.tab2Title,
@@ -93,7 +93,7 @@ final class HitHappensTabs2Tests: BaseUITests {
         )
         exists(staticText: Constants.tab2Title, on: app)
     }
-        
+
     func test_routeToEntityDetailsAndEditCancel() {
         guard enabled else {
             XCTAssert(true)
@@ -127,7 +127,7 @@ final class HitHappensTabs2Tests: BaseUITests {
         notExists(staticText: newName, on: app)
         notExists(staticText: newCategory, on: app)
         notExists(staticText: newSoundEffect, on: app)
-                
+
         exists(staticText: Constants.Entities.Book.name, on: app)
         exists(staticText: Constants.Entities.Book.soundEffect, on: app)
         exists(staticText: Constants.Entities.Book.category, on: app)

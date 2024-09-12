@@ -1,46 +1,81 @@
 {
   "options" : {
-    "bundleIdPrefix" : "hit.happens.app.id",
     "findCarthageFrameworks" : false,
-    "groupSortPosition" : "top",
-    "deploymentTarget" : "16.0",
-    "generateEmptyDirectories" : true,
     "xcodeVersion" : "15.0.1",
+    "deploymentTarget" : "16.0",
+    "bundleIdPrefix" : "hit.happens.app.id",
+    "groupSortPosition" : "top",
+    "generateEmptyDirectories" : true,
     "minimumXcodeGenVersion" : "2.18.0"
   },
   "packages" : {
     "Nimble" : {
-      "branch" : "main",
-      "url" : "https:\/\/github.com\/Quick\/Nimble"
+      "url" : "https:\/\/github.com\/Quick\/Nimble",
+      "branch" : "main"
     }
   },
-  "targets" : {
-    "Common" : {
-      "sources" : [
-        {
-          "excludes" : [
-            "Tests",
-            "Sources\/Info.plist",
-            ".gitignore",
-            ".swiftpm",
-            "Package.swift",
-            "Package.resolved"
-          ],
-          "path" : "..\/Common"
-        }
-      ],
+  "targetTemplates" : {
+    "UnitTest" : {
+      "deploymentTarget" : "16.0",
+      "type" : "bundle.unit-test",
+      "platform" : "iOS",
+      "settings" : ""
+    },
+    "Widget" : {
+      "type" : "app-extension",
+      "deploymentTarget" : "17.0",
+      "platform" : "iOS",
       "settings" : {
         "base" : {
-          "SWIFT_OBJC_BRIDGING_HEADER" : "Common\/Sources\/Common-Bridging-Header.h",
           "MARKETING_VERSION" : 1
         }
-      },
-      "templates" : [
-        "Framework"
-      ]
+      }
     },
-    "HitHappens" : {
+    "UITest" : {
+      "type" : "bundle.ui-testing",
+      "deploymentTarget" : "16.0",
       "platform" : "iOS",
+      "settings" : ""
+    },
+    "Framework" : {
+      "deploymentTarget" : "16.0",
+      "platform" : "iOS",
+      "settings" : {
+        "base" : {
+          "MODULE_VERIFIER_SUPPORTED_LANGUAGE_STANDARDS" : "gnu11 gnu++14",
+          "MARKETING_VERSION" : 1,
+          "ENABLE_USER_SCRIPT_SANDBOXING" : true,
+          "ENABLE_MODULE_VERIFIER" : true
+        }
+      },
+      "type" : "framework"
+    }
+  },
+  "fileGroups" : [
+    "..\/_Documents",
+    "..\/Configuration",
+    "..\/XcodeGen"
+  ],
+  "settings" : {
+    "base" : {
+      "IPHONEOS_DEPLOYMENT_TARGET" : 16,
+      "SWIFT_OBJC_BRIDGING_HEADER" : "Application\/Bridging-Header.h",
+      "MARKETING_VERSION" : 1,
+      "SWIFT_VERSION" : 5.2999999999999998,
+      "CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED" : true
+    }
+  },
+  "configs" : {
+    "Dev Release" : "release",
+    "Production Release" : "release",
+    "QA Release" : "release",
+    "Production Debug" : "debug",
+    "QA Debug" : "debug",
+    "Dev Debug" : "debug"
+  },
+  "name" : "HitHappens",
+  "targets" : {
+    "HitHappens" : {
       "scheme" : {
         "configVariants" : [
           "Production",
@@ -52,23 +87,19 @@
           "UITests"
         ]
       },
-      "settings" : {
-        "base" : {
-          "SUPPORTED_PLATFORMS" : "iphoneos iphonesimulator",
-          "TARGETED_DEVICE_FAMILY" : 1,
-          "SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD" : false,
-          "SUPPORTS_MACCATALYST" : false
-        }
-      },
-      "configFiles" : {
-        "QA Debug" : "..\/Configuration\/qa-debug.xcconfig",
-        "Production Debug" : "..\/Configuration\/production-debug.xcconfig",
-        "Production Release" : "..\/Configuration\/production-release.xcconfig",
-        "QA Release" : "..\/Configuration\/qa-release.xcconfig",
-        "Dev Release" : "..\/Configuration\/dev-release.xcconfig",
-        "Dev Debug" : "..\/Configuration\/dev-debug.xcconfig"
-      },
       "type" : "application",
+      "platform" : "iOS",
+      "sources" : [
+        {
+          "excludes" : [
+            "*.md",
+            "*.png",
+            "GoogleService*"
+          ],
+          "path" : "..\/Application",
+          "type" : "group"
+        }
+      ],
       "dependencies" : [
         {
           "target" : "Common"
@@ -86,123 +117,25 @@
           "target" : "DesignSystem"
         }
       ],
-      "sources" : [
-        {
-          "path" : "..\/Application",
-          "type" : "group",
-          "excludes" : [
-            "*.md",
-            "*.png",
-            "GoogleService*"
-          ]
-        }
-      ]
-    },
-    "Core" : {
-      "sources" : [
-        {
-          "path" : "..\/Core",
-          "excludes" : [
-            "Info.plist"
-          ]
-        }
-      ],
-      "dependencies" : [
-        {
-          "target" : "Domain"
-        },
-        {
-          "target" : "DevTools"
-        },
-        {
-          "target" : "Common"
-        }
-      ],
-      "templates" : [
-        "Framework"
-      ],
-      "settings" : {
-        "base" : {
-          "MARKETING_VERSION" : 1
-        }
-      }
-    },
-    "Domain" : {
-      "dependencies" : [
-        {
-          "target" : "Common"
-        },
-        {
-          "target" : "DevTools"
-        }
-      ],
-      "sources" : [
-        {
-          "excludes" : [
-            "Info.plist"
-          ],
-          "path" : "..\/Domain"
-        }
-      ],
-      "templates" : [
-        "Framework"
-      ],
-      "settings" : {
-        "base" : {
-          "MARKETING_VERSION" : 1
-        }
-      }
-    },
-    "Favorits-Extension" : {
-      "settings" : {
-        "base" : {
-          "MARKETING_VERSION" : 1
-        }
+      "configFiles" : {
+        "Production Release" : "..\/Configuration\/production-release.xcconfig",
+        "Dev Release" : "..\/Configuration\/dev-release.xcconfig",
+        "QA Debug" : "..\/Configuration\/qa-debug.xcconfig",
+        "Dev Debug" : "..\/Configuration\/dev-debug.xcconfig",
+        "Production Debug" : "..\/Configuration\/production-debug.xcconfig",
+        "QA Release" : "..\/Configuration\/qa-release.xcconfig"
       },
-      "templates" : [
-        "Widget"
-      ],
-      "dependencies" : [
-        {
-          "target" : "Common"
-        },
-        {
-          "target" : "DevTools"
-        }
-      ],
-      "sources" : [
-        {
-          "path" : "..\/Favorits-Extension"
-        }
-      ]
-    },
-    "DevTools" : {
-      "dependencies" : [
-        {
-          "target" : "Common"
-        }
-      ],
-      "sources" : [
-        {
-          "excludes" : [
-            "Info.plist"
-          ],
-          "path" : "..\/DevTools"
-        }
-      ],
-      "templates" : [
-        "Framework"
-      ],
       "settings" : {
         "base" : {
-          "MARKETING_VERSION" : 1
+          "SUPPORTS_MACCATALYST" : false,
+          "ENABLE_USER_SCRIPT_SANDBOXING" : true,
+          "SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD" : false,
+          "SUPPORTED_PLATFORMS" : "iphoneos iphonesimulator",
+          "TARGETED_DEVICE_FAMILY" : 1
         }
       }
     },
     "UnitTests" : {
-      "templates" : [
-        "UnitTest"
-      ],
       "sources" : [
         {
           "excludes" : [
@@ -220,30 +153,137 @@
           "target" : "HitHappens"
         },
         {
-          "link" : false,
-          "target" : "Common"
+          "target" : "Common",
+          "link" : false
         },
         {
           "link" : false,
           "target" : "Domain"
         },
         {
-          "link" : false,
-          "target" : "Core"
+          "target" : "Core",
+          "link" : false
         },
         {
-          "link" : true,
           "product" : "Nimble",
-          "package" : "Nimble"
+          "package" : "Nimble",
+          "link" : true
         }
+      ],
+      "templates" : [
+        "UnitTest"
       ]
     },
-    "DesignSystem" : {
+    "DevTools" : {
+      "sources" : [
+        {
+          "excludes" : [
+            "Info.plist"
+          ],
+          "path" : "..\/DevTools"
+        }
+      ],
       "settings" : {
         "base" : {
           "MARKETING_VERSION" : 1
         }
       },
+      "templates" : [
+        "Framework"
+      ],
+      "dependencies" : [
+        {
+          "target" : "Common"
+        }
+      ]
+    },
+    "Favorits-Extension" : {
+      "templates" : [
+        "Widget"
+      ],
+      "dependencies" : [
+        {
+          "target" : "Common"
+        },
+        {
+          "target" : "DevTools"
+        }
+      ],
+      "settings" : {
+        "base" : {
+          "MARKETING_VERSION" : 1
+        }
+      },
+      "sources" : [
+        {
+          "path" : "..\/Favorits-Extension"
+        }
+      ]
+    },
+    "UITests" : {
+      "sources" : [
+        {
+          "path" : "..\/UITests",
+          "excludes" : [
+            "Info.plist"
+          ]
+        }
+      ],
+      "templates" : [
+        "UITest"
+      ],
+      "dependencies" : [
+        {
+          "sdk" : "XCTest.framework"
+        },
+        {
+          "link" : true,
+          "target" : "HitHappens"
+        },
+        {
+          "target" : "Common",
+          "link" : false
+        },
+        {
+          "product" : "Nimble",
+          "package" : "Nimble",
+          "link" : true
+        }
+      ]
+    },
+    "Core" : {
+      "sources" : [
+        {
+          "excludes" : [
+            "Info.plist"
+          ],
+          "path" : "..\/Core"
+        }
+      ],
+      "templates" : [
+        "Framework"
+      ],
+      "dependencies" : [
+        {
+          "target" : "Domain"
+        },
+        {
+          "target" : "DevTools"
+        },
+        {
+          "target" : "Common"
+        }
+      ],
+      "settings" : {
+        "base" : {
+          "MARKETING_VERSION" : 1
+        }
+      }
+    },
+    "DesignSystem" : {
+      "templates" : [
+        "Framework"
+      ],
       "sources" : [
         {
           "path" : "..\/DesignSystem",
@@ -263,52 +303,80 @@
           "target" : "DevTools"
         }
       ],
+      "settings" : {
+        "base" : {
+          "MARKETING_VERSION" : 1
+        }
+      }
+    },
+    "Common" : {
       "templates" : [
         "Framework"
-      ]
-    },
-    "UITests" : {
-      "dependencies" : [
-        {
-          "sdk" : "XCTest.framework"
-        },
-        {
-          "link" : true,
-          "target" : "HitHappens"
-        },
-        {
-          "target" : "Common",
-          "link" : false
-        },
-        {
-          "product" : "Nimble",
-          "package" : "Nimble",
-          "link" : true
-        }
       ],
       "sources" : [
         {
-          "path" : "..\/UITests",
+          "excludes" : [
+            "Tests",
+            "Sources\/Info.plist",
+            ".gitignore",
+            ".swiftpm",
+            "Package.swift",
+            "Package.resolved"
+          ],
+          "path" : "..\/Common"
+        }
+      ],
+      "settings" : {
+        "base" : {
+          "SWIFT_OBJC_BRIDGING_HEADER" : "Common\/Sources\/Common-Bridging-Header.h",
+          "MARKETING_VERSION" : 1
+        }
+      }
+    },
+    "Domain" : {
+      "sources" : [
+        {
+          "path" : "..\/Domain",
           "excludes" : [
             "Info.plist"
           ]
         }
       ],
+      "settings" : {
+        "base" : {
+          "MARKETING_VERSION" : 1
+        }
+      },
+      "dependencies" : [
+        {
+          "target" : "Common"
+        },
+        {
+          "target" : "DevTools"
+        }
+      ],
       "templates" : [
-        "UITest"
+        "Framework"
       ]
     }
   },
-  "configs" : {
-    "QA Debug" : "debug",
-    "Production Debug" : "debug",
-    "QA Release" : "release",
-    "Production Release" : "release",
-    "Dev Debug" : "debug",
-    "Dev Release" : "release"
-  },
-  "name" : "HitHappens",
+  "include" : [
+    "_FrameworkTemplate.yml",
+    "_UnitTestTemplate.yml",
+    "_UITestTemplate.yml",
+    "_AggregateTargets.yml",
+    "_WidgetTemplate.yml"
+  ],
   "aggregateTargets" : {
+    "SwiftFormat" : {
+      "buildScripts" : [
+        {
+          "name" : "SwiftFormat",
+          "script" : "${SRCROOT}\/Scripts\/executeSwiftFormat.sh\n",
+          "shell" : "\/bin\/bash"
+        }
+      ]
+    },
     "SwiftLint" : {
       "buildScripts" : [
         {
@@ -317,72 +385,6 @@
           "shell" : "\/bin\/bash"
         }
       ]
-    },
-    "SwiftFormat" : {
-      "buildScripts" : [
-        {
-          "script" : "${SRCROOT}\/Scripts\/executeSwiftFormat.sh\n",
-          "name" : "SwiftFormat",
-          "shell" : "\/bin\/bash"
-        }
-      ]
     }
-  },
-  "settings" : {
-    "base" : {
-      "MARKETING_VERSION" : 1,
-      "IPHONEOS_DEPLOYMENT_TARGET" : 16,
-      "SWIFT_OBJC_BRIDGING_HEADER" : "Application\/Bridging-Header.h",
-      "CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED" : true,
-      "SWIFT_VERSION" : 5.2999999999999998
-    }
-  },
-  "targetTemplates" : {
-    "Framework" : {
-      "platform" : "iOS",
-      "deploymentTarget" : "16.0",
-      "settings" : {
-        "base" : {
-          "MARKETING_VERSION" : 1,
-          "MODULE_VERIFIER_SUPPORTED_LANGUAGE_STANDARDS" : "gnu11 gnu++14",
-          "ENABLE_MODULE_VERIFIER" : true
-        }
-      },
-      "type" : "framework"
-    },
-    "UITest" : {
-      "type" : "bundle.ui-testing",
-      "settings" : "",
-      "platform" : "iOS",
-      "deploymentTarget" : "16.0"
-    },
-    "Widget" : {
-      "deploymentTarget" : "17.0",
-      "platform" : "iOS",
-      "type" : "app-extension",
-      "settings" : {
-        "base" : {
-          "MARKETING_VERSION" : 1
-        }
-      }
-    },
-    "UnitTest" : {
-      "platform" : "iOS",
-      "type" : "bundle.unit-test",
-      "deploymentTarget" : "16.0",
-      "settings" : ""
-    }
-  },
-  "fileGroups" : [
-    "..\/_Documents",
-    "..\/Configuration",
-    "..\/XcodeGen"
-  ],
-  "include" : [
-    "_FrameworkTemplate.yml",
-    "_UnitTestTemplate.yml",
-    "_UITestTemplate.yml",
-    "_AggregateTargets.yml",
-    "_WidgetTemplate.yml"
-  ]
+  }
 }

@@ -21,6 +21,7 @@ public extension CalendarView {
             static func textColor() -> Color {
                 ColorSemantic.labelPrimary.color
             }
+
             static func cellBackgroundColor() -> Color {
                 ColorSemantic.primary.color
             }
@@ -30,6 +31,7 @@ public extension CalendarView {
             static func textColor() -> Color {
                 ColorSemantic.labelPrimary.color
             }
+
             static func cellBackgroundColor() -> Color {
                 ColorSemantic.primary.color.opacity(0.1)
             }
@@ -39,6 +41,7 @@ public extension CalendarView {
             static func textColor() -> Color {
                 ColorSemantic.labelSecondary.color
             }
+
             static func cellBackgroundColor() -> Color {
                 ColorSemantic.labelSecondary.color.opacity(0.1)
             }

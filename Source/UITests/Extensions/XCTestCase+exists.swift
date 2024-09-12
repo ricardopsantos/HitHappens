@@ -12,7 +12,7 @@ import Common
 //
 
 fileprivate extension XCTestCase {
-     func exists(
+    func exists(
         anyStaticText: String,
         on app: XCUIApplication
     ) -> Bool {
@@ -31,7 +31,7 @@ fileprivate extension XCTestCase {
                 }
             }
         }
-        
+
         if !result {
             app.collectionViews.staticTexts.allElementsBoundByIndex.forEach { xcuiElement in
                 if xcuiElement.label == anyStaticText {

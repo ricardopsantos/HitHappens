@@ -52,8 +52,8 @@ final class HitHappensOnboardingTests: BaseUITests {
         appLaunch(launchArguments: [
             .shouldResetAllContent
         ])
-        wait(delay: 1)        
-  
+        wait(delay: 1)
+
         let intro = ModelDto.AppConfigResponse.mock?.hitHappens.onboarding.intro ?? ""
         exists(staticText: intro, on: app)
     }
