@@ -106,7 +106,7 @@ struct EventsMapView: View, ViewProtocol {
     @ViewBuilder
     var content: some View {
         ScrollView {
-            Header(text: "\(AppConstants.entityOccurrenceNamePlural) by region".localizedMissing)
+            Header(text: "\(AppConstants.entityOccurrenceNamePlural1) by region".localizedMissing)
             LazyVStack(spacing: 0) {
                 GenericMapView(
                     items: $viewModel.mapItems,

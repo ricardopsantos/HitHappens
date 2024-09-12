@@ -47,7 +47,7 @@ final class HitHappensTabs2Tests: BaseUITests {
             andWaitForStaticText: Constants.tab2Title,
             on: app
         )
-        let newName = Constants.Entities.Book.name
+        let newName = Constants.Entities.Book.alternativeName
         let newInfo = "New info"
         let newCategory = Constants.Entities.Book.alternativeCategory
         let newSoundEffect = Constants.Entities.Book.alternativeSoundEffect
@@ -61,7 +61,7 @@ final class HitHappensTabs2Tests: BaseUITests {
         tap(button: "Yes", on: app) // Confirmation alert
 
         tap(button: Accessibility.backButton.identifier, on: app) // Close details
-        exists(listItemStaticText: Constants.Entities.Book.listItem, on: app) // New name on favorits screen
+        exists(staticText: Constants.Entities.Book.alternativeListItem, on: app) // New name on favorits screen
         tap(listItemStaticText: Constants.Entities.Book.alternativeListItem, on: app) // Go back to details
 
         exists(staticText: newName, on: app)
@@ -122,10 +122,12 @@ final class HitHappensTabs2Tests: BaseUITests {
 
         tap(button: "No", on: app) // Confirmation alert
 
+        app.swipeDown()
+
         notExists(staticText: newName, on: app)
         notExists(staticText: newCategory, on: app)
         notExists(staticText: newSoundEffect, on: app)
-
+                
         exists(staticText: Constants.Entities.Book.name, on: app)
         exists(staticText: Constants.Entities.Book.soundEffect, on: app)
         exists(staticText: Constants.Entities.Book.category, on: app)
@@ -151,7 +153,7 @@ final class HitHappensTabs2Tests: BaseUITests {
         tap(button: Accessibility.deleteButton.identifier, on: app)
         tap(button: "Yes", on: app) // Confirmation alert
 
-        notExists(listItemStaticText: Constants.Entities.Book.listItem, on: app) // Deleted from list
+        notExists(staticText: Constants.Entities.Book.listItem, on: app) // Deleted from list
         tap(
             tabBarIndex: Constants.tab1,
             andWaitForStaticText: Constants.tab1Title,

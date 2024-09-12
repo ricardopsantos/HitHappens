@@ -173,7 +173,7 @@ final class HitHappensTabs1Tests: BaseUITests {
             andWaitForStaticText: Constants.tab2Title,
             on: app
         )
-        notExists(listItemStaticText: Constants.Entities.Book.listItem, on: app) // Deleted from list
+        notExists(staticText: Constants.Entities.Book.listItem, on: app) // Deleted from list
     }
 
     func test_deleteAllFavoritsAndAddNew() {

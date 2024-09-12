@@ -140,7 +140,7 @@ struct EventDetailsView: View, ViewProtocol {
 
     var content: some View {
         ZStack {
-            ScrollView {
+            ScrollView(showsIndicators: true) {
                 LazyVStack(spacing: 0) {
                     section1Header
                     SwiftUIUtils.FixedVerticalSpacer(height: SizeNames.defaultMarginSmall)
@@ -352,7 +352,7 @@ fileprivate extension EventDetailsView {
         if let logs = viewModel.logs, !logs.isEmpty {
             HStack {
                 Spacer()
-                Text("All \(AppConstants.entityOccurrenceNamePlural.lowercased())".localizedMissing)
+                Text("All \(AppConstants.entityOccurrenceNamePlural1.lowercased())".localizedMissing)
                     .fontSemantic(.headlineBold)
                     .textColor(ColorSemantic.labelPrimary.color)
                 Spacer()

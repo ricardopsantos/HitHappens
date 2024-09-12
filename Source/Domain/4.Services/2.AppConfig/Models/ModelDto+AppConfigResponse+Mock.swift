@@ -14,7 +14,7 @@ public extension ModelDto.AppConfigResponse {
         {
           "hit_happens": {
             "public_code_url": "https://raw.githubusercontent.com/ricardopsantos/RJPS_AppsConfig/main/HitHappens/PublicCode.md",
-            "support_email_encrypted": "qxmbXiDuBh9gfJ8StXgyH0weyRMK5UbZ7IWGOAjvuCKbZtLLFlhggNo8xBWkwyq1jA==",
+            "support_email_encrypted": "IsM2GkBouvygwCr/dGUrS6Th4X45BlR/GNrIl3Hvp3nsAFRdlcVv79Lm/cpiMw==",
             "onboarding": {
               "intro": "Hit Happens lets you capture life’s moments with ease. Track the little things that matter and see how often they happen over time.",
               "pages": [

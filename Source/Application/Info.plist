@@ -41,9 +41,9 @@
 	<key>NSBluetoothAlwaysUsageDescription</key>
 	<string>$(PRODUCT_NAME) requires bluetooth because...</string>
 	<key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
-	<string>$(PRODUCT_NAME) requires your location because...</string>
+	<string>$(PRODUCT_NAME) requires access to your location to help you capture where your events took place. Don’t worry, we only use your location when you&apos;re adding new events or viewing the Map.</string>
 	<key>NSLocationWhenInUseUsageDescription</key>
-	<string>$(PRODUCT_NAME) requires your location because...</string>
+	<string>$(PRODUCT_NAME) requires access to your location to help you capture where your events took place. Don’t worry, we only use your location when you&apos;re adding new events or viewing the Map.</string>
 	<key>UIBackgroundModes</key>
 	<array>
 		<string>fetch</string>
