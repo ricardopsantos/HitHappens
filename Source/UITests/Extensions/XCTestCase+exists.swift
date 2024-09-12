@@ -11,21 +11,62 @@ import Common
 // https://www.appcoda.com/ui-testing-swiftui-xctest/
 //
 
-public extension XCTestCase {
-    func exists(
-        listItemStaticText: String,
-        on app: XCUIApplication,
-        timeout: TimeInterval = XCTestCase.timeout
-    ) {
-        XCTAssertTrue(app.scrollViews.otherElements.staticTexts[listItemStaticText].waitForExistence(timeout: timeout))
+fileprivate extension XCTestCase {
+     func exists(
+        anyStaticText: String,
+        on app: XCUIApplication
+    ) -> Bool {
+        var result = false
+        if !result {
+            app.scrollViews.staticTexts.allElementsBoundByIndex.forEach { xcuiElement in
+                if xcuiElement.label == anyStaticText {
+                    result = true
+                }
+            }
+        }
+        if !result {
+            app.scrollViews.otherElements.staticTexts.allElementsBoundByIndex.forEach { xcuiElement in
+                if xcuiElement.label == anyStaticText {
+                    result = true
+                }
+            }
+        }
+        
+        if !result {
+            app.collectionViews.staticTexts.allElementsBoundByIndex.forEach { xcuiElement in
+                if xcuiElement.label == anyStaticText {
+                    result = true
+                }
+            }
+        }
+        if !result {
+            app.collectionViews.otherElements.staticTexts.allElementsBoundByIndex.forEach { xcuiElement in
+                if xcuiElement.label == anyStaticText {
+                    result = true
+                }
+            }
+        }
+        app.otherElements.staticTexts.allElementsBoundByIndex.forEach { xcuiElement in
+            if xcuiElement.label == anyStaticText {
+                result = true
+            }
+        }
+        return result
     }
+}
 
+public extension XCTestCase {
     func exists(
         staticText: String,
         on app: XCUIApplication,
         timeout: TimeInterval = XCTestCase.timeout
     ) {
-        XCTAssertTrue(app.staticTexts[staticText].waitForExistence(timeout: timeout))
+        let exists = exists(anyStaticText: staticText, on: app)
+        if !exists {
+            XCTAssert(app.staticTexts[staticText].waitForExistence(timeout: timeout))
+        } else {
+            XCTAssert(true)
+        }
     }
 
     func notExists(
@@ -34,13 +75,5 @@ public extension XCTestCase {
         timeout: TimeInterval = XCTestCase.timeout
     ) {
         XCTAssertFalse(app.staticTexts[staticText].waitForExistence(timeout: timeout))
-    }
-
-    func notExists(
-        listItemStaticText: String,
-        on app: XCUIApplication,
-        timeout: TimeInterval = XCTestCase.timeout
-    ) {
-        XCTAssertFalse(app.scrollViews.otherElements.staticTexts[listItemStaticText].waitForExistence(timeout: timeout))
     }
 }

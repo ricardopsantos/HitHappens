@@ -140,7 +140,7 @@ struct EventsListView: View, ViewProtocol {
                 }
                 if !sectionA.isEmpty {
                     HStack(spacing: 0) {
-                        Text("Favorits".localizedMissing)
+                        Text("Favorites".localizedMissing)
                             .textColor(ColorSemantic.labelPrimary.color)
                             .fontSemantic(.bodyBold)
                         Spacer()

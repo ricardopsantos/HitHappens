@@ -30,6 +30,7 @@ public extension XCUIElement {
         } else {
             description = "{\(description)label:n/a"
         }
+
         if !identifier.isEmpty {
             description = "\(description), id:\(identifier)"
         }

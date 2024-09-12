@@ -48,7 +48,7 @@ enum Constants {
     //
     //
     static let tab1 = 0
-    static let tab1Title = "Favorite \(entityNamePlural.lowercased())"
+    static let tab1Title = "Favorites"
     //
     static let tab2 = 1
     static let tab2Title = "\(entityNamePlural)"

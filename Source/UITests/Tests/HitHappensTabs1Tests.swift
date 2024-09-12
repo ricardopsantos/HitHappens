@@ -57,7 +57,7 @@ final class HitHappensTabs1Tests: BaseUITests {
             .isOnboardingCompleted
         ])
 
-        let newName = Constants.Entities.Book.name + "_V2"
+        let newName = Constants.Entities.Book.alternativeName
         let newInfo = "New info"
         tap(staticText: Constants.Entities.Book.name, on: app)
         exists(staticText: "\(Constants.entityNameSingle) details", on: app)
@@ -77,9 +77,8 @@ final class HitHappensTabs1Tests: BaseUITests {
         tap(button: Accessibility.confirmButton.identifier, on: app)
         tap(button: "Yes", on: app) // Confirmation alert
         tap(button: Accessibility.backButton.identifier, on: app) // Close details
-        exists(staticText: Constants.tab2Title, on: app)
-        let newListItem = Constants.Entities.Book.listItem.replace(Constants.Entities.Book.name, with: newName)
-        exists(staticText: newListItem, on: app) // New name on favorits screen
+        exists(staticText: Constants.tab1Title, on: app)
+        exists(staticText: Constants.Entities.Book.alternativeName, on: app) // New name on favorits screen
     }
 
     func test_trackAddNewLogAndDelete() {
@@ -174,7 +173,7 @@ final class HitHappensTabs1Tests: BaseUITests {
             andWaitForStaticText: Constants.tab2Title,
             on: app
         )
-        notExists(listItemStaticText: Constants.Entities.Book.listItem, on: app) // Deleted from list
+        notExists(staticText: Constants.Entities.Book.listItem, on: app) // Deleted from list
     }
 
     func test_deleteAllFavoritsAndAddNew() {

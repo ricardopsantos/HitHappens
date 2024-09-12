@@ -12,7 +12,8 @@ public enum AppConstants {
     static let entityNameSingle = "Tracker"
     static let entityNamePlural = "\(entityNameSingle)(s)"
     static let entityOccurrenceSingle = "Event"
-    static let entityOccurrenceNamePlural = "\(entityOccurrenceSingle)(s)"
+    static let entityOccurrenceNamePlural1 = "\(entityOccurrenceSingle)s"
+    static let entityOccurrenceNamePlural2 = "\(entityOccurrenceSingle)(s)"
 
     // static let entityNameSingle = "AAAAA"
     // static let entityNamePlural = "\(entityNameSingle)s"

@@ -38,6 +38,11 @@ magick t2.se.light.png generated/t2.se.light.jpg
 magick t3.se.light.png generated/t3.se.light.jpg
 magick t4.se.light.png generated/t4.se.light.jpg
 
+magick t1.se.dark.png -resize 1242x2208 generated/store.t1.55display.jpg
+magick t2.se.dark.png -resize 1242x2208 generated/store.t2.55display.jpg
+magick t3.se.dark.png -resize 1242x2208 generated/store.t3.55display.jpg
+magick t4.se.dark.png -resize 1242x2208 generated/store.t4.55display.jpg
+
 #magick generated/onboarding_15pro.dark.png generated/onboarding_15pro.dark.jpg
 #magick generated/onboarding_15pro.light.png generated/onboarding_15pro.light.jpg
 

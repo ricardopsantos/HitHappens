@@ -12,7 +12,6 @@ import Common
 import DevTools
 
 public class AppConfigService {
-    // private let cacheManager = Common.CacheManagerForCodableUserDefaultsRepository.shared
     private let cacheManager = Common.CacheManagerForCodableCoreDataRepository.shared
     public let webAPI: NetworkManagerProtocol
     public init(webAPI: NetworkManagerProtocol) {

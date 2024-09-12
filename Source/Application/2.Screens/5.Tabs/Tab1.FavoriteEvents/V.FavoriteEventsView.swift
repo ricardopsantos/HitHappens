@@ -142,7 +142,7 @@ struct FavoriteEventsView: View, ViewProtocol {
     var content: some View {
         ScrollView {
             LazyVStack(spacing: 0) {
-                Header(text: "Favorite \(AppConstants.entityNamePlural.lowercased())".localizedMissing)
+                Header(text: "Favorites")
                 if viewModel.favorits.isEmpty {
                     SwiftUIUtils.FixedVerticalSpacer(height: screenHeight * 0.33)
                     Text("You don't have any \(AppConstants.entityNamePlural.lowercased()) marked as favorite\n\nTap to add one!".localizedMissing)

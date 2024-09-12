@@ -56,7 +56,7 @@ extension EventDetailsViewModel {
         var subTitle: String {
             switch self {
             case .delete:
-                "Are you sure you want to delete this \(AppConstants.entityNameSingle.lowercased())? All the \(AppConstants.entityOccurrenceNamePlural.lowercased()) associated to it will be deleted!"
+                "Are you sure you want to delete this \(AppConstants.entityNameSingle.lowercased())? All the \(AppConstants.entityOccurrenceNamePlural1.lowercased()) associated to it will be deleted!"
                     .localizedMissing
             case .save:
                 "Are you sure you want to save  \(AppConstants.entityNameSingle.lowercased())?".localizedMissing
