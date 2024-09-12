@@ -891,7 +891,7 @@
 		59EECF08F7A0E37449ABCF1D /* AnyPublisher+Async.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AnyPublisher+Async.swift"; sourceTree = "<group>"; };
 		5A0F5524ACC7AE12154CDB3C /* UIControl+CombineCompatible.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIControl+CombineCompatible.swift"; sourceTree = "<group>"; };
 		5A5FAFA9B651E153FC6C02A6 /* CommonDataBaseRepository+NSFetchedResultsControllerDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CommonDataBaseRepository+NSFetchedResultsControllerDelegate.swift"; sourceTree = "<group>"; };
-		5C019ED81A967EE4965806ED /* UnitTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = UnitTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		5C019ED81A967EE4965806ED /* UnitTests.xctest */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.cfbundle; path = UnitTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		5D1DF9AE813D279EA6503147 /* SampleService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SampleService.swift; sourceTree = "<group>"; };
 		5E0EFDABBC89E6955C045187 /* _FrameworkTemplate.yml */ = {isa = PBXFileReference; lastKnownFileType = text.yaml; path = _FrameworkTemplate.yml; sourceTree = "<group>"; };
 		5ED4F524BE62E4713143FBB0 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
@@ -3260,9 +3260,6 @@
 					7FC1D4A9405E52C5CA9319C9 = {
 						TestTargetID = F7A7E879415146CCE92FA8DF;
 					};
-					ADF727D272C546FEA796F717 = {
-						TestTargetID = F7A7E879415146CCE92FA8DF;
-					};
 					F7A7E879415146CCE92FA8DF = {
 						DevelopmentTeam = EP8XQ3ZY9V;
 					};
@@ -4015,6 +4012,7 @@
 			baseConfigurationReference = DD0DA4E4955C4B0732C54BFD /* production-debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
 				ENABLE_USER_SCRIPT_SANDBOXING = YES;
 				INFOPLIST_FILE = Application/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -4050,6 +4048,7 @@
 		041055AC494A207944A80DBD /* QA Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
 				CODE_SIGN_IDENTITY = "";
 				CURRENT_PROJECT_VERSION = 1;
 				DEFINES_MODULE = YES;
@@ -4095,6 +4094,7 @@
 		06C192D16A389666D0402590 /* QA Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
 				CODE_SIGN_IDENTITY = "";
 				CURRENT_PROJECT_VERSION = 1;
 				DEFINES_MODULE = YES;
@@ -4123,6 +4123,7 @@
 		0B31D51FFE72F841F1AC5604 /* QA Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
 				CODE_SIGN_IDENTITY = "";
 				CURRENT_PROJECT_VERSION = 1;
 				DEFINES_MODULE = YES;
@@ -4152,6 +4153,7 @@
 		100E1F276B0292206F9DBEB0 /* Dev Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
 				CODE_SIGN_IDENTITY = "";
 				CURRENT_PROJECT_VERSION = 1;
 				DEFINES_MODULE = YES;
@@ -4186,6 +4188,7 @@
 		107291BE5CD33489739AF17A /* QA Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
 				CODE_SIGN_IDENTITY = "";
 				CURRENT_PROJECT_VERSION = 1;
 				DEFINES_MODULE = YES;
@@ -4214,6 +4217,7 @@
 		13CEF7CD0A4CAD3486F0D1AD /* Production Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
 				CODE_SIGN_IDENTITY = "";
 				CURRENT_PROJECT_VERSION = 1;
 				DEFINES_MODULE = YES;
@@ -4253,7 +4257,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = hit.happens.app.id.UnitTests;
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/HitHappens.Dev.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/HitHappens.Dev";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/HitHappens.app/HitHappens";
 			};
 			name = "Production Debug";
 		};
@@ -4271,13 +4275,14 @@
 				PRODUCT_BUNDLE_IDENTIFIER = hit.happens.app.id.UnitTests;
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/HitHappens.Dev.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/HitHappens.Dev";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/HitHappens.app/HitHappens";
 			};
 			name = "QA Release";
 		};
 		1B4DA15E4B02528541414811 /* Production Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
 				CODE_SIGN_IDENTITY = "";
 				CURRENT_PROJECT_VERSION = 1;
 				DEFINES_MODULE = YES;
@@ -4306,6 +4311,7 @@
 		25CDF95E9DB657FC56E95595 /* Production Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
 				CODE_SIGN_IDENTITY = "";
 				CURRENT_PROJECT_VERSION = 1;
 				DEFINES_MODULE = YES;
@@ -4334,6 +4340,7 @@
 		2865DC9BEDA8A67311CA751B /* QA Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
 				CODE_SIGN_IDENTITY = "";
 				CURRENT_PROJECT_VERSION = 1;
 				DEFINES_MODULE = YES;
@@ -4362,6 +4369,7 @@
 		2A7868E8CB0FD003F11BB768 /* QA Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
 				CODE_SIGN_IDENTITY = "";
 				CURRENT_PROJECT_VERSION = 1;
 				DEFINES_MODULE = YES;
@@ -4390,6 +4398,7 @@
 		2B3019243E9650883FF40969 /* Dev Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
 				CODE_SIGN_IDENTITY = "";
 				CURRENT_PROJECT_VERSION = 1;
 				DEFINES_MODULE = YES;
@@ -4486,6 +4495,7 @@
 			baseConfigurationReference = D95D93D539F1F36375A07927 /* qa-release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
 				ENABLE_USER_SCRIPT_SANDBOXING = YES;
 				INFOPLIST_FILE = Application/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -4520,6 +4530,7 @@
 		30C5C244128C7F064903367C /* Dev Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
 				CODE_SIGN_IDENTITY = "";
 				CURRENT_PROJECT_VERSION = 1;
 				DEFINES_MODULE = YES;
@@ -4736,7 +4747,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = hit.happens.app.id.UnitTests;
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/HitHappens.Dev.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/HitHappens.Dev";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/HitHappens.app/HitHappens";
 			};
 			name = "Production Release";
 		};
@@ -4745,6 +4756,7 @@
 			baseConfigurationReference = F73D9B8BE84D0324B9A93E71 /* dev-debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
 				ENABLE_USER_SCRIPT_SANDBOXING = YES;
 				INFOPLIST_FILE = Application/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -4768,6 +4780,7 @@
 		552D33EBE629B1C7ED793079 /* Dev Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
 				CODE_SIGN_IDENTITY = "";
 				CURRENT_PROJECT_VERSION = 1;
 				DEFINES_MODULE = YES;
@@ -4802,6 +4815,7 @@
 		61F61F8C7CF426D56342EBE0 /* Dev Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
 				CODE_SIGN_IDENTITY = "";
 				CURRENT_PROJECT_VERSION = 1;
 				DEFINES_MODULE = YES;
@@ -4841,7 +4855,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = hit.happens.app.id.UnitTests;
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/HitHappens.Dev.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/HitHappens.Dev";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/HitHappens.app/HitHappens";
 			};
 			name = "Dev Debug";
 		};
@@ -4937,7 +4951,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = hit.happens.app.id.UnitTests;
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/HitHappens.Dev.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/HitHappens.Dev";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/HitHappens.app/HitHappens";
 			};
 			name = "Dev Release";
 		};
@@ -5022,6 +5036,7 @@
 		A27F7DFDCA29B583DCD5ECEA /* QA Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
 				CODE_SIGN_IDENTITY = "";
 				CURRENT_PROJECT_VERSION = 1;
 				DEFINES_MODULE = YES;
@@ -5050,6 +5065,7 @@
 		A7DE330FDBACAC756FD803AB /* QA Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
 				CODE_SIGN_IDENTITY = "";
 				CURRENT_PROJECT_VERSION = 1;
 				DEFINES_MODULE = YES;
@@ -5079,6 +5095,7 @@
 		AE8037CE47BB4BF30B356D02 /* Dev Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
 				CODE_SIGN_IDENTITY = "";
 				CURRENT_PROJECT_VERSION = 1;
 				DEFINES_MODULE = YES;
@@ -5125,6 +5142,7 @@
 		B52DA5D921EDC612DFB4AD45 /* Production Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
 				CODE_SIGN_IDENTITY = "";
 				CURRENT_PROJECT_VERSION = 1;
 				DEFINES_MODULE = YES;
@@ -5161,6 +5179,7 @@
 			baseConfigurationReference = 45F570CFE670D023A614D242 /* qa-debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
 				ENABLE_USER_SCRIPT_SANDBOXING = YES;
 				INFOPLIST_FILE = Application/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -5195,6 +5214,7 @@
 		BD982ED1B809BDFBC9469DBB /* Production Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
 				CODE_SIGN_IDENTITY = "";
 				CURRENT_PROJECT_VERSION = 1;
 				DEFINES_MODULE = YES;
@@ -5241,6 +5261,7 @@
 		C5F75991C8E19E149E93EF1F /* QA Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
 				CODE_SIGN_IDENTITY = "";
 				CURRENT_PROJECT_VERSION = 1;
 				DEFINES_MODULE = YES;
@@ -5271,6 +5292,7 @@
 			baseConfigurationReference = E76B8687E060162560516E86 /* production-release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
 				ENABLE_USER_SCRIPT_SANDBOXING = YES;
 				INFOPLIST_FILE = Application/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -5347,6 +5369,7 @@
 		CF5C45E5D994313913F1B64E /* Dev Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
 				CODE_SIGN_IDENTITY = "";
 				CURRENT_PROJECT_VERSION = 1;
 				DEFINES_MODULE = YES;
@@ -5375,6 +5398,7 @@
 		D16826740E517E041B722522 /* Dev Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
 				CODE_SIGN_IDENTITY = "";
 				CURRENT_PROJECT_VERSION = 1;
 				DEFINES_MODULE = YES;
@@ -5412,6 +5436,7 @@
 			baseConfigurationReference = FF28DB0DCEE4B829E8D3A60F /* dev-release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
 				ENABLE_USER_SCRIPT_SANDBOXING = YES;
 				INFOPLIST_FILE = Application/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -5480,13 +5505,14 @@
 				PRODUCT_BUNDLE_IDENTIFIER = hit.happens.app.id.UnitTests;
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/HitHappens.Dev.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/HitHappens.Dev";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/HitHappens.app/HitHappens";
 			};
 			name = "QA Debug";
 		};
 		EB2582ED90EB025A60C90AB1 /* QA Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
 				CODE_SIGN_IDENTITY = "";
 				CURRENT_PROJECT_VERSION = 1;
 				DEFINES_MODULE = YES;
@@ -5515,6 +5541,7 @@
 		EC686B85D2DCD1E0CB3BB7A0 /* Production Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
 				CODE_SIGN_IDENTITY = "";
 				CURRENT_PROJECT_VERSION = 1;
 				DEFINES_MODULE = YES;
@@ -5543,6 +5570,7 @@
 		ED8A6BDBCA384A3E65EB2BB6 /* Production Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
 				CODE_SIGN_IDENTITY = "";
 				CURRENT_PROJECT_VERSION = 1;
 				DEFINES_MODULE = YES;
@@ -5571,6 +5599,7 @@
 		EF38F6BC764049DAB9F98F2C /* Production Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
 				CODE_SIGN_IDENTITY = "";
 				CURRENT_PROJECT_VERSION = 1;
 				DEFINES_MODULE = YES;
@@ -5606,6 +5635,7 @@
 		F30168F108151FE1B4975F8D /* Dev Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
 				CODE_SIGN_IDENTITY = "";
 				CURRENT_PROJECT_VERSION = 1;
 				DEFINES_MODULE = YES;
@@ -5634,6 +5664,7 @@
 		F40BAF84460AD61716CFF37D /* Production Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
 				CODE_SIGN_IDENTITY = "";
 				CURRENT_PROJECT_VERSION = 1;
 				DEFINES_MODULE = YES;
@@ -5662,6 +5693,7 @@
 		F41128478D882B694479CB28 /* Production Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
 				CODE_SIGN_IDENTITY = "";
 				CURRENT_PROJECT_VERSION = 1;
 				DEFINES_MODULE = YES;
@@ -5709,6 +5741,7 @@
 		FDECE9695E5C64BEEE74037C /* Dev Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
 				CODE_SIGN_IDENTITY = "";
 				CURRENT_PROJECT_VERSION = 1;
 				DEFINES_MODULE = YES;
