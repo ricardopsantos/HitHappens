@@ -12,7 +12,8 @@ import Common
 import DevTools
 
 public class AppConfigService {
-    private let cacheManager = Common.CacheManagerForCodableCoreDataRepository.shared
+    private let cacheManager = Common.CacheManagerForCodableUserDefaultsRepository.shared
+    // private let cacheManager = Common.CacheManagerForCodableCoreDataRepository.shared
     public let webAPI: NetworkManagerProtocol
     public init(webAPI: NetworkManagerProtocol) {
         self.webAPI = webAPI
@@ -38,7 +39,7 @@ extension AppConfigService: AppConfigServiceProtocol {
             .getAppConfiguration(request)
         )
 
-        await cacheManager.aSyncStore(result, key: cacheKey, params: cacheParams)
+        await cacheManager.aSyncStore(result, key: cacheKey, params: cacheParams, timeToLiveMinutes: 60 * 24)
 
         return result
     }

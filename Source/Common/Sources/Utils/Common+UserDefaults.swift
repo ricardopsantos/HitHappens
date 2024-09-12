@@ -43,7 +43,8 @@ public extension Common {
         private init() {}
         public static var prefix: String { "\(Common.self).\(InternalUserDefaults.self)" }
         public static var defaults: UserDefaults? {
-            UserDefaults(suiteName: "\(Common.bundleIdentifier)")
+            let appGroup = Common.bundleIdentifier
+            return UserDefaults(suiteName: appGroup)
         }
 
         public static func cleanUserDefaults() {

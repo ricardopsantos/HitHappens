@@ -15,6 +15,7 @@ struct HitHappensApp: App {
     @UIApplicationDelegateAdaptor(AppDelegate.self) var delegate
     let configuration: ConfigurationViewModel
     init() {
+        Domain.coreDataPersistence = .appGroup(identifier: "group.com.hit.happens.app.id")
         let sampleService = DependenciesManager.Services.sampleService
         let dataBaseRepository = DependenciesManager.Repository.dataBaseRepository
         let nonSecureAppPreferences = DependenciesManager.Repository.nonSecureAppPreferences

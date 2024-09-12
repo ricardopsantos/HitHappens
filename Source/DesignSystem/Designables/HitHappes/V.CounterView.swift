@@ -8,11 +8,10 @@
 import SwiftUI
 //
 import Domain
-import Core
 import DesignSystem
 import Common
 
-struct DigitTransitionView: View {
+public struct DigitTransitionView: View {
     @State private var imageName: String
     @State private var timer: Timer?
     @Binding private var digit: Int
@@ -40,7 +39,7 @@ struct DigitTransitionView: View {
         }
     }
 
-    var body: some View {
+    public var body: some View {
         Image(imageName)
             .resizable()
             .scaledToFit()
@@ -82,7 +81,7 @@ struct DigitTransitionView: View {
     }
 }
 
-struct NumberTransitionView: View {
+public struct NumberTransitionView: View {
     @Binding private var digitIndex0: Int
     @Binding private var digitIndex1: Int
     @Binding private var digitIndex2: Int
@@ -99,7 +98,7 @@ struct NumberTransitionView: View {
         self._digitIndex2 = digitIndex2
     }
 
-    var body: some View {
+    public var body: some View {
         HStack(spacing: 0) {
             DigitTransitionView(digit: $digitIndex0, onDigitTapGesture: onDigitTapGesture)
             DigitTransitionView(digit: $digitIndex1, onDigitTapGesture: onDigitTapGesture)
@@ -108,14 +107,14 @@ struct NumberTransitionView: View {
     }
 }
 
-extension CounterView {
+public extension CounterView {
     static let maxWidth = screenWidth * 0.2
     static let maxHeight = screenWidth * 0.2
     static let minWidth = screenWidth * 0.15
     static let minHeight = screenWidth * 0.15
 }
 
-struct CounterView: View {
+public struct CounterView: View {
     @State private var number: Int
     @State private var digitIndex0: Int
     @State private var digitIndex1: Int
