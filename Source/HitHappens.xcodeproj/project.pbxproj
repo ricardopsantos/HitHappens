@@ -148,6 +148,7 @@
 		4533E4367F232BEC8744A61C /* CommonCoreData+Utils+CRUD.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2F9333909240B02646751C7 /* CommonCoreData+Utils+CRUD.swift */; };
 		460125FCAE4FEC20F81A03F4 /* PasswordCheckerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3301EEB581D7DC051ECD0B81 /* PasswordCheckerView.swift */; };
 		4626F0C95FBB6046FA97A2B0 /* ModelDtoProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A270C7D27C4EB35808C9869 /* ModelDtoProtocol.swift */; };
+		480DB42A07452D24A555E032 /* Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = B3C90005B26273E1C5578068 /* Info.plist */; };
 		4819BBF8FADED4164E868F84 /* V.EventsListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7973AADD1ECE85A46A80B73A /* V.EventsListView.swift */; };
 		484779E7CEEAAB54B80AABFB /* AnalyticsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25CEA12B1DBFD3CE892B9BFA /* AnalyticsManager.swift */; };
 		48AD8B721F595FF55AFE0419 /* Domain.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 50900AE93714414999A66957 /* Domain.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
@@ -3253,7 +3254,7 @@
 		2272A138D7A445ABC7678CC6 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 1540;
+				LastUpgradeCheck = 1501;
 				TargetAttributes = {
 					7FC1D4A9405E52C5CA9319C9 = {
 						TestTargetID = F7A7E879415146CCE92FA8DF;
@@ -3311,6 +3312,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				9236DCF4947A03B8FF6690D8 /* Assets.xcassets in Resources */,
+				480DB42A07452D24A555E032 /* Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
