@@ -150,10 +150,11 @@ printf "\n"
 #pod update
 
 ################################################################################
-
 echo "Generating graphviz...."
-xcodegen dump --spec ./XcodeGen/XcodegenMultiConfig.yml --type graphviz --file ./_Documents/Graph.viz
-xcodegen dump --spec ./XcodeGen/XcodegenMultiConfig.yml --type json --file ./_Documents/Graph.json
+#xcodegen dump --spec ./XcodeGen/XcodegenMultiConfig.yml --t graphviz --file ./_Documents/Graph.viz
+xcodegen dump --spec ./XcodeGen/XcodegenMultiConfig.yml --type json --file ./_Documents/Graph-jsonV1.json
+xcodegen dump --spec ./XcodeGen/XcodegenMultiConfig.yml --type parsed-json --file ./_Documents/Graph-jsonV2.json
+xcodegen dump --spec ./XcodeGen/XcodegenMultiConfig.yml --type summary --file ./_Documents/Graph-summary.txt
 
 ################################################################################
 

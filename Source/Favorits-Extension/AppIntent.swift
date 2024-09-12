@@ -7,6 +7,8 @@
 
 import WidgetKit
 import AppIntents
+//
+import Common
 
 struct ConfigurationAppIntent: WidgetConfigurationIntent {
     static var title: LocalizedStringResource = "Configuration"

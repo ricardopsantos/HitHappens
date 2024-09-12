@@ -1,0 +1,19 @@
+Name: HitHappens
+Include:
+  _FrameworkTemplate.yml
+  _UnitTestTemplate.yml
+  _UITestTemplate.yml
+  _AggregateTargets.yml
+  _WidgetTemplate.yml
+Targets:
+  Common: iOS framework
+  Core: iOS framework
+  DesignSystem: iOS framework
+  DevTools: iOS framework
+  Domain: iOS framework
+  HitHappens: iOS application
+  UITests: iOS uiTestBundle
+  UnitTests: iOS unitTestBundle
+Aggregate Targets:
+  SwiftFormat
+  SwiftLint

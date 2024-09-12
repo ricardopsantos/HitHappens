@@ -7,6 +7,8 @@
 
 import WidgetKit
 import SwiftUI
+//
+import Common
 
 @main
 struct Favorits_ExtensionBundle: WidgetBundle {

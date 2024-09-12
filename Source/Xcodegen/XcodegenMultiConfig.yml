@@ -69,7 +69,7 @@ settings:
     MARKETING_VERSION: 1.0
     ENABLE_BITCODE: YES
     SWIFT_VERSION: 5.3
-    #CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED: YES
+    CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED: YES
     SWIFT_OBJC_BRIDGING_HEADER: "Application/Bridging-Header.h"
 
 ####################### MAIN TARGET #######################
@@ -90,7 +90,6 @@ targets:
         SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD: NO
         TARGETED_DEVICE_FAMILY: 1
         ENABLE_USER_SCRIPT_SANDBOXING: YES
-        #CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED: NO
         #OTHER_SWIFT_FLAGS: "-DSMART_SDK_ENABLED"
         
     # configFiles ########################
@@ -133,6 +132,7 @@ targets:
     # dependencies: ########################
     
     dependencies:
+      #- target: Favorits-Extension
       - target: Common
       - target: DevTools
       - target: Domain
@@ -142,18 +142,21 @@ targets:
 # WIDGET
 # WIDGET
 
-  Favorits-Extension:
-    templates:
-    - Widget
-    settings:
-      base:
-        MARKETING_VERSION: 1.0
-    sources:
-      - path: ../Favorits-Extension
-        #excludes: [Info.plist]
-    dependencies:
-      - target: Common
-      - target: DevTools
+#  Favorits-Extension:
+#    templates:
+#    - Widget
+#    settings:
+#      base:
+#        MARKETING_VERSION: 1.0
+#    sources:
+#      - path: ../Favorits-Extension
+#        excludes: [Info.plist]
+#    dependencies:
+#      - target: Common
+#      - target: DevTools
+#      - target: Domain
+#      - target: Core
+#      - target: DesignSystem
       
 # DOMAIN
 # DOMAIN

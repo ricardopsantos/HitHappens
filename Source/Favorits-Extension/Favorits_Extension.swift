@@ -7,6 +7,8 @@
 
 import WidgetKit
 import SwiftUI
+//
+import Common
 
 struct Provider: AppIntentTimelineProvider {
     func placeholder(in context: Context) -> SimpleEntry {
