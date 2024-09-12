@@ -54,6 +54,7 @@ include:
   - _UnitTestTemplate.yml
   - _UITestTemplate.yml
   - _AggregateTargets.yml
+  - _WidgetTemplate.yml
 
 ####################### SETTINGS BASE #######################
 ####################### SETTINGS BASE #######################
@@ -135,7 +136,23 @@ targets:
       - target: Domain
       - target: Core
       - target: DesignSystem
-  
+# WIDGET
+# WIDGET
+# WIDGET
+
+  Favorits-Extension:
+    templates:
+    - Widget
+    settings:
+      base:
+        MARKETING_VERSION: 1.0
+    sources:
+      - path: ../Favorits-Extension
+        #excludes: [Info.plist]
+    dependencies:
+      - target: Common
+      - target: DevTools
+      
 # DOMAIN
 # DOMAIN
 # DOMAIN
