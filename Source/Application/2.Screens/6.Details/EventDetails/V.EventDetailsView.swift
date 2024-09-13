@@ -369,8 +369,6 @@ fileprivate extension EventDetailsView {
                         })
                 }
             }
-        } else {
-            Text("Empty")
         }
     }
 }

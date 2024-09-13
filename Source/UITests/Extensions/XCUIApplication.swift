@@ -13,7 +13,7 @@ import Common
 
 public extension XCUIApplication {
     func elementIsWithinWindow(element: XCUIElement) -> Bool {
-        guard element.exists && !element.frame.isEmpty && element.isHittable else { return false }
+        guard element.exists, !element.frame.isEmpty, element.isHittable else { return false }
         return windows.element(boundBy: 0).frame.contains(element.frame)
     }
 
@@ -34,7 +34,7 @@ public extension XCUIApplication {
             topScreenPoint.press(forDuration: 0, thenDragTo: bottomScreenPoint)
         }
     }
-        
+
     func scrollUntilElementAppears(element: XCUIElement, threshold: Int = 10) {
         var iteration = 0
 

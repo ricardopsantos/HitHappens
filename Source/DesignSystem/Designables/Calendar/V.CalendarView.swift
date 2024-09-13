@@ -18,18 +18,33 @@ public extension CalendarView {
         static let daysFont: FontSemantic = .body
         enum CurrentDay {
             static let currentDayShapeIsCircle = false
-            static let textColor = ColorSemantic.labelPrimary.color
-            static let cellBackgroundColor = ColorSemantic.primary.color
+            static func textColor() -> Color {
+                ColorSemantic.labelPrimary.color
+            }
+
+            static func cellBackgroundColor() -> Color {
+                ColorSemantic.primary.color
+            }
         }
 
         enum CurrentMonth {
-            static let textColor = ColorSemantic.labelPrimary.color
-            static let cellBackgroundColor = ColorSemantic.primary.color.opacity(0.1)
+            static func textColor() -> Color {
+                ColorSemantic.labelPrimary.color
+            }
+
+            static func cellBackgroundColor() -> Color {
+                ColorSemantic.primary.color.opacity(0.1)
+            }
         }
 
         enum OtherMonths {
-            static let textColor = ColorSemantic.labelSecondary.color
-            static let cellBackgroundColor = ColorSemantic.labelSecondary.color.opacity(0.1)
+            static func textColor() -> Color {
+                ColorSemantic.labelSecondary.color
+            }
+
+            static func cellBackgroundColor() -> Color {
+                ColorSemantic.labelSecondary.color.opacity(0.1)
+            }
         }
     }
 }
@@ -138,24 +153,24 @@ public struct DayView: View {
     func backgroundColor() -> some View {
         Group {
             if day.date.isToday {
-                CalendarView.Config.CurrentDay.cellBackgroundColor
+                CalendarView.Config.CurrentDay.cellBackgroundColor()
             } else if day.date == selectedDay {
-                CalendarView.Config.CurrentDay.cellBackgroundColor.opacity(0.5)
+                CalendarView.Config.CurrentDay.cellBackgroundColor().opacity(0.5)
             } else {
                 day.isCurrentMonth ?
-                    CalendarView.Config.CurrentMonth.cellBackgroundColor :
-                    CalendarView.Config.OtherMonths.cellBackgroundColor
+                    CalendarView.Config.CurrentMonth.cellBackgroundColor() :
+                    CalendarView.Config.OtherMonths.cellBackgroundColor()
             }
         }
     }
 
     func textColor() -> Color {
         if day.date.isToday {
-            return CalendarView.Config.CurrentDay.textColor
+            return CalendarView.Config.CurrentDay.textColor()
         } else {
             return day.isCurrentMonth ?
-                CalendarView.Config.CurrentMonth.textColor :
-                CalendarView.Config.OtherMonths.textColor
+                CalendarView.Config.CurrentMonth.textColor() :
+                CalendarView.Config.OtherMonths.textColor()
         }
     }
 }

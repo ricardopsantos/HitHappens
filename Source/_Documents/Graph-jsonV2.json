@@ -1,0 +1,962 @@
+{
+  "options" : {
+    "localPackagesGroup" : null,
+    "deploymentTarget" : {
+      "iOS" : null,
+      "watchOS" : null,
+      "macOS" : null,
+      "visionOS" : null,
+      "tvOS" : null
+    },
+    "usesTabs" : null,
+    "disabledValidations" : [
+
+    ],
+    "bundleIdPrefix" : "hit.happens.app.id",
+    "transitivelyLinkDependencies" : false,
+    "preGenCommand" : null,
+    "carthageExecutablePath" : null,
+    "developmentLanguage" : null,
+    "xcodeVersion" : "15.0.1",
+    "postGenCommand" : null,
+    "tabWidth" : null,
+    "carthageBuildPath" : null,
+    "indentWidth" : null,
+    "minimumXcodeGenVersion" : "2.18.0",
+    "fileTypes" : {
+
+    },
+    "groupSortPosition" : "top",
+    "generateEmptyDirectories" : true,
+    "defaultConfig" : null
+  },
+  "include" : [
+    "_FrameworkTemplate.yml",
+    "_UnitTestTemplate.yml",
+    "_UITestTemplate.yml",
+    "_AggregateTargets.yml",
+    "_WidgetTemplate.yml"
+  ],
+  "fileGroups" : [
+    "..\/_Documents",
+    "..\/Configuration",
+    "..\/XcodeGen"
+  ],
+  "schemes" : {
+
+  },
+  "name" : "HitHappens",
+  "targets" : {
+    "Core" : {
+      "dependencies" : [
+        {
+          "codeSign" : null,
+          "copy" : null,
+          "link" : null,
+          "target" : "Domain",
+          "embed" : null,
+          "platforms" : null,
+          "destinationFilters" : null
+        },
+        {
+          "codeSign" : null,
+          "platforms" : null,
+          "destinationFilters" : null,
+          "embed" : null,
+          "link" : null,
+          "copy" : null,
+          "target" : "DevTools"
+        },
+        {
+          "platforms" : null,
+          "destinationFilters" : null,
+          "copy" : null,
+          "link" : null,
+          "codeSign" : null,
+          "target" : "Common",
+          "embed" : null
+        }
+      ],
+      "prebuildScripts" : [
+
+      ],
+      "buildRules" : [
+
+      ],
+      "deploymentTarget" : "16.0",
+      "supportedDestinations" : null,
+      "type" : "framework",
+      "platform" : "iOS",
+      "sources" : [
+        {
+          "destinationFilters" : null,
+          "inferDestinationFiltersByPath" : null,
+          "compilerFlags" : [
+
+          ],
+          "includes" : [
+
+          ],
+          "name" : null,
+          "type" : null,
+          "resourceTags" : [
+
+          ],
+          "group" : null,
+          "excludes" : [
+            "Info.plist"
+          ],
+          "createIntermediateGroups" : null,
+          "headerVisibility" : null,
+          "buildPhase" : null,
+          "path" : "..\/Core"
+        }
+      ],
+      "postbuildScripts" : [
+
+      ],
+      "directlyEmbedCarthageDependencies" : null,
+      "info" : null,
+      "scheme" : null,
+      "settings" : {
+        "MODULE_VERIFIER_SUPPORTED_LANGUAGE_STANDARDS" : "gnu11 gnu++14",
+        "MARKETING_VERSION" : 1,
+        "ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS" : true,
+        "ENABLE_MODULE_VERIFIER" : true,
+        "CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED" : true,
+        "ENABLE_USER_SCRIPT_SANDBOXING" : true
+      },
+      "legacy" : null,
+      "configFiles" : {
+
+      },
+      "buildToolPlugins" : [
+
+      ],
+      "transitivelyLinkDependencies" : null,
+      "postCompileScripts" : [
+
+      ],
+      "attributes" : {
+
+      },
+      "entitlements" : null,
+      "requiresObjCLinking" : null
+    },
+    "Domain" : {
+      "configFiles" : {
+
+      },
+      "deploymentTarget" : "16.0",
+      "postCompileScripts" : [
+
+      ],
+      "type" : "framework",
+      "attributes" : {
+
+      },
+      "buildRules" : [
+
+      ],
+      "info" : null,
+      "sources" : [
+        {
+          "excludes" : [
+            "Info.plist"
+          ],
+          "headerVisibility" : null,
+          "name" : null,
+          "destinationFilters" : null,
+          "inferDestinationFiltersByPath" : null,
+          "compilerFlags" : [
+
+          ],
+          "includes" : [
+
+          ],
+          "type" : null,
+          "group" : null,
+          "path" : "..\/Domain",
+          "createIntermediateGroups" : null,
+          "resourceTags" : [
+
+          ],
+          "buildPhase" : null
+        }
+      ],
+      "directlyEmbedCarthageDependencies" : null,
+      "settings" : {
+        "ENABLE_MODULE_VERIFIER" : true,
+        "ENABLE_USER_SCRIPT_SANDBOXING" : true,
+        "MODULE_VERIFIER_SUPPORTED_LANGUAGE_STANDARDS" : "gnu11 gnu++14",
+        "ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS" : true,
+        "CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED" : true,
+        "MARKETING_VERSION" : 1
+      },
+      "scheme" : null,
+      "legacy" : null,
+      "supportedDestinations" : null,
+      "prebuildScripts" : [
+
+      ],
+      "postbuildScripts" : [
+
+      ],
+      "dependencies" : [
+        {
+          "embed" : null,
+          "link" : null,
+          "platforms" : null,
+          "copy" : null,
+          "target" : "Common",
+          "codeSign" : null,
+          "destinationFilters" : null
+        },
+        {
+          "codeSign" : null,
+          "destinationFilters" : null,
+          "link" : null,
+          "copy" : null,
+          "platforms" : null,
+          "target" : "DevTools",
+          "embed" : null
+        }
+      ],
+      "requiresObjCLinking" : null,
+      "platform" : "iOS",
+      "buildToolPlugins" : [
+
+      ],
+      "entitlements" : null,
+      "transitivelyLinkDependencies" : null
+    },
+    "DevTools" : {
+      "postCompileScripts" : [
+
+      ],
+      "info" : null,
+      "sources" : [
+        {
+          "name" : null,
+          "createIntermediateGroups" : null,
+          "group" : null,
+          "path" : "..\/DevTools",
+          "includes" : [
+
+          ],
+          "type" : null,
+          "buildPhase" : null,
+          "destinationFilters" : null,
+          "resourceTags" : [
+
+          ],
+          "inferDestinationFiltersByPath" : null,
+          "compilerFlags" : [
+
+          ],
+          "headerVisibility" : null,
+          "excludes" : [
+            "Info.plist"
+          ]
+        }
+      ],
+      "prebuildScripts" : [
+
+      ],
+      "buildToolPlugins" : [
+
+      ],
+      "buildRules" : [
+
+      ],
+      "platform" : "iOS",
+      "transitivelyLinkDependencies" : null,
+      "dependencies" : [
+        {
+          "destinationFilters" : null,
+          "copy" : null,
+          "link" : null,
+          "platforms" : null,
+          "target" : "Common",
+          "codeSign" : null,
+          "embed" : null
+        }
+      ],
+      "configFiles" : {
+
+      },
+      "deploymentTarget" : "16.0",
+      "settings" : {
+        "MARKETING_VERSION" : 1,
+        "MODULE_VERIFIER_SUPPORTED_LANGUAGE_STANDARDS" : "gnu11 gnu++14",
+        "CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED" : true,
+        "ENABLE_USER_SCRIPT_SANDBOXING" : true,
+        "ENABLE_MODULE_VERIFIER" : true,
+        "ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS" : true
+      },
+      "attributes" : {
+
+      },
+      "type" : "framework",
+      "entitlements" : null,
+      "directlyEmbedCarthageDependencies" : null,
+      "requiresObjCLinking" : null,
+      "scheme" : null,
+      "legacy" : null,
+      "supportedDestinations" : null,
+      "postbuildScripts" : [
+
+      ]
+    },
+    "HitHappens" : {
+      "buildRules" : [
+
+      ],
+      "info" : null,
+      "sources" : [
+        {
+          "resourceTags" : [
+
+          ],
+          "excludes" : [
+            "*.md",
+            "*.png",
+            "GoogleService*"
+          ],
+          "compilerFlags" : [
+
+          ],
+          "inferDestinationFiltersByPath" : null,
+          "name" : null,
+          "group" : null,
+          "includes" : [
+
+          ],
+          "buildPhase" : null,
+          "headerVisibility" : null,
+          "createIntermediateGroups" : null,
+          "type" : "group",
+          "path" : "..\/Application",
+          "destinationFilters" : null
+        }
+      ],
+      "entitlements" : null,
+      "buildToolPlugins" : [
+
+      ],
+      "transitivelyLinkDependencies" : null,
+      "supportedDestinations" : null,
+      "prebuildScripts" : [
+
+      ],
+      "platform" : "iOS",
+      "attributes" : {
+
+      },
+      "type" : "application",
+      "requiresObjCLinking" : null,
+      "configFiles" : {
+        "Production Debug" : "..\/Configuration\/production-debug.xcconfig",
+        "QA Release" : "..\/Configuration\/qa-release.xcconfig",
+        "QA Debug" : "..\/Configuration\/qa-debug.xcconfig",
+        "Dev Debug" : "..\/Configuration\/dev-debug.xcconfig",
+        "Production Release" : "..\/Configuration\/production-release.xcconfig",
+        "Dev Release" : "..\/Configuration\/dev-release.xcconfig"
+      },
+      "deploymentTarget" : null,
+      "directlyEmbedCarthageDependencies" : null,
+      "scheme" : {
+        "commandLineArguments" : {
+
+        },
+        "testTargets" : [
+          "UnitTests",
+          "UITests"
+        ],
+        "environmentVariables" : [
+
+        ],
+        "preActions" : [
+
+        ],
+        "testPlans" : [
+
+        ],
+        "configVariants" : [
+          "Production",
+          "QA",
+          "Dev"
+        ],
+        "postActions" : [
+
+        ],
+        "coverageTargets" : [
+
+        ]
+      },
+      "postbuildScripts" : [
+
+      ],
+      "dependencies" : [
+        {
+          "embed" : null,
+          "copy" : null,
+          "codeSign" : null,
+          "platforms" : null,
+          "link" : null,
+          "target" : "Common",
+          "destinationFilters" : null
+        },
+        {
+          "destinationFilters" : null,
+          "platforms" : null,
+          "codeSign" : null,
+          "link" : null,
+          "target" : "DevTools",
+          "embed" : null,
+          "copy" : null
+        },
+        {
+          "platforms" : null,
+          "link" : null,
+          "target" : "Domain",
+          "codeSign" : null,
+          "embed" : null,
+          "copy" : null,
+          "destinationFilters" : null
+        },
+        {
+          "codeSign" : null,
+          "target" : "Core",
+          "embed" : null,
+          "link" : null,
+          "destinationFilters" : null,
+          "copy" : null,
+          "platforms" : null
+        },
+        {
+          "platforms" : null,
+          "embed" : null,
+          "target" : "DesignSystem",
+          "destinationFilters" : null,
+          "codeSign" : null,
+          "copy" : null,
+          "link" : null
+        }
+      ],
+      "legacy" : null,
+      "settings" : {
+        "TARGETED_DEVICE_FAMILY" : 1,
+        "SUPPORTS_MACCATALYST" : false,
+        "SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD" : true,
+        "SUPPORTED_PLATFORMS" : "iphoneos iphonesimulator",
+        "ENABLE_USER_SCRIPT_SANDBOXING" : true,
+        "ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES" : true
+      },
+      "postCompileScripts" : [
+
+      ]
+    },
+    "UITests" : {
+      "deploymentTarget" : "16.0",
+      "prebuildScripts" : [
+
+      ],
+      "transitivelyLinkDependencies" : null,
+      "postCompileScripts" : [
+
+      ],
+      "attributes" : {
+
+      },
+      "sources" : [
+        {
+          "excludes" : [
+            "Info.plist"
+          ],
+          "group" : null,
+          "resourceTags" : [
+
+          ],
+          "type" : null,
+          "name" : null,
+          "includes" : [
+
+          ],
+          "destinationFilters" : null,
+          "compilerFlags" : [
+
+          ],
+          "headerVisibility" : null,
+          "path" : "..\/UITests",
+          "createIntermediateGroups" : null,
+          "buildPhase" : null,
+          "inferDestinationFiltersByPath" : null
+        }
+      ],
+      "scheme" : null,
+      "legacy" : null,
+      "requiresObjCLinking" : null,
+      "postbuildScripts" : [
+
+      ],
+      "settings" : {
+
+      },
+      "platform" : "iOS",
+      "configFiles" : {
+
+      },
+      "type" : "bundle.ui-testing",
+      "supportedDestinations" : null,
+      "buildRules" : [
+
+      ],
+      "info" : null,
+      "directlyEmbedCarthageDependencies" : null,
+      "buildToolPlugins" : [
+
+      ],
+      "dependencies" : [
+        {
+          "destinationFilters" : null,
+          "embed" : null,
+          "link" : null,
+          "codeSign" : null,
+          "sdk" : "XCTest.framework",
+          "copy" : null,
+          "platforms" : null
+        },
+        {
+          "destinationFilters" : null,
+          "copy" : null,
+          "embed" : null,
+          "target" : "HitHappens",
+          "platforms" : null,
+          "link" : true,
+          "codeSign" : null
+        },
+        {
+          "copy" : null,
+          "platforms" : null,
+          "destinationFilters" : null,
+          "codeSign" : null,
+          "target" : "Common",
+          "link" : false,
+          "embed" : null
+        },
+        {
+          "destinationFilters" : null,
+          "codeSign" : null,
+          "copy" : null,
+          "embed" : null,
+          "link" : true,
+          "platforms" : null,
+          "package" : "Nimble"
+        }
+      ],
+      "entitlements" : null
+    },
+    "Common" : {
+      "platform" : "iOS",
+      "dependencies" : [
+
+      ],
+      "info" : null,
+      "directlyEmbedCarthageDependencies" : null,
+      "sources" : [
+        {
+          "inferDestinationFiltersByPath" : null,
+          "compilerFlags" : [
+
+          ],
+          "headerVisibility" : null,
+          "group" : null,
+          "excludes" : [
+            "Tests",
+            "Sources\/Info.plist",
+            ".gitignore",
+            ".swiftpm",
+            "Package.swift",
+            "Package.resolved"
+          ],
+          "path" : "..\/Common",
+          "type" : null,
+          "destinationFilters" : null,
+          "buildPhase" : null,
+          "includes" : [
+
+          ],
+          "name" : null,
+          "createIntermediateGroups" : null,
+          "resourceTags" : [
+
+          ]
+        }
+      ],
+      "settings" : {
+        "ENABLE_USER_SCRIPT_SANDBOXING" : true,
+        "ENABLE_MODULE_VERIFIER" : true,
+        "SWIFT_OBJC_BRIDGING_HEADER" : "Common\/Sources\/Common-Bridging-Header.h",
+        "ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS" : true,
+        "MODULE_VERIFIER_SUPPORTED_LANGUAGE_STANDARDS" : "gnu11 gnu++14",
+        "MARKETING_VERSION" : 1,
+        "CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED" : true
+      },
+      "buildToolPlugins" : [
+
+      ],
+      "postbuildScripts" : [
+
+      ],
+      "postCompileScripts" : [
+
+      ],
+      "deploymentTarget" : "16.0",
+      "prebuildScripts" : [
+
+      ],
+      "entitlements" : null,
+      "supportedDestinations" : null,
+      "scheme" : null,
+      "buildRules" : [
+
+      ],
+      "type" : "framework",
+      "attributes" : {
+
+      },
+      "transitivelyLinkDependencies" : null,
+      "requiresObjCLinking" : null,
+      "legacy" : null,
+      "configFiles" : {
+
+      }
+    },
+    "DesignSystem" : {
+      "postCompileScripts" : [
+
+      ],
+      "directlyEmbedCarthageDependencies" : null,
+      "supportedDestinations" : null,
+      "dependencies" : [
+        {
+          "link" : null,
+          "destinationFilters" : null,
+          "copy" : null,
+          "platforms" : null,
+          "embed" : null,
+          "target" : "Common",
+          "codeSign" : null
+        },
+        {
+          "destinationFilters" : null,
+          "embed" : null,
+          "copy" : null,
+          "platforms" : null,
+          "link" : null,
+          "codeSign" : null,
+          "target" : "Domain"
+        },
+        {
+          "target" : "DevTools",
+          "codeSign" : null,
+          "destinationFilters" : null,
+          "platforms" : null,
+          "embed" : null,
+          "copy" : null,
+          "link" : null
+        }
+      ],
+      "configFiles" : {
+
+      },
+      "prebuildScripts" : [
+
+      ],
+      "entitlements" : null,
+      "attributes" : {
+
+      },
+      "buildToolPlugins" : [
+
+      ],
+      "info" : null,
+      "settings" : {
+        "CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED" : true,
+        "MODULE_VERIFIER_SUPPORTED_LANGUAGE_STANDARDS" : "gnu11 gnu++14",
+        "ENABLE_USER_SCRIPT_SANDBOXING" : true,
+        "MARKETING_VERSION" : 1,
+        "ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS" : true,
+        "ENABLE_MODULE_VERIFIER" : true
+      },
+      "buildRules" : [
+
+      ],
+      "transitivelyLinkDependencies" : null,
+      "legacy" : null,
+      "postbuildScripts" : [
+
+      ],
+      "platform" : "iOS",
+      "sources" : [
+        {
+          "includes" : [
+
+          ],
+          "headerVisibility" : null,
+          "excludes" : [
+            "Info.plist"
+          ],
+          "createIntermediateGroups" : null,
+          "resourceTags" : [
+
+          ],
+          "type" : null,
+          "group" : null,
+          "compilerFlags" : [
+
+          ],
+          "name" : null,
+          "destinationFilters" : null,
+          "inferDestinationFiltersByPath" : null,
+          "buildPhase" : null,
+          "path" : "..\/DesignSystem"
+        }
+      ],
+      "deploymentTarget" : "16.0",
+      "requiresObjCLinking" : null,
+      "scheme" : null,
+      "type" : "framework"
+    },
+    "UnitTests" : {
+      "platform" : "iOS",
+      "sources" : [
+        {
+          "createIntermediateGroups" : null,
+          "group" : null,
+          "compilerFlags" : [
+
+          ],
+          "buildPhase" : null,
+          "headerVisibility" : null,
+          "resourceTags" : [
+
+          ],
+          "type" : null,
+          "excludes" : [
+            "Info.plist"
+          ],
+          "name" : null,
+          "inferDestinationFiltersByPath" : null,
+          "destinationFilters" : null,
+          "includes" : [
+
+          ],
+          "path" : "..\/UnitTests"
+        }
+      ],
+      "postbuildScripts" : [
+
+      ],
+      "postCompileScripts" : [
+
+      ],
+      "deploymentTarget" : "16.0",
+      "type" : "bundle.unit-test",
+      "scheme" : null,
+      "supportedDestinations" : null,
+      "prebuildScripts" : [
+
+      ],
+      "buildToolPlugins" : [
+
+      ],
+      "info" : null,
+      "transitivelyLinkDependencies" : null,
+      "settings" : {
+        "BUNDLE_LOADER" : "$(TEST_HOST)",
+        "TEST_HOST" : "$(BUILT_PRODUCTS_DIR)\/HitHappens.Dev.app\/$(BUNDLE_EXECUTABLE_FOLDER_PATH)\/HitHappens.Dev"
+      },
+      "buildRules" : [
+
+      ],
+      "attributes" : {
+
+      },
+      "dependencies" : [
+        {
+          "embed" : null,
+          "platforms" : null,
+          "sdk" : "XCTest.framework",
+          "copy" : null,
+          "destinationFilters" : null,
+          "link" : null,
+          "codeSign" : null
+        },
+        {
+          "copy" : null,
+          "target" : "HitHappens",
+          "destinationFilters" : null,
+          "link" : true,
+          "platforms" : null,
+          "codeSign" : null,
+          "embed" : null
+        },
+        {
+          "target" : "Common",
+          "link" : false,
+          "copy" : null,
+          "platforms" : null,
+          "codeSign" : null,
+          "destinationFilters" : null,
+          "embed" : null
+        },
+        {
+          "target" : "Domain",
+          "destinationFilters" : null,
+          "link" : false,
+          "codeSign" : null,
+          "embed" : null,
+          "copy" : null,
+          "platforms" : null
+        },
+        {
+          "embed" : null,
+          "target" : "Core",
+          "copy" : null,
+          "destinationFilters" : null,
+          "link" : false,
+          "platforms" : null,
+          "codeSign" : null
+        },
+        {
+          "link" : true,
+          "embed" : null,
+          "platforms" : null,
+          "destinationFilters" : null,
+          "package" : "Nimble",
+          "copy" : null,
+          "codeSign" : null
+        }
+      ],
+      "entitlements" : null,
+      "requiresObjCLinking" : null,
+      "configFiles" : {
+
+      },
+      "legacy" : null,
+      "directlyEmbedCarthageDependencies" : null
+    }
+  },
+  "configFiles" : {
+
+  },
+  "configs" : {
+    "QA Release" : "release",
+    "Production Release" : "release",
+    "Production Debug" : "debug",
+    "Dev Release" : "release",
+    "Dev Debug" : "debug",
+    "QA Debug" : "debug"
+  },
+  "attributes" : {
+
+  },
+  "settingGroups" : {
+
+  },
+  "projectReferences" : {
+
+  },
+  "settings" : {
+    "SWIFT_VERSION" : 5.0999999999999996,
+    "CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED" : true,
+    "SWIFT_OBJC_BRIDGING_HEADER" : "Application\/Bridging-Header.h",
+    "IPHONEOS_DEPLOYMENT_TARGET" : 16
+  },
+  "aggregateTargets" : {
+    "SwiftLint" : {
+      "buildToolPlugins" : [
+
+      ],
+      "targets" : [
+
+      ],
+      "buildScripts" : [
+        {
+          "inputFileLists" : [
+
+          ],
+          "outputFiles" : [
+
+          ],
+          "shell" : "\/bin\/bash",
+          "outputFileLists" : [
+
+          ],
+          "script" : "${SRCROOT}\/Scripts\/executeSwiftLint.sh\n",
+          "name" : "SwiftLint",
+          "inputFiles" : [
+
+          ],
+          "runOnlyWhenInstalling" : false
+        }
+      ],
+      "configFiles" : {
+
+      },
+      "settings" : {
+
+      },
+      "scheme" : null,
+      "attributes" : {
+
+      }
+    },
+    "SwiftFormat" : {
+      "buildScripts" : [
+        {
+          "outputFileLists" : [
+
+          ],
+          "runOnlyWhenInstalling" : false,
+          "shell" : "\/bin\/bash",
+          "outputFiles" : [
+
+          ],
+          "script" : "${SRCROOT}\/Scripts\/executeSwiftFormat.sh\n",
+          "name" : "SwiftFormat",
+          "inputFiles" : [
+
+          ],
+          "inputFileLists" : [
+
+          ]
+        }
+      ],
+      "targets" : [
+
+      ],
+      "buildToolPlugins" : [
+
+      ],
+      "scheme" : null,
+      "configFiles" : {
+
+      },
+      "settings" : {
+
+      },
+      "attributes" : {
+
+      }
+    }
+  },
+  "packages" : {
+    "Nimble" : {
+      "branch" : "main",
+      "github" : "Quick\/Nimble"
+    }
+  }
+}

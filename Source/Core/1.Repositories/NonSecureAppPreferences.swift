@@ -27,12 +27,12 @@ public class NonSecureAppPreferences {
     }
 
     fileprivate var defaults: UserDefaults {
-        if let bundleIdentifier = cachedBundleIdentifier, !bundleIdentifier.isEmpty,
-           let custom = UserDefaults(suiteName: bundleIdentifier) {
+        if let appGroup = cachedBundleIdentifier, !appGroup.isEmpty,
+           let custom = UserDefaults(suiteName: appGroup) {
             return custom
         } else {
-            if let bundleIdentifier = Bundle.main.bundleIdentifier {
-                let fullIdentifier = bundleIdentifier + "_" + targetEnv.lowercased()
+            if let appGroup = Bundle.main.bundleIdentifier {
+                let fullIdentifier = appGroup + "_" + targetEnv.lowercased()
                 cachedBundleIdentifier = fullIdentifier
                 return UserDefaults(suiteName: fullIdentifier) ?? .standard
             } else {

@@ -18,11 +18,11 @@
 	
 # About 
 
+___Hit Happens___ is an open [source app](https://en.wikipedia.org/wiki/Open_source), built using SwiftUI and available on __[AppStore](https://apps.apple.com/pt/app/hit-happens/id6670711255)__.
+
 <center>
 <img src=Source/_Documents/images/PreviewOnboarding.jpg width=800/>
 </center>
-
-_Hit Happens_ is an open [source app](https://en.wikipedia.org/wiki/Open_source), built using SwiftUI.
 
 ## Intro 
 

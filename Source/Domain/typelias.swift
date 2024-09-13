@@ -6,6 +6,8 @@
 //
 
 import Foundation
+//
+import Common
 
 public enum Domain {}
 
@@ -16,4 +18,6 @@ public extension Domain {
     static var bundleIdentifier: String {
         Bundle(for: DomainBundleFinder.self).bundleIdentifier ?? ""
     }
+
+    static var coreDataPersistence: CommonCoreData.Utils.Persistence = .default
 }

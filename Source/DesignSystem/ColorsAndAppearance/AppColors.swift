@@ -156,8 +156,8 @@ public indirect enum ColorSemantic: CaseIterable, Hashable {
             ColorPalletSmart.systemPrimary.colorFaded02 :
             ColorPalletSmart.systemPrimary.colorFaded02
         case .systemSecondary: result = on == .light ?
-            ColorPalletSmart.systemPrimary.colorFaded016 :
-            ColorPalletSmart.systemPrimary.colorFaded016
+            ColorPalletSmart.systemPrimary.colorFaded01 :
+            ColorPalletSmart.systemPrimary.colorFaded01
 
         case .backgroundPrimary: result = on == .light ?
             ColorPalletSmart.white.uiColor :
@@ -168,7 +168,7 @@ public indirect enum ColorSemantic: CaseIterable, Hashable {
             ColorPalletSmart.black.uiColor
 
         case .backgroundTertiary: result = on == .light ?
-            UIColor.colorFromRGBString("201,208,214") :
+            ColorPalletSmart.silver1.colorFaded02 :
             UIColor.colorFromRGBString("0,0,0")
 
         case .backgroundGradient: result = on == .light ?
@@ -223,19 +223,10 @@ enum ColorPalletSmart: CaseIterable {
     public var color: Color { Color(uiColor) }
 
     public var colorFaded08: UIColor { uiColor.alpha(0.8) }
-    public var colorFaded064: UIColor { uiColor.alpha(0.64) }
     public var colorFaded06: UIColor { uiColor.alpha(0.6) }
-    public var colorFaded048: UIColor { uiColor.alpha(0.48) }
     public var colorFaded04: UIColor { uiColor.alpha(0.4) }
-    public var colorFaded036: UIColor { uiColor.alpha(0.36) }
-    public var colorFaded032: UIColor { uiColor.alpha(0.32) }
-    public var colorFaded03: UIColor { uiColor.alpha(0.3) }
-    public var colorFaded024: UIColor { uiColor.alpha(0.24) }
     public var colorFaded02: UIColor { uiColor.alpha(0.2) }
-    public var colorFaded018: UIColor { uiColor.alpha(0.18) }
-    public var colorFaded016: UIColor { uiColor.alpha(0.16) }
-    public var colorFaded012: UIColor { uiColor.alpha(0.12) }
-    public var colorFaded008: UIColor { uiColor.alpha(0.08) }
+    public var colorFaded01: UIColor { uiColor.alpha(0.1) }
 
     public var colorSwiftUI: SwiftUI.Color { Color(rawValue) }
 

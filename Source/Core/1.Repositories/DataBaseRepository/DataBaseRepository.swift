@@ -15,10 +15,11 @@ import Domain
 public class DataBaseRepository: CommonBaseCoreDataManager, DataBaseRepositoryProtocol {
     public static var shared = DataBaseRepository(
         dbName: Domain.internalDB,
-        dbBundle: Domain.bundleIdentifier
+        dbBundle: Domain.bundleIdentifier,
+        persistence: Domain.coreDataPersistence
     )
-    override private init(dbName: String, dbBundle: String) {
-        super.init(dbName: dbName, dbBundle: dbBundle)
+    override private init(dbName: String, dbBundle: String, persistence: CommonCoreData.Utils.Persistence) {
+        super.init(dbName: dbName, dbBundle: dbBundle, persistence: persistence)
     }
 
     override public func startFetchedResultsController() {

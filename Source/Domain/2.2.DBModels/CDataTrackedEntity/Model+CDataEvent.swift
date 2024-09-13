@@ -66,9 +66,9 @@ public extension Model.TrackedEntity {
             name: "",
             info: "",
             archived: false,
-            favorite: false,
+            favorite: true,
             locationRelevant: false,
-            category: .none,
+            category: .personal,
             sound: .none,
             cascadeEvents: []
         )
