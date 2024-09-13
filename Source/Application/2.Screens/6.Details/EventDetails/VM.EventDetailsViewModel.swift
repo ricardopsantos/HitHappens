@@ -12,6 +12,7 @@ import Domain
 import Common
 import Core
 import DesignSystem
+import DevTools
 
 //
 // MARK: - Model
@@ -139,7 +140,6 @@ class EventDetailsViewModel: BaseViewModel {
             displayTip("")
             if isNewEvent {
                 trackedEntity?.archived = value
-
             } else {
                 Task { [weak self] in
                     guard let self = self, var trackedEntity = trackedEntity,
@@ -172,6 +172,10 @@ class EventDetailsViewModel: BaseViewModel {
             Task { [weak self] in
                 guard let self = self else { return }
                 let trackedEntityId = trackedEntity?.id ?? ""
+                guard !trackedEntityId.isEmpty else {
+                    DevTools.Log.error("Invalid trackedEntityId", .business)
+                    return
+                }
                 let locationRelevant = trackedEntity?.locationRelevant ?? false
                 let location = Common.SharedLocationManager.lastKnowLocation?.coordinate
                 if locationRelevant, let location = location {
@@ -223,7 +227,7 @@ class EventDetailsViewModel: BaseViewModel {
                     if let trackedEntityId = dataBaseRepository?.trackedEntityInsertOrUpdate(trackedEntity: trackedEntity) {
                         self.isNewEvent = false
                         self.confirmationSheetType = nil
-                        //   self.trackedEntity = dataBaseRepository?.trackedEntityGet(trackedEntityId: trackedEntityId, cascade: true)
+                        self.trackedEntity = dataBaseRepository?.trackedEntityGet(trackedEntityId: trackedEntityId, cascade: true)
                     }
                 }
             }

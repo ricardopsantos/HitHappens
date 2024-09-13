@@ -9,6 +9,7 @@ import Foundation
 import SwiftUI
 //
 import DesignSystem
+import Common
 
 public struct EditView: View {
     @Environment(\.colorScheme) var colorScheme
@@ -26,28 +27,31 @@ public struct EditView: View {
 
     public var body: some View {
         Group {
-            Divider()
             if onEdit {
                 HStack(spacing: 0) {
                     saveEditionChangesView
-                    Spacer()
+                    SwiftUIUtils.FixedHorizontalSpacer(width: SizeNames.defaultMarginSmall)
                     doEditionView
                 }
             } else {
                 doEditionView
             }
-            Divider()
         }
     }
 
+    @ViewBuilder
     var doEditionView: some View {
+        let text = onEdit ? "Cancel".localizedMissing : "Edit".localizedMissing
+        let background: ColorSemantic = onEdit ? ColorSemantic.primary : ColorSemantic.primary
+        let style: TextButton.Style = onEdit ? .secondary : .primary
         TextButton(
             onClick: {
                 onEdit.toggle()
                 onCancelEdit()
             },
-            text: !onEdit ? "Edit".localizedMissing : "Cancel".localizedMissing,
-            style: .textOnly,
+            text: text,
+            style: style,
+            background: background,
             accessibility: .editButton)
     }
 
@@ -58,7 +62,9 @@ public struct EditView: View {
                 TextButton(onClick: {
                     onEdit.toggle()
                     onConfirmEdit()
-                }, text: "Confirm changes", style: .textOnly, accessibility: .confirmButton)
+                }, text: "Confirm".localizedMissing,
+                           style: .primary,
+                           accessibility: .confirmButton)
             } else {
                 EmptyView()
             }
