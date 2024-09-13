@@ -86,7 +86,7 @@ targets:
       base:
         SUPPORTED_PLATFORMS: "iphoneos iphonesimulator"
         SUPPORTS_MACCATALYST: NO
-        SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD: NO
+        SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD: YES
         TARGETED_DEVICE_FAMILY: 1
         ENABLE_USER_SCRIPT_SANDBOXING: YES
         ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES: YES
@@ -129,7 +129,13 @@ targets:
            - "*.md"
            - "*.png"
            - "GoogleService*"
-          
+
+    # files ########################
+    files:
+      - path: ../Application/Info.plist
+        excludeFromTargets:
+          - HitHappens # Exclude this file from the HitHappens target
+
     # dependencies: ########################
     
     dependencies:
