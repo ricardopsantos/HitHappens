@@ -8,8 +8,8 @@
 import SwiftUI
 //
 import Domain
-import DesignSystem
 import Common
+import DevTools
 
 public struct DigitTransitionView: View {
     @State private var imageName: String
@@ -127,7 +127,7 @@ public struct CounterView: View {
     private let id: String
     private let minimalDisplay: Bool
     private let model: Model.TrackedEntity
-    init(
+    public init(
         model: Model.TrackedEntity,
         minimalDisplay: Bool,
         onChange: @escaping (Int) -> Void,
@@ -154,7 +154,7 @@ public struct CounterView: View {
             SwiftUIUtils.RenderedView(
                 "\(Self.self).\(#function)",
                 id: id,
-                visible: AppFeaturesManager.Debug.canDisplayRenderedView
+                visible: DevTools.onSimulator && !DevTools.onTargetProduction
             )
             NumberTransitionView(
                 digitIndex0: $digitIndex0,

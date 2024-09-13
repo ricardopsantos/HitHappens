@@ -136,7 +136,7 @@ fileprivate extension FavoriteEventsViewModel {
                             }
                         }
                     }
-                case .databaseDidUpdatedContentOn(let table, let id):
+                case .databaseDidUpdatedContentOn:
                     ()
                 // Entity updated
                 /* if table == "\(CDataTrackedEntity.self)" {
