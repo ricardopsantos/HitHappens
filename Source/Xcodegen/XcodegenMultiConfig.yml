@@ -91,6 +91,7 @@ targets:
         ENABLE_USER_SCRIPT_SANDBOXING: YES
         ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES: YES
         #OTHER_SWIFT_FLAGS: "-DSMART_SDK_ENABLED"
+
         
     # configFiles ########################
           
