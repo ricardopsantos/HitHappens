@@ -1,11 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Scheme
    LastUpgradeVersion = "1501"
-   version = "1.7">
+   version = "1.3">
    <BuildAction
       parallelizeBuildables = "YES"
-      buildImplicitDependencies = "YES"
-      runPostActionsOnFailure = "NO">
+      buildImplicitDependencies = "YES">
       <BuildActionEntries>
          <BuildActionEntry
             buildForTesting = "YES"
@@ -16,7 +15,7 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "F7A7E879415146CCE92FA8DF"
-               BuildableName = "HitHappens.app"
+               BuildableName = "HitHappens.Dev.app"
                BlueprintName = "HitHappens"
                ReferencedContainer = "container:HitHappens.xcodeproj">
             </BuildableReference>
@@ -27,13 +26,12 @@
       buildConfiguration = "QA Debug"
       selectedDebuggerIdentifier = "Xcode.DebuggerFoundation.Debugger.LLDB"
       selectedLauncherIdentifier = "Xcode.DebuggerFoundation.Launcher.LLDB"
-      shouldUseLaunchSchemeArgsEnv = "YES"
-      onlyGenerateCoverageForSpecifiedTargets = "NO">
+      shouldUseLaunchSchemeArgsEnv = "YES">
       <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "F7A7E879415146CCE92FA8DF"
-            BuildableName = "HitHappens.app"
+            BuildableName = "HitHappens.Dev.app"
             BlueprintName = "HitHappens"
             ReferencedContainer = "container:HitHappens.xcodeproj">
          </BuildableReference>
@@ -60,8 +58,6 @@
             </BuildableReference>
          </TestableReference>
       </Testables>
-      <CommandLineArguments>
-      </CommandLineArguments>
    </TestAction>
    <LaunchAction
       buildConfiguration = "QA Debug"
@@ -78,13 +74,11 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "F7A7E879415146CCE92FA8DF"
-            BuildableName = "HitHappens.app"
+            BuildableName = "HitHappens.Dev.app"
             BlueprintName = "HitHappens"
             ReferencedContainer = "container:HitHappens.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
-      <CommandLineArguments>
-      </CommandLineArguments>
    </LaunchAction>
    <ProfileAction
       buildConfiguration = "QA Release"
@@ -97,13 +91,11 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "F7A7E879415146CCE92FA8DF"
-            BuildableName = "HitHappens.app"
+            BuildableName = "HitHappens.Dev.app"
             BlueprintName = "HitHappens"
             ReferencedContainer = "container:HitHappens.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
-      <CommandLineArguments>
-      </CommandLineArguments>
    </ProfileAction>
    <AnalyzeAction
       buildConfiguration = "QA Debug">
