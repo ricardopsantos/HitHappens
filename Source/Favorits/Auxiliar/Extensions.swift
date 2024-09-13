@@ -9,13 +9,13 @@ import Foundation
 import AppIntents
 
 extension String {
-    var asIntentParameter : IntentParameter<String> {
+    var asIntentParameter: IntentParameter<String> {
         IntentParameter(title: LocalizedStringResource(stringLiteral: self))
     }
 }
 
 extension Int {
-    var asIntentParameter : IntentParameter<String> {
+    var asIntentParameter: IntentParameter<String> {
         description.asIntentParameter
     }
 }

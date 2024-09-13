@@ -12,6 +12,6 @@ struct Constants {
     static let kind: String = "Favorits"
 
     /// Sets the localized name shown for a widget when a user adds or edits the widgets in the widget gallery
-    static let configurationDisplayName: String = "Water tips"
-    static let description: String = "Some little tips about water that will change your life!"
+    static let configurationDisplayName: String = "Hit Happens"
+    static let description: String = "Your favorite trackers!"
 }

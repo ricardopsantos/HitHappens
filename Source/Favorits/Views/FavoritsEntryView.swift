@@ -13,21 +13,38 @@ import Common
 import Domain
 
 struct FavoritsEntryView: View {
+    let dataBaseRepository: DataBaseRepositoryProtocol
     var entry: Provider.Entry
-
     var body: some View {
         VStack {
-            Text("Time:")
-            Text(entry.date, style: .time)
-            Text("Favorite Emoji:")
-            Text(entry.model.emoji)
+            HStack {
+                Text("Name:")
+                Text(entry.model.name)
+            }
+            HStack {
+                Text("Counter:")
+                Text(entry.model.counter.description)
+            }
+            Button("Increment") {
+                dataBaseRepository.trackedLogInsertOrUpdate(
+                    trackedLog:
+                    .init(
+                        latitude: 0,
+                        longitude: 0,
+                        addressMin: "",
+                        note: ""
+                    ),
+
+                    trackedEntityId: entry.model.id
+                )
+            }
         }
     }
 }
 
-#Preview(as: .systemMedium) {
+#Preview(as: .systemSmall) {
     Favorits()
 } timeline: {
-    TimelineEntryModel(date: .now, model: .smiley)
-    TimelineEntryModel(date: .now, model: .starEyes)
+    TimelineEntryModel(date: .now, model: .mock1)
+    TimelineEntryModel(date: .now, model: .mock2)
 }

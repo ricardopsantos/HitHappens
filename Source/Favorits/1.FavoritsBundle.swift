@@ -15,6 +15,7 @@ struct FavoritsBundle: WidgetBundle {
     init() {
         Domain.coreDataPersistence = .appGroup(identifier: "group.com.hit.happens.app.id")
     }
+
     var body: some Widget {
         Favorits()
     }
@@ -23,6 +24,6 @@ struct FavoritsBundle: WidgetBundle {
 #Preview(as: .systemSmall) {
     Favorits()
 } timeline: {
-    TimelineEntryModel(date: .now, model: .smiley)
-    TimelineEntryModel(date: .now, model: .starEyes)
+    TimelineEntryModel(date: .now, model: .mock1)
+    TimelineEntryModel(date: .now, model: .mock2)
 }

@@ -15,33 +15,35 @@ struct ConfigurationIntent: WidgetConfigurationIntent {
     static var title: LocalizedStringResource = "Favorites"
     static var description = IntentDescription("Favorites widget.")
 
-    @Parameter(title: "Favorites", default: "")
-    var emoji: String
-
-    @Parameter(title: "Favorite Name", default: "")
+    @Parameter(title: "Favorite Name", default: "123123")
     var name: String
 
-    @Parameter(title: "Favorite Current Counter Value", default: "0")
-    var counter: String
+    @Parameter(title: "Favorite Current Counter Value", default: 2)
+    var counter: Int
+
+    @Parameter(title: "Counter ID", default: "")
+    var id: String
 }
 
 extension ConfigurationIntent {
-    static var smiley: ConfigurationIntent {
-        let intent = ConfigurationIntent()
-        intent.emoji = "😀"
-        return intent
+    static var mock1: Self {
+        let configuration = ConfigurationIntent()
+        configuration.name = "name_1"
+        configuration.counter = 1
+        return configuration
     }
 
-    static var starEyes: ConfigurationIntent {
-        let intent = ConfigurationIntent()
-        intent.emoji = "🤩"
-        return intent
+    static var mock2: Self {
+        let configuration = ConfigurationIntent()
+        configuration.name = "name_2"
+        configuration.counter = 2
+        return configuration
     }
 }
 
 #Preview(as: .systemSmall) {
     Favorits()
 } timeline: {
-    TimelineEntryModel(date: .now, model: .smiley)
-    TimelineEntryModel(date: .now, model: .starEyes)
+    TimelineEntryModel(date: .now, model: .mock1)
+    TimelineEntryModel(date: .now, model: .mock2)
 }

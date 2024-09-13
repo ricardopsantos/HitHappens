@@ -25,7 +25,7 @@ struct Favorits: Widget {
 
             provider: Provider(dataBaseRepository: dataBaseRepository)
         ) { entry in
-            FavoritsEntryView(entry: entry)
+            FavoritsEntryView(dataBaseRepository: dataBaseRepository, entry: entry)
                 .containerBackground(.fill.tertiary, for: .widget)
         }
         .configurationDisplayName(Constants.configurationDisplayName)
@@ -37,9 +37,9 @@ struct Favorits: Widget {
     }
 }
 
-#Preview(as: .systemMedium) {
+#Preview(as: .systemSmall) {
     Favorits()
 } timeline: {
-    TimelineEntryModel(date: .now, model: .smiley)
-    TimelineEntryModel(date: .now, model: .starEyes)
+    TimelineEntryModel(date: .now, model: .mock1)
+    TimelineEntryModel(date: .now, model: .mock2)
 }

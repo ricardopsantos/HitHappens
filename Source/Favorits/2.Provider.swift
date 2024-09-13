@@ -27,53 +27,47 @@ struct Provider: AppIntentTimelineProvider {
         }
     }
 
-    // ORDER: 1
-    func placeholder(in context: Context) -> TimelineEntryModel {
-        if let first = Self.favorits.first {
-            let nameIntent: IntentParameter<String> = first.name.asIntentParameter
-            let countIntent: IntentParameter<String> = (first.cascadeEvents?.count ?? 0).asIntentParameter
-            let model: ConfigurationIntent = ConfigurationIntent(
-                name: nameIntent,
-                counter: countIntent)
-            return TimelineEntryModel(date: Date(), model: model)
-        } else {
-            return TimelineEntryModel(date: Date(), model: ConfigurationIntent())
-        }
-    }
-
-    func snapshot(for configuration: ConfigurationIntent, in context: Context) async -> TimelineEntryModel {
-        TimelineEntryModel(date: Date(), model: configuration)
-    }
-
+    /// Purpose: Defines how often the widget updates. It generates a timeline with multiple entries based on the configuration.
     func timeline(for configuration: ConfigurationIntent, in context: Context) async -> Timeline<TimelineEntryModel> {
         var entries: [TimelineEntryModel] = []
 
-        // Generate a timeline consisting of five entries an hour apart, starting from the current date.
+        // Generate a timeline consisting of five entries
         let currentDate = Date()
-        for hourOffset in 0..<5 {
-            let entryDate = Calendar.current.date(byAdding: .hour, value: hourOffset, to: currentDate)!
+        for offSet in 0..<5 {
+            let entryDate = Calendar.current.date(
+                byAdding: .second,
+                value: offSet,
+                to: currentDate)!
             let entry = TimelineEntryModel(date: entryDate, model: configuration)
             entries.append(entry)
         }
 
         return Timeline(entries: entries, policy: .atEnd)
     }
-}
 
-extension Provider {
-    func getFavorits() {
-        if let records = dataBaseRepository?.trackedEntityGetAll(
-            favorite: true,
-            archived: false,
-            cascade: true) {
-            // favorits = records
+    /// Purpose: Provides a placeholder for the widget's display when no actual data is available.
+    func placeholder(in context: Context) -> TimelineEntryModel {
+        if let first = Self.favorits.sorted(by: { $0.name > $1.name }).first {
+            let model = ConfigurationIntent()
+            model.name = first.name
+            model.counter = first.cascadeEvents?.count ?? 0
+            return TimelineEntryModel(date: Date(), model: model)
+        } else {
+            return TimelineEntryModel(date: Date(), model: ConfigurationIntent())
         }
+    }
+
+    /// Purpose: Provides a snapshot for the widget when in a transient state (e.g., in the widget gallery).
+    func snapshot(
+        for configuration: ConfigurationIntent,
+        in context: Context) async -> TimelineEntryModel {
+        TimelineEntryModel(date: Date(), model: configuration)
     }
 }
 
 #Preview(as: .systemSmall) {
     Favorits()
 } timeline: {
-    TimelineEntryModel(date: .now, model: .smiley)
-    TimelineEntryModel(date: .now, model: .starEyes)
+    TimelineEntryModel(date: .now, model: .mock1)
+    TimelineEntryModel(date: .now, model: .mock2)
 }
