@@ -224,11 +224,7 @@ fileprivate extension EventDetailsView {
                 changedValue: $eventLocationRelevantCopy,
                 accessibility: .undefined)
             SwiftUIUtils.FixedVerticalSpacer(height: SizeNames.defaultMarginSmall)
-            categoryView
-            SwiftUIUtils.FixedVerticalSpacer(height: SizeNames.defaultMarginSmall)
-            soundEffectsView
-            SwiftUIUtils.FixedVerticalSpacer(height: SizeNames.defaultMarginSmall)
-            if !onEdit, !viewModel.isNewEvent {
+            if !viewModel.isNewEvent {
                 EditableTitleAndValueToggleView(
                     title: "Archived".localizedMissing,
                     onEdit: $onEdit,
@@ -237,6 +233,11 @@ fileprivate extension EventDetailsView {
                     accessibility: .undefined)
                 SwiftUIUtils.FixedVerticalSpacer(height: SizeNames.defaultMarginSmall)
             }
+            categoryView
+            SwiftUIUtils.FixedVerticalSpacer(height: SizeNames.defaultMarginSmall)
+            soundEffectsView
+            SwiftUIUtils.FixedVerticalSpacer(height: SizeNames.defaultMarginSmall)
+
         }
         .paddingRight(SizeNames.size_1.cgFloat)
         .paddingLeft(SizeNames.size_1.cgFloat)
