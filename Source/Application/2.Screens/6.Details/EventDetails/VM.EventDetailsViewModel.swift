@@ -205,7 +205,6 @@ class EventDetailsViewModel: BaseViewModel {
                 let errorMessage = "No bottom sheet found"
                 alertModel = .init(type: .error, message: errorMessage)
                 ErrorsManager.handleError(message: "\(Self.self).\(action)", error: nil)
-                
             }
 
         case .deleteEvent(confirmed: let confirmed):
@@ -245,7 +244,7 @@ class EventDetailsViewModel: BaseViewModel {
                         self.trackedEntity = dataBaseRepository?.trackedEntityGet(trackedEntityId: trackedEntityId, cascade: true)
                     }
                 }
-            }        }
+            } }
     }
 }
 

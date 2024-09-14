@@ -59,12 +59,14 @@ public struct EditView: View {
     var saveEditionChangesView: some View {
         Group {
             if onEdit {
-                TextButton(onClick: {
-                    onEdit.toggle()
-                    onConfirmEdit()
-                }, text: "Confirm".localizedMissing,
-                           style: .primary,
-                           accessibility: .confirmButton)
+                TextButton(
+                    onClick: {
+                        onEdit.toggle()
+                        onConfirmEdit()
+                    },
+                    text: "Confirm".localizedMissing,
+                    style: .primary,
+                    accessibility: .confirmButton)
             } else {
                 EmptyView()
             }

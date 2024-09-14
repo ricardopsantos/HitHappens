@@ -20,9 +20,12 @@ public class DependenciesManager {
     enum Services {
         public static var appConfigServiceMock: AppConfigServiceProtocol { AppConfigServiceMock.shared }
         public static var appConfigService: AppConfigServiceProtocol {
-            AppConfigService(webAPI: WebAPI.webAPI,
-                             dataBaseRepository: Repository.dataBaseRepository)
+            AppConfigService(
+                webAPI: WebAPI.webAPI,
+                dataBaseRepository: Repository.dataBaseRepository
+            )
         }
+
         public static var sampleService: SampleServiceProtocol { SampleService(webAPI: WebAPI.webAPI) }
     }
 

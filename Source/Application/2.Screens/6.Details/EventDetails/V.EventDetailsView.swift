@@ -344,19 +344,21 @@ fileprivate extension EventDetailsView {
 
                     })
             }
-            TextButton(
-                onClick: {
-                    AnalyticsManager.shared.handleButtonClickEvent(
-                        buttonType: .primary,
-                        label: "Reset",
-                        sender: "\(Self.self)")
-                    viewModel.send(.resetAllOccurrences(confirmed: false))
-                },
-                text: "Reset counter".localizedMissing,
-                alignment: .center,
-                style: .textOnly,
-                background: .danger,
-                accessibility: .resetButton)
+            if !(viewModel.trackedEntity?.cascadeEvents?.isEmpty ?? true) {
+                TextButton(
+                    onClick: {
+                        AnalyticsManager.shared.handleButtonClickEvent(
+                            buttonType: .primary,
+                            label: "Reset",
+                            sender: "\(Self.self)")
+                        viewModel.send(.resetAllOccurrences(confirmed: false))
+                    },
+                    text: "Reset counter".localizedMissing,
+                    alignment: .center,
+                    style: .textOnly,
+                    background: .danger,
+                    accessibility: .resetButton)
+            }
         }
     }
 

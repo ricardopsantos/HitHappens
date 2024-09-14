@@ -47,8 +47,11 @@ struct HitHappensApp: App {
         //
         // Generic Setup
         //
-        SetupManager.shared.setup(dataBaseRepository: dataBaseRepository, 
-                                  nonSecureAppPreferences: nonSecureAppPreferences)
+        SetupManager.shared.setup(
+            dataBaseRepository: dataBaseRepository,
+
+            nonSecureAppPreferences: nonSecureAppPreferences
+        )
     }
 
     var body: some Scene {

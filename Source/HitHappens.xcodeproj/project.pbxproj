@@ -403,7 +403,6 @@
 		D1FDC70413E184ABD2AAC17E /* Text+Extentions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EFA6E51792B79D19C1716B9 /* Text+Extentions.swift */; };
 		D27BF264F0E9B6416E3BB9AA /* Domain.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 50900AE93714414999A66957 /* Domain.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		D2E3B4A80AE61E64EF0672FE /* UIViewController+Getters.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86B0B5E190635FDACC391A73 /* UIViewController+Getters.swift */; };
-		D2F0D2410EF8B8AE6465167D /* DataBaseRepository+Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33A478EF566C4BA1E2157CD1 /* DataBaseRepository+Utils.swift */; };
 		D3D12C6AC3BAC028932F84D6 /* BundleFinder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EB8789D983039A04E8438EC /* BundleFinder.swift */; };
 		D467C1095CD8071709ABEE7F /* E.HttpMethod.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7B7DA29E777D87D2A5EDDAC /* E.HttpMethod.swift */; };
 		D4D48E359356AE65EBE240CE /* CommonNetworking+JSONUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 087BAF1EB93042D53EF7A704 /* CommonNetworking+JSONUtils.swift */; };
@@ -797,7 +796,6 @@
 		32D013250A6575F1ED364E5F /* AppColors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppColors.swift; sourceTree = "<group>"; };
 		3301EEB581D7DC051ECD0B81 /* PasswordCheckerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PasswordCheckerView.swift; sourceTree = "<group>"; };
 		3353B618E4B4AF4A425B4168 /* Result+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Result+Extensions.swift"; sourceTree = "<group>"; };
-		33A478EF566C4BA1E2157CD1 /* DataBaseRepository+Utils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "DataBaseRepository+Utils.swift"; sourceTree = "<group>"; };
 		344A7A703A2084ED6FB5CBD8 /* TinyConstraints.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TinyConstraints.swift; sourceTree = "<group>"; };
 		3473E7B5B7D797D8C001677C /* incorrect.caf */ = {isa = PBXFileReference; lastKnownFileType = file; path = incorrect.caf; sourceTree = "<group>"; };
 		358B8AC42628B968B47440A0 /* ModelDto+AppConfigRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ModelDto+AppConfigRequest.swift"; sourceTree = "<group>"; };
@@ -2342,7 +2340,6 @@
 				DF66C5BEADF9C8C9D4580273 /* DataBaseRepository.swift */,
 				975A500EDE938D6B80979BEC /* DataBaseRepository+TrackedEntity.swift */,
 				886796FDBED59FC2C864CB4C /* DataBaseRepository+TrackedLog.swift */,
-				33A478EF566C4BA1E2157CD1 /* DataBaseRepository+Utils.swift */,
 			);
 			path = DataBaseRepository;
 			sourceTree = "<group>";
@@ -3675,7 +3672,6 @@
 				C440D38DA203C84807150E9D /* AppConfigServiceMock.swift in Sources */,
 				0FF7D8EEF215E328F0C9D60E /* DataBaseRepository+TrackedEntity.swift in Sources */,
 				039203ED6AB2DDD9984A877D /* DataBaseRepository+TrackedLog.swift in Sources */,
-				D2F0D2410EF8B8AE6465167D /* DataBaseRepository+Utils.swift in Sources */,
 				1101E09096264B3577866403 /* DataBaseRepository.swift in Sources */,
 				04890DDECC8DF10730AC0CF1 /* NetworkManager+NetworkManagerProtocol.swift in Sources */,
 				3B6D18A447FBF390516A00BC /* NetworkManager.swift in Sources */,
