@@ -97,6 +97,7 @@ struct EventDetailsView: View, ViewProtocol {
     @State var eventInfoCopy: String = ""
     @State var eventFavoriteCopy: Bool = false
     @State var eventLocationRelevantCopy: Bool = false
+    @State var eventArchivedCopy: Bool = false
     @State var eventSoundEffectCopy: String = ""
     @State var eventCategoryCopy: String = ""
     @StateObject var locationViewModel: Common.SharedLocationManagerViewModel = .shared
@@ -228,12 +229,12 @@ fileprivate extension EventDetailsView {
             soundEffectsView
             SwiftUIUtils.FixedVerticalSpacer(height: SizeNames.defaultMarginSmall)
             if !onEdit, !viewModel.isNewEvent {
-                ToggleWithState(
+                EditableTitleAndValueToggleView(
                     title: "Archived".localizedMissing,
-                    isOn: viewModel.trackedEntity?.archived ?? false,
-                    onChanged: { newValue in
-                        viewModel.send(.userDidChangedArchived(value: newValue))
-                    })
+                    onEdit: $onEdit,
+                    originalValue: viewModel.trackedEntity?.archived ?? false,
+                    changedValue: $eventArchivedCopy,
+                    accessibility: .undefined)
                 SwiftUIUtils.FixedVerticalSpacer(height: SizeNames.defaultMarginSmall)
             }
         }
@@ -416,6 +417,9 @@ fileprivate extension EventDetailsView {
         if viewModel.trackedEntity?.locationRelevant != eventLocationRelevantCopy {
             viewModel.trackedEntity?.locationRelevant = eventLocationRelevantCopy
         }
+        if viewModel.trackedEntity?.archived != eventArchivedCopy {
+            viewModel.trackedEntity?.archived = eventArchivedCopy
+        }
         if viewModel.trackedEntity?.sound.localized != eventSoundEffectCopy {
             viewModel.trackedEntity?.sound = SoundEffect.with(localized: eventSoundEffectCopy) ?? .none
         }
@@ -436,6 +440,9 @@ fileprivate extension EventDetailsView {
         }
         if viewModel.trackedEntity?.locationRelevant != eventLocationRelevantCopy {
             eventLocationRelevantCopy = viewModel.trackedEntity?.locationRelevant ?? false
+        }
+        if viewModel.trackedEntity?.archived != eventArchivedCopy {
+            eventArchivedCopy = viewModel.trackedEntity?.archived ?? false
         }
         if viewModel.trackedEntity?.sound.localized != eventSoundEffectCopy {
             eventSoundEffectCopy = viewModel.trackedEntity?.sound.localized ?? ""
