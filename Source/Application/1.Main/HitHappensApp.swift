@@ -15,7 +15,10 @@ struct HitHappensApp: App {
     @UIApplicationDelegateAdaptor(AppDelegate.self) var delegate
     let configuration: ConfigurationViewModel
     init() {
-        Domain.coreDataPersistence = .appGroup(identifier: "group.com.hit.happens.app.id")
+        Domain.coreDataPersistence = .appGroup(identifier: AppConstants.appGroup)
+        //
+        // Dependencies Setup
+        //
         let sampleService = DependenciesManager.Services.sampleService
         let dataBaseRepository = DependenciesManager.Repository.dataBaseRepository
         let nonSecureAppPreferences = DependenciesManager.Repository.nonSecureAppPreferences
@@ -41,8 +44,11 @@ struct HitHappensApp: App {
             )
             self.configuration = config
         }
-        SetupManager.shared.setup(dataBaseRepository: dataBaseRepository)
-        InterfaceStyleManager.setup(nonSecureAppPreferences: configuration.nonSecureAppPreferences)
+        //
+        // Generic Setup
+        //
+        SetupManager.shared.setup(dataBaseRepository: dataBaseRepository, 
+                                  nonSecureAppPreferences: nonSecureAppPreferences)
     }
 
     var body: some Scene {

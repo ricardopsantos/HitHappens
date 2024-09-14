@@ -19,10 +19,6 @@ public protocol DataBaseRepositoryProtocol {
     func output(_ filter: [OutputType]) -> AnyPublisher<OutputType, Never>
     static func emit(event: OutputType)
     static func output(_ filter: [OutputType]) -> AnyPublisher<OutputType, Never>
-    //
-    // MARK: - Utils
-    //
-    func initDataBase()
 
     //
     // MARK: - TrackedEntity

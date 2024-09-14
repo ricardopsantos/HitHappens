@@ -12,7 +12,7 @@ import MapKit
 import Common
 
 public extension Model {
-    struct TrackedLog: Equatable, Hashable, Sendable, Identifiable {
+    struct TrackedLog: Equatable, Hashable, Sendable, Identifiable, Codable {
         public var id: String
         public var latitude: Double
         public var longitude: Double

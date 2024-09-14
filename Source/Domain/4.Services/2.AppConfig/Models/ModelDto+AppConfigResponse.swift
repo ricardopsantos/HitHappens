@@ -28,12 +28,14 @@ public extension ModelDto.AppConfigResponse {
     // MARK: - HitHappens
     struct HitHappens: ModelDtoProtocol {
         public let onboarding: Onboarding
+        public let defaultEvents: [Model.TrackedEntity]
         public let supportEmailEncrypted: String
         public let publicCodeURL: String
         enum CodingKeys: String, CodingKey {
             case onboarding
             case supportEmailEncrypted = "support_email_encrypted"
             case publicCodeURL = "public_code_url"
+            case defaultEvents = "default_events"
         }
 
         // MARK: - Onboarding

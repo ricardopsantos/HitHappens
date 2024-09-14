@@ -6,7 +6,7 @@
 import Foundation
 import Common
 
-public enum HitHappensEventCategory: Int, CaseIterable, Hashable, Sendable {
+public enum HitHappensEventCategory: Int, CaseIterable, Hashable, Sendable, Codable {
     case none = 0
     case health
     case lifestyle

@@ -9,7 +9,8 @@ import Foundation
 //
 import Common
 import CoreData
-
+/*
+ print("delete")
 public extension DataBaseRepository {
     func initDataBase() {
         if trackedLogGetAll(cascade: false).isEmpty {
@@ -261,6 +262,41 @@ public extension DataBaseRepository {
                 cascadeEvents: bookEvents
             )
 
+            
+            if let jsonData = try? JSONEncoder().encode(books) {
+                // Convert JSON data to string
+                if let jsonString = String(data: jsonData, encoding: .utf8) {
+                    print(jsonString)
+                }
+            }
+            if let jsonData = try? JSONEncoder().encode(concerts) {
+                // Convert JSON data to string
+                if let jsonString = String(data: jsonData, encoding: .utf8) {
+                    print(jsonString)
+                }
+            }
+            
+            if let jsonData = try? JSONEncoder().encode(coffee) {
+                // Convert JSON data to string
+                if let jsonString = String(data: jsonData, encoding: .utf8) {
+                    print(jsonString)
+                }
+            }
+            
+            if let jsonData = try? JSONEncoder().encode(cinema) {
+                // Convert JSON data to string
+                if let jsonString = String(data: jsonData, encoding: .utf8) {
+                    print(jsonString)
+                }
+            }
+            
+            if let jsonData = try? JSONEncoder().encode(gymnasium) {
+                // Convert JSON data to string
+                if let jsonString = String(data: jsonData, encoding: .utf8) {
+                    print(jsonString)
+                }
+            }
+            
             trackedEntityInsert(trackedEntity: books)
             trackedEntityInsert(trackedEntity: concerts)
             trackedEntityInsert(trackedEntity: coffee)
@@ -269,3 +305,4 @@ public extension DataBaseRepository {
         }
     }
 }
+*/

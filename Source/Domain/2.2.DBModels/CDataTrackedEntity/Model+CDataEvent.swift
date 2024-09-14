@@ -11,7 +11,7 @@ import UIKit
 import Common
 
 public extension Model {
-    struct TrackedEntity: Equatable, Hashable, Identifiable, Sendable {
+    struct TrackedEntity: Equatable, Hashable, Identifiable, Sendable, Codable {
         public var id: String
         public var name: String
         public var info: String

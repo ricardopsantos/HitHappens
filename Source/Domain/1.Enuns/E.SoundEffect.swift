@@ -7,7 +7,7 @@
 
 import Foundation
 
-public enum SoundEffect: String, Sendable, CaseIterable {
+public enum SoundEffect: String, Sendable, CaseIterable, Codable {
     case none
     case airHorn = "air-horn-club.caf"
     case amb1 = "amb1.caf"

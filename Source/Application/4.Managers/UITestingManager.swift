@@ -52,7 +52,6 @@ public enum UITestingManager {
             DependenciesManager.Repository.nonSecureAppPreferences.deleteAll()
             DependenciesManager.Repository.secureAppPreferences.deleteAll()
             DependenciesManager.Repository.dataBaseRepository.trackedEntityDeleteAll()
-            DependenciesManager.Repository.dataBaseRepository.initDataBase()
             Common.Storage.cleanAll()
             UserDefaults.resetStandardUserDefaults()
         }
