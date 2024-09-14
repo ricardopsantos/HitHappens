@@ -40,7 +40,8 @@ enum Constants {
     static let entityNameSingle = "Tracker"
     static let entityNamePlural = "\(entityNameSingle)(s)"
     static let entityOccurrenceSingle = "Event"
-    static let entityOccurrenceNamePlural = "\(entityOccurrenceSingle)(s)"
+    static let entityOccurrenceNamePlural1 = "\(entityOccurrenceSingle)s"
+    static let entityOccurrenceNamePlural2 = "\(entityOccurrenceSingle)(s)"
     //
     //
     static let alertWhenAddNewEvent = "\(Constants.entityOccurrenceSingle) tracked!\n\n(Tap here to edit/add details.)"
@@ -57,7 +58,7 @@ enum Constants {
     static let tab3Title = "September 2024" // "\(Date().monthAndYear)"
     //
     static let tab4 = 3
-    static let tab4Title = "\(entityOccurrenceNamePlural) by region"
+    static let tab4Title = "\(entityOccurrenceNamePlural1) by region"
     //
     static let tab5 = 4
     static let tab5Title = "Settings"
@@ -97,6 +98,7 @@ public enum Accessibility: String, CaseIterable {
     case loginButton
     case logoutButton
     case deleteButton
+    case resetButton
     case saveButton
     case fwdButton
     case backButton

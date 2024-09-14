@@ -66,7 +66,9 @@ struct FavoriteEventsViewCoordinator: View, ViewCoordinatorProtocol {
             FavoriteEventsView(dependencies: dependencies)
         case .eventLogDetails(model: let model):
             let dependencies: EventLogDetailsViewModel.Dependencies = .init(
-                model: model, onPerformRouteBack: {
+                model: model, onPerformDisplayEntityDetails: { model in
+                    coordinator.coverLink = .eventDetails(model: .init(event:  model))
+                }, onPerformRouteBack: {
                     coordinator.coverLink = nil
                 },
                 dataBaseRepository: configuration.dataBaseRepository,

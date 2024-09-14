@@ -20,6 +20,7 @@ public enum Accessibility: String, CaseIterable {
     case toggleFavorits
 
     // Buttons
+    case detailsButton
     case loginButton
     case logoutButton
     case deleteButton

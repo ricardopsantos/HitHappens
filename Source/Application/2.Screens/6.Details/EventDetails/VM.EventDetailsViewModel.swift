@@ -57,7 +57,7 @@ extension EventDetailsViewModel {
             case .save:
                 "Are you sure you want to save  \(AppConstants.entityNameSingle.lowercased())?".localizedMissing
             case .resetOccurrences:
-                "Are you sure you want to resent the counter?".localizedMissing
+                "Are you sure you want to reset the counter?".localizedMissing
             }
         }
     }
@@ -121,6 +121,10 @@ class EventDetailsViewModel: BaseViewModel {
             }
             isNewEvent = false
             updateUI(event: unwrapped)
+            if unwrapped.cascadeEvents?.isEmpty ?? true {
+                // No events? Reload.
+                send(.reload)
+            }
         case .didDisappear: ()
         case .reload:
             guard let unwrapped = trackedEntity else {

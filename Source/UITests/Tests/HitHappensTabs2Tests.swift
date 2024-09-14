@@ -161,4 +161,27 @@ final class HitHappensTabs2Tests: BaseUITests {
         )
         notExists(staticText: Constants.Entities.Book.name, on: app) // Deleted from favorits
     }
+    
+    func test_resetCounter() {
+        guard enabled else {
+            XCTAssert(true)
+            return
+        }
+        appLaunch(launchArguments: [
+            .shouldResetAllContent,
+            .isOnboardingCompleted
+        ])
+        tap(
+            tabBarIndex: Constants.tab2,
+            andWaitForStaticText: Constants.tab2Title,
+            on: app
+        )
+        tap(listItemStaticText: Constants.Entities.Book.listItem, on: app)
+        exists(staticText: "\(Constants.entityNameSingle) details", on: app)
+
+        tap(button: Accessibility.resetButton.identifier, on: app)
+        tap(button: "Yes", on: app) // Confirmation alert
+
+        notExists(staticText: "All events", on: app) // The list disapears
+    }
 }

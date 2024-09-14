@@ -219,8 +219,6 @@ final class HitHappensTabs1Tests: BaseUITests {
             on: app
         )
 
-        tap(staticText: "Favorite", on: app) // Toggle favorite ON
-
         tap(button: Accessibility.saveButton.identifier, on: app)
         tap(button: "Yes", on: app) // Confirmation alert
         tap(button: Accessibility.backButton.identifier, on: app) // Close details

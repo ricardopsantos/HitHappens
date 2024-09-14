@@ -56,12 +56,25 @@ struct EventLogDetailsViewCoordinator: View, ViewCoordinatorProtocol {
         switch screen {
         case .eventLogDetails(model: let model):
             let dependencies: EventLogDetailsViewModel.Dependencies = .init(
-                model: model, onPerformRouteBack: {
+                model: model, 
+                onPerformDisplayEntityDetails: { model in
+                    coordinator.coverLink = .eventDetails(model: .init(event:  model))
+                }, onPerformRouteBack: {
                     coordinatorTab2.navigateBack()
                 },
                 dataBaseRepository: configuration.dataBaseRepository,
                 presentationStyle: presentationStyle)
             EventLogDetailsView(dependencies: dependencies)
+        case .eventDetails(model: let model):
+            let dependencies: EventDetailsViewModel.Dependencies = .init(
+                model: model, onPerformRouteBack: {
+                    coordinatorTab2.navigateBack()
+                }, onShouldDisplayTrackedLog: { trackedLog in
+                    coordinator.coverLink = .eventLogDetails(model: .init(trackedLog: trackedLog))
+                },
+                dataBaseRepository: configuration.dataBaseRepository,
+                presentationStyle: presentationStyle)
+            EventDetailsView(dependencies: dependencies)
         default:
             NotImplementedView(screen: screen)
         }
@@ -80,10 +93,12 @@ struct EventLogDetailsView: View, ViewProtocol {
         DevTools.Log.debug(.viewInit("\(Self.self)"), .view)
         _viewModel = StateObject(wrappedValue: .init(dependencies: dependencies))
         self.onPerformRouteBack = dependencies.onPerformRouteBack
+        self.onPerformDisplayEntityDetails = dependencies.onPerformDisplayEntityDetails
     }
 
     // MARK: - Usage/Auxiliar Attributes
     @Environment(\.dismiss) var dismiss
+    private let onPerformDisplayEntityDetails: (Model.TrackedEntity) -> Void
     private let onPerformRouteBack: () -> Void
     private let cancelBag: CancelBag = .init()
     private let minDelta: Double = 0.005
@@ -139,6 +154,7 @@ struct EventLogDetailsView: View, ViewProtocol {
                         onConfirmEdit: onConfirmEdit,
                         onCancelEdit: onCancelEdit)
                     SwiftUIUtils.FixedVerticalSpacer(height: SizeNames.defaultMarginSmall)
+                    routeToEntityDetailsView
                     Spacer()
                     deleteView
                     SwiftUIUtils.FixedVerticalSpacer(height: SizeNames.defaultMarginSmall)
@@ -300,25 +316,42 @@ extension EventLogDetailsView {
     }
 
     @ViewBuilder
+    var routeToEntityDetailsView: some View {
+        if !onEdit {
+            TextButton(
+                onClick: {
+                    AnalyticsManager.shared.handleButtonClickEvent(
+                        buttonType: .primary,
+                        label: "RouteToEntity",
+                        sender: "\(Self.self)")
+                    if let cascadeEntity = viewModel.trackedLog?.cascadeEntity {
+                        onPerformDisplayEntityDetails(cascadeEntity)
+                    }
+                },
+                text: "\(AppConstants.entityNameSingle) details".localizedMissing,
+                alignment: .center,
+                style: .textOnly,
+                background: .primary,
+                accessibility: .detailsButton)
+        }
+    }
+    
+    @ViewBuilder
     var deleteView: some View {
-        Group {
-            if !onEdit {
-                TextButton(
-                    onClick: {
-                        AnalyticsManager.shared.handleButtonClickEvent(
-                            buttonType: .primary,
-                            label: "Delete",
-                            sender: "\(Self.self)")
-                        viewModel.send(.delete(confirmed: false))
-                    },
-                    text: "Delete \(AppConstants.entityOccurrenceSingle.lowercased())".localizedMissing,
-                    alignment: .center,
-                    style: .secondary,
-                    background: .danger,
-                    accessibility: .deleteButton)
-            } else {
-                EmptyView()
-            }
+        if !onEdit {
+            TextButton(
+                onClick: {
+                    AnalyticsManager.shared.handleButtonClickEvent(
+                        buttonType: .primary,
+                        label: "Delete",
+                        sender: "\(Self.self)")
+                    viewModel.send(.delete(confirmed: false))
+                },
+                text: "Delete".localizedMissing,
+                alignment: .center,
+                style: .textOnly,
+                background: .danger,
+                accessibility: .deleteButton)
         }
     }
 }
