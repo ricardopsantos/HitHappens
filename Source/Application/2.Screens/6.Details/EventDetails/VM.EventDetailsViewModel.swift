@@ -44,14 +44,9 @@ extension EventDetailsViewModel {
     enum ConfirmationSheet {
         case delete
         case save
-
+        case resetOccurrences
         var title: String {
-            switch self {
-            case .delete:
-                "Alert".localizedMissing
-            case .save:
-                "Alert".localizedMissing
-            }
+            "Alert".localizedMissing
         }
 
         var subTitle: String {
@@ -61,6 +56,8 @@ extension EventDetailsViewModel {
                     .localizedMissing
             case .save:
                 "Are you sure you want to save  \(AppConstants.entityNameSingle.lowercased())?".localizedMissing
+            case .resetOccurrences:
+                "Are you sure you want to resent the counter?".localizedMissing
             }
         }
     }
@@ -75,6 +72,7 @@ extension EventDetailsViewModel {
         case usedDidTappedLogEvent(trackedLogId: String)
         case handleConfirmation
         case addNewLog
+        case resetAllOccurrences(confirmed: Bool)
         case deleteEvent(confirmed: Bool)
         case saveEvent(confirmed: Bool)
     }
@@ -201,6 +199,8 @@ class EventDetailsViewModel: BaseViewModel {
                 send(.deleteEvent(confirmed: true))
             case .save:
                 send(.saveEvent(confirmed: true))
+            case .resetOccurrences:
+                send(.resetAllOccurrences(confirmed: true))
             case nil:
                 let errorMessage = "No bottom sheet found"
                 alertModel = .init(type: .error, message: errorMessage)
@@ -231,7 +231,20 @@ class EventDetailsViewModel: BaseViewModel {
                     }
                 }
             }
-        }
+        case .resetAllOccurrences(confirmed: let confirmed):
+            if !confirmed {
+                confirmationSheetType = .resetOccurrences
+            } else {
+                Task { [weak self] in
+                    guard let self = self, var trackedEntity = trackedEntity else { return }
+                    trackedEntity.cascadeEvents = [] // This will delete all events on the save
+                    if let trackedEntityId = dataBaseRepository?.trackedEntityInsertOrUpdate(trackedEntity: trackedEntity) {
+                        self.isNewEvent = false
+                        self.confirmationSheetType = nil
+                        self.trackedEntity = dataBaseRepository?.trackedEntityGet(trackedEntityId: trackedEntityId, cascade: true)
+                    }
+                }
+            } }
     }
 }
 

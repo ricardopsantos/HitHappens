@@ -15,8 +15,10 @@ public class AppConfigService {
     private let cacheManager = Common.CacheManagerForCodableUserDefaultsRepository.shared
     // private let cacheManager = Common.CacheManagerForCodableCoreDataRepository.shared
     public let webAPI: NetworkManagerProtocol
-    public init(webAPI: NetworkManagerProtocol) {
+    public let dataBaseRepository: DataBaseRepositoryProtocol
+    public init(webAPI: NetworkManagerProtocol, dataBaseRepository: DataBaseRepositoryProtocol) {
         self.webAPI = webAPI
+        self.dataBaseRepository = dataBaseRepository
     }
 }
 
@@ -38,6 +40,15 @@ extension AppConfigService: AppConfigServiceProtocol {
         let result: ModelDto.AppConfigResponse = try await webAPI.requestAsync(
             .getAppConfiguration(request)
         )
+
+        if Common.InternalUserDefaults.numberOfLogins == 1 {
+            // First Login! Store default events
+            if dataBaseRepository.trackedEntityGetAll(favorite: nil, archived: nil, cascade: false).isEmpty {
+                result.hitHappens.defaultEvents.forEach { some in
+                    dataBaseRepository.trackedEntityInsert(trackedEntity: some)
+                }
+            }
+        }
 
         await cacheManager.aSyncStore(result, key: cacheKey, params: cacheParams, timeToLiveMinutes: 60 * 24)
 

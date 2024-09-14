@@ -20,15 +20,14 @@ import DesignSystem
 public class SetupManager {
     private init() {}
     static let shared = SetupManager()
-    func setup(dataBaseRepository: DataBaseRepositoryProtocol) {
+    func setup(
+        dataBaseRepository: DataBaseRepositoryProtocol,
+        nonSecureAppPreferences: NonSecureAppPreferencesProtocol
+    ) {
         let numberOfLogins = Common.InternalUserDefaults.numberOfLoginsIncrement()
         CPPWrapper.disable_gdb() // Security: Detach debugger for real device
         CPPWrapper.crash_if_debugged() // Security: Crash app if debugger Detach failed
         DevTools.Log.setup()
-        if numberOfLogins == 1 {
-            // First login
-            dataBaseRepository.initDataBase()
-        }
         #if FIREBASE_ENABLED
         if FirebaseApp.configIsValidAndAvailable {
             FirebaseApp.configure()
@@ -45,5 +44,6 @@ public class SetupManager {
             UserDefaults.standard.set(0, forKey: "com.apple.CoreData.SQLDebug")
         }
         UITestingManager.setup()
+        InterfaceStyleManager.setup(nonSecureAppPreferences: nonSecureAppPreferences)
     }
 }
