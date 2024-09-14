@@ -52,6 +52,10 @@ public enum UITestingManager {
             DependenciesManager.Repository.nonSecureAppPreferences.deleteAll()
             DependenciesManager.Repository.secureAppPreferences.deleteAll()
             DependenciesManager.Repository.dataBaseRepository.trackedEntityDeleteAll()
+            DependenciesManager.Repository.dataBaseRepository.trackedEntityDeleteAll()
+            ModelDto.AppConfigResponse.mock?.hitHappens.defaultEvents.forEach({ trackedEntity in
+                DependenciesManager.Repository.dataBaseRepository.trackedEntityInsert(trackedEntity: trackedEntity)
+            })
             Common.Storage.cleanAll()
             UserDefaults.resetStandardUserDefaults()
         }

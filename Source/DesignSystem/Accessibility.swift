@@ -23,6 +23,7 @@ public enum Accessibility: String, CaseIterable {
     case loginButton
     case logoutButton
     case deleteButton
+    case resetButton
     case saveButton
     case fwdButton
     case backButton

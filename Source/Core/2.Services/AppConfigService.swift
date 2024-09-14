@@ -41,9 +41,12 @@ extension AppConfigService: AppConfigServiceProtocol {
             .getAppConfiguration(request)
         )
 
-        if dataBaseRepository.trackedEntityGetAll(favorite: nil, archived: nil, cascade: false).isEmpty {
-            result.hitHappens.defaultEvents.forEach { some in
-                dataBaseRepository.trackedEntityInsert(trackedEntity: some)
+        if Common.InternalUserDefaults.numberOfLogins == 1 {
+            // First Login! Store default events
+            if dataBaseRepository.trackedEntityGetAll(favorite: nil, archived: nil, cascade: false).isEmpty {
+                result.hitHappens.defaultEvents.forEach { some in
+                    dataBaseRepository.trackedEntityInsert(trackedEntity: some)
+                }
             }
         }
 
