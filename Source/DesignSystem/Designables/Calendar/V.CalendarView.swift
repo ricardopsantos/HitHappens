@@ -77,7 +77,7 @@ public struct DayView: View {
         (
             screenWidth
                 - 2 * SizeNames.defaultMargin // Side Margin
-            - 6 * CalendarView.Config.innerSpace // Inner Space
+                - 6 * CalendarView.Config.innerSpace // Inner Space
         ) / 7.0 // Days on a row
     }
 
@@ -375,6 +375,6 @@ public struct CalendarView: View {
         onSelectedDay: { _ in },
         onSelectedMonth: { _ in }
     )
-    .paddingHorizontal(SizeNames.defaultMargin)
+    .paddingHorizontal(SizeNames.defaultMarginSmall)
 }
 #endif

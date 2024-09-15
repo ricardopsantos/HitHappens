@@ -62,7 +62,7 @@ extension EventLogDetailsViewModel {
 
     struct Dependencies {
         let model: EventLogDetailsModel
-        let onPerformDisplayEntityDetails: (Model.TrackedEntity) -> Void
+        let onPerformDisplayEntityDetails: ((Model.TrackedEntity) -> Void)?
         let onPerformRouteBack: () -> Void
         let dataBaseRepository: DataBaseRepositoryProtocol
         let presentationStyle: ViewPresentationStyle

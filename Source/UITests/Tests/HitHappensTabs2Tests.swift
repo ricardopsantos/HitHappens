@@ -161,7 +161,7 @@ final class HitHappensTabs2Tests: BaseUITests {
         )
         notExists(staticText: Constants.Entities.Book.name, on: app) // Deleted from favorits
     }
-    
+
     func test_resetCounter() {
         guard enabled else {
             XCTAssert(true)

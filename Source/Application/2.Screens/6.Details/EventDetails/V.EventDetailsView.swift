@@ -64,9 +64,12 @@ struct EventDetailsViewCoordinator: View, ViewCoordinatorProtocol {
             EventDetailsView(dependencies: dependencies)
         case .eventLogDetails(model: let model):
             let dependencies: EventLogDetailsViewModel.Dependencies = .init(
-                model: model, onPerformDisplayEntityDetails: { model in
-                    coordinator.coverLink = .eventDetails(model: .init(event:  model))
-                }, onPerformRouteBack: {},
+                model: model, 
+                onPerformDisplayEntityDetails: { model in
+                    coordinator.coverLink = nil // We are on details already. Just close
+                }, onPerformRouteBack: {
+                    coordinator.coverLink = nil
+                },
                 dataBaseRepository: configuration.dataBaseRepository,
                 presentationStyle: presentationStyle)
             EventLogDetailsView(dependencies: dependencies)
@@ -167,6 +170,7 @@ struct EventDetailsView: View, ViewProtocol {
         }.onAppear {
             updateStateCopyWithViewModelCurrentState()
         }
+        .paddingHorizontal(SizeNames.defaultMarginSmall)
     }
 }
 
@@ -239,7 +243,6 @@ fileprivate extension EventDetailsView {
             SwiftUIUtils.FixedVerticalSpacer(height: SizeNames.defaultMarginSmall)
             soundEffectsView
             SwiftUIUtils.FixedVerticalSpacer(height: SizeNames.defaultMarginSmall)
-
         }
         .paddingRight(SizeNames.size_1.cgFloat)
         .paddingLeft(SizeNames.size_1.cgFloat)

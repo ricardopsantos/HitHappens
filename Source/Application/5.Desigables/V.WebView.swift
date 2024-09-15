@@ -66,7 +66,7 @@ struct WebView: View {
         VStack(spacing: 0) {
             Header(text: model.title, hasCloseButton: true, onBackOrCloseClick: {
                 dismiss()
-            }).paddingHorizontal(SizeNames.defaultMargin)
+            }).paddingHorizontal(SizeNames.defaultMarginSmall)
             SwiftUIUtils.FixedVerticalSpacer(height: SizeNames.defaultMarginSmall)
             if let url = URL(string: model.url) {
                 WebViewRepresentable(url: url)

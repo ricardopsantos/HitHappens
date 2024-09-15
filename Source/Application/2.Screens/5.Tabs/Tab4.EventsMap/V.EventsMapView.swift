@@ -46,14 +46,25 @@ struct EventsMapViewCoordinator: View, ViewCoordinatorProtocol {
             EventsMapView(dependencies: dependencies)
         case .eventLogDetails(model: let model):
             let dependencies: EventLogDetailsViewModel.Dependencies = .init(
-                model: model, onPerformDisplayEntityDetails: { model in
-                    coordinator.coverLink = .eventDetails(model: .init(event:  model))
+                model: model, 
+                onPerformDisplayEntityDetails: { model in
+                    coordinator.coverLink = .eventDetails(model: .init(event: model))
                 }, onPerformRouteBack: {
                     coordinatorTab4.navigateBack()
                 },
                 dataBaseRepository: configuration.dataBaseRepository,
                 presentationStyle: presentationStyle)
             EventLogDetailsView(dependencies: dependencies)
+        case .eventDetails(model: let model):
+            let dependencies: EventDetailsViewModel.Dependencies = .init(
+                model: model, onPerformRouteBack: {
+                    coordinatorTab4.navigateBack()
+                }, onShouldDisplayTrackedLog: { trackedLog in
+                    coordinator.coverLink = .eventLogDetails(model: .init(trackedLog: trackedLog))
+                },
+                dataBaseRepository: configuration.dataBaseRepository,
+                presentationStyle: presentationStyle)
+            EventDetailsView(dependencies: dependencies)
         default:
             NotImplementedView(screen: screen)
         }
@@ -120,7 +131,7 @@ struct EventsMapView: View, ViewProtocol {
                 Divider().padding(.vertical, SizeNames.defaultMarginSmall)
                 listView
             }
-        }
+        }.paddingHorizontal(SizeNames.defaultMarginSmall)
     }
 }
 

@@ -66,8 +66,9 @@ struct FavoriteEventsViewCoordinator: View, ViewCoordinatorProtocol {
             FavoriteEventsView(dependencies: dependencies)
         case .eventLogDetails(model: let model):
             let dependencies: EventLogDetailsViewModel.Dependencies = .init(
-                model: model, onPerformDisplayEntityDetails: { model in
-                    coordinator.coverLink = .eventDetails(model: .init(event:  model))
+                model: model, 
+                onPerformDisplayEntityDetails: { model in
+                    coordinator.coverLink = .eventDetails(model: .init(event: model))
                 }, onPerformRouteBack: {
                     coordinator.coverLink = nil
                 },
@@ -170,12 +171,11 @@ struct FavoriteEventsView: View, ViewProtocol {
                             }, onInfoTapGesture: { model in
                                 onShouldDisplayTrackedEntity(model)
                             })
-                            .padding(.vertical, SizeNames.defaultMargin)
                     }
                     Spacer()
                 }
             }
-        }
+        }.paddingHorizontal(SizeNames.defaultMarginSmall)
     }
 }
 

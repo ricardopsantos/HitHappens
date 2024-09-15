@@ -56,9 +56,9 @@ struct EventLogDetailsViewCoordinator: View, ViewCoordinatorProtocol {
         switch screen {
         case .eventLogDetails(model: let model):
             let dependencies: EventLogDetailsViewModel.Dependencies = .init(
-                model: model, 
-                onPerformDisplayEntityDetails: { model in
-                    coordinator.coverLink = .eventDetails(model: .init(event:  model))
+                model: model,
+                onPerformDisplayEntityDetails: { model in
+                    coordinator.coverLink = .eventDetails(model: .init(event: model))
                 }, onPerformRouteBack: {
                     coordinatorTab2.navigateBack()
                 },
@@ -98,7 +98,7 @@ struct EventLogDetailsView: View, ViewProtocol {
 
     // MARK: - Usage/Auxiliar Attributes
     @Environment(\.dismiss) var dismiss
-    private let onPerformDisplayEntityDetails: (Model.TrackedEntity) -> Void
+    private let onPerformDisplayEntityDetails: ((Model.TrackedEntity) -> Void)?
     private let onPerformRouteBack: () -> Void
     private let cancelBag: CancelBag = .init()
     private let minDelta: Double = 0.005
@@ -174,7 +174,7 @@ struct EventLogDetailsView: View, ViewProtocol {
             updateStateCopyWithViewModelCurrentState()
         }.onAppear {
             updateStateCopyWithViewModelCurrentState()
-        }
+        }.paddingHorizontal(SizeNames.defaultMarginSmall)
     }
 }
 
@@ -317,7 +317,7 @@ extension EventLogDetailsView {
 
     @ViewBuilder
     var routeToEntityDetailsView: some View {
-        if !onEdit {
+        if !onEdit, let onPerformDisplayEntityDetails = onPerformDisplayEntityDetails {
             TextButton(
                 onClick: {
                     AnalyticsManager.shared.handleButtonClickEvent(
@@ -335,7 +335,7 @@ extension EventLogDetailsView {
                 accessibility: .detailsButton)
         }
     }
-    
+
     @ViewBuilder
     var deleteView: some View {
         if !onEdit {

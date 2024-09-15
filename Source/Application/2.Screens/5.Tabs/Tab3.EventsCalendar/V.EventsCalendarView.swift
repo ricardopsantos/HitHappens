@@ -46,8 +46,9 @@ struct EventsCalendarViewCoordinator: View, ViewCoordinatorProtocol {
             EventsCalendarView(dependencies: dependencies)
         case .eventLogDetails(model: let model):
             let dependencies: EventLogDetailsViewModel.Dependencies = .init(
-                model: model, onPerformDisplayEntityDetails: { model in
-                    coordinator.coverLink = .eventDetails(model: .init(event:  model))
+                model: model, 
+                onPerformDisplayEntityDetails: { model in
+                    coordinator.coverLink = .eventDetails(model: .init(event: model))
                 }, onPerformRouteBack: {
                     coordinatorTab3.navigateBack()
                 },
@@ -115,7 +116,7 @@ struct EventsCalendarView: View, ViewProtocol {
                 SwiftUIUtils.FixedVerticalSpacer(height: SizeNames.defaultMarginSmall)
                 listView
             }
-        }
+        }.paddingHorizontal(SizeNames.defaultMarginSmall)
     }
 
     var listTitle: some View {

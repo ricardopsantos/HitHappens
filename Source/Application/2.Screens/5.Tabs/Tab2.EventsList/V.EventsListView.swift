@@ -170,7 +170,7 @@ struct EventsListView: View, ViewProtocol {
                     Spacer().padding(.vertical, SizeNames.defaultMargin)
                 }
             }
-        }
+        }.paddingHorizontal(SizeNames.defaultMarginSmall)
     }
 
     @ViewBuilder
