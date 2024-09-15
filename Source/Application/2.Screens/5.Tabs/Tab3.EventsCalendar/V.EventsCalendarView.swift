@@ -46,7 +46,7 @@ struct EventsCalendarViewCoordinator: View, ViewCoordinatorProtocol {
             EventsCalendarView(dependencies: dependencies)
         case .eventLogDetails(model: let model):
             let dependencies: EventLogDetailsViewModel.Dependencies = .init(
-                model: model, 
+                model: model,
                 onPerformDisplayEntityDetails: { model in
                     coordinator.coverLink = .eventDetails(model: .init(event: model))
                 }, onPerformRouteBack: {
@@ -55,6 +55,18 @@ struct EventsCalendarViewCoordinator: View, ViewCoordinatorProtocol {
                 dataBaseRepository: configuration.dataBaseRepository,
                 presentationStyle: presentationStyle)
             EventLogDetailsView(dependencies: dependencies)
+        case .eventDetails(model: let model):
+            let dependencies: EventDetailsViewModel.Dependencies = .init(
+                model: model, onPerformRouteBack: {
+                    if !coordinatorTab3.navigateBack() {
+                        coordinator.coverLink = nil
+                    }
+                }, onShouldDisplayTrackedLog: { trackedLog in
+                    coordinatorTab3.coverLink = .eventLogDetails(model: .init(trackedLog: trackedLog))
+                },
+                dataBaseRepository: configuration.dataBaseRepository,
+                presentationStyle: presentationStyle)
+            EventDetailsView(dependencies: dependencies)
         default:
             NotImplementedView(screen: screen)
         }

@@ -45,7 +45,16 @@ extension AppConfigService: AppConfigServiceProtocol {
             // First Login! Store default events
             if dataBaseRepository.trackedEntityGetAll(favorite: nil, archived: nil, cascade: false).isEmpty {
                 result.hitHappens.defaultEvents.forEach { some in
-                    dataBaseRepository.trackedEntityInsert(trackedEntity: some)
+                    var entity = some
+                    var cascadeEvents: [Model.TrackedLog] = []
+                    some.cascadeEvents?.forEach { item in
+                        var event = item
+                        // Store with a close date
+                        event.recordDate = Date().add(days: -Int.random(in: 0...30))
+                        cascadeEvents.append(event)
+                    }
+                    entity.cascadeEvents = cascadeEvents
+                    dataBaseRepository.trackedEntityInsert(trackedEntity: entity)
                 }
             }
         }

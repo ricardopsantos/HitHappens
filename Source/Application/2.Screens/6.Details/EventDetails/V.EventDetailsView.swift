@@ -64,8 +64,8 @@ struct EventDetailsViewCoordinator: View, ViewCoordinatorProtocol {
             EventDetailsView(dependencies: dependencies)
         case .eventLogDetails(model: let model):
             let dependencies: EventLogDetailsViewModel.Dependencies = .init(
-                model: model, 
-                onPerformDisplayEntityDetails: { model in
+                model: model,
+                onPerformDisplayEntityDetails: { _ in
                     coordinator.coverLink = nil // We are on details already. Just close
                 }, onPerformRouteBack: {
                     coordinator.coverLink = nil
