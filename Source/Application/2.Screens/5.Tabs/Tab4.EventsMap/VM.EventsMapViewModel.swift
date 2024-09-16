@@ -68,18 +68,20 @@ class EventsMapViewModel: BaseViewModel {
 
     func send(_ action: Actions) {
         switch action {
-        case .didAppear: 
-            send(.loadInitialRegion)
+        case .didAppear:
+            if lastRegion == nil {
+                send(.loadInitialRegion)
+            }
         case .didDisappear: ()
         case .loadInitialRegion:
             Task { [weak self] in
                 guard let self = self else { return }
                 // The initial region displays the last 5 events region
                 if let records = self.dataBaseRepository?.trackedLogGetAll(cascade: false) {
-                    let sorted = records.sorted(by: { $0.recordDate > $1.recordDate })
+                    let sorted = records.sorted(by: { $0.recordDate > $1.recordDate })
                         .prefix(5)
-                        .map({
-                            CLLocationCoordinate2D(latitude: $0.latitude, longitude: $0.longitude) } )
+                        .map {
+                            CLLocationCoordinate2D(latitude: $0.latitude, longitude: $0.longitude) }
                     send(.loadEvents(region: sorted.regionToFitCoordinates()))
                 }
             }

@@ -149,7 +149,7 @@ extension EventsMapView {
                     .fontSemantic(.body)
                     .textColor(ColorSemantic.labelPrimary.color)
             } else {
-                Text("No \(AppConstants.entityNamePlural) on region".localizedMissing)
+                Text("No \(AppConstants.entityOccurrenceNamePlural1) on region".localizedMissing)
                     .fontSemantic(.body)
                     .textColor(ColorSemantic.labelPrimary.color)
             }

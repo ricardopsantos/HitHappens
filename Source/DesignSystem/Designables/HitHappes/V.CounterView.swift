@@ -85,24 +85,30 @@ public struct NumberTransitionView: View {
     @Binding private var digitIndex0: Int
     @Binding private var digitIndex1: Int
     @Binding private var digitIndex2: Int
+    @Binding private var digitIndex3: Int
     private let onDigitTapGesture: () -> Void
     public init(
         digitIndex0: Binding<Int>,
         digitIndex1: Binding<Int>,
         digitIndex2: Binding<Int>,
+        digitIndex3: Binding<Int>,
         onDigitTapGesture: @escaping () -> Void
     ) {
         self.onDigitTapGesture = onDigitTapGesture
         self._digitIndex0 = digitIndex0
         self._digitIndex1 = digitIndex1
         self._digitIndex2 = digitIndex2
+        self._digitIndex3 = digitIndex3
     }
 
     public var body: some View {
         HStack(spacing: 0) {
-            DigitTransitionView(digit: $digitIndex0, onDigitTapGesture: onDigitTapGesture)
+            if digitIndex0 > 0 {
+                DigitTransitionView(digit: $digitIndex0, onDigitTapGesture: onDigitTapGesture)
+            }
             DigitTransitionView(digit: $digitIndex1, onDigitTapGesture: onDigitTapGesture)
             DigitTransitionView(digit: $digitIndex2, onDigitTapGesture: onDigitTapGesture)
+            DigitTransitionView(digit: $digitIndex3, onDigitTapGesture: onDigitTapGesture)
         }
     }
 }
@@ -119,6 +125,7 @@ public struct CounterView: View {
     @State private var digitIndex0: Int
     @State private var digitIndex1: Int
     @State private var digitIndex2: Int
+    @State private var digitIndex3: Int
     private let onChange: (Int) -> Void
     private let onDigitTapGesture: () -> Void
     private let onInfoTapGesture: (Model.TrackedEntity) -> Void
@@ -144,6 +151,7 @@ public struct CounterView: View {
         self.digitIndex0 = Self.digitsArray(number: counter)[0]
         self.digitIndex1 = Self.digitsArray(number: counter)[1]
         self.digitIndex2 = Self.digitsArray(number: counter)[2]
+        self.digitIndex3 = Self.digitsArray(number: counter)[3]
         self.onChange = onChange
         self.onDigitTapGesture = onDigitTapGesture
         self.onInfoTapGesture = onInfoTapGesture
@@ -160,12 +168,14 @@ public struct CounterView: View {
                 digitIndex0: $digitIndex0,
                 digitIndex1: $digitIndex1,
                 digitIndex2: $digitIndex2,
+                digitIndex3: $digitIndex3,
                 onDigitTapGesture: onDigitTapGesture
             )
             .onChange(of: number) { _ in
                 digitIndex0 = Self.digitsArray(number: number)[0]
                 digitIndex1 = Self.digitsArray(number: number)[1]
                 digitIndex2 = Self.digitsArray(number: number)[2]
+                digitIndex3 = Self.digitsArray(number: number)[3]
                 onChange(number)
             }
             if !minimalDisplay, !name.isEmpty {
@@ -192,7 +202,7 @@ public struct CounterView: View {
     }
 
     static func digitsArray(number: Int) -> [Int] {
-        String(format: "%03d", number).compactMap(\.wholeNumberValue)
+        String(format: "%04d", number).compactMap(\.wholeNumberValue)
     }
 }
 
