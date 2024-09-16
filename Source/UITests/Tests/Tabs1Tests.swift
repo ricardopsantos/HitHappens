@@ -15,7 +15,7 @@ import Nimble
 //
 import Common
 
-final class HitHappensTabs1Tests: BaseUITests {
+final class Tabs1Tests: BaseUITests {
     let enabled = true
     override class var runsForEachTargetApplicationUIConfiguration: Bool {
         false
@@ -91,16 +91,15 @@ final class HitHappensTabs1Tests: BaseUITests {
             .isOnboardingCompleted
         ])
 
-        tapCounterWith(number: Constants.Entities.Book.logsCount)
-        waitFor(staticText: Constants.alertWhenAddNewEvent, on: app)
+        favoritsTapCounterWith(number: Constants.Entities.Book.logsCount)
         tap(
-            staticText: Constants.alertWhenAddNewEvent,
+            staticText: Accessibility.txtAlertModelText.identifier,
             andWaitForStaticText: "\(Constants.entityOccurrenceSingle) details",
             on: app
         )
         tap(button: Accessibility.deleteButton.identifier, on: app)
         tap(button: "Yes", on: app) // Confirmation alert
-        tapCounterWith(number: Constants.Entities.Book.logsCount) // We should have the same amount of book
+        favoritsTapCounterWith(number: Constants.Entities.Book.logsCount) // We should have the same amount of book
     }
 
     func test_trackAddNewLog() {
@@ -113,10 +112,10 @@ final class HitHappensTabs1Tests: BaseUITests {
             .isOnboardingCompleted
         ])
 
-        tapCounterWith(number: Constants.Entities.Book.logsCount)
-        waitFor(staticText: Constants.alertWhenAddNewEvent, on: app)
+        favoritsTapCounterWith(number: Constants.Entities.Book.logsCount)
+        // waitFor(staticText: Constants.alertWhenAddNewEvent, on: app)
         tap(
-            staticText: Constants.alertWhenAddNewEvent,
+            staticText: Accessibility.txtAlertModelText.identifier,
             andWaitForStaticText: "\(Constants.entityOccurrenceSingle) details",
             on: app
         )
@@ -132,10 +131,10 @@ final class HitHappensTabs1Tests: BaseUITests {
             .isOnboardingCompleted
         ])
 
-        tapCounterWith(number: Constants.Entities.Book.logsCount)
-        waitFor(staticText: Constants.alertWhenAddNewEvent, on: app)
+        favoritsTapCounterWith(number: Constants.Entities.Book.logsCount)
+
         tap(
-            staticText: Constants.alertWhenAddNewEvent,
+            staticText: Accessibility.txtAlertModelText.identifier,
             andWaitForStaticText: "\(Constants.entityOccurrenceSingle) details",
             on: app
         )

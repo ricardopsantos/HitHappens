@@ -15,7 +15,7 @@ import Common
 // MARK: - Misc
 //
 public extension XCTestCase {
-    static var timeout: Double = 5
+    static var timeout: Double = 3
 
     func describe(app: XCUIApplication) {
         let secureTextFields = app.secureTextFields.allElementsBoundByIndex

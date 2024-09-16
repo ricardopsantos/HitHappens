@@ -21,34 +21,19 @@ struct EventLogDetailsViewCoordinator: View, ViewCoordinatorProtocol {
     @EnvironmentObject var configuration: ConfigurationViewModel
     @StateObject var coordinator = RouterViewModel()
     // MARK: - Usage/Auxiliar Attributes
-    @EnvironmentObject var coordinatorTab2: RouterViewModel
+    @EnvironmentObject var parentCoordinator: RouterViewModel
     @Environment(\.dismiss) var dismiss
     let model: EventLogDetailsModel
-    let haveNavigationStack: Bool
+    let presentationStyle: ViewPresentationStyle
     // MARK: - Body & View
     var body: some View {
-        if !haveNavigationStack {
-            buildScreen(.eventLogDetails(model: model), presentationStyle: .notApplied)
-                .sheet(item: $coordinator.sheetLink) { screen in
-                    buildScreen(screen, presentationStyle: .sheet)
-                }
-                .fullScreenCover(item: $coordinator.coverLink) { screen in
-                    buildScreen(screen, presentationStyle: .fullScreenCover)
-                }
-        } else {
-            NavigationStack(path: $coordinator.navPath) {
-                buildScreen(.eventLogDetails(model: model), presentationStyle: .notApplied)
-                    .navigationDestination(for: AppScreen.self, destination: { screen in
-                        buildScreen(screen, presentationStyle: .fullScreenCover)
-                    })
-                    .sheet(item: $coordinator.sheetLink) { screen in
-                        buildScreen(screen, presentationStyle: .sheet)
-                    }
-                    .fullScreenCover(item: $coordinator.coverLink) { screen in
-                        buildScreen(screen, presentationStyle: .fullScreenCover)
-                    }
+        buildScreen(.eventLogDetails(model: model), presentationStyle: presentationStyle)
+            .sheet(item: $coordinator.sheetLink) { screen in
+                buildScreen(screen, presentationStyle: .sheet)
             }
-        }
+            .fullScreenCover(item: $coordinator.coverLink) { screen in
+                buildScreen(screen, presentationStyle: .fullScreenCover)
+            }
     }
 
     @ViewBuilder
@@ -60,21 +45,28 @@ struct EventLogDetailsViewCoordinator: View, ViewCoordinatorProtocol {
                 onPerformDisplayEntityDetails: { model in
                     coordinator.coverLink = .eventDetails(model: .init(event: model))
                 }, onPerformRouteBack: {
-                    coordinatorTab2.navigateBack()
+                    switch presentationStyle {
+                    case .notApplied:
+                        ()
+                    case .navigation:
+                        parentCoordinator.navigateBack()
+                    case .sheet:
+                        parentCoordinator.sheetLink = nil
+                    case .fullScreenCover:
+                        coordinator.coverLink = nil
+                        parentCoordinator.coverLink = nil
+                        dismiss()
+                    }
                 },
                 dataBaseRepository: configuration.dataBaseRepository,
                 presentationStyle: presentationStyle)
             EventLogDetailsView(dependencies: dependencies)
         case .eventDetails(model: let model):
-            let dependencies: EventDetailsViewModel.Dependencies = .init(
-                model: model, onPerformRouteBack: {
-                    coordinatorTab2.navigateBack()
-                }, onShouldDisplayTrackedLog: { trackedLog in
-                    coordinator.coverLink = .eventLogDetails(model: .init(trackedLog: trackedLog))
-                },
-                dataBaseRepository: configuration.dataBaseRepository,
+            EventDetailsViewCoordinator(
+                model: model,
                 presentationStyle: presentationStyle)
-            EventDetailsView(dependencies: dependencies)
+                .environmentObject(configuration)
+                .environmentObject(parentCoordinator)
         default:
             NotImplementedView(screen: screen)
         }
@@ -175,6 +167,7 @@ struct EventLogDetailsView: View, ViewProtocol {
         }.onAppear {
             updateStateCopyWithViewModelCurrentState()
         }.paddingHorizontal(SizeNames.defaultMarginSmall)
+            .padding(.top)
     }
 }
 
@@ -330,7 +323,7 @@ extension EventLogDetailsView {
                 },
                 text: "\(AppConstants.entityNameSingle) details".localizedMissing,
                 alignment: .center,
-                style: .textOnly,
+                style: .secondary,
                 background: .primary,
                 accessibility: .detailsButton)
         }
@@ -395,7 +388,7 @@ fileprivate extension EventLogDetailsView {
 #Preview {
     EventLogDetailsViewCoordinator(
         model: .init(trackedLog: .random),
-        haveNavigationStack: false)
+        presentationStyle: .fullScreenCover)
         .environmentObject(ConfigurationViewModel.defaultForPreviews)
 }
 #endif

@@ -21,32 +21,20 @@ struct EventDetailsViewCoordinator: View, ViewCoordinatorProtocol {
     @EnvironmentObject var configuration: ConfigurationViewModel
     @StateObject var coordinator = RouterViewModel()
     // MARK: - Usage/Auxiliar Attributes
-    @EnvironmentObject var coordinatorTab2: RouterViewModel
+    @EnvironmentObject var parentCoordinator: RouterViewModel
     @Environment(\.dismiss) var dismiss
     let model: EventDetailsModel?
-    let haveNavigationStack: Bool
+    let presentationStyle: ViewPresentationStyle
 
     // MARK: - Body & View
     var body: some View {
-        if !haveNavigationStack {
-            buildScreen(.eventDetails(model: model), presentationStyle: .navigation)
-                .sheet(item: $coordinator.sheetLink) { screen in
-                    buildScreen(screen, presentationStyle: .sheet)
-                }
-                .fullScreenCover(item: $coordinator.coverLink) { screen in
-                    buildScreen(screen, presentationStyle: .fullScreenCover)
-                }
-        } else {
-            NavigationStack(path: $coordinator.navPath) {
-                buildScreen(.eventDetails(model: model), presentationStyle: .navigation)
-                    .sheet(item: $coordinator.sheetLink) { screen in
-                        buildScreen(screen, presentationStyle: .sheet)
-                    }
-                    .fullScreenCover(item: $coordinator.coverLink) { screen in
-                        buildScreen(screen, presentationStyle: .fullScreenCover)
-                    }
+        buildScreen(.eventDetails(model: model), presentationStyle: presentationStyle)
+            .sheet(item: $coordinator.sheetLink) { screen in
+                buildScreen(screen, presentationStyle: .sheet)
             }
-        }
+            .fullScreenCover(item: $coordinator.coverLink) { screen in
+                buildScreen(screen, presentationStyle: .fullScreenCover)
+            }
     }
 
     @ViewBuilder
@@ -55,7 +43,19 @@ struct EventDetailsViewCoordinator: View, ViewCoordinatorProtocol {
         case .eventDetails(model: let model):
             let dependencies: EventDetailsViewModel.Dependencies = .init(
                 model: model, onPerformRouteBack: {
-                    coordinatorTab2.navigateBack()
+                    switch presentationStyle {
+                    case .notApplied: ()
+                    case .navigation:
+                        coordinator.coverLink = nil
+                        parentCoordinator.coverLink = nil
+                        parentCoordinator.navigateBack()
+                    case .sheet: ()
+                    case .fullScreenCover:
+                        coordinator.coverLink = nil
+                        parentCoordinator.coverLink = nil
+                        parentCoordinator.navigateBack()
+                        dismiss()
+                    }
                 }, onShouldDisplayTrackedLog: { trackedLog in
                     coordinator.coverLink = .eventLogDetails(model: .init(trackedLog: trackedLog))
                 },
@@ -63,16 +63,11 @@ struct EventDetailsViewCoordinator: View, ViewCoordinatorProtocol {
                 presentationStyle: presentationStyle)
             EventDetailsView(dependencies: dependencies)
         case .eventLogDetails(model: let model):
-            let dependencies: EventLogDetailsViewModel.Dependencies = .init(
+            EventLogDetailsViewCoordinator(
                 model: model,
-                onPerformDisplayEntityDetails: { _ in
-                    coordinator.coverLink = nil // We are on details already. Just close
-                }, onPerformRouteBack: {
-                    coordinator.coverLink = nil
-                },
-                dataBaseRepository: configuration.dataBaseRepository,
                 presentationStyle: presentationStyle)
-            EventLogDetailsView(dependencies: dependencies)
+                .environmentObject(configuration)
+                .environmentObject(parentCoordinator)
         default:
             NotImplementedView(screen: screen)
         }
@@ -171,6 +166,7 @@ struct EventDetailsView: View, ViewProtocol {
             updateStateCopyWithViewModelCurrentState()
         }
         .paddingHorizontal(SizeNames.defaultMarginSmall)
+        .padding(.top)
     }
 }
 
@@ -295,6 +291,7 @@ fileprivate extension EventDetailsView {
             Divider()
             SwiftUIUtils.FixedVerticalSpacer(height: SizeNames.defaultMarginSmall)
             listView
+            SwiftUIUtils.FixedVerticalSpacer(height: SizeNames.defaultMarginSmall)
         }
     }
 
@@ -513,12 +510,13 @@ extension EventDetailsView {
         model: .init(event: .random(cascadeEvents: [
             .random,
             .random
-        ])), haveNavigationStack: false)
+        ])),
+        presentationStyle: .fullScreenCover)
         .environmentObject(ConfigurationViewModel.defaultForPreviews)
 }
 
 #Preview("New") {
-    EventDetailsViewCoordinator(model: nil, haveNavigationStack: false)
+    EventDetailsViewCoordinator(model: nil, presentationStyle: .fullScreenCover)
         .environmentObject(ConfigurationViewModel.defaultForPreviews)
 }
 #endif

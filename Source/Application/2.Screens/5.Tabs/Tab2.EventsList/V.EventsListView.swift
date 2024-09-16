@@ -19,10 +19,11 @@ import Domain
 struct EventsListViewCoordinator: View, ViewCoordinatorProtocol {
     // MARK: - ViewCoordinatorProtocol
     @EnvironmentObject var configuration: ConfigurationViewModel
-    @EnvironmentObject var coordinatorTab2: RouterViewModel
+    @EnvironmentObject var parentCoordinator: RouterViewModel
     @StateObject var coordinator = RouterViewModel()
     // MARK: - Usage/Auxiliar Attributes
     @Environment(\.dismiss) var dismiss
+    let presentationStyle: ViewPresentationStyle
     // MARK: - Body & View
     var body: some View {
         buildScreen(.eventsList, presentationStyle: .notApplied)
@@ -41,24 +42,30 @@ struct EventsListViewCoordinator: View, ViewCoordinatorProtocol {
             let dependencies: EventsListViewModel.Dependencies = .init(
                 model: .init(), onShouldDisplayTrackedEntity: { model in
                     let detailsModel: EventDetailsModel = .init(event: model)
-                    coordinatorTab2.navigate(to: .eventDetails(model: detailsModel))
+                    parentCoordinator.navigate(to: .eventDetails(model: detailsModel))
                 }, onShouldDisplayNewTrackedEntity: {
                     coordinator.coverLink = .eventDetails(model: nil)
                 },
                 dataBaseRepository: configuration.dataBaseRepository)
             EventsListView(dependencies: dependencies)
         case .eventDetails(model: let model):
-            let dependencies: EventDetailsViewModel.Dependencies = .init(
-                model: model, onPerformRouteBack: {
-                    if !coordinatorTab2.navigateBack() {
-                        coordinator.coverLink = nil
-                    }
-                }, onShouldDisplayTrackedLog: { trackedLog in
-                    coordinatorTab2.coverLink = .eventLogDetails(model: .init(trackedLog: trackedLog))
-                },
-                dataBaseRepository: configuration.dataBaseRepository,
+            /*
+             let dependencies: EventDetailsViewModel.Dependencies = .init(
+                 model: model, onPerformRouteBack: {
+                     if !coordinatorTab2.navigateBack() {
+                         coordinator.coverLink = nil
+                     }
+                 }, onShouldDisplayTrackedLog: { trackedLog in
+                     coordinatorTab2.coverLink = .eventLogDetails(model: .init(trackedLog: trackedLog))
+                 },
+                 dataBaseRepository: configuration.dataBaseRepository,
+                 presentationStyle: presentationStyle)
+             EventDetailsView(dependencies: dependencies)*/
+            EventDetailsViewCoordinator(
+                model: model,
                 presentationStyle: presentationStyle)
-            EventDetailsView(dependencies: dependencies)
+                .environmentObject(configuration)
+                .environmentObject(parentCoordinator)
         default:
             NotImplementedView(screen: screen)
         }
@@ -170,7 +177,9 @@ struct EventsListView: View, ViewProtocol {
                     Spacer().padding(.vertical, SizeNames.defaultMargin)
                 }
             }
-        }.paddingHorizontal(SizeNames.defaultMarginSmall)
+        }
+        .paddingHorizontal(SizeNames.defaultMarginSmall)
+        .padding(.top)
     }
 
     @ViewBuilder
@@ -195,7 +204,7 @@ struct EventsListView: View, ViewProtocol {
 #if canImport(SwiftUI) && DEBUG
 @available(iOS 17, *)
 #Preview {
-    EventsListViewCoordinator()
+    EventsListViewCoordinator(presentationStyle: .fullScreenCover)
         .environmentObject(ConfigurationViewModel.defaultForPreviews)
 }
 #endif

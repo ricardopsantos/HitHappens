@@ -52,11 +52,23 @@ extension BaseUITests {
         tap(button: newCategory, on: app)
     }
 
-    func tapCounterWith(number: Int) {
+    func favoritsTapCounterWith(number: Int) {
         if number < 10 {
             app.scrollViews.otherElements.images["\(number)00"].tap()
         } else {
             app.scrollViews.otherElements.images["\(number)0"].tap()
+        }
+    }
+
+    func trackerDetailsTapCounterWith(number: Int) {
+        if number < 10 {
+            app.scrollViews.children(matching: .other)
+                .element(boundBy: 0)
+                .children(matching: .other).element.children(matching: .image).matching(identifier: "\(number)00").element(boundBy: 2).tap()
+        } else {
+            app.scrollViews.children(matching: .other)
+                .element(boundBy: 0)
+                .children(matching: .other).element.children(matching: .image).matching(identifier: "\(number)0").element(boundBy: 2).tap()
         }
     }
 

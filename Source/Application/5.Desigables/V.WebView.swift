@@ -48,7 +48,7 @@ struct WebView: View {
             sender: "\(Self.self)",
             appScreen: .na,
             navigationViewModel: .disabled,
-            ignoresSafeArea: true,
+            ignoresSafeArea: false,
             background: .defaultBackground,
             loadingModel: nil,
             alertModel: nil,
@@ -64,6 +64,7 @@ struct WebView: View {
 
     var content: some View {
         VStack(spacing: 0) {
+            //  SwiftUIUtils.FixedVerticalSpacer(height: SizeNames.defaultMarginSmall*3)
             Header(text: model.title, hasCloseButton: true, onBackOrCloseClick: {
                 dismiss()
             }).paddingHorizontal(SizeNames.defaultMarginSmall)

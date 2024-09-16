@@ -65,6 +65,7 @@ extension BaseView {
         var textView: some View {
             Text(model?.message ?? "")
                 .fontSemantic(.body)
+                .accessibilityIdentifier(Accessibility.txtAlertModelText.identifier)
                 .lineLimit(nil) // Unlimited lines
                 .multilineTextAlignment(.center)
                 .fixedSize(horizontal: false, vertical: true) // Prevents truncation

@@ -23,6 +23,8 @@ public final class RouterViewModel: ObservableObject {
 
     // MARK: - Functions
 
+    public func freeAll() {}
+
     public func navigate(to appScreen: AppScreen) {
         navPath.append(appScreen)
     }
@@ -42,6 +44,7 @@ public final class RouterViewModel: ObservableObject {
         }
     }
 
+    @discardableResult
     public func navigateToRoot() -> Bool {
         if sheetLink != nil || coverLink == nil || !navPath.isEmpty {
             sheetLink = nil

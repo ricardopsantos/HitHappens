@@ -21,32 +21,17 @@ struct FavoriteEventsViewCoordinator: View, ViewCoordinatorProtocol {
     @StateObject var coordinator = RouterViewModel()
     // MARK: - Usage/Auxiliar Attributes
     @Environment(\.dismiss) var dismiss
-    let haveNavigationStack: Bool
-
+    @EnvironmentObject var parentCoordinator: RouterViewModel
+    let presentationStyle: ViewPresentationStyle
     // MARK: - Body & View
     var body: some View {
-        if haveNavigationStack {
-            NavigationStack(path: $coordinator.navPath) {
-                buildScreen(.favoriteEvents, presentationStyle: .notApplied)
-                    .navigationDestination(for: AppScreen.self, destination: { screen in
-                        buildScreen(screen, presentationStyle: .fullScreenCover)
-                    })
-                    .sheet(item: $coordinator.sheetLink) { screen in
-                        buildScreen(screen, presentationStyle: .sheet)
-                    }
-                    .fullScreenCover(item: $coordinator.coverLink) { screen in
-                        buildScreen(screen, presentationStyle: .fullScreenCover)
-                    }
+        buildScreen(.favoriteEvents, presentationStyle: .notApplied)
+            .sheet(item: $coordinator.sheetLink) { screen in
+                buildScreen(screen, presentationStyle: .sheet)
             }
-        } else {
-            buildScreen(.favoriteEvents, presentationStyle: .notApplied)
-                .sheet(item: $coordinator.sheetLink) { screen in
-                    buildScreen(screen, presentationStyle: .sheet)
-                }
-                .fullScreenCover(item: $coordinator.coverLink) { screen in
-                    buildScreen(screen, presentationStyle: .fullScreenCover)
-                }
-        }
+            .fullScreenCover(item: $coordinator.coverLink) { screen in
+                buildScreen(screen, presentationStyle: .fullScreenCover)
+            }
     }
 
     @ViewBuilder
@@ -65,27 +50,18 @@ struct FavoriteEventsViewCoordinator: View, ViewCoordinatorProtocol {
                 dataBaseRepository: configuration.dataBaseRepository)
             FavoriteEventsView(dependencies: dependencies)
         case .eventLogDetails(model: let model):
-            let dependencies: EventLogDetailsViewModel.Dependencies = .init(
+            EventLogDetailsViewCoordinator(
                 model: model,
-                onPerformDisplayEntityDetails: { model in
-                    coordinator.coverLink = .eventDetails(model: .init(event: model))
-                }, onPerformRouteBack: {
-                    coordinator.coverLink = nil
-                },
-                dataBaseRepository: configuration.dataBaseRepository,
                 presentationStyle: presentationStyle)
-            EventLogDetailsView(dependencies: dependencies)
+                .environmentObject(configuration)
+                .environmentObject(parentCoordinator)
+
         case .eventDetails(model: let model):
-            let dependencies: EventDetailsViewModel.Dependencies = .init(
-                model: model, onPerformRouteBack: {
-                    coordinator.coverLink = nil
-                },
-                onShouldDisplayTrackedLog: { trackedLog in
-                    coordinator.coverLink = .eventLogDetails(model: .init(trackedLog: trackedLog))
-                },
-                dataBaseRepository: configuration.dataBaseRepository,
+            EventDetailsViewCoordinator(
+                model: model,
                 presentationStyle: presentationStyle)
-            EventDetailsView(dependencies: dependencies)
+                .environmentObject(configuration)
+                .environmentObject(parentCoordinator)
         default:
             NotImplementedView(screen: screen)
         }
@@ -175,7 +151,9 @@ struct FavoriteEventsView: View, ViewProtocol {
                     Spacer()
                 }
             }
-        }.paddingHorizontal(SizeNames.defaultMarginSmall)
+        }
+        .paddingHorizontal(SizeNames.defaultMarginSmall)
+        .padding(.top)
     }
 }
 
@@ -186,7 +164,7 @@ struct FavoriteEventsView: View, ViewProtocol {
 #if canImport(SwiftUI) && DEBUG
 @available(iOS 17, *)
 #Preview {
-    FavoriteEventsViewCoordinator(haveNavigationStack: true)
+    FavoriteEventsViewCoordinator(presentationStyle: .fullScreenCover)
         .environmentObject(ConfigurationViewModel.defaultForPreviews)
 }
 #endif

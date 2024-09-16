@@ -85,6 +85,7 @@ class EventLogDetailsViewModel: BaseViewModel {
     private let cancelBag = CancelBag()
     private let dataBaseRepository: DataBaseRepositoryProtocol?
     private let onPerformRouteBack: () -> Void
+    private let screenID = UUID().uuidString
     public init(dependencies: Dependencies) {
         self.dataBaseRepository = dependencies.dataBaseRepository
         self.trackedLog = dependencies.model.trackedLog
@@ -197,6 +198,7 @@ fileprivate extension EventLogDetailsViewModel {
 
     func startListeningDBChanges() {
         dataBaseRepository?.output([]).sink { [weak self] some in
+            guard let screenID = self?.screenID else { return }
             switch some {
             case .generic(let some):
                 switch some {
@@ -204,15 +206,21 @@ fileprivate extension EventLogDetailsViewModel {
                 case .databaseDidUpdatedContentOn(let table, let id):
                     // Data changed. Reload!
                     if table == "\(CDataTrackedLog.self)", id == self?.trackedLog?.id {
-                        Common.ExecutionControlManager.debounce(operationId: "\(Self.self)\(#function)") { [weak self] in
+                        Common.ExecutionControlManager.debounce(operationId: "\(Self.self)\(#function).\(screenID)") { [weak self] in
                             self?.send(.reload)
-                            // self?.userMessage = ("Updated\n\(Date().timeStyleMedium)".localizedMissing, ColorSemantic.allCool)
                         }
                     }
                 case .databaseDidDeletedContentOn(let table, let id):
-                    // Record deleted! Route back
-                    if table == "\(CDataTrackedLog.self)", id == self?.trackedLog?.id {
-                        self?.onPerformRouteBack()
+                    if table == "\(CDataTrackedLog.self)" {
+                        // Record deleted! Route back
+                        Common.ExecutionControlManager.debounce(operationId: "\(Self.self)\(#function).\(screenID)") { [weak self] in
+                            self?.onPerformRouteBack()
+                        }
+                    } else if table == "\(CDataTrackedEntity.self)" {
+                        // Entity deleted! Route back
+                        Common.ExecutionControlManager.debounce(operationId: "\(Self.self)\(#function).\(screenID)") { [weak self] in
+                            self?.onPerformRouteBack()
+                        }
                     }
                 case .databaseDidChangedContentItemOn: break
                 case .databaseDidFinishChangeContentItemsOn: break
@@ -230,7 +238,7 @@ fileprivate extension EventLogDetailsViewModel {
 @available(iOS 17, *)
 #Preview {
     EventLogDetailsViewCoordinator(
-        model: .init(trackedLog: .random), haveNavigationStack: false)
+        model: .init(trackedLog: .random), presentationStyle: .fullScreenCover)
         .environmentObject(ConfigurationViewModel.defaultForPreviews)
 }
 #endif

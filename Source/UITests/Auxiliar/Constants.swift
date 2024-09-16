@@ -44,7 +44,7 @@ enum Constants {
     static let entityOccurrenceNamePlural2 = "\(entityOccurrenceSingle)(s)"
     //
     //
-    static let alertWhenAddNewEvent = "\(Constants.entityOccurrenceSingle) tracked!\n\n(Tap here to edit/add details.)"
+    // static let alertWhenAddNewEvent = "Event tracked!\nTap for edit/add details."
     static let noFavoritsMessage = "You don't have any \(entityNamePlural.lowercased()) marked as favorite\n\nTap to add one!"
     //
     //
@@ -84,6 +84,7 @@ enum UITestingOptions: String {
 //
 public enum Accessibility: String, CaseIterable {
     // Text Fields
+    case txtAlertModelText
     case txtName
     case txtInfo
     case txtNote

@@ -14,9 +14,11 @@ import DevTools
 import DesignSystem
 
 struct MainTabViewCoordinator: View {
+    @EnvironmentObject var configuration: ConfigurationViewModel
     var body: some View {
         MainTabView(dependencies: .init(
-            model: .init(selectedTab: .tab1)
+            model: .init(selectedTab: .tab1),
+            dataBaseRepository: configuration.dataBaseRepository
         ))
     }
 }
@@ -52,7 +54,7 @@ struct MainTabView: View, ViewProtocol {
             // Tab 1 - Favorits
             //
             NavigationStack(path: $tab1Router.navPath) {
-                FavoriteEventsViewCoordinator(haveNavigationStack: false)
+                FavoriteEventsViewCoordinator(presentationStyle: .fullScreenCover)
                     .navigationDestination(for: AppScreen.self, destination: { screen in
                         buildScreen(screen, presentationStyle: .notApplied)
                     })
@@ -64,9 +66,9 @@ struct MainTabView: View, ViewProtocol {
             // Tab 2 - Event as List
             //
             NavigationStack(path: $tab2Router.navPath) {
-                EventsListViewCoordinator()
+                EventsListViewCoordinator(presentationStyle: .fullScreenCover)
                     .navigationDestination(for: AppScreen.self, destination: { screen in
-                        buildScreen(screen, presentationStyle: .notApplied)
+                        buildScreen(screen, presentationStyle: .navigation)
                     })
                     .environmentObject(tab2Router)
             }
@@ -76,7 +78,7 @@ struct MainTabView: View, ViewProtocol {
             // Tab 3 - Event as Calendar
             //
             NavigationStack(path: $tab3Router.navPath) {
-                EventsCalendarViewCoordinator()
+                EventsCalendarViewCoordinator(presentationStyle: .fullScreenCover)
                     .navigationDestination(for: AppScreen.self, destination: { screen in
                         buildScreen(screen, presentationStyle: .notApplied)
                     })
@@ -88,7 +90,7 @@ struct MainTabView: View, ViewProtocol {
             // Tab 4 - Event as Map
             //
             NavigationStack(path: $tab4Router.navPath) {
-                EventsMapViewCoordinator()
+                EventsMapViewCoordinator(presentationStyle: .fullScreenCover)
                     .navigationDestination(for: AppScreen.self, destination: { screen in
                         buildScreen(screen, presentationStyle: .notApplied)
                     })
@@ -136,14 +138,14 @@ struct MainTabView: View, ViewProtocol {
         case .eventLogDetails(model: let model):
             EventLogDetailsViewCoordinator(
                 model: model,
-                haveNavigationStack: false
+                presentationStyle: presentationStyle
             )
             .environmentObject(configuration)
             .environmentObject(tab1Router)
         case .eventDetails(model: let model):
             EventDetailsViewCoordinator(
                 model: model,
-                haveNavigationStack: false
+                presentationStyle: presentationStyle
             )
             .environmentObject(configuration)
             .environmentObject(tab2Router)
@@ -162,7 +164,6 @@ private extension MainTabView {
         case .dark:
             UITabBar.appearance().unselectedItemTintColor = ColorSemantic.danger.uiColor
         }
-        // UITabBar.appearance().tintColor = ColorSemantic.allCool.uiColor
         if let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene {
             windowScene.windows.forEach { window in
                 window.rootViewController = window.rootViewController

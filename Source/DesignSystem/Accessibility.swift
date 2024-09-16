@@ -9,6 +9,7 @@ import Foundation
 
 public enum Accessibility: String, CaseIterable {
     // Text Fields
+    case txtAlertModelText
     case txtName
     case txtInfo
     case txtNote

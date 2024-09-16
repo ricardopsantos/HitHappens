@@ -23,11 +23,12 @@ struct ___Template___ViewCoordinator: View, ViewCoordinatorProtocol {
     @Environment(\.dismiss) var dismiss
     let haveNavigationStack: Bool
     let model: ___Template___Model
+    let presentationStyle: ViewPresentationStyle
     // MARK: - Body & View
     var body: some View {
         if haveNavigationStack {
             NavigationStack(path: $coordinator.navPath) {
-                buildScreen(.templateWith(model: model), presentationStyle: .notApplied)
+                buildScreen(.templateWith(model: model), presentationStyle: presentationStyle)
                     .navigationDestination(for: AppScreen.self, destination: { screen in
                         buildScreen(screen, presentationStyle: .fullScreenCover)
                     })
@@ -39,7 +40,7 @@ struct ___Template___ViewCoordinator: View, ViewCoordinatorProtocol {
                     }
             }
         } else {
-            buildScreen(.templateWith(model: model), presentationStyle: .notApplied)
+            buildScreen(.templateWith(model: model), presentationStyle: presentationStyle)
                 .sheet(item: $coordinator.sheetLink) { screen in
                     buildScreen(screen, presentationStyle: .sheet)
                 }
@@ -141,7 +142,7 @@ fileprivate extension ___Template___View {
 #if canImport(SwiftUI) && DEBUG
 @available(iOS 17, *)
 #Preview {
-    ___Template___ViewCoordinator(haveNavigationStack: false, model: .init(message: "Hi"))
+    ___Template___ViewCoordinator(haveNavigationStack: false, model: .init(message: "Hi"), presentationStyle: .fullScreenCover)
         .environmentObject(ConfigurationViewModel.defaultForPreviews)
 }
 #endif

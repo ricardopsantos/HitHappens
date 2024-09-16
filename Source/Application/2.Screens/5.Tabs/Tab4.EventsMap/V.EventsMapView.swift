@@ -23,9 +23,10 @@ struct EventsMapViewCoordinator: View, ViewCoordinatorProtocol {
     @StateObject var coordinator = RouterViewModel()
     // MARK: - Usage/Auxiliar Attributes
     @Environment(\.dismiss) var dismiss
+    let presentationStyle: ViewPresentationStyle
     // MARK: - Body & View
     var body: some View {
-        buildScreen(.map, presentationStyle: .notApplied)
+        buildScreen(.map, presentationStyle: presentationStyle)
             .sheet(item: $coordinator.sheetLink) { screen in
                 buildScreen(screen, presentationStyle: .sheet)
             }
@@ -131,7 +132,9 @@ struct EventsMapView: View, ViewProtocol {
                 Divider().padding(.vertical, SizeNames.defaultMarginSmall)
                 listView
             }
-        }.paddingHorizontal(SizeNames.defaultMarginSmall)
+        }
+        .paddingHorizontal(SizeNames.defaultMarginSmall)
+        .padding(.top)
     }
 }
 
@@ -176,7 +179,7 @@ extension EventsMapView {
 #if canImport(SwiftUI) && DEBUG
 @available(iOS 17, *)
 #Preview {
-    EventsMapViewCoordinator()
+    EventsMapViewCoordinator(presentationStyle: .fullScreenCover)
         .environmentObject(ConfigurationViewModel.defaultForPreviews)
 }
 #endif

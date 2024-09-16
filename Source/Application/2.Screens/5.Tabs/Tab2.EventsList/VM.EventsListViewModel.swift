@@ -91,7 +91,12 @@ fileprivate extension EventsListViewModel {
                 switch some {
                 case .databaseDidInsertedContentOn: break
                 case .databaseDidUpdatedContentOn: break
-                case .databaseDidDeletedContentOn: break
+                case .databaseDidDeletedContentOn(_, let table):
+                    if table == "\(CDataTrackedLog.self)" || table == "\(CDataTrackedEntity.self)" {
+                        Common.ExecutionControlManager.debounce(operationId: "\(Self.self)|\(#function)") { [weak self] in
+                            self?.send(.loadEvents)
+                        }
+                    }
                 case .databaseDidChangedContentItemOn: break
                 case .databaseDidFinishChangeContentItemsOn(let table):
                     if table == "\(CDataTrackedLog.self)" || table == "\(CDataTrackedEntity.self)" {
@@ -112,7 +117,7 @@ fileprivate extension EventsListViewModel {
 #if canImport(SwiftUI) && DEBUG
 @available(iOS 17, *)
 #Preview {
-    EventsListViewCoordinator()
+    EventsListViewCoordinator(presentationStyle: .fullScreenCover)
         .environmentObject(ConfigurationViewModel.defaultForPreviews)
 }
 #endif
