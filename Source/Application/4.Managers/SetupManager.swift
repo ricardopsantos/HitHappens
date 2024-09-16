@@ -24,7 +24,7 @@ public class SetupManager {
         dataBaseRepository: DataBaseRepositoryProtocol,
         nonSecureAppPreferences: NonSecureAppPreferencesProtocol
     ) {
-        let numberOfLogins = Common.InternalUserDefaults.numberOfLoginsIncrement()
+        Common.InternalUserDefaults.numberOfLoginsIncrement()
         CPPWrapper.disable_gdb() // Security: Detach debugger for real device
         CPPWrapper.crash_if_debugged() // Security: Crash app if debugger Detach failed
         DevTools.Log.setup()

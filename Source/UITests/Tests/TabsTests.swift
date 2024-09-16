@@ -15,7 +15,7 @@ import Nimble
 //
 import Common
 
-final class HitHappensTabsTests: BaseUITests {
+final class TabsTests: BaseUITests {
     let enabled = true
     override class var runsForEachTargetApplicationUIConfiguration: Bool {
         false

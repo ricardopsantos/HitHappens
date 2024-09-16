@@ -21,34 +21,19 @@ struct EventLogDetailsViewCoordinator: View, ViewCoordinatorProtocol {
     @EnvironmentObject var configuration: ConfigurationViewModel
     @StateObject var coordinator = RouterViewModel()
     // MARK: - Usage/Auxiliar Attributes
-    @EnvironmentObject var coordinatorTab2: RouterViewModel
+    @EnvironmentObject var parentCoordinator: RouterViewModel
     @Environment(\.dismiss) var dismiss
     let model: EventLogDetailsModel
-    let haveNavigationStack: Bool
+    let presentationStyle: ViewPresentationStyle
     // MARK: - Body & View
     var body: some View {
-        if !haveNavigationStack {
-            buildScreen(.eventLogDetails(model: model), presentationStyle: .notApplied)
-                .sheet(item: $coordinator.sheetLink) { screen in
-                    buildScreen(screen, presentationStyle: .sheet)
-                }
-                .fullScreenCover(item: $coordinator.coverLink) { screen in
-                    buildScreen(screen, presentationStyle: .fullScreenCover)
-                }
-        } else {
-            NavigationStack(path: $coordinator.navPath) {
-                buildScreen(.eventLogDetails(model: model), presentationStyle: .notApplied)
-                    .navigationDestination(for: AppScreen.self, destination: { screen in
-                        buildScreen(screen, presentationStyle: .fullScreenCover)
-                    })
-                    .sheet(item: $coordinator.sheetLink) { screen in
-                        buildScreen(screen, presentationStyle: .sheet)
-                    }
-                    .fullScreenCover(item: $coordinator.coverLink) { screen in
-                        buildScreen(screen, presentationStyle: .fullScreenCover)
-                    }
+        buildScreen(.eventLogDetails(model: model), presentationStyle: presentationStyle)
+            .sheet(item: $coordinator.sheetLink) { screen in
+                buildScreen(screen, presentationStyle: .sheet)
             }
-        }
+            .fullScreenCover(item: $coordinator.coverLink) { screen in
+                buildScreen(screen, presentationStyle: .fullScreenCover)
+            }
     }
 
     @ViewBuilder
@@ -56,12 +41,32 @@ struct EventLogDetailsViewCoordinator: View, ViewCoordinatorProtocol {
         switch screen {
         case .eventLogDetails(model: let model):
             let dependencies: EventLogDetailsViewModel.Dependencies = .init(
-                model: model, onPerformRouteBack: {
-                    coordinatorTab2.navigateBack()
+                model: model,
+                onPerformDisplayEntityDetails: { model in
+                    coordinator.coverLink = .eventDetails(model: .init(event: model))
+                }, onPerformRouteBack: {
+                    switch presentationStyle {
+                    case .notApplied:
+                        ()
+                    case .navigation:
+                        parentCoordinator.navigateBack()
+                    case .sheet:
+                        parentCoordinator.sheetLink = nil
+                    case .fullScreenCover:
+                        coordinator.coverLink = nil
+                        parentCoordinator.coverLink = nil
+                        dismiss()
+                    }
                 },
                 dataBaseRepository: configuration.dataBaseRepository,
                 presentationStyle: presentationStyle)
             EventLogDetailsView(dependencies: dependencies)
+        case .eventDetails(model: let model):
+            EventDetailsViewCoordinator(
+                model: model,
+                presentationStyle: presentationStyle)
+                .environmentObject(configuration)
+                .environmentObject(parentCoordinator)
         default:
             NotImplementedView(screen: screen)
         }
@@ -80,10 +85,12 @@ struct EventLogDetailsView: View, ViewProtocol {
         DevTools.Log.debug(.viewInit("\(Self.self)"), .view)
         _viewModel = StateObject(wrappedValue: .init(dependencies: dependencies))
         self.onPerformRouteBack = dependencies.onPerformRouteBack
+        self.onPerformDisplayEntityDetails = dependencies.onPerformDisplayEntityDetails
     }
 
     // MARK: - Usage/Auxiliar Attributes
     @Environment(\.dismiss) var dismiss
+    private let onPerformDisplayEntityDetails: ((Model.TrackedEntity) -> Void)?
     private let onPerformRouteBack: () -> Void
     private let cancelBag: CancelBag = .init()
     private let minDelta: Double = 0.005
@@ -139,6 +146,7 @@ struct EventLogDetailsView: View, ViewProtocol {
                         onConfirmEdit: onConfirmEdit,
                         onCancelEdit: onCancelEdit)
                     SwiftUIUtils.FixedVerticalSpacer(height: SizeNames.defaultMarginSmall)
+                    routeToEntityDetailsView
                     Spacer()
                     deleteView
                     SwiftUIUtils.FixedVerticalSpacer(height: SizeNames.defaultMarginSmall)
@@ -158,7 +166,8 @@ struct EventLogDetailsView: View, ViewProtocol {
             updateStateCopyWithViewModelCurrentState()
         }.onAppear {
             updateStateCopyWithViewModelCurrentState()
-        }
+        }.paddingHorizontal(SizeNames.defaultMarginSmall)
+            .padding(.top)
     }
 }
 
@@ -300,25 +309,42 @@ extension EventLogDetailsView {
     }
 
     @ViewBuilder
+    var routeToEntityDetailsView: some View {
+        if !onEdit, let onPerformDisplayEntityDetails = onPerformDisplayEntityDetails {
+            TextButton(
+                onClick: {
+                    AnalyticsManager.shared.handleButtonClickEvent(
+                        buttonType: .primary,
+                        label: "RouteToEntity",
+                        sender: "\(Self.self)")
+                    if let cascadeEntity = viewModel.trackedLog?.cascadeEntity {
+                        onPerformDisplayEntityDetails(cascadeEntity)
+                    }
+                },
+                text: "\(AppConstants.entityNameSingle) details".localizedMissing,
+                alignment: .center,
+                style: .secondary,
+                background: .primary,
+                accessibility: .detailsButton)
+        }
+    }
+
+    @ViewBuilder
     var deleteView: some View {
-        Group {
-            if !onEdit {
-                TextButton(
-                    onClick: {
-                        AnalyticsManager.shared.handleButtonClickEvent(
-                            buttonType: .primary,
-                            label: "Delete",
-                            sender: "\(Self.self)")
-                        viewModel.send(.delete(confirmed: false))
-                    },
-                    text: "Delete \(AppConstants.entityOccurrenceSingle.lowercased())".localizedMissing,
-                    alignment: .center,
-                    style: .secondary,
-                    background: .danger,
-                    accessibility: .deleteButton)
-            } else {
-                EmptyView()
-            }
+        if !onEdit {
+            TextButton(
+                onClick: {
+                    AnalyticsManager.shared.handleButtonClickEvent(
+                        buttonType: .primary,
+                        label: "Delete",
+                        sender: "\(Self.self)")
+                    viewModel.send(.delete(confirmed: false))
+                },
+                text: "Delete".localizedMissing,
+                alignment: .center,
+                style: .textOnly,
+                background: .danger,
+                accessibility: .deleteButton)
         }
     }
 }
@@ -362,7 +388,7 @@ fileprivate extension EventLogDetailsView {
 #Preview {
     EventLogDetailsViewCoordinator(
         model: .init(trackedLog: .random),
-        haveNavigationStack: false)
+        presentationStyle: .fullScreenCover)
         .environmentObject(ConfigurationViewModel.defaultForPreviews)
 }
 #endif

@@ -16,6 +16,7 @@ public extension CalendarView {
         static let monthFont: FontSemantic = Header.defaultTitleFontSemantic
         static let weekDaysFont: FontSemantic = .bodyBold
         static let daysFont: FontSemantic = .body
+        static let innerSpace: CGFloat = SizeNames.defaultMarginSmall / 2
         enum CurrentDay {
             static let currentDayShapeIsCircle = false
             static func textColor() -> Color {
@@ -76,7 +77,7 @@ public struct DayView: View {
         (
             screenWidth
                 - 2 * SizeNames.defaultMargin // Side Margin
-                - 6 * SizeNames.defaultMarginSmall // Inner Space
+                - 6 * CalendarView.Config.innerSpace // Inner Space
         ) / 7.0 // Days on a row
     }
 
@@ -266,7 +267,7 @@ public struct CalendarMonthlyView: View {
         let days = generateDays(for: currentDate)
         VStack(spacing: 0) {
             ForEach(0..<6) { row in
-                HStack(spacing: SizeNames.defaultMarginSmall) {
+                HStack(spacing: CalendarView.Config.innerSpace) {
                     let allDays = (0..<7).map { days[row * 7 + $0] }
                     let someDaysAreCurrentMonth = !allDays.filter(\.isCurrentMonth).isEmpty
                     if someDaysAreCurrentMonth {
@@ -279,7 +280,7 @@ public struct CalendarMonthlyView: View {
                         EmptyView()
                     }
                 }
-                SwiftUIUtils.FixedVerticalSpacer(height: SizeNames.defaultMarginSmall)
+                SwiftUIUtils.FixedVerticalSpacer(height: CalendarView.Config.innerSpace)
             }
         }
     }
@@ -374,6 +375,6 @@ public struct CalendarView: View {
         onSelectedDay: { _ in },
         onSelectedMonth: { _ in }
     )
-    .paddingHorizontal(SizeNames.defaultMargin)
+    .paddingHorizontal(SizeNames.defaultMarginSmall)
 }
 #endif

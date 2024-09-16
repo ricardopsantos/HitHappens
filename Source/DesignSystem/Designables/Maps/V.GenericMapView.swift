@@ -68,7 +68,6 @@ public struct GenericMapView: View {
     private let onRegionChanged: (MKCoordinateRegion) -> Void
     public init(
         items: Binding<[ModelItem]>,
-
         displayGrid: Binding<Bool>,
         onRegionChanged: @escaping (MKCoordinateRegion) -> Void
     ) {
@@ -81,19 +80,25 @@ public struct GenericMapView: View {
         content
             .onAppear {
                 locationViewModel.start(sender: "\(Self.self)")
-                shouldDisplayUserLocation = locationViewModel.locationIsAuthorized
-                shouldDisplayEventsLocation = true
-                Common_Utils.delay {
+                Common_Utils.delay(1) {
                     // Delay so that view model gets user location
                     updateRegionToFitCoordinates()
                 }
             }.onDisappear {
                 locationViewModel.stop(sender: "\(Self.self)")
             }
+            .onChange(of: shouldDisplayUserLocation) { _ in
+                updateRegionToFitCoordinates()
+            }
+            .onChange(of: shouldDisplayEventsLocation) { _ in
+                updateRegionToFitCoordinates()
+            }
             .onChange(of: items) { _ in
                 if shouldDisplayEventsLocation, items.isEmpty {
                     // No items, so no need on this being on
                     shouldDisplayEventsLocation = false
+                } else {
+                    updateRegionToFitCoordinates()
                 }
             }
             .onChange(of: region) { new in
@@ -113,7 +118,6 @@ public struct GenericMapView: View {
     public var content: some View {
         ZStack {
             mapView
-
             actionBottonView
         }.cornerRadius2(SizeNames.cornerRadius)
     }
@@ -161,9 +165,6 @@ fileprivate extension GenericMapView {
     var actionBottonView: some View {
         let allEventsRegion = Button(action: {
             shouldDisplayEventsLocation.toggle()
-            withAnimation {
-                updateRegionToFitCoordinates()
-            }
         }) {
             Image(systemName: "list.bullet")
                 .frame(SizeNames.defaultMargin)
@@ -183,9 +184,6 @@ fileprivate extension GenericMapView {
         .paddingRight(SizeNames.defaultMargin)
         let userRegion = Button(action: {
             shouldDisplayUserLocation.toggle()
-            withAnimation {
-                updateRegionToFitCoordinates()
-            }
         }) {
             Image(systemName: "location.fill")
                 .frame(SizeNames.defaultMargin)
@@ -292,39 +290,43 @@ fileprivate extension GenericMapView {
     }
 
     func updateRegionToFitCoordinates() {
-        guard shouldDisplayUserLocation || shouldDisplayEventsLocation else {
-            return
-        }
-        var meanFullCoordinates: [CLLocationCoordinate2D] = []
-        let userLocation = locationViewModel.coordinates
-
-        if shouldDisplayUserLocation, let userLocation = userLocation {
-            meanFullCoordinates.append(.init(
-                latitude: userLocation.latitude,
-                longitude: userLocation.longitude
-            ))
-        }
-        if shouldDisplayEventsLocation {
-            let validItems = items.map(\.coordinate)
-                .filter { $0.latitude != 0 && $0.longitude != 0 }
-            meanFullCoordinates.append(contentsOf: validItems)
-        }
-
-        if !meanFullCoordinates.isEmpty {
-            if meanFullCoordinates.count == 1, let first = meanFullCoordinates.first {
-                region.center = .init(
-                    latitude: first.latitude,
-                    longitude: first.longitude
-                )
-            } else {
-                region = meanFullCoordinates.regionToFitCoordinates()
+        Common.ExecutionControlManager.debounce(operationId: "\(Self.self).\(#function)") {
+            guard shouldDisplayUserLocation || shouldDisplayEventsLocation else {
+                return
             }
-        } else if let userLocation = userLocation {
-            // No coordinates! Center on user...
-            region = [.init(
-                latitude: userLocation.latitude,
-                longitude: userLocation.longitude
-            )].regionToFitCoordinates()
+            var meanFullCoordinates: [CLLocationCoordinate2D] = []
+            let userLocation = locationViewModel.coordinates
+
+            if shouldDisplayUserLocation, let userLocation = userLocation {
+                meanFullCoordinates.append(.init(
+                    latitude: userLocation.latitude,
+                    longitude: userLocation.longitude
+                ))
+            }
+            if shouldDisplayEventsLocation {
+                let validItems = items.map(\.coordinate)
+                    .filter { $0.latitude != 0 && $0.longitude != 0 }
+                meanFullCoordinates.append(contentsOf: validItems)
+            }
+
+            withAnimation {
+                if !meanFullCoordinates.isEmpty {
+                    if meanFullCoordinates.count == 1, let first = meanFullCoordinates.first {
+                        region.center = .init(
+                            latitude: first.latitude,
+                            longitude: first.longitude
+                        )
+                    } else {
+                        region = meanFullCoordinates.regionToFitCoordinates()
+                    }
+                } else if let userLocation = userLocation {
+                    // No coordinates! Center on user...
+                    region = [.init(
+                        latitude: userLocation.latitude,
+                        longitude: userLocation.longitude
+                    )].regionToFitCoordinates()
+                }
+            }
         }
     }
 }

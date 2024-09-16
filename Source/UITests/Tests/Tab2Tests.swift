@@ -15,7 +15,7 @@ import Nimble
 //
 import Common
 
-final class HitHappensTabs2Tests: BaseUITests {
+final class Tab2Tests: BaseUITests {
     let enabled = true
     override class var runsForEachTargetApplicationUIConfiguration: Bool {
         false
@@ -133,7 +133,7 @@ final class HitHappensTabs2Tests: BaseUITests {
         exists(staticText: Constants.Entities.Book.category, on: app)
     }
 
-    func test_deleteEntity() {
+    func test_resetCounter() {
         guard enabled else {
             XCTAssert(true)
             return
@@ -150,15 +150,9 @@ final class HitHappensTabs2Tests: BaseUITests {
         tap(listItemStaticText: Constants.Entities.Book.listItem, on: app)
         exists(staticText: "\(Constants.entityNameSingle) details", on: app)
 
-        tap(button: Accessibility.deleteButton.identifier, on: app)
+        tap(button: Accessibility.resetButton.identifier, on: app)
         tap(button: "Yes", on: app) // Confirmation alert
 
-        notExists(staticText: Constants.Entities.Book.listItem, on: app) // Deleted from list
-        tap(
-            tabBarIndex: Constants.tab1,
-            andWaitForStaticText: Constants.tab1Title,
-            on: app
-        )
-        notExists(staticText: Constants.Entities.Book.name, on: app) // Deleted from favorits
+        notExists(staticText: "All events", on: app) // The list disapears
     }
 }

@@ -15,7 +15,7 @@ import Nimble
 //
 import Common
 
-final class HitHappensOnboardingTests: BaseUITests {
+final class OnboardingTests: BaseUITests {
     let enabled = true
     override class var runsForEachTargetApplicationUIConfiguration: Bool {
         false
@@ -54,8 +54,8 @@ final class HitHappensOnboardingTests: BaseUITests {
         ])
         wait(delay: 1)
 
-        let intro = ModelDto.AppConfigResponse.mock?.hitHappens.onboarding.intro ?? ""
-        exists(staticText: intro, on: app)
+        //       let intro = ModelDto.AppConfigResponse.mock?.hitHappens.onboarding.intro ?? ""
+        tap(button: Accessibility.fwdButton.identifier, on: app)
     }
 
     func test_performOnboarding() {

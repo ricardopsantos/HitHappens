@@ -32,14 +32,20 @@ extension MainTabViewModel {
 
     struct Dependencies {
         let model: MainTabModel
+        let dataBaseRepository: DataBaseRepositoryProtocol
     }
 }
 
 class MainTabViewModel: BaseViewModel {
     // MARK: - Usage/Auxiliar Attributes
     @Published var selectedTab: AppTab = .tab1
+    private var dataBaseRepository: DataBaseRepositoryProtocol?
+    private let cancelBag: CancelBag = .init()
     public init(dependencies: Dependencies) {
+        super.init()
         self.selectedTab = dependencies.model.selectedTab
+        self.dataBaseRepository = dependencies.dataBaseRepository
+        startListeningDBChanges()
     }
 
     func send(action: Actions) {
@@ -47,6 +53,26 @@ class MainTabViewModel: BaseViewModel {
         case .didAppear: ()
         case .didDisappear: ()
         }
+    }
+}
+
+//
+// MARK: - Auxiliar
+//
+private extension MainTabViewModel {
+    func startListeningDBChanges() {
+        dataBaseRepository?.output([]).sink { some in
+            switch some {
+            case .generic(let some):
+                switch some {
+                case .databaseDidInsertedContentOn: ()
+                case .databaseDidUpdatedContentOn: ()
+                case .databaseDidDeletedContentOn: ()
+                case .databaseDidChangedContentItemOn: ()
+                case .databaseDidFinishChangeContentItemsOn: ()
+                }
+            }
+        }.store(in: cancelBag)
     }
 }
 

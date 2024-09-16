@@ -162,7 +162,7 @@ fileprivate extension EventsCalendarViewModel {
 #if canImport(SwiftUI) && DEBUG
 @available(iOS 17, *)
 #Preview {
-    EventsCalendarViewCoordinator()
+    EventsCalendarViewCoordinator(presentationStyle: .fullScreenCover)
         .environmentObject(ConfigurationViewModel.defaultForPreviews)
 }
 #endif

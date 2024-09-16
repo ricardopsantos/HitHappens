@@ -53,10 +53,6 @@ enum BaseView {
                 content()
                     .doIf(ignoresSafeArea, transform: {
                         $0.ignoresSafeArea()
-
-                    })
-                    .doIf(!ignoresSafeArea, transform: {
-                        $0.padding(.all) // This will ensure the content stays within the safe area
                     })
             }
             .doIf(dismissKeyboardOnTap, transform: {

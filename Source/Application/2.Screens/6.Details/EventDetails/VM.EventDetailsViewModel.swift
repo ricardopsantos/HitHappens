@@ -57,7 +57,7 @@ extension EventDetailsViewModel {
             case .save:
                 "Are you sure you want to save  \(AppConstants.entityNameSingle.lowercased())?".localizedMissing
             case .resetOccurrences:
-                "Are you sure you want to resent the counter?".localizedMissing
+                "Are you sure you want to reset the counter?".localizedMissing
             }
         }
     }
@@ -101,7 +101,7 @@ class EventDetailsViewModel: BaseViewModel {
     private let onPerformRouteBack: () -> Void
     private let onShouldDisplayTrackedLog: (Model.TrackedLog) -> Void
     @Published var confirmationSheetType: ConfirmationSheet?
-
+    private let screenID = UUID().uuidString // Because several equal screens can be loaded at same time
     public init(dependencies: Dependencies) {
         self.dataBaseRepository = dependencies.dataBaseRepository
         self.trackedEntity = dependencies.model?.event
@@ -121,6 +121,7 @@ class EventDetailsViewModel: BaseViewModel {
             }
             isNewEvent = false
             updateUI(event: unwrapped)
+            send(.reload) // Always reload on appear
         case .didDisappear: ()
         case .reload:
             guard let unwrapped = trackedEntity else {
@@ -254,7 +255,7 @@ class EventDetailsViewModel: BaseViewModel {
 
 fileprivate extension EventDetailsViewModel {
     func updateUI(event model: Model.TrackedEntity) {
-        Common.ExecutionControlManager.debounce(operationId: "\(Self.self)|\(#function)") { [weak self] in
+        Common.ExecutionControlManager.debounce(operationId: "\(Self.self)|\(#function).\(screenID)") { [weak self] in
             self?.trackedEntityUpdated = Date()
             let count = model.cascadeEvents?.count ?? 0
             self?.logs = model.cascadeEvents?
@@ -272,6 +273,7 @@ fileprivate extension EventDetailsViewModel {
 
     func startListeningDBChanges() {
         dataBaseRepository?.output([]).sink { [weak self] some in
+            guard let screenID = self?.screenID else { return }
             switch some {
             case .generic(let some):
                 switch some {
@@ -292,25 +294,18 @@ fileprivate extension EventDetailsViewModel {
                         }
                     }
                 case .databaseDidUpdatedContentOn: break
-                case .databaseDidDeletedContentOn(let table, let id):
+                case .databaseDidDeletedContentOn(let table, _):
                     // Record deleted! Route back
-                    if table == "\(CDataTrackedEntity.self)", id == self?.trackedEntity?.id {
-                        Common.ExecutionControlManager.debounce(operationId: "\(Self.self)\(#function).Deleted") { [weak self] in
+                    if table == "\(CDataTrackedEntity.self)" {
+                        Common.ExecutionControlManager.debounce(operationId: "\(Self.self)\(#function).deleted.\(screenID)") { [weak self] in
                             self?.onPerformRouteBack()
                         }
                     }
-                case .databaseDidChangedContentItemOn: break
-                case .databaseDidFinishChangeContentItemsOn(let table):
+                case .databaseDidChangedContentItemOn: ()
+                case .databaseDidFinishChangeContentItemsOn:
                     // Data changed. Reload!
-                    if table == "\(CDataTrackedEntity.self)" {
-                        Common.ExecutionControlManager.debounce(operationId: "\(Self.self)\(#function)") { [weak self] in
-                            self?.send(.reload)
-                        }
-                    }
-                    if table == "\(CDataTrackedLog.self)" {
-                        Common.ExecutionControlManager.debounce(operationId: "\(Self.self)\(#function)") { [weak self] in
-                            self?.send(.reload)
-                        }
+                    Common.ExecutionControlManager.debounce(operationId: "\(Self.self)\(#function).\(screenID)") { [weak self] in
+                        self?.send(.reload)
                     }
                 }
             }
@@ -326,7 +321,7 @@ fileprivate extension EventDetailsViewModel {
 @available(iOS 17, *)
 #Preview {
     EventDetailsViewCoordinator(
-        model: .init(event: .random(cascadeEvents: [.random])), haveNavigationStack: false)
+        model: .init(event: .random(cascadeEvents: [.random])), presentationStyle: .fullScreenCover)
         .environmentObject(ConfigurationViewModel.defaultForPreviews)
 }
 #endif

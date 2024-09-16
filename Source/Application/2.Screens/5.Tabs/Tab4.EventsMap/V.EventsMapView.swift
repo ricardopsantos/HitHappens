@@ -23,9 +23,10 @@ struct EventsMapViewCoordinator: View, ViewCoordinatorProtocol {
     @StateObject var coordinator = RouterViewModel()
     // MARK: - Usage/Auxiliar Attributes
     @Environment(\.dismiss) var dismiss
+    let presentationStyle: ViewPresentationStyle
     // MARK: - Body & View
     var body: some View {
-        buildScreen(.map, presentationStyle: .notApplied)
+        buildScreen(.map, presentationStyle: presentationStyle)
             .sheet(item: $coordinator.sheetLink) { screen in
                 buildScreen(screen, presentationStyle: .sheet)
             }
@@ -46,12 +47,25 @@ struct EventsMapViewCoordinator: View, ViewCoordinatorProtocol {
             EventsMapView(dependencies: dependencies)
         case .eventLogDetails(model: let model):
             let dependencies: EventLogDetailsViewModel.Dependencies = .init(
-                model: model, onPerformRouteBack: {
+                model: model,
+                onPerformDisplayEntityDetails: { model in
+                    coordinator.coverLink = .eventDetails(model: .init(event: model))
+                }, onPerformRouteBack: {
                     coordinatorTab4.navigateBack()
                 },
                 dataBaseRepository: configuration.dataBaseRepository,
                 presentationStyle: presentationStyle)
             EventLogDetailsView(dependencies: dependencies)
+        case .eventDetails(model: let model):
+            let dependencies: EventDetailsViewModel.Dependencies = .init(
+                model: model, onPerformRouteBack: {
+                    coordinatorTab4.navigateBack()
+                }, onShouldDisplayTrackedLog: { trackedLog in
+                    coordinator.coverLink = .eventLogDetails(model: .init(trackedLog: trackedLog))
+                },
+                dataBaseRepository: configuration.dataBaseRepository,
+                presentationStyle: presentationStyle)
+            EventDetailsView(dependencies: dependencies)
         default:
             NotImplementedView(screen: screen)
         }
@@ -94,7 +108,14 @@ struct EventsMapView: View, ViewProtocol {
                 Common_Utils.delay {
                     if let coordinates = locationViewModel.coordinates {
                         viewModel
-                            .send(.loadEvents(region: .init(center: .init(latitude: coordinates.latitude, longitude: coordinates.longitude), span: .init(latitudeDelta: 0.01, longitudeDelta: 0.01))))
+                            .send(.loadEvents(region: .init(
+                                center:
+                                .init(
+                                    latitude: coordinates.latitude,
+                                    longitude: coordinates.longitude),
+                                span: .init(
+                                    latitudeDelta: 0.1,
+                                    longitudeDelta: 0.1))))
                     }
                 }
             }.onDisappear {
@@ -119,6 +140,8 @@ struct EventsMapView: View, ViewProtocol {
                 listView
             }
         }
+        .paddingHorizontal(SizeNames.defaultMarginSmall)
+        .padding(.top)
     }
 }
 
@@ -133,7 +156,7 @@ extension EventsMapView {
                     .fontSemantic(.body)
                     .textColor(ColorSemantic.labelPrimary.color)
             } else {
-                Text("No \(AppConstants.entityNamePlural) on region".localizedMissing)
+                Text("No \(AppConstants.entityOccurrenceNamePlural1) on region".localizedMissing)
                     .fontSemantic(.body)
                     .textColor(ColorSemantic.labelPrimary.color)
             }
@@ -163,7 +186,7 @@ extension EventsMapView {
 #if canImport(SwiftUI) && DEBUG
 @available(iOS 17, *)
 #Preview {
-    EventsMapViewCoordinator()
+    EventsMapViewCoordinator(presentationStyle: .fullScreenCover)
         .environmentObject(ConfigurationViewModel.defaultForPreviews)
 }
 #endif
