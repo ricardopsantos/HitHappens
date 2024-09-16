@@ -108,7 +108,14 @@ struct EventsMapView: View, ViewProtocol {
                 Common_Utils.delay {
                     if let coordinates = locationViewModel.coordinates {
                         viewModel
-                            .send(.loadEvents(region: .init(center: .init(latitude: coordinates.latitude, longitude: coordinates.longitude), span: .init(latitudeDelta: 0.01, longitudeDelta: 0.01))))
+                            .send(.loadEvents(region: .init(
+                                center:
+                                .init(
+                                    latitude: coordinates.latitude,
+                                    longitude: coordinates.longitude),
+                                span: .init(
+                                    latitudeDelta: 0.1,
+                                    longitudeDelta: 0.1))))
                     }
                 }
             }.onDisappear {

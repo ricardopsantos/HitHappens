@@ -69,20 +69,17 @@ class EventsMapViewModel: BaseViewModel {
     func send(_ action: Actions) {
         switch action {
         case .didAppear:
-            if lastRegion == nil {
-                send(.loadInitialRegion)
-            }
+            ()
+            // send(.loadInitialRegion)
+
         case .didDisappear: ()
         case .loadInitialRegion:
             Task { [weak self] in
                 guard let self = self else { return }
                 // The initial region displays the last 5 events region
                 if let records = self.dataBaseRepository?.trackedLogGetAll(cascade: false) {
-                    let sorted = records.sorted(by: { $0.recordDate > $1.recordDate })
-                        .prefix(5)
-                        .map {
-                            CLLocationCoordinate2D(latitude: $0.latitude, longitude: $0.longitude) }
-                    send(.loadEvents(region: sorted.regionToFitCoordinates()))
+                    let region = findInitialRegion(allRecords: records)
+                    send(.loadEvents(region: region))
                 }
             }
         case .loadEvents(region: let region):
@@ -116,6 +113,22 @@ class EventsMapViewModel: BaseViewModel {
 //
 
 fileprivate extension EventsMapViewModel {
+    func findInitialRegion(allRecords: [Model.TrackedLog]) -> MKCoordinateRegion {
+        let recordsSorted = allRecords
+            .filter { $0.latitude != 0 && $0.longitude != 0 }
+            .sorted(by: { $0.recordDate > $1.recordDate })
+            .map {
+                CLLocationCoordinate2D(latitude: $0.latitude, longitude: $0.longitude)
+            }
+        var uniqueStored: [CLLocationCoordinate2D] = []
+        recordsSorted.forEach { coordinate in
+            if uniqueStored.count < 5, !uniqueStored.contains(coordinate) {
+                uniqueStored.append(coordinate)
+            }
+        }
+        return uniqueStored.regionToFitCoordinates()
+    }
+
     func updateUI(logs trackedLogs: [Model.TrackedLog]) {
         let count = trackedLogs.count
         logs = trackedLogs
