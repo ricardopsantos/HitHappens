@@ -106,6 +106,42 @@ final class AdvancedRoutingTests: BaseUITests {
         notExists(staticText: Constants.Entities.Book.name, on: app) // Deleted from favorits
     }
 
+    func test_loadTrackerAndAddEventAndGoToEventDetailsAndAfterToTrackerDetailsAndDeleteTracker() {
+        guard enabled else {
+            XCTAssert(true)
+            return
+        }
+        appLaunch(launchArguments: [
+            .shouldResetAllContent,
+            .isOnboardingCompleted
+        ])
+        tap(
+            tabBarIndex: Constants.tab2,
+            andWaitForStaticText: Constants.tab2Title,
+            on: app
+        )
+        tap(listItemStaticText: Constants.Entities.Book.listItem, on: app)
+        exists(staticText: "\(Constants.entityNameSingle) details", on: app)
+
+        tapCounterWithV1(number: 3)
+        tap(
+            staticText: Accessibility.txtAlertModelText.identifier,
+            on: app
+        )
+
+        tap(
+            button: "\(Constants.entityNameSingle) details",
+            andWaitForStaticText: "\(Constants.entityOccurrenceSingle) details",
+            on: app
+        )
+
+        tap(button: Accessibility.deleteButton.identifier, buttonIndex: 0, on: app)
+
+        tap(button: "Yes", on: app) // Confirm delete
+        exists(staticText: Constants.tab2Title, on: app) // Assure we route back to list
+        notExists(staticText: Constants.Entities.Book.name, on: app)
+    }
+
     func test_createNewTrackerAndAddLogAndRouteToLogAndRouteToTrackerDetailsAndDeleteTracker() {
         guard enabled else {
             XCTAssert(true)
@@ -127,7 +163,7 @@ final class AdvancedRoutingTests: BaseUITests {
         tap(button: Accessibility.saveButton.identifier, on: app)
         tap(button: "Yes", on: app) // Confirm save
 
-        trackerDetailsTapCounterWith(number: 0)
+        tapCounterWithV2(number: 0)
         tap(
             staticText: Accessibility.txtAlertModelText.identifier,
             on: app
@@ -139,7 +175,7 @@ final class AdvancedRoutingTests: BaseUITests {
             on: app
         )
 
-        tap(button: Accessibility.deleteButton.identifier, on: app)
+        tap(button: Accessibility.deleteButton.identifier, buttonIndex: 1, on: app)
 
         tap(button: "Yes", on: app) // Confirm delete
         exists(staticText: Constants.tab2Title, on: app) // Assure we route back to list

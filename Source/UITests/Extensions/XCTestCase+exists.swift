@@ -62,13 +62,6 @@ public extension XCTestCase {
         timeout: TimeInterval = XCTestCase.timeout
     ) {
         XCTAssert(app.staticTexts[staticText].waitForExistence(timeout: timeout))
-        /*
-         let exists = exists(anyStaticText: staticText, on: app)
-         if !exists {
-             XCTAssert(app.staticTexts[staticText].waitForExistence(timeout: timeout))
-         } else {
-             XCTAssert(true)
-         }*/
     }
 
     func notExists(

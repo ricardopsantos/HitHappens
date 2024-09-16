@@ -52,7 +52,7 @@ extension BaseUITests {
         tap(button: newCategory, on: app)
     }
 
-    func favoritsTapCounterWith(number: Int) {
+    func tapCounterWithV1(number: Int) {
         if number < 10 {
             app.scrollViews.otherElements.images["\(number)00"].tap()
         } else {
@@ -60,7 +60,7 @@ extension BaseUITests {
         }
     }
 
-    func trackerDetailsTapCounterWith(number: Int) {
+    func tapCounterWithV2(number: Int) {
         if number < 10 {
             app.scrollViews.children(matching: .other)
                 .element(boundBy: 0)

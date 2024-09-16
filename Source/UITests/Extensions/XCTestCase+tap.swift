@@ -84,6 +84,7 @@ public extension XCTestCase {
 public extension XCTestCase {
     func tap(
         button: String,
+        buttonIndex: Int? = nil,
         andWaitForStaticText nextStaticText: String = "",
         andWaitForButtonWithText nextButtonWithText: String = "",
         on app: XCUIApplication,
@@ -95,7 +96,17 @@ public extension XCTestCase {
             handler: nil
         )
         wait(for: [expectation], timeout: timeout)
-        app.buttons[button].tap()
+
+        let matchingButtons = app.buttons.matching(identifier: button)
+        if matchingButtons.count == 1 {
+            matchingButtons.element(boundBy: 0).tap()
+        } else if let buttonIndex = buttonIndex {
+            matchingButtons.element(boundBy: buttonIndex).tap()
+        } else {
+            Common_Logs.error("Found \(matchingButtons.count)x button[\(button)] and no index provided")
+            XCTAssert(false)
+        }
+
         if !nextStaticText.isEmpty {
             waitFor(staticText: nextStaticText, on: app, timeout: timeout)
         }

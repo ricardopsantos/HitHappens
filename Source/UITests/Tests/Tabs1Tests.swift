@@ -91,7 +91,7 @@ final class Tabs1Tests: BaseUITests {
             .isOnboardingCompleted
         ])
 
-        favoritsTapCounterWith(number: Constants.Entities.Book.logsCount)
+        tapCounterWithV1(number: Constants.Entities.Book.logsCount)
         tap(
             staticText: Accessibility.txtAlertModelText.identifier,
             andWaitForStaticText: "\(Constants.entityOccurrenceSingle) details",
@@ -99,7 +99,7 @@ final class Tabs1Tests: BaseUITests {
         )
         tap(button: Accessibility.deleteButton.identifier, on: app)
         tap(button: "Yes", on: app) // Confirmation alert
-        favoritsTapCounterWith(number: Constants.Entities.Book.logsCount) // We should have the same amount of book
+        tapCounterWithV1(number: Constants.Entities.Book.logsCount) // We should have the same amount of book
     }
 
     func test_trackAddNewLog() {
@@ -112,8 +112,7 @@ final class Tabs1Tests: BaseUITests {
             .isOnboardingCompleted
         ])
 
-        favoritsTapCounterWith(number: Constants.Entities.Book.logsCount)
-        // waitFor(staticText: Constants.alertWhenAddNewEvent, on: app)
+        tapCounterWithV1(number: Constants.Entities.Book.logsCount)
         tap(
             staticText: Accessibility.txtAlertModelText.identifier,
             andWaitForStaticText: "\(Constants.entityOccurrenceSingle) details",
@@ -131,7 +130,7 @@ final class Tabs1Tests: BaseUITests {
             .isOnboardingCompleted
         ])
 
-        favoritsTapCounterWith(number: Constants.Entities.Book.logsCount)
+        tapCounterWithV1(number: Constants.Entities.Book.logsCount)
 
         tap(
             staticText: Accessibility.txtAlertModelText.identifier,

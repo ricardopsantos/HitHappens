@@ -24,7 +24,7 @@ public extension Common {
 
     /// https://medium.com/@daviddoswell/anchor-preferences-or-lets-have-some-fun-a30f693d44f9
     struct AnchorPreferenceKey: PreferenceKey {
-        public static var defaultValue: Anchor<CGRect>? = nil
+        public static var defaultValue: Anchor<CGRect>?
         public static func reduce(value: inout Anchor<CGRect>?, nextValue: () -> Anchor<CGRect>?) {
             value = nextValue()
         }
