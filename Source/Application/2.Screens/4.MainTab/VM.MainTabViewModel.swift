@@ -61,21 +61,15 @@ class MainTabViewModel: BaseViewModel {
 //
 private extension MainTabViewModel {
     func startListeningDBChanges() {
-        dataBaseRepository?.output([]).sink { [weak self] some in
+        dataBaseRepository?.output([]).sink { some in
             switch some {
             case .generic(let some):
                 switch some {
-                case .databaseDidInsertedContentOn(let table, let id):
-                    // New record added
-                    ()
-                case .databaseDidUpdatedContentOn: break
-                case .databaseDidDeletedContentOn(let table, let id):
-                    // Record deleted! Route back
-                    ()
-                case .databaseDidChangedContentItemOn: break
-                case .databaseDidFinishChangeContentItemsOn(let table):
-                    // Data changed. Reload!
-                    ()
+                case .databaseDidInsertedContentOn: ()
+                case .databaseDidUpdatedContentOn: ()
+                case .databaseDidDeletedContentOn: ()
+                case .databaseDidChangedContentItemOn: ()
+                case .databaseDidFinishChangeContentItemsOn: ()
                 }
             }
         }.store(in: cancelBag)

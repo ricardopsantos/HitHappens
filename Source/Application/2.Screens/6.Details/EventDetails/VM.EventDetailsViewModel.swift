@@ -294,16 +294,15 @@ fileprivate extension EventDetailsViewModel {
                         }
                     }
                 case .databaseDidUpdatedContentOn: break
-                case .databaseDidDeletedContentOn(let table, let id):
+                case .databaseDidDeletedContentOn(let table, _):
                     // Record deleted! Route back
                     if table == "\(CDataTrackedEntity.self)" {
                         Common.ExecutionControlManager.debounce(operationId: "\(Self.self)\(#function).deleted.\(screenID)") { [weak self] in
                             self?.onPerformRouteBack()
                         }
                     }
-                case .databaseDidChangedContentItemOn(let table):
-                    ()
-                case .databaseDidFinishChangeContentItemsOn(let table):
+                case .databaseDidChangedContentItemOn: ()
+                case .databaseDidFinishChangeContentItemsOn:
                     // Data changed. Reload!
                     Common.ExecutionControlManager.debounce(operationId: "\(Self.self)\(#function).\(screenID)") { [weak self] in
                         self?.send(.reload)

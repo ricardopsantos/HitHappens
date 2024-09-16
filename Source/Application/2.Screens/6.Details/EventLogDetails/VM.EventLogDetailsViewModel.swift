@@ -210,7 +210,7 @@ fileprivate extension EventLogDetailsViewModel {
                             self?.send(.reload)
                         }
                     }
-                case .databaseDidDeletedContentOn(let table, let id):
+                case .databaseDidDeletedContentOn(let table, _):
                     if table == "\(CDataTrackedLog.self)" {
                         // Record deleted! Route back
                         Common.ExecutionControlManager.debounce(operationId: "\(Self.self)\(#function).\(screenID)") { [weak self] in

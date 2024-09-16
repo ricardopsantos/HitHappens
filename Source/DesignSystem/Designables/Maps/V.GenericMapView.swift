@@ -68,7 +68,6 @@ public struct GenericMapView: View {
     private let onRegionChanged: (MKCoordinateRegion) -> Void
     public init(
         items: Binding<[ModelItem]>,
-
         displayGrid: Binding<Bool>,
         onRegionChanged: @escaping (MKCoordinateRegion) -> Void
     ) {

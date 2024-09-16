@@ -34,6 +34,7 @@ extension EventsMapViewModel {
     enum Actions {
         case didAppear
         case didDisappear
+        case loadInitialRegion
         case loadEvents(region: MKCoordinateRegion)
         case usedDidTappedLogEvent(trackedLogId: String)
     }
@@ -67,8 +68,21 @@ class EventsMapViewModel: BaseViewModel {
 
     func send(_ action: Actions) {
         switch action {
-        case .didAppear: ()
+        case .didAppear: 
+            send(.loadInitialRegion)
         case .didDisappear: ()
+        case .loadInitialRegion:
+            Task { [weak self] in
+                guard let self = self else { return }
+                // The initial region displays the last 5 events region
+                if let records = self.dataBaseRepository?.trackedLogGetAll(cascade: false) {
+                    let sorted = records.sorted(by: { $0.recordDate > $1.recordDate })
+                        .prefix(5)
+                        .map({
+                            CLLocationCoordinate2D(latitude: $0.latitude, longitude: $0.longitude) } )
+                    send(.loadEvents(region: sorted.regionToFitCoordinates()))
+                }
+            }
         case .loadEvents(region: let region):
             Common.ExecutionControlManager.debounce(operationId: "\(Self.self)|\(#function)") { [weak self] in
                 self?.lastRegion = region
