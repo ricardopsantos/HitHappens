@@ -31,7 +31,7 @@ final class ___Template___ViewModelTests: BaseViewModelsTests {
 
         if viewModel == nil {
             viewModel = await ___Template___ViewModel(dependencies: .init(model: .init(), onCompletion: { _ in
-            }, sampleService: sampleService))
+            }, dataBaseRepository: dataBaseRepository))
         }
     }
 }

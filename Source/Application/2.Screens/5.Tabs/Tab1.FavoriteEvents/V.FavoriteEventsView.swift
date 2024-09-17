@@ -18,11 +18,12 @@ import DesignSystem
 struct FavoriteEventsViewCoordinator: View, ViewCoordinatorProtocol {
     // MARK: - ViewCoordinatorProtocol
     @EnvironmentObject var configuration: ConfigurationViewModel
+    @EnvironmentObject var parentCoordinator: RouterViewModel
     @StateObject var coordinator = RouterViewModel()
+    var presentationStyle: ViewPresentationStyle
+
     // MARK: - Usage/Auxiliar Attributes
     @Environment(\.dismiss) var dismiss
-    @EnvironmentObject var parentCoordinator: RouterViewModel
-    let presentationStyle: ViewPresentationStyle
     // MARK: - Body & View
     var body: some View {
         buildScreen(.favoriteEvents, presentationStyle: .notApplied)
@@ -51,15 +52,15 @@ struct FavoriteEventsViewCoordinator: View, ViewCoordinatorProtocol {
             FavoriteEventsView(dependencies: dependencies)
         case .eventLogDetails(model: let model):
             EventLogDetailsViewCoordinator(
-                model: model,
-                presentationStyle: presentationStyle)
+                presentationStyle: presentationStyle,
+                model: model)
                 .environmentObject(configuration)
                 .environmentObject(parentCoordinator)
 
         case .eventDetails(model: let model):
             EventDetailsViewCoordinator(
-                model: model,
-                presentationStyle: presentationStyle)
+                presentationStyle: presentationStyle,
+                model: model)
                 .environmentObject(configuration)
                 .environmentObject(parentCoordinator)
         default:

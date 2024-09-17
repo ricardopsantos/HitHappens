@@ -238,7 +238,7 @@ fileprivate extension EventLogDetailsViewModel {
 @available(iOS 17, *)
 #Preview {
     EventLogDetailsViewCoordinator(
-        model: .init(trackedLog: .random), presentationStyle: .fullScreenCover)
+        presentationStyle: .fullScreenCover, model: .init(trackedLog: .random))
         .environmentObject(ConfigurationViewModel.defaultForPreviews)
 }
 #endif

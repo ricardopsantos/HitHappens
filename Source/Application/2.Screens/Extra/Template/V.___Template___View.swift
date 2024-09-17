@@ -18,12 +18,17 @@ import DesignSystem
 struct ___Template___ViewCoordinator: View, ViewCoordinatorProtocol {
     // MARK: - ViewCoordinatorProtocol
     @EnvironmentObject var configuration: ConfigurationViewModel
+    @EnvironmentObject var parentCoordinator: RouterViewModel
     @StateObject var coordinator = RouterViewModel()
+    var presentationStyle: ViewPresentationStyle
+
     // MARK: - Usage/Auxiliar Attributes
     @Environment(\.dismiss) var dismiss
+
+    // MARK: - Usage/Auxiliar Attributes
     let haveNavigationStack: Bool
     let model: ___Template___Model
-    let presentationStyle: ViewPresentationStyle
+
     // MARK: - Body & View
     var body: some View {
         if haveNavigationStack {
@@ -58,7 +63,7 @@ struct ___Template___ViewCoordinator: View, ViewCoordinatorProtocol {
                 model: model, onCompletion: { _ in
 
                 },
-                sampleService: configuration.sampleService)
+                dataBaseRepository: configuration.dataBaseRepository)
             ___Template___View(dependencies: dependencies)
         default:
             NotImplementedView(screen: screen)
@@ -142,7 +147,7 @@ fileprivate extension ___Template___View {
 #if canImport(SwiftUI) && DEBUG
 @available(iOS 17, *)
 #Preview {
-    ___Template___ViewCoordinator(haveNavigationStack: false, model: .init(message: "Hi"), presentationStyle: .fullScreenCover)
+    ___Template___ViewCoordinator(presentationStyle: .fullScreenCover, haveNavigationStack: false, model: .init(message: "Hi"))
         .environmentObject(ConfigurationViewModel.defaultForPreviews)
 }
 #endif

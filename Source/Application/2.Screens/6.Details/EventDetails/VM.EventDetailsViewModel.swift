@@ -321,7 +321,7 @@ fileprivate extension EventDetailsViewModel {
 @available(iOS 17, *)
 #Preview {
     EventDetailsViewCoordinator(
-        model: .init(event: .random(cascadeEvents: [.random])), presentationStyle: .fullScreenCover)
+        presentationStyle: .fullScreenCover, model: .init(event: .random(cascadeEvents: [.random])))
         .environmentObject(ConfigurationViewModel.defaultForPreviews)
 }
 #endif

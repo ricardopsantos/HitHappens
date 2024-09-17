@@ -67,7 +67,7 @@ class OnboardingViewModel: BaseViewModel {
                 do {
                     if let appConfigService = try await appConfigService?.requestAppConfig(
                         .init(),
-                        cachePolicy: .load
+                        cachePolicy: .cacheElseLoad
                     ) {
                         handle(config: appConfigService)
                     } else {
@@ -138,7 +138,7 @@ fileprivate extension OnboardingViewModel {
 #if canImport(SwiftUI) && DEBUG
 @available(iOS 17, *)
 #Preview {
-    OnboardingViewCoordinator(haveNavigationStack: true, model: .init(), onCompletion: { _ in })
+    OnboardingViewCoordinator(presentationStyle: .notApplied, haveNavigationStack: true, model: .init(), onCompletion: { _ in })
         .environmentObject(ConfigurationViewModel.defaultForPreviews)
 }
 #endif

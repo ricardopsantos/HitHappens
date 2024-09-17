@@ -100,7 +100,6 @@ class EventsMapViewModel: BaseViewModel {
 //
 
 fileprivate extension EventsMapViewModel {
-  
     func updateUI(logs trackedLogs: [Model.TrackedLog]) {
         let count = trackedLogs.count
         logs = trackedLogs

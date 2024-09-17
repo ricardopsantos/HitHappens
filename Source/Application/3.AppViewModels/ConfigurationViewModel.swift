@@ -17,7 +17,6 @@ class ConfigurationViewModel: ObservableObject {
 
     // Services
     let appConfigService: AppConfigServiceProtocol
-    let sampleService: SampleServiceProtocol
 
     // Repositories
     let dataBaseRepository: DataBaseRepositoryProtocol
@@ -32,13 +31,11 @@ class ConfigurationViewModel: ObservableObject {
 
     // MARK: - Constructor
     init(
-        sampleService: SampleServiceProtocol,
         appConfigService: AppConfigServiceProtocol,
         dataBaseRepository: DataBaseRepositoryProtocol,
         nonSecureAppPreferences: NonSecureAppPreferencesProtocol,
         secureAppPreferences: SecureAppPreferencesProtocol
     ) {
-        self.sampleService = sampleService
         self.appConfigService = appConfigService
         self.dataBaseRepository = dataBaseRepository
         self.nonSecureAppPreferences = nonSecureAppPreferences
@@ -51,7 +48,6 @@ class ConfigurationViewModel: ObservableObject {
 extension ConfigurationViewModel {
     static var defaultForPreviews: ConfigurationViewModel {
         ConfigurationViewModel(
-            sampleService: DependenciesManager.Services.sampleService,
             appConfigService: DependenciesManager.Services.appConfigServiceMock,
             dataBaseRepository: DependenciesManager.Repository.dataBaseRepository,
             nonSecureAppPreferences: DependenciesManager.Repository.nonSecureAppPreferences,
@@ -61,7 +57,6 @@ extension ConfigurationViewModel {
 
     static var defaultForApp: ConfigurationViewModel {
         ConfigurationViewModel(
-            sampleService: DependenciesManager.Services.sampleService,
             appConfigService: DependenciesManager.Services.appConfigService,
             dataBaseRepository: DependenciesManager.Repository.dataBaseRepository,
             nonSecureAppPreferences: DependenciesManager.Repository.nonSecureAppPreferences,

@@ -15,6 +15,8 @@ protocol ViewCoordinatorProtocol {
     associatedtype ContentView: View
     var configuration: ConfigurationViewModel { get }
     var coordinator: RouterViewModel { get }
+    var parentCoordinator: RouterViewModel { get }
+    var presentationStyle: ViewPresentationStyle { get set }
     @ViewBuilder
     func buildScreen(_ screen: AppScreen, presentationStyle: ViewPresentationStyle) -> ContentView
 }

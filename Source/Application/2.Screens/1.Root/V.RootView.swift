@@ -17,8 +17,12 @@ import DesignSystem
 struct RootViewCoordinator: View, ViewCoordinatorProtocol {
     // MARK: - ViewCoordinatorProtocol
     @EnvironmentObject var configuration: ConfigurationViewModel
+    @EnvironmentObject var parentCoordinator: RouterViewModel
     @StateObject var coordinator = RouterViewModel()
+    var presentationStyle: ViewPresentationStyle
+
     // MARK: - Usage/Auxiliar Attributes
+    @Environment(\.dismiss) var dismiss
 
     // MARK: - Body & View
     var body: some View {
@@ -82,14 +86,14 @@ struct RootView: View, ViewProtocol {
     @ViewBuilder private func buildScreen(_ appScreen: AppScreen) -> some View {
         switch appScreen {
         case .splash:
-            SplashViewCoordinator(onCompletion: {
+            SplashViewCoordinator(presentationStyle: .fullScreenCover, onCompletion: {
                 viewModel.send(action: .start)
             })
         case .mainApp:
             MainTabViewCoordinator()
         case .onboarding:
             OnboardingViewCoordinator(
-                haveNavigationStack: false,
+                presentationStyle: .fullScreenCover, haveNavigationStack: false,
                 model: .init(),
                 onCompletion: { _ in viewModel.send(action: .markOnboardingAsCompleted) }
             )
@@ -126,7 +130,7 @@ fileprivate extension RootView {
 #if canImport(SwiftUI) && DEBUG
 @available(iOS 17, *)
 #Preview {
-    RootViewCoordinator()
+    RootViewCoordinator(presentationStyle: .fullScreenCover)
         .environmentObject(ConfigurationViewModel.defaultForPreviews)
 }
 #endif

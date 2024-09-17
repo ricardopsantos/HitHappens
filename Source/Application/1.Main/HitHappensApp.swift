@@ -15,48 +15,44 @@ struct HitHappensApp: App {
     @UIApplicationDelegateAdaptor(AppDelegate.self) var delegate
     let configuration: ConfigurationViewModel
     init() {
-        Domain.coreDataPersistence = .appGroup(identifier: AppConstants.appGroup)
+        //
+        // Security
+        //
+        CPPWrapper.disable_gdb() // Detach debugger for real device
+        CPPWrapper.crash_if_debugged() // Crash app if debugger Detach failed
         //
         // Dependencies Setup
         //
-        let sampleService = DependenciesManager.Services.sampleService
-        let dataBaseRepository = DependenciesManager.Repository.dataBaseRepository
-        let nonSecureAppPreferences = DependenciesManager.Repository.nonSecureAppPreferences
-        let secureAppPreferences = DependenciesManager.Repository.secureAppPreferences
         let config: ConfigurationViewModel!
-        let onTesting = UITestingManager.Options.onUITesting.enabled || Common_Utils.onUnitTests
-        if onTesting {
+        if UITestingManager.Options.onUITesting.enabled {
             config = .init(
-                sampleService: sampleService,
                 appConfigService: DependenciesManager.Services.appConfigServiceMock,
-                dataBaseRepository: dataBaseRepository,
-                nonSecureAppPreferences: nonSecureAppPreferences,
-                secureAppPreferences: secureAppPreferences
+                dataBaseRepository: DependenciesManager.Repository.dataBaseRepository,
+                nonSecureAppPreferences: DependenciesManager.Repository.nonSecureAppPreferences,
+                secureAppPreferences: DependenciesManager.Repository.secureAppPreferences
             )
             self.configuration = config
         } else {
             config = .init(
-                sampleService: sampleService,
                 appConfigService: DependenciesManager.Services.appConfigService,
-                dataBaseRepository: dataBaseRepository,
-                nonSecureAppPreferences: nonSecureAppPreferences,
-                secureAppPreferences: secureAppPreferences
+                dataBaseRepository: DependenciesManager.Repository.dataBaseRepository,
+                nonSecureAppPreferences: DependenciesManager.Repository.nonSecureAppPreferences,
+                secureAppPreferences: DependenciesManager.Repository.secureAppPreferences
             )
             self.configuration = config
         }
         //
-        // Generic Setup
+        // Modules Setup
         //
         SetupManager.shared.setup(
-            dataBaseRepository: dataBaseRepository,
-
-            nonSecureAppPreferences: nonSecureAppPreferences
+            dataBaseRepository: config.dataBaseRepository,
+            nonSecureAppPreferences: config.nonSecureAppPreferences
         )
     }
 
     var body: some Scene {
         WindowGroup {
-            RootViewCoordinator()
+            RootViewCoordinator(presentationStyle: .fullScreenCover)
                 .onAppear(perform: {
                     InterfaceStyleManager.setup(nonSecureAppPreferences: configuration.nonSecureAppPreferences)
                 })

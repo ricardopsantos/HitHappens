@@ -25,8 +25,6 @@ public class SetupManager {
         nonSecureAppPreferences: NonSecureAppPreferencesProtocol
     ) {
         Common.InternalUserDefaults.numberOfLoginsIncrement()
-        CPPWrapper.disable_gdb() // Security: Detach debugger for real device
-        CPPWrapper.crash_if_debugged() // Security: Crash app if debugger Detach failed
         DevTools.Log.setup()
         #if FIREBASE_ENABLED
         if FirebaseApp.configIsValidAndAvailable {

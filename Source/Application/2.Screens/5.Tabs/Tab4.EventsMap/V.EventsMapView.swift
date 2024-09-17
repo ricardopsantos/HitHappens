@@ -19,11 +19,13 @@ import Domain
 struct EventsMapViewCoordinator: View, ViewCoordinatorProtocol {
     // MARK: - ViewCoordinatorProtocol
     @EnvironmentObject var configuration: ConfigurationViewModel
-    @EnvironmentObject var coordinatorTab4: RouterViewModel
+    @EnvironmentObject var parentCoordinator: RouterViewModel
     @StateObject var coordinator = RouterViewModel()
+    var presentationStyle: ViewPresentationStyle
+
     // MARK: - Usage/Auxiliar Attributes
     @Environment(\.dismiss) var dismiss
-    let presentationStyle: ViewPresentationStyle
+
     // MARK: - Body & View
     var body: some View {
         buildScreen(.map, presentationStyle: presentationStyle)
@@ -46,26 +48,28 @@ struct EventsMapViewCoordinator: View, ViewCoordinatorProtocol {
                 dataBaseRepository: configuration.dataBaseRepository)
             EventsMapView(dependencies: dependencies)
         case .eventLogDetails(model: let model):
-            let dependencies: EventLogDetailsViewModel.Dependencies = .init(
-                model: model,
-                onPerformDisplayEntityDetails: { model in
-                    coordinator.coverLink = .eventDetails(model: .init(event: model))
-                }, onPerformRouteBack: {
-                    coordinatorTab4.navigateBack()
-                },
-                dataBaseRepository: configuration.dataBaseRepository,
-                presentationStyle: presentationStyle)
-            EventLogDetailsView(dependencies: dependencies)
+            /*
+             let dependencies: EventLogDetailsViewModel.Dependencies = .init(
+                 model: model,
+                 onPerformDisplayEntityDetails: { model in
+                     coordinator.coverLink = .eventDetails(model: .init(event: model))
+                 }, onPerformRouteBack: {
+                     parentCoordinator.navigateBack()
+                 },
+                 dataBaseRepository: configuration.dataBaseRepository,
+                 presentationStyle: presentationStyle)
+             EventLogDetailsView(dependencies: dependencies)*/
+            EventLogDetailsViewCoordinator(
+                presentationStyle: presentationStyle,
+                model: model)
+                .environmentObject(configuration)
+                .environmentObject(parentCoordinator)
         case .eventDetails(model: let model):
-            let dependencies: EventDetailsViewModel.Dependencies = .init(
-                model: model, onPerformRouteBack: {
-                    coordinatorTab4.navigateBack()
-                }, onShouldDisplayTrackedLog: { trackedLog in
-                    coordinator.coverLink = .eventLogDetails(model: .init(trackedLog: trackedLog))
-                },
-                dataBaseRepository: configuration.dataBaseRepository,
-                presentationStyle: presentationStyle)
-            EventDetailsView(dependencies: dependencies)
+            EventDetailsViewCoordinator(
+                presentationStyle: presentationStyle,
+                model: model)
+                .environmentObject(configuration)
+                .environmentObject(parentCoordinator)
         default:
             NotImplementedView(screen: screen)
         }
@@ -152,7 +156,7 @@ extension EventsMapView {
     var listView: some View {
         Group {
             if let logs = viewModel.logs, !logs.isEmpty {
-                Text("\(logs.count) event(s) on region")
+                Text("\(logs.count) \(AppConstants.entityOccurrenceNamePlural1.lowercased()) on region")
                     .fontSemantic(.body)
                     .textColor(ColorSemantic.labelPrimary.color)
             } else {

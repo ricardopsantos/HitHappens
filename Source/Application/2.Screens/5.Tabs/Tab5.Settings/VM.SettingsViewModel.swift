@@ -88,7 +88,7 @@ class SettingsViewModel: BaseViewModel {
 #if canImport(SwiftUI) && DEBUG
 @available(iOS 17, *)
 #Preview {
-    SettingsViewCoordinator()
+    SettingsViewCoordinator(presentationStyle: .notApplied)
         .environmentObject(ConfigurationViewModel.defaultForPreviews)
 }
 #endif

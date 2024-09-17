@@ -21,7 +21,7 @@ public extension UITestingManager {
         var enabled: Bool {
             switch self {
             case .onUITesting:
-                return UITestingManager.enabled(option: self)
+                return Common_Utils.onUnitTests || UITestingManager.enabled(option: self)
             case .firebaseDisabled:
                 return UITestingManager.enabled(option: self)
             default:

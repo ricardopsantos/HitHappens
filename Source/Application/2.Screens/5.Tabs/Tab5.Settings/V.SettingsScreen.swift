@@ -19,8 +19,13 @@ import DesignSystem
 struct SettingsViewCoordinator: View, ViewCoordinatorProtocol {
     // MARK: - ViewCoordinatorProtocol
     @EnvironmentObject var configuration: ConfigurationViewModel
+    @EnvironmentObject var parentCoordinator: RouterViewModel
     @StateObject var coordinator = RouterViewModel()
+    var presentationStyle: ViewPresentationStyle
+
     // MARK: - Usage/Auxiliar Attributes
+    @Environment(\.dismiss) var dismiss
+
     // MARK: - Body & View
     var body: some View {
         buildScreen(.settings, presentationStyle: .notApplied)
@@ -228,7 +233,7 @@ fileprivate extension SettingsScreen {}
 #if canImport(SwiftUI) && DEBUG
 @available(iOS 17, *)
 #Preview {
-    SettingsViewCoordinator()
+    SettingsViewCoordinator(presentationStyle: .notApplied)
         .environmentObject(ConfigurationViewModel.defaultForApp)
 }
 #endif
