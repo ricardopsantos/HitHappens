@@ -34,12 +34,6 @@
 	<string>$(SMARTSDK_APP_SECRET)</string>
 	<key>TARGET_ENVIRONMENT</key>
 	<string>$(TARGET_ENVIRONMENT)</string>
-	<key>NSFaceIDUsageDescription</key>
-	<string>$(PRODUCT_NAME) requires authentication with TouchId or FaceID</string>
-	<key>NSCameraUsageDescription</key>
-	<string>$(PRODUCT_NAME) requires camera because...</string>
-	<key>NSBluetoothAlwaysUsageDescription</key>
-	<string>$(PRODUCT_NAME) requires bluetooth because...</string>
 	<key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
 	<string>$(PRODUCT_NAME) requires access to your location to help you capture where your events took place. Don’t worry, we only use your location when you&apos;re adding new events or viewing the Map.</string>
 	<key>NSLocationWhenInUseUsageDescription</key>
