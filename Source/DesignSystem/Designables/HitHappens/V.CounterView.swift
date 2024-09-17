@@ -10,6 +10,7 @@ import SwiftUI
 import Domain
 import Common
 import DevTools
+import Common
 
 public struct DigitTransitionView: View {
     @State private var imageName: String
@@ -87,6 +88,7 @@ public struct NumberTransitionView: View {
     @Binding private var digitIndex2: Int
     @Binding private var digitIndex3: Int
     private let onDigitTapGesture: () -> Void
+    @State private var isGestureEnabled: Bool = true // State to track gesture availability
     public init(
         digitIndex0: Binding<Int>,
         digitIndex1: Binding<Int>,
@@ -101,14 +103,20 @@ public struct NumberTransitionView: View {
         self._digitIndex3 = digitIndex3
     }
 
+    private func handleTapGesture() {
+        Common.ExecutionControlManager.throttle(1, operationId: "\(Self.self).\(#function)") {
+            onDigitTapGesture()
+        }
+    }
+    
     public var body: some View {
         HStack(spacing: 0) {
             if digitIndex0 > 0 {
                 DigitTransitionView(digit: $digitIndex0, onDigitTapGesture: onDigitTapGesture)
             }
-            DigitTransitionView(digit: $digitIndex1, onDigitTapGesture: onDigitTapGesture)
-            DigitTransitionView(digit: $digitIndex2, onDigitTapGesture: onDigitTapGesture)
-            DigitTransitionView(digit: $digitIndex3, onDigitTapGesture: onDigitTapGesture)
+            DigitTransitionView(digit: $digitIndex1, onDigitTapGesture: handleTapGesture)
+            DigitTransitionView(digit: $digitIndex2, onDigitTapGesture: handleTapGesture)
+            DigitTransitionView(digit: $digitIndex3, onDigitTapGesture: handleTapGesture)
         }
     }
 }
