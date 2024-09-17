@@ -200,7 +200,13 @@ __XcodeGen__ treamlines project management by allowing you to generate Xcode pro
 
 ## Profiling
 
-At the present day the project is [leaks](https://developer.apple.com/documentation/xcode/diagnosing-memory-thread-and-crash-issues-early) free.
+As of today, the project is free from memory [leaks](https://developer.apple.com/documentation/xcode/diagnosing-memory-thread-and-crash-issues-early), ensuring stable performance even with extended use.
+
+<img src=Source/_Documents/images/Leaks.png width=800/>
+
+The app maintains a minimal memory footprint, consistently staying around 50-60 MB after adding 50 new events and navigating through various screens.
+
+<img src=Source/_Documents/images/MemoryPrint.png width=800/>
 
 ## Install 
 
