@@ -56,7 +56,7 @@ public enum UITestingManager {
             ModelDto.AppConfigResponse.mock?.hitHappens.defaultEvents.forEach { trackedEntity in
                 DependenciesManager.Repository.dataBaseRepository.trackedEntityInsert(trackedEntity: trackedEntity)
             }
-            Common.Storage.cleanAll()
+            Common.cleanAllData()
             UserDefaults.resetStandardUserDefaults()
         }
 

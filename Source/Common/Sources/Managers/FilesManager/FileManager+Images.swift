@@ -4,30 +4,9 @@
 //
 
 import UIKit
-import MobileCoreServices
 
-public extension Common {
-    enum FileManager {
-        public static var `default` = Foundation.FileManager.default
-        public static var defaultSearchPath: Foundation.FileManager.SearchPathDirectory { .documentDirectory }
-
-        public static var defaultFolder: String {
-            let fileManager = FileManager.default
-            let paths = NSSearchPathForDirectoriesInDomains(defaultSearchPath, .userDomainMask, true)
-            guard let documentsDirectory = paths.first else {
-                // Fallback cache directory
-                return NSSearchPathForDirectoriesInDomains(.cachesDirectory, .userDomainMask, true).first ?? ""
-            }
-
-            if !fileManager.fileExists(atPath: documentsDirectory) {
-                // Fallback cache directory
-                return NSSearchPathForDirectoriesInDomains(.cachesDirectory, .userDomainMask, true).first ?? ""
-            }
-            return documentsDirectory
-        }
-    }
-
-    enum ImagesFileManager {
+public extension Common.FileManager {
+    enum Images {
         public static func allImageNames(in folderPath: String = Common.FileManager.defaultFolder) -> [String]? {
             var result: [String] = []
             do {
@@ -92,17 +71,18 @@ public extension Common {
             return result
         }
 
-        public static func deleteAll(in folderPath: String = Common.FileManager.defaultFolder) {
+        public static func reset(in folderPath: String = Common.FileManager.defaultFolder) {
             let fileManager = Common.FileManager.default
-            let directory = fileManager.urls(for: Common.FileManager.defaultSearchPath, in: .userDomainMask).first!
-            let urls = try? fileManager.contentsOfDirectory(at: directory, includingPropertiesForKeys: nil)
-            guard let urls else {
-                return
-            }
-            for url in urls {
-                let isImage = imageWith(name: url.lastPathComponent).image != nil
-                if isImage {
-                    try? fileManager.removeItem(at: url)
+            if let directory = fileManager.urls(for: Common.FileManager.defaultSearchPath, in: .userDomainMask).first {
+                let urls = try? fileManager.contentsOfDirectory(at: directory, includingPropertiesForKeys: nil)
+                guard let urls else {
+                    return
+                }
+                for url in urls {
+                    let isImage = imageWith(name: url.lastPathComponent).image != nil
+                    if isImage {
+                        try? fileManager.removeItem(at: url)
+                    }
                 }
             }
         }
@@ -150,11 +130,11 @@ public extension Common {
 public extension UIImage {
     @discardableResult
     func saveWith(urlPath: URL) -> (success: Bool, urlPath: URL?) {
-        Common.ImagesFileManager.saveImageWith(urlPath: urlPath, image: self)
+        Common.FileManager.Images.saveImageWith(urlPath: urlPath, image: self)
     }
 
     @discardableResult
     func saveWith(name: String) -> (success: Bool, urlPath: URL?) {
-        Common.ImagesFileManager.saveImageWith(name: name, image: self)
+        Common.FileManager.Images.saveImageWith(name: name, image: self)
     }
 }

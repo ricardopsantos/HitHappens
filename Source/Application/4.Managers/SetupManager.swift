@@ -24,8 +24,7 @@ public class SetupManager {
         dataBaseRepository: DataBaseRepositoryProtocol,
         nonSecureAppPreferences: NonSecureAppPreferencesProtocol
     ) {
-        Common.InternalUserDefaults.numberOfLoginsIncrement()
-        DevTools.Log.setup()
+        Common.UserDefaultsManager.numberOfLoginsIncrement()
         #if FIREBASE_ENABLED
         if FirebaseApp.configIsValidAndAvailable {
             FirebaseApp.configure()

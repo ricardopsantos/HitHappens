@@ -135,6 +135,7 @@ struct FavoriteEventsView: View, ViewProtocol {
                     Spacer()
                 } else {
                     Spacer()
+                    SwiftUIUtils.FixedVerticalSpacer(height: SizeNames.defaultMargin)
                     ForEach(viewModel.favorits, id: \.self) { model in
                         CounterView(
                             model: model,
@@ -148,6 +149,7 @@ struct FavoriteEventsView: View, ViewProtocol {
                             }, onInfoTapGesture: { model in
                                 onShouldDisplayTrackedEntity(model)
                             })
+                        SwiftUIUtils.FixedVerticalSpacer(height: SizeNames.defaultMargin)
                     }
                     Spacer()
                 }

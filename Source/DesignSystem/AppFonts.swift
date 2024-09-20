@@ -96,7 +96,7 @@ public enum FontSemantic: CaseIterable {
                 }
             }
 
-            Common_Utils.executeOnce(token: "\(Self.self)_\(#function)") {
+            Common.ExecutionControlManager.executeOnce(token: "\(Self.self)_\(#function)") {
                 Common_Logs.debug("TextSizeCategory: \(trait) -> \(multiplier)")
             }
         }

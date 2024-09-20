@@ -14,7 +14,7 @@ import Common
 public class DependenciesManager {
     private init() {}
     enum WebAPI {
-        public static var webAPI: NetworkManagerProtocol { NetworkManager.shared }
+        public static var webAPI: NetworkManagerProtocol { NetworkManagerV2.shared }
     }
 
     enum Services {

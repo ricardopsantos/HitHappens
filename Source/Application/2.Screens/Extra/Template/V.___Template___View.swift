@@ -87,7 +87,6 @@ struct ___Template___View: View, ViewProtocol {
     // MARK: - Usage/Auxiliar Attributes
     @Environment(\.dismiss) var dismiss
     private let cancelBag: CancelBag = .init()
-
     // MARK: - Body & View
     var body: some View {
         BaseView.withLoading(

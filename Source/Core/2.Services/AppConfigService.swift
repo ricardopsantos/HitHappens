@@ -41,7 +41,7 @@ extension AppConfigService: AppConfigServiceProtocol {
             .getAppConfiguration(request)
         )
 
-        if Common.InternalUserDefaults.numberOfLogins == 1 {
+        if Common.UserDefaultsManager.numberOfLogins == 1 {
             // First Login! Store default events
             if dataBaseRepository.trackedEntityGetAll(favorite: nil, archived: nil, cascade: false).isEmpty {
                 result.hitHappens.defaultEvents.forEach { some in

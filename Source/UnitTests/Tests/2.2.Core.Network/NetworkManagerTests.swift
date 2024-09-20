@@ -15,7 +15,7 @@ import Common
 
 final class NetworkManagerTests: XCTestCase {
     let enabled = true
-    lazy var networkManager: NetworkManagerProtocol = { NetworkManager.shared }()
+    lazy var networkManager: NetworkManagerProtocol = { NetworkManagerV1.shared }()
     override func setUp() {
         super.setUp()
         continueAfterFailure = false
