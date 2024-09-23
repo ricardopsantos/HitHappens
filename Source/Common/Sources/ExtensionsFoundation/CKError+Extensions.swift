@@ -31,8 +31,7 @@ public extension CKError {
         var match = false
         if self.code == code {
             match = true
-        }
-        else if self.code == .partialFailure {
+        } else if self.code == .partialFailure {
             // This is a multiple-issue error. Check the underlying array
             // of errors to see if it contains a match for the error in question.
             guard let errors = partialErrorsByItemID else {

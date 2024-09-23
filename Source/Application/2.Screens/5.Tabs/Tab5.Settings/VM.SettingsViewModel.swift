@@ -83,7 +83,7 @@ class SettingsViewModel: BaseViewModel {
 
         case .didDisappear: ()
         case .shouldDisplayOnboarding:
-            nonSecureAppPreferences?.isOnboardingCompleted = false
+            nonSecureAppPreferences?.isOnboardingCompleted = false // Will trigger onboarding
         case .fetchAppVersion:
             Task { [weak self] in
                 guard let self = self else { return }
@@ -97,7 +97,7 @@ class SettingsViewModel: BaseViewModel {
                 case .orderedDescending:
                     appVersionInfo = ""
                 case .orderedSame:
-                    appVersionInfo = "(You app is updated)".localizedMissing
+                    appVersionInfo = "" // Update
                 }
                 self.appVersion = version
             }

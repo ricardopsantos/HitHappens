@@ -8,8 +8,6 @@ import UIKit
 //
 import Common
 
-// swiftlint:disable logs_rule_1
-
 public extension DevTools {
     struct Log {
         private init() {}

@@ -40,8 +40,7 @@ extension CloudKitService: CloudKitServiceProtocol {
     public func fetchAppVersion() async -> Model.AppVersion? {
         try? await withCheckedThrowingContinuation { [weak self] continuation in
             guard let self = self else { return }
-            fetchAppVersion { [weak self] some in
-                guard let self = self else { return }
+            fetchAppVersion { some in
                 switch some {
                 case .success(let some):
                     continuation.resume(returning: some)
@@ -62,7 +61,7 @@ extension CloudKitService: CloudKitServiceProtocol {
             let query = CKQuery(recordType: "AppVersion", predicate: NSPredicate(value: true))
             let queryOperation = CKQueryOperation(query: query)
             queryOperation.resultsLimit = 1
-            queryOperation.recordMatchedBlock = { id, result in
+            queryOperation.recordMatchedBlock = { _, result in
                 switch result {
                 case .success(let record):
                     guard let storeVersion = record["store_version"] as? String,
@@ -118,7 +117,7 @@ private extension CloudKitService {
             operation.modifyRecordZonesResultBlock = { result in
                 switch result {
                 case .success(let record):
-                    DevTools.Log.debug("Zone created", .business)
+                    DevTools.Log.debug("Zone created: \(record)", .business)
                     completion(nil)
                 case .failure(let error):
                     DevTools.Log.error("Error creating zone: \(error)", .business)
@@ -143,7 +142,7 @@ private extension CloudKitService {
             saveOperation.modifyRecordsResultBlock = { result in
                 switch result {
                 case .success(let record):
-                    DevTools.Log.debug("Record saved successfully in custom zone", .business)
+                    DevTools.Log.debug("Record saved successfully in custom zone \(record)", .business)
                 case .failure(let error):
                     DevTools.Log.error("Error saving record: \(error)", .business)
                 }
