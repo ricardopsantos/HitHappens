@@ -60,7 +60,7 @@ public struct LoadingIndicator: View {
 //
 
 #if canImport(SwiftUI) && DEBUG
-@available(iOS 17, *)
+
 #Preview {
     LoadingIndicator(isLoading: true, loadingMessage: "loadingMessage")
 }

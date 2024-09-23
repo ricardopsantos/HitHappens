@@ -19,11 +19,13 @@ import Domain
 struct EventsCalendarViewCoordinator: View, ViewCoordinatorProtocol {
     // MARK: - ViewCoordinatorProtocol
     @EnvironmentObject var configuration: ConfigurationViewModel
-    @EnvironmentObject var coordinatorTab3: RouterViewModel
+    @EnvironmentObject var parentCoordinator: RouterViewModel
     @StateObject var coordinator = RouterViewModel()
+    var presentationStyle: ViewPresentationStyle
+
     // MARK: - Usage/Auxiliar Attributes
     @Environment(\.dismiss) var dismiss
-    let presentationStyle: ViewPresentationStyle
+
     // MARK: - Body & View
     var body: some View {
         buildScreen(.calendar, presentationStyle: presentationStyle)
@@ -46,38 +48,17 @@ struct EventsCalendarViewCoordinator: View, ViewCoordinatorProtocol {
                 dataBaseRepository: configuration.dataBaseRepository)
             EventsCalendarView(dependencies: dependencies)
         case .eventLogDetails(model: let model):
-            /*    let dependencies: EventLogDetailsViewModel.Dependencies = .init(
-                 model: model,
-                 onPerformDisplayEntityDetails: { model in
-                     coordinator.coverLink = .eventDetails(model: .init(event: model))
-                 }, onPerformRouteBack: {
-                     coordinatorTab3.navigateBack()
-                 },
-                 dataBaseRepository: configuration.dataBaseRepository,
-                 presentationStyle: presentationStyle)
-             EventLogDetailsView(dependencies: dependencies)
-             */
             EventLogDetailsViewCoordinator(
-                model: model,
-                presentationStyle: presentationStyle)
+                presentationStyle: presentationStyle,
+                model: model)
                 .environmentObject(configuration)
+                .environmentObject(parentCoordinator)
         case .eventDetails(model: let model):
-            /*
-             let dependencies: EventDetailsViewModel.Dependencies = .init(
-                 model: model, onPerformRouteBack: {
-                     if !coordinatorTab3.navigateBack() {
-                         coordinator.coverLink = nil
-                     }
-                 }, onShouldDisplayTrackedLog: { trackedLog in
-                     coordinatorTab3.coverLink = .eventLogDetails(model: .init(trackedLog: trackedLog))
-                 },
-                 dataBaseRepository: configuration.dataBaseRepository,
-                 presentationStyle: presentationStyle)
-             EventDetailsView(dependencies: dependencies)*/
             EventDetailsViewCoordinator(
-                model: model,
-                presentationStyle: .fullScreenCover)
+                presentationStyle: presentationStyle,
+                model: model)
                 .environmentObject(configuration)
+                .environmentObject(parentCoordinator)
         default:
             NotImplementedView(screen: screen)
         }
@@ -196,7 +177,6 @@ struct EventsCalendarView: View, ViewProtocol {
 //
 
 #if canImport(SwiftUI) && DEBUG
-@available(iOS 17, *)
 #Preview {
     EventsCalendarViewCoordinator(presentationStyle: .fullScreenCover)
         .environmentObject(ConfigurationViewModel.defaultForPreviews)

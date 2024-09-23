@@ -14,9 +14,14 @@ import DevTools
 
 struct NotImplementedView: View {
     let screen: AppScreen
+    let sender: String
+    public init(screen: AppScreen, sender: String = "[\(Self.self)|\(#function)]") {
+        self.screen = screen
+        self.sender = sender
+    }
 
     var body: some View {
-        Text("Not implemented [\(AppScreen.self).\(screen)]\nat [\(Self.self)|\(#function)]")
+        Text("Not implemented [\(screen)] at \(sender)")
             .fontSemantic(.callout)
             .textColor(ColorSemantic.danger.color)
             .multilineTextAlignment(.center)

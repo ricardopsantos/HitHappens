@@ -19,12 +19,14 @@ import DesignSystem
 struct EventLogDetailsViewCoordinator: View, ViewCoordinatorProtocol {
     // MARK: - ViewCoordinatorProtocol
     @EnvironmentObject var configuration: ConfigurationViewModel
-    @StateObject var coordinator = RouterViewModel()
-    // MARK: - Usage/Auxiliar Attributes
     @EnvironmentObject var parentCoordinator: RouterViewModel
+    @StateObject var coordinator = RouterViewModel()
+    var presentationStyle: ViewPresentationStyle
+
+    // MARK: - Usage/Auxiliar Attributes
     @Environment(\.dismiss) var dismiss
     let model: EventLogDetailsModel
-    let presentationStyle: ViewPresentationStyle
+
     // MARK: - Body & View
     var body: some View {
         buildScreen(.eventLogDetails(model: model), presentationStyle: presentationStyle)
@@ -63,8 +65,7 @@ struct EventLogDetailsViewCoordinator: View, ViewCoordinatorProtocol {
             EventLogDetailsView(dependencies: dependencies)
         case .eventDetails(model: let model):
             EventDetailsViewCoordinator(
-                model: model,
-                presentationStyle: presentationStyle)
+                presentationStyle: presentationStyle, model: model)
                 .environmentObject(configuration)
                 .environmentObject(parentCoordinator)
         default:
@@ -384,11 +385,9 @@ fileprivate extension EventLogDetailsView {
 //
 
 #if canImport(SwiftUI) && DEBUG
-@available(iOS 17, *)
 #Preview {
     EventLogDetailsViewCoordinator(
-        model: .init(trackedLog: .random),
-        presentationStyle: .fullScreenCover)
+        presentationStyle: .fullScreenCover, model: .init(trackedLog: .random))
         .environmentObject(ConfigurationViewModel.defaultForPreviews)
 }
 #endif

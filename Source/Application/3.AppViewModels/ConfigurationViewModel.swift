@@ -17,7 +17,7 @@ class ConfigurationViewModel: ObservableObject {
 
     // Services
     let appConfigService: AppConfigServiceProtocol
-    let sampleService: SampleServiceProtocol
+    let cloudKitService: CloudKitServiceProtocol
 
     // Repositories
     let dataBaseRepository: DataBaseRepositoryProtocol
@@ -32,14 +32,14 @@ class ConfigurationViewModel: ObservableObject {
 
     // MARK: - Constructor
     init(
-        sampleService: SampleServiceProtocol,
         appConfigService: AppConfigServiceProtocol,
+        cloudKitService: CloudKitServiceProtocol,
         dataBaseRepository: DataBaseRepositoryProtocol,
         nonSecureAppPreferences: NonSecureAppPreferencesProtocol,
         secureAppPreferences: SecureAppPreferencesProtocol
     ) {
-        self.sampleService = sampleService
         self.appConfigService = appConfigService
+        self.cloudKitService = cloudKitService
         self.dataBaseRepository = dataBaseRepository
         self.nonSecureAppPreferences = nonSecureAppPreferences
         self.secureAppPreferences = secureAppPreferences
@@ -51,8 +51,8 @@ class ConfigurationViewModel: ObservableObject {
 extension ConfigurationViewModel {
     static var defaultForPreviews: ConfigurationViewModel {
         ConfigurationViewModel(
-            sampleService: DependenciesManager.Services.sampleService,
             appConfigService: DependenciesManager.Services.appConfigServiceMock,
+            cloudKitService: DependenciesManager.Services.cloudKitService,
             dataBaseRepository: DependenciesManager.Repository.dataBaseRepository,
             nonSecureAppPreferences: DependenciesManager.Repository.nonSecureAppPreferences,
             secureAppPreferences: DependenciesManager.Repository.secureAppPreferences
@@ -61,8 +61,8 @@ extension ConfigurationViewModel {
 
     static var defaultForApp: ConfigurationViewModel {
         ConfigurationViewModel(
-            sampleService: DependenciesManager.Services.sampleService,
             appConfigService: DependenciesManager.Services.appConfigService,
+            cloudKitService: DependenciesManager.Services.cloudKitService,
             dataBaseRepository: DependenciesManager.Repository.dataBaseRepository,
             nonSecureAppPreferences: DependenciesManager.Repository.nonSecureAppPreferences,
             secureAppPreferences: DependenciesManager.Repository.secureAppPreferences

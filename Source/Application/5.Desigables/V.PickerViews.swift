@@ -108,7 +108,6 @@ public struct AppearancePickerView: View {
 //
 
 #if canImport(SwiftUI) && DEBUG
-@available(iOS 17, *)
 #Preview {
     VStack {
         AppearancePickerView(selected: .constant(.dark))

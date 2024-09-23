@@ -8,8 +8,6 @@ import UIKit
 //
 import Common
 
-// swiftlint:disable logs_rule_1
-
 public extension DevTools {
     struct Log {
         private init() {}
@@ -23,8 +21,6 @@ public extension DevTools {
             case appDelegate // For AppDelegate services
         }
 
-        public static func setup() {}
-
         public enum LogTemplate {
             case log(_ any: Any)
             case viewInit(_ origin: String, function: String = #function)
@@ -35,10 +31,7 @@ public extension DevTools {
             case screenOut(_ origin: String)
             case onAppear(_ origin: String)
             case onDisappear(_ origin: String)
-            case userSession(_ origin: String, _ message: String)
-            case syncRecords(_ origin: String, _ message: String)
             case tapped(_ origin: String, _ message: String)
-            case dbChangesDetected(_ origin: String, _ changed: String, _ willMessage: String)
             var log: String {
                 switch self {
                 case .warning(let message):
@@ -71,62 +64,25 @@ public extension DevTools {
                     } else {
                         return "💾 \(origin) 💾 Value of [\(key)] changed/updated to [\(value)]"
                     }
-                case .userSession(let origin, let message):
-                    return "🛜 \(origin) 🛜 \(message)"
-                case .syncRecords(let origin, let message):
-                    return "🔄 \(origin) 🔄 Will sync \(message)"
-                case .dbChangesDetected(let origin, let changed, let willMessage):
-                    return "🔎 Detected [\(changed)] @ [\(origin)] 🔎 Will [\(willMessage)]"
                 }
             }
         }
 
         static func canLog(_ any: Any?, _ tag: Tag) -> Bool {
+            guard Common_Utils.onDebug else {
+                return false
+            }
             guard any != nil else {
                 return false
             }
             // Log by log type
             return switch tag {
-            case .generic: !DevTools.onTargetProduction
-            case .view: !DevTools.onTargetProduction
-            case .business: !DevTools.onTargetProduction
-            case .appDelegate: !DevTools.onTargetProduction
+            case .generic: !DevTools.onTargetProduction || Common_Utils.onDebug
+            case .view: !DevTools.onTargetProduction || Common_Utils.onDebug
+            case .business: !DevTools.onTargetProduction || Common_Utils.onDebug
+            case .appDelegate: !DevTools.onTargetProduction || Common_Utils.onDebug
             }
         }
-
-        public static func deleteLogs() { Common_Logs.StorageUtils.deleteAllLogs() }
-        public static func retrieveLogs(full: Bool = true) -> String {
-            var logs = ""
-            var allLogs = Common_Logs.StorageUtils.allLogs
-            allLogs = allLogs.sorted(by: { a, b in
-                if let date1 = Date.with(a.logId), let date2 = Date.with(b.logId) {
-                    return date1 > date2
-                }
-                return a.logId > b.logId
-            })
-            let maxLogsDaysToRetrieve = 10
-            if allLogs.count > maxLogsDaysToRetrieve {
-                allLogs = Array(allLogs.prefix(upTo: maxLogsDaysToRetrieve))
-            }
-            if !full, let first = allLogs.first {
-                allLogs = [first]
-            }
-            allLogs.forEach { log in
-                logs += "🚨🚨🚨🚨🚨🚨🚨🚨🚨🚨🚨🚨🚨🚨🚨🚨🚨🚨🚨\n"
-                logs += "🚨🚨🚨🚨🚨 \(log.logId) 🚨🚨🚨🚨🚨\n"
-                logs += log.logContent
-                logs += "\n\n"
-            }
-            if !full {
-                let max = 20000
-                if logs.count > max {
-                    logs = String(logs.dropFirst(logs.count - max))
-                }
-            }
-            return logs
-        }
-
-        private static func store(log: String) { Common_Logs.StorageUtils.appendToFileStart(log) }
 
         /// Things that must be fixed and shouldn't happen. This logs will always be printed (unless Prod apps)
         public static func error(
@@ -146,9 +102,6 @@ public extension DevTools {
             file: String = #file,
             line: Int = #line
         ) {
-            guard !DevTools.onTargetProduction else {
-                return
-            }
             guard canLog(any, tag) else {
                 return
             }
@@ -177,9 +130,6 @@ public extension DevTools {
             file: String = #file,
             line: Int = #line
         ) {
-            guard !DevTools.onTargetProduction else {
-                return
-            }
             guard canLog(any, tag) else {
                 return
             }
@@ -190,38 +140,82 @@ public extension DevTools {
                 store(log: log)
             }
         }
-
-        private static func prettyPrinted(
-            log: String,
-            type: String,
-            tag: Tag,
-            function: String = #function,
-            file: String = #file,
-            line: Int = #line
-        ) -> String {
-            counterTotal += 1
-
-            let senderCodeId = Common_Utils.senderCodeId(function, file: file, line: line)
-            let maxLen = 10000
-            let messageToPrint = log.count > maxLen ? log.trim.prefix(maxLen) + "(...)✂️✂️ Truncated @ \(maxLen) chars" : log.trim
-            let title = "Log_\(counterTotal) @ \(Date.utcNow)"
-            let separator = "##################"
-            var logMessage = ""
-            logMessage = "\(logMessage)\n\(separator)\(separator)\n"
-            logMessage = "\(logMessage)# Title:  \(title)\n"
-            logMessage = "\(logMessage)# Type:   \(type) | \(tag)\n"
-            logMessage = "\(logMessage)# Sender: \(senderCodeId)\n"
-            logMessage = "\(logMessage)# Thread: \(Thread.current.queueName)\n"
-            logMessage = "\(logMessage)↓ ↓ ↓ ↓\n"
-            if messageToPrint.hasSuffix("\n") {
-                logMessage = "\(logMessage)\(messageToPrint)"
-            } else {
-                logMessage = "\(logMessage)\(messageToPrint)\n"
-            }
-            logMessage = "\(logMessage)↑ ↑ ↑ ↑\n"
-            return logMessage
-        }
     }
 }
 
-// swiftlint:enable logs_rule_1
+//
+// MARK: - Storage
+//
+
+public extension DevTools.Log {
+    static func deleteLogs() { Common_Logs.Persistence.reset() }
+    static func retrieveLogs(full: Bool = true) -> String {
+        var logs = ""
+        var allLogs = Common_Logs.Persistence.allLogs
+        allLogs = allLogs.sorted(by: { a, b in
+            if let date1 = Date.with(a.logId), let date2 = Date.with(b.logId) {
+                return date1 > date2
+            }
+            return a.logId > b.logId
+        })
+        let maxLogsDaysToRetrieve = 10
+        if allLogs.count > maxLogsDaysToRetrieve {
+            allLogs = Array(allLogs.prefix(upTo: maxLogsDaysToRetrieve))
+        }
+        if !full, let first = allLogs.first {
+            allLogs = [first]
+        }
+        allLogs.forEach { log in
+            logs += "🚨🚨🚨🚨🚨🚨🚨🚨🚨🚨🚨🚨🚨🚨🚨🚨🚨🚨🚨\n"
+            logs += "🚨🚨🚨🚨🚨 \(log.logId) 🚨🚨🚨🚨🚨\n"
+            logs += log.logContent
+            logs += "\n\n"
+        }
+        if !full {
+            let max = 20000
+            if logs.count > max {
+                logs = String(logs.dropFirst(logs.count - max))
+            }
+        }
+        return logs
+    }
+}
+
+//
+// MARK: - Private
+//
+
+fileprivate extension DevTools.Log {
+    static func store(log: String) { Common_Logs.Persistence.appendToFileStart(log) }
+
+    static func prettyPrinted(
+        log: String,
+        type: String,
+        tag: Tag,
+        function: String = #function,
+        file: String = #file,
+        line: Int = #line
+    ) -> String {
+        counterTotal += 1
+
+        let senderCodeId = Common_Utils.senderCodeId(function, file: file, line: line)
+        let maxLen = 10000
+        let messageToPrint = log.count > maxLen ? log.trim.prefix(maxLen) + "(...)✂️✂️ Truncated @ \(maxLen) chars" : log.trim
+        let title = "Log_\(counterTotal) @ \(Date.utcNow)"
+        let separator = "##################"
+        var logMessage = ""
+        logMessage = "\(logMessage)\n\(separator)\(separator)\n"
+        logMessage = "\(logMessage)# Title:  \(title)\n"
+        logMessage = "\(logMessage)# Type:   \(type) | \(tag)\n"
+        logMessage = "\(logMessage)# Sender: \(senderCodeId)\n"
+        logMessage = "\(logMessage)# Thread: \(Thread.current.queueName)\n"
+        logMessage = "\(logMessage)↓ ↓ ↓ ↓\n"
+        if messageToPrint.hasSuffix("\n") {
+            logMessage = "\(logMessage)\(messageToPrint)"
+        } else {
+            logMessage = "\(logMessage)\(messageToPrint)\n"
+        }
+        logMessage = "\(logMessage)↑ ↑ ↑ ↑\n"
+        return logMessage
+    }
+}

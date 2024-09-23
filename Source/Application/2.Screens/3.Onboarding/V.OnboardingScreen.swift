@@ -17,7 +17,10 @@ import DevTools
 struct OnboardingViewCoordinator: View, ViewCoordinatorProtocol {
     // MARK: - ViewCoordinatorProtocol
     @EnvironmentObject var configuration: ConfigurationViewModel
+    @EnvironmentObject var parentCoordinator: RouterViewModel
     @StateObject var coordinator = RouterViewModel()
+    var presentationStyle: ViewPresentationStyle
+
     // MARK: - Usage/Auxiliar Attributes
     @Environment(\.dismiss) var dismiss
     let haveNavigationStack: Bool
@@ -188,9 +191,8 @@ fileprivate extension OnboardingView {
 //
 
 #if canImport(SwiftUI) && DEBUG
-@available(iOS 17, *)
 #Preview {
-    OnboardingViewCoordinator(haveNavigationStack: true, model: .init(), onCompletion: { _ in })
+    OnboardingViewCoordinator(presentationStyle: .notApplied, haveNavigationStack: true, model: .init(), onCompletion: { _ in })
         .environmentObject(ConfigurationViewModel.defaultForPreviews)
 }
 #endif

@@ -34,7 +34,7 @@ struct ___Template___CounterDisplayView: View {
 //
 
 #if canImport(SwiftUI) && DEBUG
-@available(iOS 17, *)
+
 #Preview {
     ___Template___CounterDisplayView(
         counter: .constant(1),

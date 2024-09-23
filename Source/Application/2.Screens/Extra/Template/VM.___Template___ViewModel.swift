@@ -41,7 +41,7 @@ extension ___Template___ViewModel {
     struct Dependencies {
         let model: ___Template___Model
         let onCompletion: (String) -> Void
-        let sampleService: SampleServiceProtocol
+        let dataBaseRepository: DataBaseRepositoryProtocol
     }
 }
 
@@ -52,9 +52,9 @@ class ___Template___ViewModel: BaseViewModel {
     // MARK: - Usage/Auxiliar Attributes
     @Published private(set) var message: String = ""
     @Published var counter: Int = 0
-    private let sampleService: SampleServiceProtocol?
+    private let dataBaseRepository: DataBaseRepositoryProtocol?
     public init(dependencies: Dependencies) {
-        self.sampleService = dependencies.sampleService
+        self.dataBaseRepository = dependencies.dataBaseRepository
         self.message = dependencies.model.message
         self.counter = dependencies.model.counter
     }
@@ -69,7 +69,6 @@ class ___Template___ViewModel: BaseViewModel {
         case .displayRandomError:
             alertModel = .init(
                 type: .error,
-
                 location: .top,
                 message: String.randomWithSpaces(10)
             )
@@ -88,9 +87,8 @@ fileprivate extension ___Template___ViewModel {}
 //
 
 #if canImport(SwiftUI) && DEBUG
-@available(iOS 17, *)
 #Preview {
-    ___Template___ViewCoordinator(haveNavigationStack: false, model: .init(message: "Hi"), presentationStyle: .fullScreenCover)
+    ___Template___ViewCoordinator(presentationStyle: .fullScreenCover, haveNavigationStack: false, model: .init(message: "Hi"))
         .environmentObject(ConfigurationViewModel.defaultForPreviews)
 }
 #endif

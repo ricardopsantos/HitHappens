@@ -359,7 +359,7 @@ public struct CalendarView: View {
 //
 
 #if canImport(SwiftUI) && DEBUG
-@available(iOS 17, *)
+
 #Preview {
     CalendarView(
         currentDate: .constant(Date()),

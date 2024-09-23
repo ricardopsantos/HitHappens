@@ -10,6 +10,6 @@ import Combine
 import Common
 
 public protocol NetworkManagerProtocol {
-    func requestAsync<T: Decodable>(_ api: APIEndpoints) async throws -> T
-    func requestPublisher<T: Decodable>(_ api: APIEndpoints) -> AnyPublisher<T, CommonNetworking.APIError>
+    func requestAsync<T: Decodable>(_ api: APIRouter) async throws -> T
+    func requestPublisher<T: Decodable>(_ api: APIRouter) -> AnyPublisher<T, AppErrors>
 }

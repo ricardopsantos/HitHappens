@@ -77,7 +77,7 @@ public struct CustomTextField: View {
 //
 
 #if canImport(SwiftUI) && DEBUG
-@available(iOS 17, *)
+
 #Preview {
     VStack {
         CustomTextField(

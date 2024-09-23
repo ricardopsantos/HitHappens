@@ -39,10 +39,7 @@ public extension Common_PropertyWrappers {
             self.onChange = onChange
         }
 
-        private let synchronizedQueue = DispatchQueue(
-            label: "\(Common.self)_\(Self.self)_\(UUID().uuidString)",
-            attributes: .concurrent
-        )
+        private let synchronizedQueue = DispatchQueue.synchronizedQueue(label: "\(Common.self)_\(T.self)_\(UUID().uuidString)")
 
         private var container: Foundation.UserDefaults
 
@@ -92,7 +89,6 @@ public extension Common_PropertyWrappers {
                 if let optional = newValue as? AnyOptional, optional.isNil {
                     container.removeObject(forKey: key)
                 } else {
-                    // container.set(to, forKey: key)
                     let data = try? JSONEncoder().encode(newValue)
                     container.setValue(data, forKey: key)
                 }
@@ -131,7 +127,6 @@ fileprivate extension Common_Preview {
     }
 }
 
-@available(iOS 17, *)
 #Preview {
     Common_Preview.UserDefaultsTestViewView()
 }

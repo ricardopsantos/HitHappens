@@ -96,7 +96,7 @@ public enum FontSemantic: CaseIterable {
                 }
             }
 
-            Common_Utils.executeOnce(token: "\(Self.self)_\(#function)") {
+            Common.ExecutionControlManager.executeOnce(token: "\(Self.self)_\(#function)") {
                 Common_Logs.debug("TextSizeCategory: \(trait) -> \(multiplier)")
             }
         }
@@ -123,7 +123,7 @@ public enum FontSemantic: CaseIterable {
 //
 
 #if canImport(SwiftUI) && DEBUG
-@available(iOS 17, *)
+
 #Preview {
     VStack(spacing: 0) {
         ForEach(FontSemantic.allCases, id: \.self) { font in
@@ -142,7 +142,7 @@ public enum FontSemantic: CaseIterable {
 //
 
 #if canImport(SwiftUI) && DEBUG
-@available(iOS 17, *)
+
 #Preview {
     VStack(spacing: 0) {
         ForEach(FontSemantic.allCases, id: \.self) { font in

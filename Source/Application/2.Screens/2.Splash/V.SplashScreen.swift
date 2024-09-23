@@ -17,7 +17,10 @@ import DevTools
 struct SplashViewCoordinator: View, ViewCoordinatorProtocol {
     // MARK: - ViewCoordinatorProtocol
     @EnvironmentObject var configuration: ConfigurationViewModel
+    @EnvironmentObject var parentCoordinator: RouterViewModel
     @StateObject var coordinator = RouterViewModel()
+    var presentationStyle: ViewPresentationStyle
+
     // MARK: - Usage/Auxiliar Attributes
     let onCompletion: () -> Void
 
@@ -42,8 +45,7 @@ struct SplashViewCoordinator: View, ViewCoordinatorProtocol {
         switch screen {
         case .splash:
             let dependencies: SplashViewModel.Dependencies = .init(
-                model: .init(),
-                nonSecureAppPreferences: configuration.nonSecureAppPreferences,
+                model: nil,
                 onCompletion: onCompletion
             )
             SplashView(dependencies: dependencies)
@@ -126,9 +128,8 @@ fileprivate extension SplashView {}
 //
 
 #if canImport(SwiftUI) && DEBUG
-@available(iOS 17, *)
 #Preview {
-    SplashViewCoordinator(onCompletion: {})
+    SplashViewCoordinator(presentationStyle: .notApplied, onCompletion: {})
         .environmentObject(ConfigurationViewModel.defaultForPreviews)
 }
 #endif

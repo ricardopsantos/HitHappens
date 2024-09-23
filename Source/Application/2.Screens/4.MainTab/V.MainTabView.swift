@@ -102,7 +102,7 @@ struct MainTabView: View, ViewProtocol {
             // Tab 5
             //
             NavigationStack(path: $tab5Router.navPath) {
-                SettingsViewCoordinator()
+                SettingsViewCoordinator(presentationStyle: .notApplied)
                     .navigationDestination(for: AppScreen.self, destination: { screen in
                         buildScreen(screen, presentationStyle: .notApplied)
                     })
@@ -137,18 +137,14 @@ struct MainTabView: View, ViewProtocol {
         switch screen {
         case .eventLogDetails(model: let model):
             EventLogDetailsViewCoordinator(
-                model: model,
-                presentationStyle: presentationStyle
+                presentationStyle: presentationStyle, model: model
             )
             .environmentObject(configuration)
             .environmentObject(tab1Router)
         case .eventDetails(model: let model):
-            EventDetailsViewCoordinator(
-                model: model,
-                presentationStyle: presentationStyle
-            )
-            .environmentObject(configuration)
-            .environmentObject(tab2Router)
+            EventDetailsViewCoordinator(presentationStyle: presentationStyle, model: model)
+                .environmentObject(configuration)
+                .environmentObject(tab2Router)
         default:
             NotImplementedView(screen: screen)
         }
@@ -212,7 +208,6 @@ private extension MainTabView {
 //
 
 #if canImport(SwiftUI) && DEBUG
-@available(iOS 17, *)
 #Preview {
     MainTabViewCoordinator()
         .environmentObject(ConfigurationViewModel.defaultForPreviews)

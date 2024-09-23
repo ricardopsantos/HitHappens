@@ -20,7 +20,7 @@ var timeout: Int = 5
 var loadedAny: Any?
 
 class BaseViewModelsTests: XCTestCase {
-    lazy var sampleService: SampleServiceProtocol = { DependenciesManager.Services.sampleService }()
+    lazy var dataBaseRepository: DataBaseRepositoryProtocol = { DependenciesManager.Repository.dataBaseRepository }()
     lazy var secureAppPreferences: SecureAppPreferencesProtocol = { DependenciesManager.Repository.secureAppPreferences }()
     lazy var nonSecureAppPreferences: NonSecureAppPreferencesProtocol = { DependenciesManager.Repository.nonSecureAppPreferences }()
 }

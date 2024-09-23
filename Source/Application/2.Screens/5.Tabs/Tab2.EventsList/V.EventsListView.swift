@@ -21,9 +21,11 @@ struct EventsListViewCoordinator: View, ViewCoordinatorProtocol {
     @EnvironmentObject var configuration: ConfigurationViewModel
     @EnvironmentObject var parentCoordinator: RouterViewModel
     @StateObject var coordinator = RouterViewModel()
+    var presentationStyle: ViewPresentationStyle
+
     // MARK: - Usage/Auxiliar Attributes
     @Environment(\.dismiss) var dismiss
-    let presentationStyle: ViewPresentationStyle
+
     // MARK: - Body & View
     var body: some View {
         buildScreen(.eventsList, presentationStyle: .notApplied)
@@ -49,21 +51,9 @@ struct EventsListViewCoordinator: View, ViewCoordinatorProtocol {
                 dataBaseRepository: configuration.dataBaseRepository)
             EventsListView(dependencies: dependencies)
         case .eventDetails(model: let model):
-            /*
-             let dependencies: EventDetailsViewModel.Dependencies = .init(
-                 model: model, onPerformRouteBack: {
-                     if !coordinatorTab2.navigateBack() {
-                         coordinator.coverLink = nil
-                     }
-                 }, onShouldDisplayTrackedLog: { trackedLog in
-                     coordinatorTab2.coverLink = .eventLogDetails(model: .init(trackedLog: trackedLog))
-                 },
-                 dataBaseRepository: configuration.dataBaseRepository,
-                 presentationStyle: presentationStyle)
-             EventDetailsView(dependencies: dependencies)*/
             EventDetailsViewCoordinator(
-                model: model,
-                presentationStyle: presentationStyle)
+                presentationStyle: presentationStyle,
+                model: model)
                 .environmentObject(configuration)
                 .environmentObject(parentCoordinator)
         default:
@@ -202,7 +192,6 @@ struct EventsListView: View, ViewProtocol {
 //
 
 #if canImport(SwiftUI) && DEBUG
-@available(iOS 17, *)
 #Preview {
     EventsListViewCoordinator(presentationStyle: .fullScreenCover)
         .environmentObject(ConfigurationViewModel.defaultForPreviews)

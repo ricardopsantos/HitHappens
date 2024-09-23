@@ -25,19 +25,14 @@ extension SplashViewModel {
     }
 
     struct Dependencies {
-        let model: SplashModel
-        let nonSecureAppPreferences: NonSecureAppPreferencesProtocol
+        let model: SplashModel?
         let onCompletion: () -> Void
     }
 }
 
 class SplashViewModel: BaseViewModel {
     // MARK: - Usage/Auxiliar Attributes
-    private var cancelBag = CancelBag()
-    private var nonSecureAppPreferences: NonSecureAppPreferencesProtocol?
-    public init(dependencies: Dependencies) {
-        self.nonSecureAppPreferences = dependencies.nonSecureAppPreferences
-    }
+    public init(dependencies: Dependencies) {}
 
     // MARK: - Functions
 
@@ -60,9 +55,8 @@ fileprivate extension RootViewModel {}
 //
 
 #if canImport(SwiftUI) && DEBUG
-@available(iOS 17, *)
 #Preview {
-    SplashViewCoordinator(onCompletion: {})
+    SplashViewCoordinator(presentationStyle: .notApplied, onCompletion: {})
         .environmentObject(ConfigurationViewModel.defaultForPreviews)
 }
 #endif

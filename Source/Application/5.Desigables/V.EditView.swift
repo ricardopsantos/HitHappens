@@ -79,7 +79,6 @@ public struct EditView: View {
 //
 
 #if canImport(SwiftUI) && DEBUG
-@available(iOS 17, *)
 #Preview {
     VStack {
         Spacer()

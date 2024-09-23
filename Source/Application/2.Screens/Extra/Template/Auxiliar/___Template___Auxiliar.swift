@@ -27,7 +27,6 @@ public enum ___Template___Auxiliar {
 //
 
 #if canImport(SwiftUI) && DEBUG
-@available(iOS 17, *)
 #Preview {
     ___Template___Auxiliar.counterDisplayView(
         counterValue: .constant(1),

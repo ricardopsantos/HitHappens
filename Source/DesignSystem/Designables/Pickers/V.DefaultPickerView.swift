@@ -53,7 +53,7 @@ public struct DefaultPickerView: View {
 //
 
 #if canImport(SwiftUI) && DEBUG
-@available(iOS 17, *)
+
 #Preview {
     VStack {
         DefaultPickerView(

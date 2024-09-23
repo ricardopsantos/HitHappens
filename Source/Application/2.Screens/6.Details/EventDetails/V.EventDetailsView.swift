@@ -19,12 +19,13 @@ import Domain
 struct EventDetailsViewCoordinator: View, ViewCoordinatorProtocol {
     // MARK: - ViewCoordinatorProtocol
     @EnvironmentObject var configuration: ConfigurationViewModel
-    @StateObject var coordinator = RouterViewModel()
-    // MARK: - Usage/Auxiliar Attributes
     @EnvironmentObject var parentCoordinator: RouterViewModel
+    @StateObject var coordinator = RouterViewModel()
+    var presentationStyle: ViewPresentationStyle
+
+    // MARK: - Usage/Auxiliar Attributes
     @Environment(\.dismiss) var dismiss
     let model: EventDetailsModel?
-    let presentationStyle: ViewPresentationStyle
 
     // MARK: - Body & View
     var body: some View {
@@ -64,8 +65,7 @@ struct EventDetailsViewCoordinator: View, ViewCoordinatorProtocol {
             EventDetailsView(dependencies: dependencies)
         case .eventLogDetails(model: let model):
             EventLogDetailsViewCoordinator(
-                model: model,
-                presentationStyle: presentationStyle)
+                presentationStyle: presentationStyle, model: model)
                 .environmentObject(configuration)
                 .environmentObject(parentCoordinator)
         default:
@@ -507,16 +507,15 @@ extension EventDetailsView {
 #if canImport(SwiftUI) && DEBUG
 #Preview("Existing") {
     EventDetailsViewCoordinator(
-        model: .init(event: .random(cascadeEvents: [
+        presentationStyle: .fullScreenCover, model: .init(event: .random(cascadeEvents: [
             .random,
             .random
-        ])),
-        presentationStyle: .fullScreenCover)
+        ])))
         .environmentObject(ConfigurationViewModel.defaultForPreviews)
 }
 
 #Preview("New") {
-    EventDetailsViewCoordinator(model: nil, presentationStyle: .fullScreenCover)
+    EventDetailsViewCoordinator(presentationStyle: .fullScreenCover, model: nil)
         .environmentObject(ConfigurationViewModel.defaultForPreviews)
 }
 #endif
