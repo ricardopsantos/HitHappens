@@ -385,7 +385,6 @@ fileprivate extension EventLogDetailsView {
 //
 
 #if canImport(SwiftUI) && DEBUG
-@available(iOS 17, *)
 #Preview {
     EventLogDetailsViewCoordinator(
         presentationStyle: .fullScreenCover, model: .init(trackedLog: .random))

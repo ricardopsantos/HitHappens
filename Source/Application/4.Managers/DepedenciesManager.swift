@@ -18,6 +18,7 @@ public class DependenciesManager {
     }
 
     enum Services {
+        public static var cloudKitService: CloudKitServiceProtocol { CloudKitService(cloudKit: AppConstants.cloudKitId) }
         public static var appConfigServiceMock: AppConfigServiceProtocol { AppConfigServiceMock.shared }
         public static var appConfigService: AppConfigServiceProtocol {
             AppConfigService(

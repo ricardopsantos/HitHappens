@@ -128,7 +128,6 @@ fileprivate extension SplashView {}
 //
 
 #if canImport(SwiftUI) && DEBUG
-@available(iOS 17, *)
 #Preview {
     SplashViewCoordinator(presentationStyle: .notApplied, onCompletion: {})
         .environmentObject(ConfigurationViewModel.defaultForPreviews)

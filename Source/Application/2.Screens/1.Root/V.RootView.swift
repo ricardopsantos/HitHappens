@@ -128,7 +128,6 @@ fileprivate extension RootView {
 //
 
 #if canImport(SwiftUI) && DEBUG
-@available(iOS 17, *)
 #Preview {
     RootViewCoordinator(presentationStyle: .fullScreenCover)
         .environmentObject(ConfigurationViewModel.defaultForPreviews)

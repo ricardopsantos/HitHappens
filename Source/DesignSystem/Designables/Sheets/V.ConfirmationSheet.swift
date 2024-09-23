@@ -122,7 +122,7 @@ public struct ConfirmationSheetV1: View {
 //
 
 #if canImport(SwiftUI) && DEBUG
-@available(iOS 17, *)
+
 #Preview {
     VStack {
         ConfirmationSheetV2(isOpen: .constant(true)) {}

@@ -71,15 +71,18 @@ public extension DevTools {
         }
 
         static func canLog(_ any: Any?, _ tag: Tag) -> Bool {
+            guard Common_Utils.onDebug else {
+                return false
+            }
             guard any != nil else {
                 return false
             }
             // Log by log type
             return switch tag {
-            case .generic: !DevTools.onTargetProduction
-            case .view: !DevTools.onTargetProduction
-            case .business: !DevTools.onTargetProduction
-            case .appDelegate: !DevTools.onTargetProduction
+            case .generic: !DevTools.onTargetProduction || Common_Utils.onDebug
+            case .view: !DevTools.onTargetProduction || Common_Utils.onDebug
+            case .business: !DevTools.onTargetProduction || Common_Utils.onDebug
+            case .appDelegate: !DevTools.onTargetProduction || Common_Utils.onDebug
             }
         }
 
@@ -101,9 +104,6 @@ public extension DevTools {
             file: String = #file,
             line: Int = #line
         ) {
-            guard !DevTools.onTargetProduction else {
-                return
-            }
             guard canLog(any, tag) else {
                 return
             }
@@ -132,9 +132,6 @@ public extension DevTools {
             file: String = #file,
             line: Int = #line
         ) {
-            guard !DevTools.onTargetProduction else {
-                return
-            }
             guard canLog(any, tag) else {
                 return
             }

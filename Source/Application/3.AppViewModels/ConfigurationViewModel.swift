@@ -17,6 +17,7 @@ class ConfigurationViewModel: ObservableObject {
 
     // Services
     let appConfigService: AppConfigServiceProtocol
+    let cloudKitService: CloudKitServiceProtocol
 
     // Repositories
     let dataBaseRepository: DataBaseRepositoryProtocol
@@ -32,11 +33,13 @@ class ConfigurationViewModel: ObservableObject {
     // MARK: - Constructor
     init(
         appConfigService: AppConfigServiceProtocol,
+        cloudKitService: CloudKitServiceProtocol,
         dataBaseRepository: DataBaseRepositoryProtocol,
         nonSecureAppPreferences: NonSecureAppPreferencesProtocol,
         secureAppPreferences: SecureAppPreferencesProtocol
     ) {
         self.appConfigService = appConfigService
+        self.cloudKitService = cloudKitService
         self.dataBaseRepository = dataBaseRepository
         self.nonSecureAppPreferences = nonSecureAppPreferences
         self.secureAppPreferences = secureAppPreferences
@@ -49,6 +52,7 @@ extension ConfigurationViewModel {
     static var defaultForPreviews: ConfigurationViewModel {
         ConfigurationViewModel(
             appConfigService: DependenciesManager.Services.appConfigServiceMock,
+            cloudKitService: DependenciesManager.Services.cloudKitService,
             dataBaseRepository: DependenciesManager.Repository.dataBaseRepository,
             nonSecureAppPreferences: DependenciesManager.Repository.nonSecureAppPreferences,
             secureAppPreferences: DependenciesManager.Repository.secureAppPreferences
@@ -58,6 +62,7 @@ extension ConfigurationViewModel {
     static var defaultForApp: ConfigurationViewModel {
         ConfigurationViewModel(
             appConfigService: DependenciesManager.Services.appConfigService,
+            cloudKitService: DependenciesManager.Services.cloudKitService,
             dataBaseRepository: DependenciesManager.Repository.dataBaseRepository,
             nonSecureAppPreferences: DependenciesManager.Repository.nonSecureAppPreferences,
             secureAppPreferences: DependenciesManager.Repository.secureAppPreferences

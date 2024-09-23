@@ -188,7 +188,6 @@ extension EventsMapView {
 //
 
 #if canImport(SwiftUI) && DEBUG
-@available(iOS 17, *)
 #Preview {
     EventsMapViewCoordinator(presentationStyle: .fullScreenCover)
         .environmentObject(ConfigurationViewModel.defaultForPreviews)

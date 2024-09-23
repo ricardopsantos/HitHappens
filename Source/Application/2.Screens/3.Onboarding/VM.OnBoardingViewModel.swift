@@ -136,7 +136,6 @@ fileprivate extension OnboardingViewModel {
 //
 
 #if canImport(SwiftUI) && DEBUG
-@available(iOS 17, *)
 #Preview {
     OnboardingViewCoordinator(presentationStyle: .notApplied, haveNavigationStack: true, model: .init(), onCompletion: { _ in })
         .environmentObject(ConfigurationViewModel.defaultForPreviews)

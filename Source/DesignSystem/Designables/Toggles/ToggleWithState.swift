@@ -79,7 +79,7 @@ public struct ToggleWithState: View {
 //
 
 #if canImport(SwiftUI) && DEBUG
-@available(iOS 17, *)
+
 #Preview {
     ToggleWithState(title: "Title", isOn: true, onChanged: { _ in })
 }

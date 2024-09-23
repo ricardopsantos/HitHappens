@@ -27,6 +27,7 @@ struct HitHappensApp: App {
         if UITestingManager.Options.onUITesting.enabled {
             config = .init(
                 appConfigService: DependenciesManager.Services.appConfigServiceMock,
+                cloudKitService: DependenciesManager.Services.cloudKitService,
                 dataBaseRepository: DependenciesManager.Repository.dataBaseRepository,
                 nonSecureAppPreferences: DependenciesManager.Repository.nonSecureAppPreferences,
                 secureAppPreferences: DependenciesManager.Repository.secureAppPreferences
@@ -35,6 +36,7 @@ struct HitHappensApp: App {
         } else {
             config = .init(
                 appConfigService: DependenciesManager.Services.appConfigService,
+                cloudKitService: DependenciesManager.Services.cloudKitService,
                 dataBaseRepository: DependenciesManager.Repository.dataBaseRepository,
                 nonSecureAppPreferences: DependenciesManager.Repository.nonSecureAppPreferences,
                 secureAppPreferences: DependenciesManager.Repository.secureAppPreferences

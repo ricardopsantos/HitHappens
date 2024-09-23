@@ -22,4 +22,5 @@ public enum AppConstants {
 
     static let weatherAppId = "1d8b7e6f3849be9a808176f247698ec3".decrypted
     static let appGroup = "oLxhaH0530JnsqigVB+e7EWdy5LnZnwqNpaVDoQNocOb5/ufyCJKRUlpCTizFqmmGFdfpF/KCNw=".decrypted
+    static let cloudKitId = "Uap+6J+2cst0yLDF6sEkFnai4SehF3gDPXWNnP/yLGDBANPNOI80xV9oCxIRNtdXJw/Vg33IbJ/H".decrypted
 }

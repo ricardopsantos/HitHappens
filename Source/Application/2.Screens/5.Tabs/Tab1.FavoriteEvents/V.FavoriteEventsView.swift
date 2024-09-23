@@ -165,7 +165,6 @@ struct FavoriteEventsView: View, ViewProtocol {
 //
 
 #if canImport(SwiftUI) && DEBUG
-@available(iOS 17, *)
 #Preview {
     FavoriteEventsViewCoordinator(presentationStyle: .fullScreenCover)
         .environmentObject(ConfigurationViewModel.defaultForPreviews)

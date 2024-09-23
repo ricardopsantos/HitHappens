@@ -49,7 +49,8 @@ struct SettingsViewCoordinator: View, ViewCoordinatorProtocol {
                     ))
                 },
                 appConfigService: configuration.appConfigService,
-                nonSecureAppPreferences: configuration.nonSecureAppPreferences
+                nonSecureAppPreferences: configuration.nonSecureAppPreferences,
+                cloudKitService: configuration.cloudKitService
             )
             SettingsScreen(dependencies: dependencies)
         case .webView(model: let model):
@@ -142,10 +143,17 @@ fileprivate extension SettingsScreen {
         }
     }
 
+    @ViewBuilder
     var versionView: some View {
         Text("App version: \(Common.AppInfo.version)")
             .fontSemantic(.callout)
             .foregroundColorSemantic(.labelPrimary)
+        if !viewModel.appVersionInfo.isEmpty {
+            SwiftUIUtils.FixedVerticalSpacer(height: SizeNames.defaultMarginSmall)
+            Text(viewModel.appVersionInfo)
+                .fontSemantic(.footnote)
+                .foregroundColorSemantic(.labelPrimary)
+        }
     }
 
     @ViewBuilder
@@ -231,7 +239,6 @@ fileprivate extension SettingsScreen {}
 //
 
 #if canImport(SwiftUI) && DEBUG
-@available(iOS 17, *)
 #Preview {
     SettingsViewCoordinator(presentationStyle: .notApplied)
         .environmentObject(ConfigurationViewModel.defaultForApp)

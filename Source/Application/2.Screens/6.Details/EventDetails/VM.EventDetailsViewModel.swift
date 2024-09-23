@@ -318,7 +318,6 @@ fileprivate extension EventDetailsViewModel {
 //
 
 #if canImport(SwiftUI) && DEBUG
-@available(iOS 17, *)
 #Preview {
     EventDetailsViewCoordinator(
         presentationStyle: .fullScreenCover, model: .init(event: .random(cascadeEvents: [.random])))
