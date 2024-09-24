@@ -15,10 +15,17 @@ open class CommonBaseCoreDataManager: NSObject, SyncCoreDataManagerCRUDProtocol 
     //
     // MARK: - Usage Propertyes
     //
+    fileprivate let dbName: String
+    fileprivate let managedObjectModelURL: URL
     fileprivate let managedObjectModel: NSManagedObjectModel
     fileprivate let persistentContainer: NSPersistentContainer!
     static var output = PassthroughSubject<OutputType, Never>()
     public var fetchedResultsController: [String: NSFetchedResultsController<NSManagedObject>] = [:]
+
+    public var databaseURL: URL {
+        let storeDescription = persistentContainer.persistentStoreDescriptions.first
+        return storeDescription?.url ?? NSPersistentContainer.defaultDirectoryURL().appendingPathComponent("\(dbName).sqlite")
+    }
 
     //
     // MARK: - Config
@@ -32,10 +39,13 @@ open class CommonBaseCoreDataManager: NSObject, SyncCoreDataManagerCRUDProtocol 
     }
 
     public init(dbName: String, dbBundle: String, persistence: CommonCoreData.Utils.Persistence) {
+        self.dbName = dbName
         if let nsManagedObjectModel = CommonCoreData.Utils.managedObjectModel(dbName: dbName, dbBundle: dbBundle) {
-            self.managedObjectModel = nsManagedObjectModel
+            self.managedObjectModel = nsManagedObjectModel.managedObjectModel
+            self.managedObjectModelURL = nsManagedObjectModel.url
         } else if let nsManagedObjectModel = CommonCoreData.Utils.managedObjectModelForSPM(dbName: dbName) {
-            self.managedObjectModel = nsManagedObjectModel
+            self.managedObjectModel = nsManagedObjectModel.managedObjectModel
+            self.managedObjectModelURL = nsManagedObjectModel.url
         } else {
             fatalError("fail to load managedObjectModel")
         }

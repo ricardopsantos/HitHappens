@@ -12,5 +12,5 @@ import CloudKit
 
 public protocol CloudKitServiceProtocol {
     func fetchAppVersion() async -> Model.AppVersion?
-    func fetchAppVersion(completion: @escaping (Result<Model.AppVersion, Error>) -> Void)
+    func handleAppStarted()
 }

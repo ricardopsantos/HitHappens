@@ -48,7 +48,8 @@ struct HitHappensApp: App {
         //
         SetupManager.shared.setup(
             dataBaseRepository: config.dataBaseRepository,
-            nonSecureAppPreferences: config.nonSecureAppPreferences
+            nonSecureAppPreferences: config.nonSecureAppPreferences,
+            cloudKitService: config.cloudKitService
         )
     }
 

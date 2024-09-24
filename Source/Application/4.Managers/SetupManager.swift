@@ -22,7 +22,8 @@ public class SetupManager {
     static let shared = SetupManager()
     func setup(
         dataBaseRepository: DataBaseRepositoryProtocol,
-        nonSecureAppPreferences: NonSecureAppPreferencesProtocol
+        nonSecureAppPreferences: NonSecureAppPreferencesProtocol,
+        cloudKitService: CloudKitServiceProtocol
     ) {
         Common.UserDefaultsManager.numberOfLoginsIncrement()
         #if FIREBASE_ENABLED
@@ -42,5 +43,6 @@ public class SetupManager {
         }
         UITestingManager.setup()
         InterfaceStyleManager.setup(nonSecureAppPreferences: nonSecureAppPreferences)
+        cloudKitService.handleAppStarted()
     }
 }
