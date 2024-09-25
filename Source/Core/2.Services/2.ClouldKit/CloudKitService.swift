@@ -58,10 +58,12 @@ extension CloudKitService: CloudKitServiceProtocol {
             }
             self?.createZones { [weak self] _ in
                 guard let self = self else { return }
-                self.insertRecord(recordType: "Event",
-                                   details: details(appLifeCycleEvent: "applicationDidEnterBackground"),
-                                                             database: privateCloudDatabase,
-                                  zoneID: eventsZone) { _ in }
+                self.insertRecord(
+                    recordType: "Event",
+                    details: details(appLifeCycleEvent: "applicationDidEnterBackground"),
+                    database: privateCloudDatabase,
+                    zoneID: eventsZone
+                ) { _ in }
             }
         }
     }
@@ -73,10 +75,12 @@ extension CloudKitService: CloudKitServiceProtocol {
             }
             self?.createZones { [weak self] _ in
                 guard let self = self else { return }
-                self.insertRecord(recordType: "Event",
-                                   details: details(appLifeCycleEvent: "appDidFinishLaunchingWithOptions"),
-                                                             database: privateCloudDatabase,
-                                  zoneID: eventsZone) { _ in }
+                self.insertRecord(
+                    recordType: "Event",
+                    details: details(appLifeCycleEvent: "appDidFinishLaunchingWithOptions"),
+                    database: privateCloudDatabase,
+                    zoneID: eventsZone
+                ) { _ in }
             }
         }
     }
@@ -88,10 +92,12 @@ extension CloudKitService: CloudKitServiceProtocol {
             }
             self?.createZones { [weak self] _ in
                 guard let self = self else { return }
-                self.insertRecord(recordType: "Event",
-                                   details: details(appLifeCycleEvent: "appStarted"),
-                                                             database: privateCloudDatabase,
-                                  zoneID: eventsZone) { _ in }
+                self.insertRecord(
+                    recordType: "Event",
+                    details: details(appLifeCycleEvent: "appStarted"),
+                    database: privateCloudDatabase,
+                    zoneID: eventsZone
+                ) { _ in }
                 self.performDBBackup(completion: { _ in })
             }
         }
@@ -117,7 +123,6 @@ extension CloudKitService: CloudKitServiceProtocol {
 //
 
 private extension CloudKitService {
-    
     func details(appLifeCycleEvent name: String) -> [String: String] {
         var userInfo: [String: String] = [:]
         userInfo["numberOfLogins"] = Common.UserDefaultsManager.numberOfLogins.description
@@ -134,7 +139,7 @@ private extension CloudKitService {
         assets["databaseFile"] = DataBaseRepository.shared.databaseURL
         return assets
     }
-    
+
     func iCloudIsAvailable(completion: @escaping (Bool) -> Void) {
         CKContainer.default().accountStatus { accountStatus, error in
             switch accountStatus {
@@ -221,11 +226,13 @@ private extension CloudKitService {
             if let record = record {
                 updateRecord(record: record, assets: assets, database: privateCloudDatabase, completion: completion)
             } else {
-                insertRecord(recordType: recordType,
-                             assets: assets,
-                             database: privateCloudDatabase,
-                             zoneID: backupsZone,
-                             completion: completion)
+                insertRecord(
+                    recordType: recordType,
+                    assets: assets,
+                    database: privateCloudDatabase,
+                    zoneID: backupsZone,
+                    completion: completion
+                )
             }
         }
     }
@@ -265,7 +272,7 @@ private extension CloudKitService {
             database.add(operation)
         }
     }
-    
+
     func updateRecord(record: CKRecord, details: [String: String] = [:], assets: [String: URL] = [:], database: CKDatabase, completion: @escaping (Bool) -> Void) {
         iCloudIsAvailable { available in
             guard available else { completion(false); return }
@@ -284,13 +291,16 @@ private extension CloudKitService {
             database.add(operation)
         }
     }
-    
-    func insertRecord(recordType: String, 
-                      details: [String: String] = [:],
-                      assets: [String: URL] = [:],
-                      database: CKDatabase,
-                      zoneID: CKRecordZone.ID?,
-                      completion: @escaping (Bool) -> Void) {
+
+    func insertRecord(
+        recordType: String,
+
+        details: [String: String] = [:],
+        assets: [String: URL] = [:],
+        database: CKDatabase,
+        zoneID: CKRecordZone.ID?,
+        completion: @escaping (Bool) -> Void
+    ) {
         iCloudIsAvailable { available in
             guard available else { completion(false); return }
             guard let zoneID = zoneID else { completion(false); return }
@@ -311,8 +321,6 @@ private extension CloudKitService {
 }
 
 public extension CKRecord {
-
-    
     func bindWith(details: [String: String] = [:], assets: [String: URL] = [:]) {
         details.keys.forEach { key in
             self[key] = details[key]
