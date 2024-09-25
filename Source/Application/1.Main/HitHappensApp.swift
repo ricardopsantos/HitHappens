@@ -41,7 +41,7 @@ struct HitHappensApp: App {
                 secureAppPreferences: DependenciesManager.Repository.secureAppPreferences
             )
         }
-        configuration = config
+        self.configuration = config
         delegate.configuration = config
         //
         // Modules Setup

@@ -14,5 +14,5 @@ public protocol CloudKitServiceProtocol {
     func fetchAppVersion() async -> Model.AppVersion?
     func appStarted()
     func appDidFinishLaunchingWithOptions()
-    func sceneDidEnterBackground()
+    func applicationDidEnterBackground()
 }

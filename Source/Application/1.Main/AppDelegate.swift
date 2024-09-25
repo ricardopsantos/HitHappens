@@ -36,7 +36,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             sessionRole: connectingSceneSession.role
         )
 
-        configuration.delegateClass = SceneDelegateUIKit.self
+        configuration.delegateClass = SceneDelegate.self
         DevTools.Log.debug(.appLifeCycle("\(#function)"), .appDelegate)
         AnalyticsManager.shared.handleAppLifeCycleEvent(label: #function, sender: "\(Self.self)")
         return configuration
@@ -115,10 +115,11 @@ extension AppDelegate {
 }
 
 //
-// MARK: - SceneDelegateUIKit
+// MARK: - SceneDelegate
 //
 
-class SceneDelegateUIKit: UIResponder, UIWindowSceneDelegate {
+class SceneDelegate: UIResponder, UIWindowSceneDelegate {
+    var configuration: ConfigurationViewModel?
     func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
         guard (scene as? UIWindowScene) != nil else {
             return
