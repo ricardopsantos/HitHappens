@@ -53,7 +53,6 @@ extension CommonLearnings.Actors {
 
             Task {
                 let currentValue = await counter.getValue()
-                print("Counter value: \(currentValue)")
             }
         }
     }
