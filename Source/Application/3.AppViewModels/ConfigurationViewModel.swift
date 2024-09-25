@@ -27,10 +27,6 @@ class ConfigurationViewModel: ObservableObject {
     // ViewModels
     // let authenticationViewModel: AuthenticationViewModel
 
-    // MARK: - Usage/Auxiliar Attributes
-    // private var cancelBag: CancelBag = .init()
-
-    // MARK: - Constructor
     init(
         appConfigService: AppConfigServiceProtocol,
         cloudKitService: CloudKitServiceProtocol,
@@ -52,16 +48,6 @@ extension ConfigurationViewModel {
     static var defaultForPreviews: ConfigurationViewModel {
         ConfigurationViewModel(
             appConfigService: DependenciesManager.Services.appConfigServiceMock,
-            cloudKitService: DependenciesManager.Services.cloudKitService,
-            dataBaseRepository: DependenciesManager.Repository.dataBaseRepository,
-            nonSecureAppPreferences: DependenciesManager.Repository.nonSecureAppPreferences,
-            secureAppPreferences: DependenciesManager.Repository.secureAppPreferences
-        )
-    }
-
-    static var defaultForApp: ConfigurationViewModel {
-        ConfigurationViewModel(
-            appConfigService: DependenciesManager.Services.appConfigService,
             cloudKitService: DependenciesManager.Services.cloudKitService,
             dataBaseRepository: DependenciesManager.Repository.dataBaseRepository,
             nonSecureAppPreferences: DependenciesManager.Repository.nonSecureAppPreferences,

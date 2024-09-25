@@ -241,6 +241,6 @@ fileprivate extension SettingsScreen {}
 #if canImport(SwiftUI) && DEBUG
 #Preview {
     SettingsViewCoordinator(presentationStyle: .notApplied)
-        .environmentObject(ConfigurationViewModel.defaultForApp)
+        .environmentObject(ConfigurationViewModel.defaultForPreviews)
 }
 #endif

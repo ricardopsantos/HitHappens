@@ -13,13 +13,14 @@ import DevTools
 
 class AppDelegate: UIResponder, UIApplicationDelegate {
     private let cancelBag = CancelBag()
-
+    var configuration: ConfigurationViewModel?
     func application(
         _ application: UIApplication,
         didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?
     ) -> Bool {
         DevTools.Log.debug(.appLifeCycle("\(#function)"), .appDelegate)
         AnalyticsManager.shared.handleAppLifeCycleEvent(label: #function, sender: "\(Self.self)")
+        configuration?.cloudKitService.appDidFinishLaunchingWithOptions()
         return true
     }
 

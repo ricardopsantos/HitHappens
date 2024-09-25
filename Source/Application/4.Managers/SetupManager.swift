@@ -43,6 +43,6 @@ public class SetupManager {
         }
         UITestingManager.setup()
         InterfaceStyleManager.setup(nonSecureAppPreferences: nonSecureAppPreferences)
-        cloudKitService.handleAppStarted()
+        cloudKitService.appStarted()
     }
 }
