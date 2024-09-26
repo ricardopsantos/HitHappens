@@ -56,7 +56,7 @@ class EventsListViewModel: BaseViewModel {
         self.dataBaseRepository = dependencies.dataBaseRepository
         self.message = dependencies.model.message
         super.init()
-        startListeningDBChanges()
+        startListeningEvents()
     }
 
     func send(_ action: Actions) {
@@ -84,7 +84,7 @@ class EventsListViewModel: BaseViewModel {
 //
 
 fileprivate extension EventsListViewModel {
-    func startListeningDBChanges() {
+    func startListeningEvents() {
         dataBaseRepository?.output([]).sink { [weak self] some in
             switch some {
             case .generic(let some):

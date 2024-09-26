@@ -62,7 +62,7 @@ class EventsCalendarViewModel: BaseViewModel {
         self.message = dependencies.model.message
         self.onShouldDisplayTrackedLog = dependencies.onShouldDisplayTrackedLog
         super.init()
-        startListeningDBChanges()
+        startListeningEvents()
     }
 
     func send(_ action: Actions) {
@@ -134,7 +134,7 @@ fileprivate extension EventsCalendarViewModel {
         }
     }
 
-    func startListeningDBChanges() {
+    func startListeningEvents() {
         dataBaseRepository?.output([]).sink { [weak self] some in
             switch some {
             case .generic(let some):

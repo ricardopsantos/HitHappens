@@ -108,7 +108,7 @@ class EventDetailsViewModel: BaseViewModel {
         self.onPerformRouteBack = dependencies.onPerformRouteBack
         self.onShouldDisplayTrackedLog = dependencies.onShouldDisplayTrackedLog
         super.init()
-        startListeningDBChanges()
+        startListeningEvents()
     }
 
     func send(_ action: Actions) {
@@ -271,7 +271,7 @@ fileprivate extension EventDetailsViewModel {
         }
     }
 
-    func startListeningDBChanges() {
+    func startListeningEvents() {
         dataBaseRepository?.output([]).sink { [weak self] some in
             guard let screenID = self?.screenID else { return }
             switch some {

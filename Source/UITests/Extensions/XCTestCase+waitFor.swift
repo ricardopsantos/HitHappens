@@ -89,7 +89,7 @@ public extension XCTestCase {
         expectation(for: predicate, evaluatedWith: object, handler: nil)
         waitForExpectations(timeout: timeout) { [self] error in
             if error != nil {
-                let message = "Failed to fulfil expectation block for \(object) after \(timeout) seconds."
+                let message = "Failed to fulfils expectation block for \(object) after \(timeout) seconds."
                 let location = XCTSourceCodeLocation(filePath: file, lineNumber: line)
                 let issue = XCTIssue(
                     type: .assertionFailure,

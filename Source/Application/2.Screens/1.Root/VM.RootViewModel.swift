@@ -30,6 +30,8 @@ extension RootViewModel {
     struct Dependencies {
         let model: RootModel
         let nonSecureAppPreferences: NonSecureAppPreferencesProtocol
+        let dataBaseRepository: DataBaseRepositoryProtocol
+        let cloudKitService: CloudKitServiceProtocol
     }
 }
 
@@ -41,24 +43,14 @@ class RootViewModel: ObservableObject {
     @Published private(set) var isOnboardingCompleted: Bool = false
     private var cancelBag = CancelBag()
     private var nonSecureAppPreferences: NonSecureAppPreferencesProtocol?
+    private var dataBaseRepository: DataBaseRepositoryProtocol
+    private var cloudKitService: CloudKitServiceProtocol
     public init(dependencies: Dependencies) {
+        self.dataBaseRepository = dependencies.dataBaseRepository
         self.nonSecureAppPreferences = dependencies.nonSecureAppPreferences
+        self.cloudKitService = dependencies.cloudKitService
         self.isAppStartCompleted = dependencies.model.isAppStartCompleted
-        dependencies.nonSecureAppPreferences.output([]).sinkToReceiveValue { [weak self] some in
-            guard let self = self else { return }
-            switch some {
-            case .success(let some):
-                switch some {
-                case .deletedAll, .changedKey:
-                    Common.ExecutionControlManager.debounce(operationId: "\(Self.self)|\(#function)") { [weak self] in
-                        Common_Utils.delay { [weak self] in
-                            guard let self = self else { return }
-                            self.send(action: .reload)
-                        }
-                    }
-                }
-            }
-        }.store(in: cancelBag)
+        startListening()
     }
 
     // MARK: - Functions
@@ -82,7 +74,43 @@ class RootViewModel: ObservableObject {
 // MARK: - Auxiliar
 //
 
-fileprivate extension RootViewModel {}
+fileprivate extension RootViewModel {
+    func startListening() {
+        dataBaseRepository.output([]).sink { [weak self] some in
+            switch some {
+            case .generic(let some):
+                switch some {
+                case .databaseDidInsertedContentOn: break
+                case .databaseDidUpdatedContentOn: break
+                case .databaseDidDeletedContentOn: break
+                case .databaseDidChangedContentItemOn: break
+                case .databaseDidFinishChangeContentItemsOn:
+                    let operationId = "\(Self.self)|\(#function)"
+                    Common.ExecutionControlManager.debounce(operationId: operationId) { [weak self] in
+                        self?.cloudKitService.syncDatabase()
+                    }
+                }
+            }
+        }.store(in: cancelBag)
+
+        nonSecureAppPreferences?.output([]).sinkToReceiveValue { [weak self] some in
+            guard let self = self else { return }
+            switch some {
+            case .success(let some):
+                switch some {
+                case .deletedAll, .changedKey:
+                    let operationId = "\(Self.self)|\(#function)"
+                    Common.ExecutionControlManager.debounce(operationId: operationId) { [weak self] in
+                        Common_Utils.delay { [weak self] in
+                            guard let self = self else { return }
+                            self.send(action: .reload)
+                        }
+                    }
+                }
+            }
+        }.store(in: cancelBag)
+    }
+}
 
 //
 // MARK: - Preview
