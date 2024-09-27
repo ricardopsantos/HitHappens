@@ -407,6 +407,7 @@
 		D6BC8F8942B6C903680150EA /* UIFont+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57AA8CA3E7964E73E2DAE6C1 /* UIFont+Extensions.swift */; };
 		D6EAB0DE6DF6282448E1C3A8 /* JSONDecoder+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45BD95649D15ED8631BC8961 /* JSONDecoder+Extensions.swift */; };
 		D6FAA4F0D2DBF963EE37A56F /* Common.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = FFF39C519E284BB9BED8F7C7 /* Common.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		D72046722CA74BFF00410744 /* V.SyncMonitorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D72046712CA74BFF00410744 /* V.SyncMonitorView.swift */; };
 		D7699558FE9C0D6CC79486C6 /* NonSecureAppPreferencesProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DAE85356E5D988971FA1B4F /* NonSecureAppPreferencesProtocol.swift */; };
 		D78279FD6624840992675303 /* ModelDto+AppConfigRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9714E4570F89D4B165B92B6 /* ModelDto+AppConfigRequest.swift */; };
 		D789C0F22BA6A8F2FF9B9EB6 /* UIViewController+ExtensionsUIKit.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE8192949F9D1AC10535CCD4 /* UIViewController+ExtensionsUIKit.swift */; };
@@ -1112,6 +1113,7 @@
 		D58553363AF514012D4CA142 /* V.FavoriteEventsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = V.FavoriteEventsView.swift; sourceTree = "<group>"; };
 		D658F0A65F848A4860089341 /* UISearchTextField+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UISearchTextField+Extensions.swift"; sourceTree = "<group>"; };
 		D663ADA86AE4F77274907014 /* _CopyFrameworks.yml */ = {isa = PBXFileReference; lastKnownFileType = text.yaml; path = _CopyFrameworks.yml; sourceTree = "<group>"; };
+		D72046712CA74BFF00410744 /* V.SyncMonitorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = V.SyncMonitorView.swift; sourceTree = "<group>"; };
 		D7A6EB94964AD288E0A000C1 /* Model+CDataEvent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Model+CDataEvent.swift"; sourceTree = "<group>"; };
 		D7B7DA29E777D87D2A5EDDAC /* E.HttpMethod.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = E.HttpMethod.swift; sourceTree = "<group>"; };
 		D85A4C596CBB9274140C2FC6 /* DBVersion2.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = DBVersion2.xcdatamodel; sourceTree = "<group>"; };
@@ -1500,6 +1502,7 @@
 				956EB28619338197B0A9C38C /* V.UserMessageView.swift */,
 				530FCC35A3770B2A8364005E /* V.WebView.swift */,
 				F16BFD8F3A0FBB2DB2E6A250 /* VC.MailViewControllerRepresentable.swift */,
+				D72046712CA74BFF00410744 /* V.SyncMonitorView.swift */,
 			);
 			path = 5.Desigables;
 			sourceTree = "<group>";
@@ -3559,6 +3562,7 @@
 				F57D8327793FC1A6CBAE086A /* BaseView+NavigationModel.swift in Sources */,
 				763C7C3B5EA19CDAFA412CE9 /* BaseView.swift in Sources */,
 				880C2F25F47BDCFF46E5904E /* BaseViewModel.swift in Sources */,
+				D72046722CA74BFF00410744 /* V.SyncMonitorView.swift in Sources */,
 				5FA4DC4F671BA57C18A30E1F /* CPPWrapper.mm in Sources */,
 				DAC9BC8CF86CD979C78D463F /* ConfigurationViewModel.swift in Sources */,
 				F2ECC2F653CEE2A3C24A9AD9 /* DepedenciesManager.swift in Sources */,

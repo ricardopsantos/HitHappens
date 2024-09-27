@@ -12,10 +12,10 @@ import CoreData
 
 public extension CommonCoreData.Utils {
     enum Persistence {
-        case `default`
-        case memory
+        case `default`(iCloudEnabled: Bool)
+        case memory(iCloudEnabled: Bool)
         case directory(value: FileManager.SearchPathDirectory)
-        case appGroup(identifier: String, iCloudEnabled: Bool)
+        case appGroup(identifier: String)
     }
 }
 
@@ -27,10 +27,24 @@ public extension CommonCoreData.Utils {
     ) -> NSPersistentContainer? {
         var container: NSPersistentContainer!
         switch persistence {
-        case .default:
-            container = NSPersistentContainer(name: dbName, managedObjectModel: managedObjectModel)
-        case .memory:
-            container = NSPersistentContainer(name: dbName, managedObjectModel: managedObjectModel)
+        case .default(iCloudEnabled: let iCloudEnabled):
+            if iCloudEnabled {
+                container = NSPersistentCloudKitContainer(
+                    name: dbName,
+                    managedObjectModel: managedObjectModel
+                )
+            } else {
+                container = NSPersistentContainer(name: dbName, managedObjectModel: managedObjectModel)
+            }
+        case .memory(iCloudEnabled: let iCloudEnabled):
+            if iCloudEnabled {
+                container = NSPersistentCloudKitContainer(
+                    name: dbName,
+                    managedObjectModel: managedObjectModel
+                )
+            } else {
+                container = NSPersistentContainer(name: dbName, managedObjectModel: managedObjectModel)
+            }
             let description = NSPersistentStoreDescription()
             description.url = URL(fileURLWithPath: "/dev/null")
             container.persistentStoreDescriptions = [description]
@@ -41,28 +55,17 @@ public extension CommonCoreData.Utils {
                 let description = NSPersistentStoreDescription(url: storeURL)
                 container.persistentStoreDescriptions = [description]
             }
-        case .appGroup(identifier: let identifier, iCloudEnabled: let iCloudEnabled):
-            if iCloudEnabled {
-                container = NSPersistentCloudKitContainer(
-                    name: dbName,
-                    managedObjectModel: managedObjectModel
-                )
-                //print("delete?")
-                container.viewContext.automaticallyMergesChangesFromParent = true
-                container.viewContext.mergePolicy = NSMergeByPropertyObjectTrumpMergePolicy
-
+        case .appGroup(identifier: let identifier):
+            container = NSPersistentContainer(
+                name: dbName,
+                managedObjectModel: managedObjectModel
+            )
+            if let sharedContainerURL = FileManager.default.containerURL(forSecurityApplicationGroupIdentifier: identifier) {
+                let storeURL = sharedContainerURL.appendingPathComponent("\(dbName).sqlite")
+                let description = NSPersistentStoreDescription(url: storeURL)
+                container.persistentStoreDescriptions = [description]
             } else {
-                container = NSPersistentContainer(
-                    name: dbName,
-                    managedObjectModel: managedObjectModel
-                )
-                if let sharedContainerURL = FileManager.default.containerURL(forSecurityApplicationGroupIdentifier: identifier) {
-                    let storeURL = sharedContainerURL.appendingPathComponent("\(dbName).sqlite")
-                    let description = NSPersistentStoreDescription(url: storeURL)
-                    container.persistentStoreDescriptions = [description]
-                } else {
-                    Common_Logs.error("Fail to access appGroupIdentifier: \(String(describing: identifier))")
-                }
+                Common_Logs.error("Fail to access appGroupIdentifier: \(String(describing: identifier))")
             }
         }
 

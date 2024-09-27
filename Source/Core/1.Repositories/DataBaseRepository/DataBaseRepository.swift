@@ -11,28 +11,15 @@ import Combine
 //
 import Common
 import Domain
-public class DataBaseRepository2: CommonBaseCoreDataManager {
-    
-}
-public class DataBaseRepository: CommonBaseCoreDataManager, DataBaseRepositoryProtocol {
+public class DataBaseRepository2: CommonBaseCoreDataManager {}
 
-    public static var shared = sharedV1
-    public static var sharedV1 = DataBaseRepository(
+public class DataBaseRepository: CommonBaseCoreDataManager, DataBaseRepositoryProtocol {
+    public static var shared = DataBaseRepository(
         dbName: Domain.internalDB,
         dbBundle: Domain.bundleIdentifier,
         persistence: Domain.coreDataPersistence
     )
-    public static var sharedV2 = DataBaseRepository()
 
-    private init() {
-        let bundle = Bundle(identifier: Domain.bundleIdentifier)!
-        let modelURL = bundle.url(forResource: Domain.internalDB, withExtension: "momd")!
-        let managedObjectModel = NSManagedObjectModel(contentsOf: modelURL)!
-        super.init(dbName: Domain.internalDB, 
-                   managedObjectModel: managedObjectModel,
-                   persistence:  Domain.coreDataPersistence)
-    }
-    
     override private init(dbName: String, dbBundle: String, persistence: CommonCoreData.Utils.Persistence) {
         super.init(dbName: dbName, dbBundle: dbBundle, persistence: persistence)
     }

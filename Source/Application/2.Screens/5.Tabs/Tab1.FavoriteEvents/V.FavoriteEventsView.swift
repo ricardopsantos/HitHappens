@@ -11,7 +11,6 @@ import SwiftUI
 import DevTools
 import Common
 import DesignSystem
-import CloudKitSyncMonitor
 
 //
 // MARK: - Coordinator
@@ -91,7 +90,6 @@ struct FavoriteEventsView: View, ViewProtocol {
     @Environment(\.dismiss) var dismiss
     private let cancelBag: CancelBag = .init()
     @StateObject var locationViewModel: Common.SharedLocationManagerViewModel = .shared
-    @StateObject var syncMonitor = SyncMonitor.shared
 
     // MARK: - Body & View
     var body: some View {
@@ -125,8 +123,6 @@ struct FavoriteEventsView: View, ViewProtocol {
         ScrollView {
             LazyVStack(spacing: 0) {
                 Header(text: "Favorites")
-                SwiftUIUtils.FixedVerticalSpacer(height: SizeNames.defaultMarginSmall)
-                SettingsScreen.syncMonitorView(syncMonitor: syncMonitor)
                 if viewModel.favorits.isEmpty {
                     SwiftUIUtils.FixedVerticalSpacer(height: screenHeight * 0.33)
                     Text("You don't have any \(AppConstants.entityNamePlural.lowercased()) marked as favorite\n\nTap to add one!".localizedMissing)
@@ -155,6 +151,7 @@ struct FavoriteEventsView: View, ViewProtocol {
                             })
                         SwiftUIUtils.FixedVerticalSpacer(height: SizeNames.defaultMargin)
                     }
+                    SyncMonitorView()
                     Spacer()
                 }
             }

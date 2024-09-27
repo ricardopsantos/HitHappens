@@ -7,30 +7,28 @@
 import Foundation
 import CloudKit
 
-
-
 /**
- 
-https://medium.com/@jakir/sync-swiftui-coredata-app-with-icloud-using-cloudkit-9162ae250a22
 
- https://medium.com/@islammoussa.eg/implementing-seamless-app-version-management-in-ios-with-cloudkit-bf5715b78283
- 
- In CloudKit, a __zone__ is a way to organize and manage your app's data within a database.
- CloudKit provides two types of databases: the public and private databases, and within these, you can create custom zones.
+ https://medium.com/@jakir/sync-swiftui-coredata-app-with-icloud-using-cloudkit-9162ae250a22
 
- __1. Default Zone:__
- Each database (public or private) comes with a default zone, where records can be stored if you don’t need complex data organization.
- You can just use this zone for simpler use cases.
+  https://medium.com/@islammoussa.eg/implementing-seamless-app-version-management-in-ios-with-cloudkit-bf5715b78283
 
- __2. Custom Zones:__
- If you need more control over your data (like organizing data into groups or supporting offline syncing), you can create custom zones.
- This allows you to partition your data within the database.
+  In CloudKit, a __zone__ is a way to organize and manage your app's data within a database.
+  CloudKit provides two types of databases: the public and private databases, and within these, you can create custom zones.
 
- Custom zones give you more flexibility for managing data, such as:
- - Batch operations: Perform operations like saving, fetching, or deleting multiple records in one zone as a transaction.
- - Offline Support: CloudKit automatically supports offline data sync for custom zones, helping manage conflicts and merging changes when the device goes back online.
- - Atomic Transactions: You can save multiple records at once, and either all records are saved or none, ensuring data consistency.
- */
+  __1. Default Zone:__
+  Each database (public or private) comes with a default zone, where records can be stored if you don’t need complex data organization.
+  You can just use this zone for simpler use cases.
+
+  __2. Custom Zones:__
+  If you need more control over your data (like organizing data into groups or supporting offline syncing), you can create custom zones.
+  This allows you to partition your data within the database.
+
+  Custom zones give you more flexibility for managing data, such as:
+  - Batch operations: Perform operations like saving, fetching, or deleting multiple records in one zone as a transaction.
+  - Offline Support: CloudKit automatically supports offline data sync for custom zones, helping manage conflicts and merging changes when the device goes back online.
+  - Atomic Transactions: You can save multiple records at once, and either all records are saved or none, ensuring data consistency.
+  */
 
 open class CloudKitManager {
     public private(set) var container: CKContainer
@@ -172,9 +170,6 @@ public extension CloudKitManager {
     }
 
     func updateRecord(record: CKRecord, details: [String: String] = [:], assets: [String: URL] = [:], database: CKDatabase, completion: @escaping (Bool) -> Void) {
-        completion(false)
-        return;
-        print("disabled for now")
         let identifier = "updateRecord" + "_" + record.recordType + "_" + UUID().uuidString
         Common_CronometerManager.startTimerWith(identifier: identifier)
         iCloudIsAvailable { [weak self] available in
@@ -210,9 +205,6 @@ public extension CloudKitManager {
         zoneID: CKRecordZone.ID?,
         completion: @escaping (Bool) -> Void
     ) {
-        completion(false)
-        return;
-        print("disabled for now")
         let identifier = "insertRecord" + "_" + recordType + "_" + UUID().uuidString
         iCloudIsAvailable { available in
             guard available else { completion(false); return }

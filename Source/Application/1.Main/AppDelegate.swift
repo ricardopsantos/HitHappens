@@ -22,6 +22,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         AnalyticsManager.shared.handleAppLifeCycleEvent(label: #function, sender: "\(Self.self)")
         configuration?.cloudKitService.appDidFinishLaunchingWithOptions()
 
+        // Needed (silent pushs) for iCloud Sync
         let options: UNAuthorizationOptions = [
             .alert,
             .badge,

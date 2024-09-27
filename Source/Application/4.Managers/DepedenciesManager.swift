@@ -19,12 +19,7 @@ public class DependenciesManager {
 
     enum Services {
         public static var appConfigServiceMock: AppConfigServiceProtocol { AppConfigServiceMock.shared }
-        public static var cloudKitService: CloudKitServiceProtocol {
-            let service = CloudKitService(cloudKit: AppConstants.cloudKitId)
-            service.dataBaseRepository = Repository.dataBaseRepository
-            return service
-        }
-
+        public static var cloudKitService: CloudKitServiceProtocol { CloudKitService(cloudKit: AppConstants.cloudKitId) }
         public static var appConfigService: AppConfigServiceProtocol {
             AppConfigService(
                 webAPI: WebAPI.webAPI,
@@ -34,15 +29,7 @@ public class DependenciesManager {
     }
 
     public enum Repository {
-        public static var dataBaseRepository: DataBaseRepositoryProtocol {
-            Domain.coreDataPersistence = .appGroup(
-                identifier: AppConstants.appGroup,
-
-                iCloudEnabled: true
-            )
-            return DataBaseRepository.shared
-        }
-
+        public static var dataBaseRepository: DataBaseRepositoryProtocol { DataBaseRepository.shared }
         public static var secureAppPreferences: SecureAppPreferencesProtocol { SecureAppPreferences.shared }
         public static var nonSecureAppPreferences: NonSecureAppPreferencesProtocol { NonSecureAppPreferences.shared }
     }

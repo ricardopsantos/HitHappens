@@ -47,25 +47,5 @@ public class SetupManager {
         UITestingManager.setup()
         InterfaceStyleManager.setup(nonSecureAppPreferences: nonSecureAppPreferences)
         cloudKitService.appStarted()
-        NotificationCenter.default.addObserver(self,
-                                               selector: #selector(handleAccountChange),
-                                               name: .NSPersistentStoreDidImportUbiquitousContentChanges,
-                                               object: nil)
-    }
-    
-    @objc private func handleAccountChange(notification: Notification) {
-        let container = CKContainer.default()
-        container.accountStatus { (status, error) in
-            switch status {
-            case .available:
-                () // The user is signed in and the account is accessible
-            case .noAccount:
-                () // Prompt the user to sign in to iCloud
-            case .restricted, .temporarilyUnavailable:
-                () // Handle cases where access is limited or unavailable
-            default:
-                break
-            }
-        }
     }
 }

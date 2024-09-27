@@ -54,7 +54,7 @@ open class CommonBaseCoreDataManager: NSObject, SyncCoreDataManagerCRUDProtocol 
         super.init()
         startFetchedResultsController()
     }
-    
+
     public init(dbName: String, dbBundle: String, persistence: CommonCoreData.Utils.Persistence) {
         self.dbName = dbName
         if let nsManagedObjectModel = CommonCoreData.Utils.managedObjectModel(dbName: dbName, dbBundle: dbBundle) {

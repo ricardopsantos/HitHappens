@@ -12,7 +12,6 @@ import MessageUI
 import DevTools
 import Common
 import DesignSystem
-import CloudKitSyncMonitor
 
 //
 // MARK: - Coordinator
@@ -80,7 +79,6 @@ struct SettingsScreen: View, ViewProtocol {
     @State private var isShowingMailView = false
     @State private var showMailError = false
     @Environment(\.dismiss) var dismiss
-    @StateObject var syncMonitor = SyncMonitor.shared
     @State private var selectedMode: Common.InterfaceStyle? = InterfaceStyleManager.selectedByUser
     private let cancelBag: CancelBag = .init()
     private let onShouldDisplayPublicCode: (String) -> Void
@@ -121,7 +119,7 @@ struct SettingsScreen: View, ViewProtocol {
             publicCodeButtonView
                 .animation(.default, value: viewModel.publicCodeURL)
             onBoardingButtonView
-            Self.syncMonitorView(syncMonitor: syncMonitor)
+            SyncMonitorView()
             SwiftUIUtils.FixedVerticalSpacer(height: SizeNames.defaultMarginSmall)
             versionView
             SwiftUIUtils.FixedVerticalSpacer(height: SizeNames.defaultMargin)
@@ -133,52 +131,10 @@ struct SettingsScreen: View, ViewProtocol {
 // MARK: - Shared Views
 //
 
-extension SettingsScreen {
-    static func syncMonitorView(syncMonitor: SyncMonitor) -> some View {
-        VStack {
-            if syncMonitor.syncStateSummary.isBroken {
-                Image(systemName: syncMonitor.syncStateSummary.symbolName)
-                    .foregroundColor(syncMonitor.syncStateSummary.symbolColor)
-                Text("Sync Broken")
-                    .fontSemantic(.footnote)
-            } else if syncMonitor.syncStateSummary.inProgress {
-                Text("Sync In progress")
-                    .fontSemantic(.footnote)
-                Image(systemName: syncMonitor.syncStateSummary.symbolName)
-                    .foregroundColor(syncMonitor.syncStateSummary.symbolColor)
-            } else {
-                Image(systemName: syncMonitor.syncStateSummary.symbolName)
-                    .foregroundColor(syncMonitor.syncStateSummary.symbolColor)
-                Text(syncMonitor.syncStateSummary.description)
-                    .fontSemantic(.footnote)
-            }
-            if SyncMonitor.shared.hasSyncError {
-                if let e = SyncMonitor.shared.setupError {
-                    Text("Unable to set up iCloud sync, changes won't be saved! \(e.localizedDescription)")
-                        .fontSemantic(.footnote)
-                }
-                if let e = SyncMonitor.shared.importError {
-                    Text("Import is broken: \(e.localizedDescription)")
-                        .fontSemantic(.footnote)
-                }
-                if let e = SyncMonitor.shared.exportError {
-                    Text("Export is broken - your changes aren't being saved! \(e.localizedDescription)")
-                        .fontSemantic(.footnote)
-                }
-            } else if SyncMonitor.shared.isNotSyncing {
-                Text("Sync should be working, but isn't. Look for a badge on Settings or other possible issues.")
-                    .fontSemantic(.footnote)
-            }
-        }
-    }
-}
-
 //
 // MARK: - Auxiliar Views
 //
 fileprivate extension SettingsScreen {
-
-
     @ViewBuilder
     var logoView: some View {
         let width = screenWidth * 0.5
