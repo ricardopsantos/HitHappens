@@ -16,7 +16,7 @@ open class CommonBaseCoreDataManager: NSObject, SyncCoreDataManagerCRUDProtocol 
     // MARK: - Usage Propertyes
     //
     fileprivate let dbName: String
-    fileprivate let managedObjectModelURL: URL
+    fileprivate let managedObjectModelURL: URL?
     fileprivate let managedObjectModel: NSManagedObjectModel
     fileprivate let persistentContainer: NSPersistentContainer!
     static var output = PassthroughSubject<OutputType, Never>()
@@ -38,6 +38,23 @@ open class CommonBaseCoreDataManager: NSObject, SyncCoreDataManagerCRUDProtocol 
         // Should be overridden to start "listening" db changes
     }
 
+    public init(dbName: String, managedObjectModel: NSManagedObjectModel, persistence: CommonCoreData.Utils.Persistence) {
+        self.dbName = dbName
+        self.managedObjectModel = managedObjectModel
+        self.managedObjectModelURL = nil
+        if let persistentContainer = CommonCoreData.Utils.buildPersistentContainer(
+            dbName: dbName,
+            managedObjectModel: managedObjectModel,
+            persistence: persistence
+        ) {
+            self.persistentContainer = persistentContainer
+        } else {
+            fatalError("fail to load persistentContainer")
+        }
+        super.init()
+        startFetchedResultsController()
+    }
+    
     public init(dbName: String, dbBundle: String, persistence: CommonCoreData.Utils.Persistence) {
         self.dbName = dbName
         if let nsManagedObjectModel = CommonCoreData.Utils.managedObjectModel(dbName: dbName, dbBundle: dbBundle) {
@@ -60,12 +77,6 @@ open class CommonBaseCoreDataManager: NSObject, SyncCoreDataManagerCRUDProtocol 
         }
         super.init()
         startFetchedResultsController()
-        NotificationCenter.default.addObserver(
-            self,
-            selector: #selector(cloudKitSyncEvent(notification:)),
-            name: NSPersistentCloudKitContainer.eventChangedNotification,
-            object: persistentContainer
-        )
     }
 
     public func save() {
@@ -86,11 +97,6 @@ open class CommonBaseCoreDataManager: NSObject, SyncCoreDataManagerCRUDProtocol 
     //
     // MARK: - Private
     //
-    @objc private func cloudKitSyncEvent(notification: Notification) {
-        if let event = notification.userInfo?[NSPersistentCloudKitContainer.eventChangedNotification] as? NSPersistentCloudKitContainer.Event {
-            Common_Logs.debug("\(event)")
-        }
-    }
 
     private var newViewContextInstance: NSManagedObjectContext {
         if Common_Utils.false {

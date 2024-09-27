@@ -14,63 +14,27 @@ import Domain
 public class DataBaseRepository2: CommonBaseCoreDataManager {
     
 }
-public class DataBaseRepository: DataBaseRepositoryProtocol {
-    public func emit(event: OutputType) {
-        
-    }
-    
-    public func output(_ filter: [OutputType]) -> AnyPublisher<OutputType, Never> {
-        .empty()
-    }
-    
-    public static func emit(event: OutputType) {
-        
-    }
-    
-    public static func output(_ filter: [OutputType]) -> AnyPublisher<OutputType, Never> {
-        .empty()
-    }
-    
-    public static var shared = DataBaseRepository()
-    fileprivate let persistentContainer: NSPersistentContainer?
+public class DataBaseRepository: CommonBaseCoreDataManager, DataBaseRepositoryProtocol {
 
-    var viewContext: NSManagedObjectContext {
-        let context = persistentContainer!.viewContext
-        context.automaticallyMergesChangesFromParent = true
-        return context
-    }
-    
-    private init() {
-        let bundle = Bundle(identifier: Domain.bundleIdentifier)!
-        let modelURL = bundle.url(forResource: Domain.internalDB, withExtension: "momd")!
-        let managedObjectModel = NSManagedObjectModel(contentsOf: modelURL)!
-          
-        self.persistentContainer = NSPersistentCloudKitContainer(
-            name: Domain.internalDB,
-            managedObjectModel: managedObjectModel
-        )
-        persistentContainer?.loadPersistentStores { _, error in
-            if let error {
-                Common_Logs.error("Unresolved error \(error), \(error.localizedDescription)")
-            }
-        }
-
-    }
-    
-    /*
-    public static var shared = DataBaseRepository(
+    public static var shared = sharedV1
+    public static var sharedV1 = DataBaseRepository(
         dbName: Domain.internalDB,
         dbBundle: Domain.bundleIdentifier,
         persistence: Domain.coreDataPersistence
     )
-    
+    public static var sharedV2 = DataBaseRepository()
 
+    private init() {
+        let bundle = Bundle(identifier: Domain.bundleIdentifier)!
+        let modelURL = bundle.url(forResource: Domain.internalDB, withExtension: "momd")!
+        let managedObjectModel = NSManagedObjectModel(contentsOf: modelURL)!
+        super.init(dbName: Domain.internalDB, 
+                   managedObjectModel: managedObjectModel,
+                   persistence:  Domain.coreDataPersistence)
+    }
+    
     override private init(dbName: String, dbBundle: String, persistence: CommonCoreData.Utils.Persistence) {
         super.init(dbName: dbName, dbBundle: dbBundle, persistence: persistence)
-    }
-
-    public func reloadDatabase(url: URL) {
-        replaceDatabase(newDatabaseURL: url)
     }
 
     override public func startFetchedResultsController() {
@@ -97,5 +61,5 @@ public class DataBaseRepository: DataBaseRepositoryProtocol {
             controller.delegate = self
             try? controller.performFetch()
         }
-    }*/
+    }
 }

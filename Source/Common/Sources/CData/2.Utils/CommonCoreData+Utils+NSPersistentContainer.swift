@@ -56,13 +56,13 @@ public extension CommonCoreData.Utils {
                     name: dbName,
                     managedObjectModel: managedObjectModel
                 )
-            }
-            if let sharedContainerURL = FileManager.default.containerURL(forSecurityApplicationGroupIdentifier: identifier) {
-                let storeURL = sharedContainerURL.appendingPathComponent("\(dbName).sqlite")
-                let description = NSPersistentStoreDescription(url: storeURL)
-                container.persistentStoreDescriptions = [description]
-            } else {
-                Common_Logs.error("Fail to access appGroupIdentifier: \(String(describing: identifier))")
+                if let sharedContainerURL = FileManager.default.containerURL(forSecurityApplicationGroupIdentifier: identifier) {
+                    let storeURL = sharedContainerURL.appendingPathComponent("\(dbName).sqlite")
+                    let description = NSPersistentStoreDescription(url: storeURL)
+                    container.persistentStoreDescriptions = [description]
+                } else {
+                    Common_Logs.error("Fail to access appGroupIdentifier: \(String(describing: identifier))")
+                }
             }
         }
 
@@ -75,20 +75,6 @@ public extension CommonCoreData.Utils {
                     container: container,
                     managedObjectModel: managedObjectModel
                 )
-            }
-            switch persistence {
-            case .appGroup(identifier: _, iCloudEnabled: let iCloudEnabled):
-                if iCloudEnabled {
-                    container.performBackgroundTask { context in
-                        do {
-                            try context.save()
-                            Common_Logs.debug("Started iCloud sync?")
-                        } catch {
-                            Common_Logs.error("Failed to save context: \(error)")
-                        }
-                    }
-                }
-            default: ()
             }
         }
         return container
