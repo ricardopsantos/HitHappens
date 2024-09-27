@@ -115,6 +115,7 @@ fileprivate extension FavoriteEventsViewModel {
             switch some {
             case .generic(let some):
                 switch some {
+                case .databaseReloaded: ()
                 case .databaseDidInsertedContentOn(let table, let id):
                     // New record added
                     // if table == "\(CDataTrackedEntity.self)" {

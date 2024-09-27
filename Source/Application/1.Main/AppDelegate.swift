@@ -21,6 +21,19 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         DevTools.Log.debug(.appLifeCycle("\(#function)"), .appDelegate)
         AnalyticsManager.shared.handleAppLifeCycleEvent(label: #function, sender: "\(Self.self)")
         configuration?.cloudKitService.appDidFinishLaunchingWithOptions()
+
+        let options: UNAuthorizationOptions = [
+            .alert,
+            .badge,
+            .sound,
+            .providesAppNotificationSettings
+        ]
+        UNUserNotificationCenter.current().requestAuthorization(options: options) { granted, error in
+            guard granted else { return }
+            DispatchQueue.main.async {
+                UIApplication.shared.registerForRemoteNotifications()
+            }
+        }
         return true
     }
 
@@ -101,6 +114,12 @@ extension AppDelegate {
         didReceiveRemoteNotification userInfo: [AnyHashable: Any],
         fetchCompletionHandler completionHandler: @escaping (UIBackgroundFetchResult) -> Void
     ) {
+        if let aps = userInfo["aps"] as? [String: Any], aps["content-available"] as? Int == 1 {
+            // Handle your silent notification here
+            completionHandler(.newData)
+        } else {
+            completionHandler(.noData)
+        }
         DevTools.Log.debug(.appLifeCycle("\(#function)"), .appDelegate)
         AnalyticsManager.shared.handleAppLifeCycleEvent(label: #function, sender: "\(Self.self)")
     }

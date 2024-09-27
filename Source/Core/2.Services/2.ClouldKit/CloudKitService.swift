@@ -13,9 +13,21 @@ import Domain
 import DevTools
 
 public class CloudKitService: CloudKitManager {
+    public var dataBaseRepository: DataBaseRepositoryProtocol?
+
     private var backupsZone: CKRecordZone.ID?
     private var eventsZone: CKRecordZone.ID?
-    private var databaseRecord: CKRecord?
+    private var databaseRecord: CKRecord? {
+        didSet {
+            if let databaseFile = databaseRecord?.value(forKey: "databaseFile") as? CKAsset {
+                if let fileURL1 = databaseFile.fileURL {
+                    // dataBaseRepository?.reloadDatabase(url: fileURL1)
+                    // dataBaseRepository?.emit(event: .generic(.databaseReloaded))
+                }
+            } 
+        }
+    }
+
     private var zonesCreated: Bool = false
     override open func loggerEnabled() -> Bool {
         true

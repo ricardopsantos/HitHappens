@@ -100,3 +100,69 @@ open class CommonBaseCoreDataManager: NSObject, SyncCoreDataManagerCRUDProtocol 
         }
     }()
 }
+
+//
+// MARK: - iCould utils - Load/Unload/Replace database
+//
+
+public extension CommonBaseCoreDataManager {
+    func replaceDatabase(newDatabaseURL: URL) {
+        unloadDatabase()
+        replaceDatabase(with: newDatabaseURL)
+        reloadDatabase()
+    }
+
+    func unloadDatabase() {
+        guard let storeURL = persistentContainer.persistentStoreDescriptions.first?.url else {
+            Common_Logs.error("Persistent store URL not found")
+            return
+        }
+        let persistentStoreCoordinator = persistentContainer.persistentStoreCoordinator
+        do {
+            if let store = persistentStoreCoordinator.persistentStore(for: storeURL) {
+                try persistentStoreCoordinator.remove(store)
+                Common_Logs.debug("Successfully unloaded the database at \(storeURL)")
+            }
+        } catch {
+            Common_Logs.error("Failed to unload database: \(error)")
+        }
+    }
+
+    func replaceDatabase(with newDatabaseURL: URL) {
+        let fileManager = FileManager.default
+        do {
+            // Remove the old database
+            let oldDatabaseURL = databaseURL
+            if fileManager.fileExists(atPath: oldDatabaseURL.path) {
+                try fileManager.removeItem(at: oldDatabaseURL)
+                Common_Logs.debug("Old database at \(oldDatabaseURL) deleted.")
+            }
+
+            // Copy the new database to the same location
+            try fileManager.copyItem(at: newDatabaseURL, to: oldDatabaseURL)
+            Common_Logs.debug("New database copied to \(oldDatabaseURL).")
+        } catch {
+            Common_Logs.error("Error replacing database: \(error)")
+        }
+    }
+
+    func reloadDatabase() {
+        guard let persistentStoreDescription = persistentContainer.persistentStoreDescriptions.first else {
+            Common_Logs.error("Persistent store description not found")
+            return
+        }
+        let persistentStoreCoordinator = persistentContainer.persistentStoreCoordinator
+
+        do {
+            try persistentStoreCoordinator.addPersistentStore(
+                ofType: persistentStoreDescription.type,
+                configurationName: nil,
+                at: persistentStoreDescription.url,
+                options: persistentStoreDescription.options
+            )
+            Common_Logs.debug("Successfully reloaded the new database.")
+        } catch {
+            Common_Logs.error("Failed to unload database: \(error)")
+        }
+    }
+}

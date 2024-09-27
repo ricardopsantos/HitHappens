@@ -22,6 +22,10 @@ public class DataBaseRepository: CommonBaseCoreDataManager, DataBaseRepositoryPr
         super.init(dbName: dbName, dbBundle: dbBundle, persistence: persistence)
     }
 
+    public func reloadDatabase(url: URL) {
+        replaceDatabase(newDatabaseURL: url)
+    }
+
     override public func startFetchedResultsController() {
         guard fetchedResultsController.isEmpty else {
             return

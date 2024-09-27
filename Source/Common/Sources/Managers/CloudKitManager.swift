@@ -10,7 +10,7 @@ import CloudKit
 // https://medium.com/@islammoussa.eg/implementing-seamless-app-version-management-in-ios-with-cloudkit-bf5715b78283
 
 /**
- In CloudKit, a __zone__ is a way to organize and manage your app's data within a database. 
+ In CloudKit, a __zone__ is a way to organize and manage your app's data within a database.
  CloudKit provides two types of databases: the public and private databases, and within these, you can create custom zones.
 
  __1. Default Zone:__
@@ -90,23 +90,39 @@ public extension CloudKitManager {
             guard available else { return }
             guard let self = self else { return }
             guard let zoneID = zoneID else { return }
-            let recordZone = CKRecordZone(zoneID: zoneID)
-            let operation = CKModifyRecordZonesOperation(recordZonesToSave: [recordZone], recordZoneIDsToDelete: [])
-            operation.modifyRecordZonesResultBlock = { [weak self] result in
+
+            // Check if the zone already exists
+            self.privateCloudDatabase.fetch(withRecordZoneID: zoneID) { [weak self] zone, error in
                 guard let self = self else { return }
-                switch result {
-                case .success:
-                    if loggerEnabled() {
-                        Common_Logs.debug("Zone created: \(zoneID)")
-                    }
+
+                if zone != nil {
+                    // Zone already exists
                     completion(true)
-                case .failure(let error):
-                    Common_Logs.error("Error creating zone: \(error)")
+                } else if let ckError = error as? CKError, ckError.code == .zoneNotFound {
+                    // Zone doesn't exist, create it
+                    let recordZone = CKRecordZone(zoneID: zoneID)
+                    let operation = CKModifyRecordZonesOperation(recordZonesToSave: [recordZone], recordZoneIDsToDelete: [])
+                    operation.modifyRecordZonesResultBlock = { [weak self] result in
+                        guard let self = self else { return }
+                        switch result {
+                        case .success:
+                            if loggerEnabled() {
+                                Common_Logs.debug("Zone created: \(zoneID)")
+                            }
+                            completion(true)
+                        case .failure(let error):
+                            Common_Logs.error("Error creating zone: \(error)")
+                            completion(false)
+                        }
+                    }
+                    operation.qualityOfService = .utility
+                    self.privateCloudDatabase.add(operation)
+                } else {
+                    // Handle other errors (e.g., network errors)
+                    Common_Logs.error("Error fetching zone: \(error?.localizedDescription ?? "Unknown error")")
                     completion(false)
                 }
             }
-            operation.qualityOfService = .utility
-            privateCloudDatabase.add(operation)
         }
     }
 
@@ -120,6 +136,8 @@ public extension CloudKitManager {
             let operation = CKQueryOperation(query: query)
             operation.resultsLimit = resultsLimit
             var recordFound = false
+            let identifier = "fetchAllRecords" + "_" + recordType + "_" + UUID().uuidString
+            Common_CronometerManager.startTimerWith(identifier: identifier)
             operation.recordMatchedBlock = { _, result in
                 switch result {
                 case .success(let record):
@@ -130,9 +148,11 @@ public extension CloudKitManager {
                     completion(nil)
                 }
             }
-            operation.queryResultBlock = { operationResult in
+            operation.queryResultBlock = { [weak self] operationResult in
+                guard let self = self else { return }
                 switch operationResult {
                 case .success:
+                    Common_CronometerManager.timeElapsed(identifier, print: loggerEnabled())
                     if !recordFound {
                         // No record found!
                         completion(nil)
@@ -164,8 +184,10 @@ public extension CloudKitManager {
                     if loggerEnabled() {
                         Common_Logs.debug("Record updated: \(record.recordType)")
                     }
+                    completion(true)
                 case .failure(let error):
                     Common_Logs.debug("Error updating: \(error)")
+                    completion(false)
                 }
             }
             database.add(operation)

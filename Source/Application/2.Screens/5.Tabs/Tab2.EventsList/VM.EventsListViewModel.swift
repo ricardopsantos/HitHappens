@@ -89,6 +89,7 @@ fileprivate extension EventsListViewModel {
             switch some {
             case .generic(let some):
                 switch some {
+                case .databaseReloaded: ()
                 case .databaseDidInsertedContentOn: break
                 case .databaseDidUpdatedContentOn: break
                 case .databaseDidDeletedContentOn(_, let table):

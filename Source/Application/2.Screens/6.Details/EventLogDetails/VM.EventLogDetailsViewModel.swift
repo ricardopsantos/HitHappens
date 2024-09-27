@@ -202,6 +202,7 @@ fileprivate extension EventLogDetailsViewModel {
             switch some {
             case .generic(let some):
                 switch some {
+                case .databaseReloaded: ()
                 case .databaseDidInsertedContentOn: break
                 case .databaseDidUpdatedContentOn(let table, let id):
                     // Data changed. Reload!

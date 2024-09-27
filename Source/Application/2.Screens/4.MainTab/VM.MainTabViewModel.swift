@@ -65,6 +65,7 @@ private extension MainTabViewModel {
             switch some {
             case .generic(let some):
                 switch some {
+                case .databaseReloaded: ()
                 case .databaseDidInsertedContentOn: ()
                 case .databaseDidUpdatedContentOn: ()
                 case .databaseDidDeletedContentOn: ()

@@ -162,6 +162,7 @@
 		510CDFFB6C0C59746C27919B /* View+ShadowModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73697C082097D735118CE022 /* View+ShadowModifier.swift */; };
 		5126B77E7D8065F3564425CE /* BaseViewModelsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8364FDA81049E3C189B44966 /* BaseViewModelsTests.swift */; };
 		51D886BF1E36923111DB3DB9 /* CommonCoreData+Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7A0281BDDD00A4A9761C1DD6 /* CommonCoreData+Utils.swift */; };
+		526A3E7CCF6205FEFF248097 /* Nimble in Frameworks */ = {isa = PBXBuildFile; productRef = 11FBEFEA4BD0AB863EDB89EE /* Nimble */; };
 		52D8EDCB0C69BF478543C62C /* URLSessionConfiguration+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 904DB7A0DAA2F64F607E71DB /* URLSessionConfiguration+Extensions.swift */; };
 		54D029E0BB7C7D70F19DEA45 /* ToggleWithState.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFE9162A2D17CDB193718184 /* ToggleWithState.swift */; };
 		55096B59B286B3D105C5571F /* CDataNotes.md in Resources */ = {isa = PBXBuildFile; fileRef = 7C424A488C79C1939CF07709 /* CDataNotes.md */; };
@@ -1209,6 +1210,7 @@
 				0459CC282089E9C64E67EBDC /* Domain.framework in Frameworks */,
 				7857B5B5A3ADFE5BBBC63076 /* Core.framework in Frameworks */,
 				EC579389E3D7221E3135C12F /* DesignSystem.framework in Frameworks */,
+				526A3E7CCF6205FEFF248097 /* Nimble in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -3122,6 +3124,9 @@
 				8B4C1FFF6A43D42F09C60AC8 /* PBXTargetDependency */,
 			);
 			name = HitHappens;
+			packageProductDependencies = (
+				11FBEFEA4BD0AB863EDB89EE /* Nimble */,
+			);
 			productName = HitHappens;
 			productReference = 8F921C9CE07FEBB9EBCC4756 /* HitHappens.app */;
 			productType = "com.apple.product-type.application";
@@ -3150,7 +3155,7 @@
 			isa = PBXProject;
 			attributes = {
 				BuildIndependentTargetsInParallel = YES;
-				LastUpgradeCheck = 1540;
+				LastUpgradeCheck = 1501;
 				TargetAttributes = {
 					7FC1D4A9405E52C5CA9319C9 = {
 						TestTargetID = F7A7E879415146CCE92FA8DF;
@@ -5707,6 +5712,11 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		11FBEFEA4BD0AB863EDB89EE /* Nimble */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 2E7E71E1846D880C62C8C743 /* XCRemoteSwiftPackageReference "Nimble" */;
+			productName = Nimble;
+		};
 		5D7DB0B301DB52BB8A1D9AB9 /* Nimble */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = 2E7E71E1846D880C62C8C743 /* XCRemoteSwiftPackageReference "Nimble" */;

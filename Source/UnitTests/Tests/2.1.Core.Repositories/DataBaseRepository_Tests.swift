@@ -149,4 +149,25 @@ extension DataBaseRepository_Tests {
         logsCount = repository?.trackedLogGetAll(cascade: false).count ?? 0
         XCTAssertEqual(logsCount, 0)
     }
+
+    /// 1000 x 50 logs = 6.8515625 MB database
+    /// 1000 x 100 logs = 13.859375 MB database
+    /// 2000 x 100 logs = 28.3515625 MB database
+    func test_stressTest() {
+        repository?.trackedEntityDeleteAll()
+        // Create 1 event with 3 logs
+        let count = 2000
+        for i in 1...count {
+            print("i: \(i)")
+            let trackedEntityId = saveRandomEntity(events: 100)
+            guard var trackedEntity = repository?.trackedEntityGet(
+                trackedEntityId: trackedEntityId,
+                cascade: true) else {
+                XCTAssert(false)
+                return
+            }
+        }
+        XCTAssertEqual(repository?.trackedEntityGetAll(favorite: nil, archived: nil, cascade: false).count ?? 0, count)
+        XCTAssert(true)
+    }
 }

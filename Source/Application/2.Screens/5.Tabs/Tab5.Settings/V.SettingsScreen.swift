@@ -12,6 +12,7 @@ import MessageUI
 import DevTools
 import Common
 import DesignSystem
+import CloudKitSyncMonitor
 
 //
 // MARK: - Coordinator
@@ -25,6 +26,7 @@ struct SettingsViewCoordinator: View, ViewCoordinatorProtocol {
 
     // MARK: - Usage/Auxiliar Attributes
     @Environment(\.dismiss) var dismiss
+    @StateObject var syncMonitor = SyncMonitor.shared
 
     // MARK: - Body & View
     var body: some View {
@@ -109,7 +111,10 @@ struct SettingsScreen: View, ViewProtocol {
             SwiftUIUtils.FixedVerticalSpacer(height: SizeNames.defaultMargin * 2)
             AppearancePickerView(selected: $selectedMode)
             Spacer()
-            logoView
+            ZStack {
+                logoView
+                syncMonitorView
+            }
             Spacer()
             SwiftUIUtils.FixedVerticalSpacer(height: SizeNames.defaultMargin)
             Divider()
@@ -129,6 +134,12 @@ struct SettingsScreen: View, ViewProtocol {
 // MARK: - Auxiliar Views
 //
 fileprivate extension SettingsScreen {
+    
+    @ViewBuilder
+    var syncMonitorView: some View {
+        Text("")
+    }
+    
     @ViewBuilder
     var logoView: some View {
         let width = screenWidth * 0.5
