@@ -112,8 +112,6 @@ struct SettingsScreen: View, ViewProtocol {
             AppearancePickerView(selected: $selectedMode)
             Spacer()
             logoView
-            SwiftUIUtils.FixedVerticalSpacer(height: SizeNames.defaultMarginSmall)
-            syncMonitorView
             Spacer()
             SwiftUIUtils.FixedVerticalSpacer(height: SizeNames.defaultMargin)
             Divider()
@@ -123,6 +121,8 @@ struct SettingsScreen: View, ViewProtocol {
             publicCodeButtonView
                 .animation(.default, value: viewModel.publicCodeURL)
             onBoardingButtonView
+            syncMonitorView
+            SwiftUIUtils.FixedVerticalSpacer(height: SizeNames.defaultMarginSmall)
             versionView
             SwiftUIUtils.FixedVerticalSpacer(height: SizeNames.defaultMargin)
         }.paddingHorizontal(SizeNames.defaultMarginSmall)

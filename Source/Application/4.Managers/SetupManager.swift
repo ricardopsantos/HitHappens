@@ -34,12 +34,14 @@ public class SetupManager {
         }
         #endif
         FontsName.setup()
-        if Common_Utils.onDebug, Common_Utils.false {
+        if Common_Utils.onDebug, Common_Utils.true {
             UserDefaults.standard.set(true, forKey: "com.apple.CoreData.ConcurrencyDebug")
             UserDefaults.standard.set(1, forKey: "com.apple.CoreData.SQLDebug")
+            UserDefaults.standard.set(1, forKey: "com.apple.CoreData.cloudkit.debug")
         } else {
             UserDefaults.standard.set(false, forKey: "com.apple.CoreData.ConcurrencyDebug")
             UserDefaults.standard.set(0, forKey: "com.apple.CoreData.SQLDebug")
+            UserDefaults.standard.set(0, forKey: "com.apple.CoreData.cloudkit.debug")
         }
         UITestingManager.setup()
         InterfaceStyleManager.setup(nonSecureAppPreferences: nonSecureAppPreferences)

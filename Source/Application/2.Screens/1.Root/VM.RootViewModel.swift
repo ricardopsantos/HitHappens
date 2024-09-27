@@ -76,23 +76,6 @@ class RootViewModel: ObservableObject {
 
 fileprivate extension RootViewModel {
     func startListening() {
-        dataBaseRepository.output([]).sink { [weak self] some in
-            switch some {
-            case .generic(let some):
-                switch some {
-                case .databaseReloaded: ()
-                case .databaseDidInsertedContentOn: break
-                case .databaseDidUpdatedContentOn: break
-                case .databaseDidDeletedContentOn: break
-                case .databaseDidChangedContentItemOn: break
-                case .databaseDidFinishChangeContentItemsOn:
-                    let operationId = "\(Self.self)|\(#function)"
-                    Common.ExecutionControlManager.debounce(operationId: operationId) { [weak self] in
-                        self?.cloudKitService.syncDatabase()
-                    }
-                }
-            }
-        }.store(in: cancelBag)
 
         nonSecureAppPreferences?.output([]).sinkToReceiveValue { [weak self] some in
             guard let self = self else { return }

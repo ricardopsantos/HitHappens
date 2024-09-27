@@ -60,6 +60,12 @@ open class CommonBaseCoreDataManager: NSObject, SyncCoreDataManagerCRUDProtocol 
         }
         super.init()
         startFetchedResultsController()
+        NotificationCenter.default.addObserver(
+            self,
+            selector: #selector(cloudKitSyncEvent(notification:)),
+            name: NSPersistentCloudKitContainer.eventChangedNotification,
+            object: persistentContainer
+        )
     }
 
     public func save() {
@@ -80,6 +86,12 @@ open class CommonBaseCoreDataManager: NSObject, SyncCoreDataManagerCRUDProtocol 
     //
     // MARK: - Private
     //
+    @objc private func cloudKitSyncEvent(notification: Notification) {
+        if let event = notification.userInfo?[NSPersistentCloudKitContainer.eventChangedNotification] as? NSPersistentCloudKitContainer.Event {
+            Common_Logs.debug("\(event)")
+        }
+    }
+    
     private var newViewContextInstance: NSManagedObjectContext {
         if Common_Utils.false {
             return CommonCoreData.Utils.mainViewContext(storeContainer: persistentContainer, automaticallyMergesChangesFromParent: true)

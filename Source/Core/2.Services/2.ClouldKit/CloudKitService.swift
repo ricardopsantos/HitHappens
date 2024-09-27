@@ -17,17 +17,7 @@ public class CloudKitService: CloudKitManager {
 
     private var backupsZone: CKRecordZone.ID?
     private var eventsZone: CKRecordZone.ID?
-    private var databaseRecord: CKRecord? {
-        didSet {
-            if let databaseFile = databaseRecord?.value(forKey: "databaseFile") as? CKAsset {
-                if let fileURL1 = databaseFile.fileURL {
-                    // dataBaseRepository?.reloadDatabase(url: fileURL1)
-                    // dataBaseRepository?.emit(event: .generic(.databaseReloaded))
-                }
-            }
-        }
-    }
-
+    private var databaseRecord: CKRecord?
     private var zonesCreated: Bool = false
     override open func loggerEnabled() -> Bool {
         true
@@ -64,6 +54,8 @@ extension CloudKitService: CloudKitServiceProtocol {
     }
 
     public func syncDatabase() {
+        print("Disabled for now")
+        /*
         iCloudIsAvailable { [weak self] available in
             guard let self = self else { return }
             guard available else {
@@ -109,7 +101,7 @@ extension CloudKitService: CloudKitServiceProtocol {
                     }
                 }
             }
-        }
+        }*/
     }
 
     public func applicationDidEnterBackground() {
