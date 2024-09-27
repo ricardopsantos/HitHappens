@@ -24,7 +24,7 @@ public class CloudKitService: CloudKitManager {
                     // dataBaseRepository?.reloadDatabase(url: fileURL1)
                     // dataBaseRepository?.emit(event: .generic(.databaseReloaded))
                 }
-            } 
+            }
         }
     }
 

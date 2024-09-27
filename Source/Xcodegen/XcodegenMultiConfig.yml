@@ -27,7 +27,7 @@ packages:
   CloudKitSyncMonitor:
     url: https://github.com/ggruen/CloudKitSyncMonitor.git
     revision: "923c6b0b2360b3a70d3dd69a0c6c8320b075caa9"
-        
+    
 ####################### Documents #######################
 ####################### Documents #######################
 ####################### Documents #######################
@@ -96,6 +96,7 @@ targets:
         ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES: YES
         #OTHER_SWIFT_FLAGS: "-DSMART_SDK_ENABLED"
 
+        
     # configFiles ########################
           
     configFiles:
@@ -148,13 +149,11 @@ targets:
       - target: Domain
       - target: Core
       - target: DesignSystem
-      - package: Nimble
-        product: Nimble
+      - package: CloudKitSyncMonitor
+        product: CloudKitSyncMonitor
         link: true
-      #- package: CloudKitSyncMonitor
-      #  product: CloudKitSyncMonitor
-      #  link: true
-                
+        
+        
 # WIDGET
 # WIDGET
 # WIDGET

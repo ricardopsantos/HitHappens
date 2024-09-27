@@ -162,7 +162,7 @@
 		510CDFFB6C0C59746C27919B /* View+ShadowModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73697C082097D735118CE022 /* View+ShadowModifier.swift */; };
 		5126B77E7D8065F3564425CE /* BaseViewModelsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8364FDA81049E3C189B44966 /* BaseViewModelsTests.swift */; };
 		51D886BF1E36923111DB3DB9 /* CommonCoreData+Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7A0281BDDD00A4A9761C1DD6 /* CommonCoreData+Utils.swift */; };
-		526A3E7CCF6205FEFF248097 /* Nimble in Frameworks */ = {isa = PBXBuildFile; productRef = 11FBEFEA4BD0AB863EDB89EE /* Nimble */; };
+		526A3E7CCF6205FEFF248097 /* CloudKitSyncMonitor in Frameworks */ = {isa = PBXBuildFile; productRef = 1F2B64FFBFA307B32F0F1D87 /* CloudKitSyncMonitor */; };
 		52D8EDCB0C69BF478543C62C /* URLSessionConfiguration+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 904DB7A0DAA2F64F607E71DB /* URLSessionConfiguration+Extensions.swift */; };
 		54D029E0BB7C7D70F19DEA45 /* ToggleWithState.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFE9162A2D17CDB193718184 /* ToggleWithState.swift */; };
 		55096B59B286B3D105C5571F /* CDataNotes.md in Resources */ = {isa = PBXBuildFile; fileRef = 7C424A488C79C1939CF07709 /* CDataNotes.md */; };
@@ -1210,7 +1210,7 @@
 				0459CC282089E9C64E67EBDC /* Domain.framework in Frameworks */,
 				7857B5B5A3ADFE5BBBC63076 /* Core.framework in Frameworks */,
 				EC579389E3D7221E3135C12F /* DesignSystem.framework in Frameworks */,
-				526A3E7CCF6205FEFF248097 /* Nimble in Frameworks */,
+				526A3E7CCF6205FEFF248097 /* CloudKitSyncMonitor in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -3125,7 +3125,7 @@
 			);
 			name = HitHappens;
 			packageProductDependencies = (
-				11FBEFEA4BD0AB863EDB89EE /* Nimble */,
+				1F2B64FFBFA307B32F0F1D87 /* CloudKitSyncMonitor */,
 			);
 			productName = HitHappens;
 			productReference = 8F921C9CE07FEBB9EBCC4756 /* HitHappens.app */;
@@ -3176,6 +3176,7 @@
 			);
 			mainGroup = 9EA5AB85CDD268099834EAE5;
 			packageReferences = (
+				F372BDE05C4EA8FD7C82363F /* XCRemoteSwiftPackageReference "CloudKitSyncMonitor" */,
 				2E7E71E1846D880C62C8C743 /* XCRemoteSwiftPackageReference "Nimble" */,
 			);
 			projectDirPath = "";
@@ -5709,13 +5710,21 @@
 				kind = branch;
 			};
 		};
+		F372BDE05C4EA8FD7C82363F /* XCRemoteSwiftPackageReference "CloudKitSyncMonitor" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/ggruen/CloudKitSyncMonitor.git";
+			requirement = {
+				kind = revision;
+				revision = 923c6b0b2360b3a70d3dd69a0c6c8320b075caa9;
+			};
+		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
-		11FBEFEA4BD0AB863EDB89EE /* Nimble */ = {
+		1F2B64FFBFA307B32F0F1D87 /* CloudKitSyncMonitor */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = 2E7E71E1846D880C62C8C743 /* XCRemoteSwiftPackageReference "Nimble" */;
-			productName = Nimble;
+			package = F372BDE05C4EA8FD7C82363F /* XCRemoteSwiftPackageReference "CloudKitSyncMonitor" */;
+			productName = CloudKitSyncMonitor;
 		};
 		5D7DB0B301DB52BB8A1D9AB9 /* Nimble */ = {
 			isa = XCSwiftPackageProductDependency;

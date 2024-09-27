@@ -28,7 +28,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             .sound,
             .providesAppNotificationSettings
         ]
-        UNUserNotificationCenter.current().requestAuthorization(options: options) { granted, error in
+        UNUserNotificationCenter.current().requestAuthorization(options: options) { granted, _ in
             guard granted else { return }
             DispatchQueue.main.async {
                 UIApplication.shared.registerForRemoteNotifications()

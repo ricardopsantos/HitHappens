@@ -158,7 +158,7 @@ extension DataBaseRepository_Tests {
         // Create 1 event with 3 logs
         let count = 2000
         for i in 1...count {
-            print("i: \(i)")
+            Common_Logs.debug("i: \(i)")
             let trackedEntityId = saveRandomEntity(events: 100)
             guard var trackedEntity = repository?.trackedEntityGet(
                 trackedEntityId: trackedEntityId,
