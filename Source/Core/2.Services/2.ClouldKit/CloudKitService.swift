@@ -54,6 +54,7 @@ extension CloudKitService: CloudKitServiceProtocol {
     }
 
     public func syncDatabase() {
+        return;
         print("Disabled for now")
         /*
          iCloudIsAvailable { [weak self] available in
@@ -167,12 +168,6 @@ private extension CloudKitService {
         event["type"] = "AppLifeCycle"
         event["user_info"] = userInfo.sorted(by: { $0.key > $1.key }).description
         return event
-    }
-
-    func dbBackupAssets() -> [String: URL] {
-        var assets: [String: URL] = [:]
-        assets["databaseFile"] = DataBaseRepository.shared.databaseURL
-        return assets
     }
 
     func createZones(completion: @escaping (Bool) -> Void) {

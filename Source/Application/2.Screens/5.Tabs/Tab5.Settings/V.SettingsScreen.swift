@@ -121,7 +121,7 @@ struct SettingsScreen: View, ViewProtocol {
             publicCodeButtonView
                 .animation(.default, value: viewModel.publicCodeURL)
             onBoardingButtonView
-            syncMonitorView
+            Self.syncMonitorView(syncMonitor: syncMonitor)
             SwiftUIUtils.FixedVerticalSpacer(height: SizeNames.defaultMarginSmall)
             versionView
             SwiftUIUtils.FixedVerticalSpacer(height: SizeNames.defaultMargin)
@@ -130,11 +130,11 @@ struct SettingsScreen: View, ViewProtocol {
 }
 
 //
-// MARK: - Auxiliar Views
+// MARK: - Shared Views
 //
-fileprivate extension SettingsScreen {
-    @ViewBuilder
-    var syncMonitorView: some View {
+
+extension SettingsScreen {
+    static func syncMonitorView(syncMonitor: SyncMonitor) -> some View {
         VStack {
             if syncMonitor.syncStateSummary.isBroken {
                 Image(systemName: syncMonitor.syncStateSummary.symbolName)
@@ -171,6 +171,13 @@ fileprivate extension SettingsScreen {
             }
         }
     }
+}
+
+//
+// MARK: - Auxiliar Views
+//
+fileprivate extension SettingsScreen {
+
 
     @ViewBuilder
     var logoView: some View {

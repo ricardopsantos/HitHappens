@@ -47,8 +47,10 @@ public extension CommonCoreData.Utils {
                     name: dbName,
                     managedObjectModel: managedObjectModel
                 )
+                //print("delete?")
                 container.viewContext.automaticallyMergesChangesFromParent = true
                 container.viewContext.mergePolicy = NSMergeByPropertyObjectTrumpMergePolicy
+
             } else {
                 container = NSPersistentContainer(
                     name: dbName,
@@ -73,6 +75,20 @@ public extension CommonCoreData.Utils {
                     container: container,
                     managedObjectModel: managedObjectModel
                 )
+            }
+            switch persistence {
+            case .appGroup(identifier: _, iCloudEnabled: let iCloudEnabled):
+                if iCloudEnabled {
+                    container.performBackgroundTask { context in
+                        do {
+                            try context.save()
+                            Common_Logs.debug("Started iCloud sync?")
+                        } catch {
+                            Common_Logs.error("Failed to save context: \(error)")
+                        }
+                    }
+                }
+            default: ()
             }
         }
         return container

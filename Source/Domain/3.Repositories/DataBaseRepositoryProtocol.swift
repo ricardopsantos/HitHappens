@@ -19,7 +19,6 @@ public protocol DataBaseRepositoryProtocol {
     func output(_ filter: [OutputType]) -> AnyPublisher<OutputType, Never>
     static func emit(event: OutputType)
     static func output(_ filter: [OutputType]) -> AnyPublisher<OutputType, Never>
-    func reloadDatabase(url: URL)
     //
     // MARK: - TrackedEntity
     //

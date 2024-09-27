@@ -172,6 +172,9 @@ public extension CloudKitManager {
     }
 
     func updateRecord(record: CKRecord, details: [String: String] = [:], assets: [String: URL] = [:], database: CKDatabase, completion: @escaping (Bool) -> Void) {
+        completion(false)
+        return;
+        print("disabled for now")
         let identifier = "updateRecord" + "_" + record.recordType + "_" + UUID().uuidString
         Common_CronometerManager.startTimerWith(identifier: identifier)
         iCloudIsAvailable { [weak self] available in
@@ -207,6 +210,9 @@ public extension CloudKitManager {
         zoneID: CKRecordZone.ID?,
         completion: @escaping (Bool) -> Void
     ) {
+        completion(false)
+        return;
+        print("disabled for now")
         let identifier = "insertRecord" + "_" + recordType + "_" + UUID().uuidString
         iCloudIsAvailable { available in
             guard available else { completion(false); return }
