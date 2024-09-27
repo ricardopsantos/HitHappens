@@ -34,7 +34,7 @@ public class SetupManager {
         }
         #endif
         FontsName.setup()
-        if Common_Utils.onDebug, Common_Utils.true {
+        if Common_Utils.onDebug, Common_Utils.false {
             UserDefaults.standard.set(true, forKey: "com.apple.CoreData.ConcurrencyDebug")
             UserDefaults.standard.set(1, forKey: "com.apple.CoreData.SQLDebug")
             UserDefaults.standard.set(1, forKey: "com.apple.CoreData.cloudkit.debug")

@@ -56,52 +56,52 @@ extension CloudKitService: CloudKitServiceProtocol {
     public func syncDatabase() {
         print("Disabled for now")
         /*
-        iCloudIsAvailable { [weak self] available in
-            guard let self = self else { return }
-            guard available else {
-                return
-            }
-            let recordType = "DBBackup"
-            let assets = dbBackupAssets()
-            createZones { [weak self] _ in
-                guard let self = self else { return }
-                if let databaseRecord = databaseRecord {
-                    // 1 - Upload DB
-                    updateRecord(
-                        record: databaseRecord,
-                        assets: assets,
-                        database: privateCloudDatabase,
-                        completion: { [weak self] _ in
-                            // 2 - Refresh current database record
-                            guard let self = self else { return }
-                            fetchAllRecords(recordType: recordType, resultsLimit: 1, database: privateCloudDatabase) { [weak self] record in
-                                guard let self else { return }
-                                if let record = record {
-                                    self.databaseRecord = record
-                                }
-                            }
-                        }
-                    )
-                } else {
-                    // No local databaseRecord. fetch it
-                    fetchAllRecords(recordType: recordType, resultsLimit: 1, database: privateCloudDatabase) { [weak self] record in
-                        guard let self else { return }
-                        if let record = record {
-                            databaseRecord = record
-                            updateRecord(record: record, assets: assets, database: privateCloudDatabase, completion: { _ in })
-                        } else {
-                            insertRecord(
-                                recordType: recordType,
-                                assets: assets,
-                                database: privateCloudDatabase,
-                                zoneID: backupsZone,
-                                completion: { _ in }
-                            )
-                        }
-                    }
-                }
-            }
-        }*/
+         iCloudIsAvailable { [weak self] available in
+             guard let self = self else { return }
+             guard available else {
+                 return
+             }
+             let recordType = "DBBackup"
+             let assets = dbBackupAssets()
+             createZones { [weak self] _ in
+                 guard let self = self else { return }
+                 if let databaseRecord = databaseRecord {
+                     // 1 - Upload DB
+                     updateRecord(
+                         record: databaseRecord,
+                         assets: assets,
+                         database: privateCloudDatabase,
+                         completion: { [weak self] _ in
+                             // 2 - Refresh current database record
+                             guard let self = self else { return }
+                             fetchAllRecords(recordType: recordType, resultsLimit: 1, database: privateCloudDatabase) { [weak self] record in
+                                 guard let self else { return }
+                                 if let record = record {
+                                     self.databaseRecord = record
+                                 }
+                             }
+                         }
+                     )
+                 } else {
+                     // No local databaseRecord. fetch it
+                     fetchAllRecords(recordType: recordType, resultsLimit: 1, database: privateCloudDatabase) { [weak self] record in
+                         guard let self else { return }
+                         if let record = record {
+                             databaseRecord = record
+                             updateRecord(record: record, assets: assets, database: privateCloudDatabase, completion: { _ in })
+                         } else {
+                             insertRecord(
+                                 recordType: recordType,
+                                 assets: assets,
+                                 database: privateCloudDatabase,
+                                 zoneID: backupsZone,
+                                 completion: { _ in }
+                             )
+                         }
+                     }
+                 }
+             }
+         }*/
     }
 
     public func applicationDidEnterBackground() {

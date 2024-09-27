@@ -91,7 +91,7 @@ open class CommonBaseCoreDataManager: NSObject, SyncCoreDataManagerCRUDProtocol 
             Common_Logs.debug("\(event)")
         }
     }
-    
+
     private var newViewContextInstance: NSManagedObjectContext {
         if Common_Utils.false {
             return CommonCoreData.Utils.mainViewContext(storeContainer: persistentContainer, automaticallyMergesChangesFromParent: true)

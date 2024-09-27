@@ -52,7 +52,7 @@ extension CommonLearnings.Actors {
             }
 
             Task {
-                /*let currentValue =*/ await counter.getValue()
+                /* let currentValue = */ await counter.getValue()
             }
         }
     }

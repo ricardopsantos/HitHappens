@@ -76,7 +76,6 @@ class RootViewModel: ObservableObject {
 
 fileprivate extension RootViewModel {
     func startListening() {
-
         nonSecureAppPreferences?.output([]).sinkToReceiveValue { [weak self] some in
             guard let self = self else { return }
             switch some {

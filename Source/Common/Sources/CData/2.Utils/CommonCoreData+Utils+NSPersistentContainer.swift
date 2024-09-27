@@ -25,7 +25,7 @@ public extension CommonCoreData.Utils {
         managedObjectModel: NSManagedObjectModel,
         persistence: Persistence
     ) -> NSPersistentContainer? {
-        var container: NSPersistentContainer = NSPersistentCloudKitContainer(name: dbName, managedObjectModel: managedObjectModel)
+        var container: NSPersistentContainer!
         switch persistence {
         case .default:
             container = NSPersistentContainer(name: dbName, managedObjectModel: managedObjectModel)
@@ -47,10 +47,11 @@ public extension CommonCoreData.Utils {
                     name: dbName,
                     managedObjectModel: managedObjectModel
                 )
+                container.viewContext.automaticallyMergesChangesFromParent = true
+                container.viewContext.mergePolicy = NSMergeByPropertyObjectTrumpMergePolicy
             } else {
                 container = NSPersistentContainer(
                     name: dbName,
-
                     managedObjectModel: managedObjectModel
                 )
             }
