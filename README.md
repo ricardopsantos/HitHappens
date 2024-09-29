@@ -161,6 +161,17 @@ The app _Services_ are built on a way that can be tested.
 
 # Misc
 
+## IClould Support
+
+<center>
+<img src=Source/_Documents/iCloud_master.gif width=400/>
+</center>
+
+<center>
+<img src=Source/_Documents/iCloud_slave.gif width=400/>
+</center>
+
+
 ## Ligth / Dark mode support 
 
 <center>
