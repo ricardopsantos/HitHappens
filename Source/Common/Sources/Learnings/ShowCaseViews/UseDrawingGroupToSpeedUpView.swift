@@ -12,8 +12,10 @@ import Combine
 
 /**
  Embedding a view with lots of modifiers, repeated subviews, or animations can cause some lag. Luckily, one modifer can help fix your speed issues: .drawingGroup().
- 
- This view modifier turns the view’s content into an image before rendering. There’s also another modifier you can use, compositingGroup(). This modifier takes the effects of modifiers like opacity() or blendMode() and applies them after rendering the contents of a view. This is a neat modifier that you can use when you want to render several opaque views without overlap:
+
+ This view modifier turns the view’s content into an image before rendering. There’s also another modifier you can use, compositingGroup(). 
+ This modifier takes the effects of modifiers like opacity() or blendMode() and applies them after rendering the contents of a view.
+ This is a neat modifier that you can use when you want to render several opaque views without overlap:
  */
 public extension CommonLearnings {
     struct UseDrawingGroupToSpeedUpView: View {

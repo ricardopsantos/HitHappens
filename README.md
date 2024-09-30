@@ -8,6 +8,7 @@
    </a>
 </p>
 
+
 # Index
 
 * __About__: _Into_
@@ -161,15 +162,24 @@ The app _Services_ are built on a way that can be tested.
 
 # Misc
 
-## IClould Support
+## iClould Sync
 
+<table>
+<tr>
+<td>
 <center>
-<img src=Source/_Documents/iCloud_master.gif width=400/>
+<img src=Source/_Documents/images/iCloud_sync1.png width=200/>
 </center>
 
+</td>
+<td>
 <center>
-<img src=Source/_Documents/iCloud_slave.gif width=400/>
+<img src=Source/_Documents/images/iCloud_sync2.png width=200/>
 </center>
+</td>
+</tr>
+</table>
+
 
 
 ## Ligth / Dark mode support 
