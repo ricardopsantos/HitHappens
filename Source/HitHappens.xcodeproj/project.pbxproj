@@ -293,6 +293,7 @@
 		973A2FCC33FAD08CB8BE608B /* UIScreen+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = EBE464405B2D727FE4E32693 /* UIScreen+Extensions.swift */; };
 		976A3AB1FF55996E12BD18DB /* Common.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = FFF39C519E284BB9BED8F7C7 /* Common.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		9789B1520B0E6B6A78A4504C /* AnyPublisher+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0931A99EBD367FEBDB61CA9E /* AnyPublisher+Extensions.swift */; };
+		978FB57A642961149AA79ABE /* View+OnFirstAppearModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E4E19CBBB24DF0520AB9E6B /* View+OnFirstAppearModifier.swift */; };
 		97A21CEA73856187F723D7C2 /* ApplicationLaunchPerformanceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 166F6E42A5F5250DA9D71F86 /* ApplicationLaunchPerformanceTests.swift */; };
 		98B489D90E17E1FBD4E1BDFB /* ExecutionControlManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30AF64695183C2CEB459D58B /* ExecutionControlManager.swift */; };
 		994ACB93F41851D94F23F97D /* V.RootView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A16D271C20F098988204BBE /* V.RootView.swift */; };
@@ -411,7 +412,6 @@
 		D7699558FE9C0D6CC79486C6 /* NonSecureAppPreferencesProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DAE85356E5D988971FA1B4F /* NonSecureAppPreferencesProtocol.swift */; };
 		D78279FD6624840992675303 /* ModelDto+AppConfigRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9714E4570F89D4B165B92B6 /* ModelDto+AppConfigRequest.swift */; };
 		D789C0F22BA6A8F2FF9B9EB6 /* UIViewController+ExtensionsUIKit.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE8192949F9D1AC10535CCD4 /* UIViewController+ExtensionsUIKit.swift */; };
-		D7BFB7E32CB7E93A00DE3E6A /* View+OnFirstAppearModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7BFB7E22CB7E93800DE3E6A /* View+OnFirstAppearModifier.swift */; };
 		D92CD7E287E6C85B258D9F48 /* TinyConstraints+superview.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13E4E71C430848F8ECF3BFD0 /* TinyConstraints+superview.swift */; };
 		D99F293FD939A6B3709EC722 /* CALayer+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = DFD437DC52B2BD2143C57759 /* CALayer+Extensions.swift */; };
 		DA47D0DA8C33CF5EA3F9C122 /* APIRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9946C15D57B96AE21E4D527 /* APIRouter.swift */; };
@@ -932,6 +932,7 @@
 		7D7EC63FBD3379042AE7251E /* dixie.caf */ = {isa = PBXFileReference; lastKnownFileType = file; path = dixie.caf; sourceTree = "<group>"; };
 		7D91F6E1C2EF2402B08B5D8C /* VM.OnBoardingViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VM.OnBoardingViewModel.swift; sourceTree = "<group>"; };
 		7DA293B866305D750B71DE69 /* URLRequest+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "URLRequest+Extensions.swift"; sourceTree = "<group>"; };
+		7E4E19CBBB24DF0520AB9E6B /* View+OnFirstAppearModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "View+OnFirstAppearModifier.swift"; sourceTree = "<group>"; };
 		7E85F9D46C9EAA01491B0C74 /* CommonDataBaseRepository+NSFetchedResultsControllerDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CommonDataBaseRepository+NSFetchedResultsControllerDelegate.swift"; sourceTree = "<group>"; };
 		7E8BE34CE51E501594C4E8DA /* Common.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Common.png; sourceTree = "<group>"; };
 		7EFA6E51792B79D19C1716B9 /* Text+Extentions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Text+Extentions.swift"; sourceTree = "<group>"; };
@@ -959,6 +960,7 @@
 		886796FDBED59FC2C864CB4C /* DataBaseRepository+TrackedLog.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "DataBaseRepository+TrackedLog.swift"; sourceTree = "<group>"; };
 		88E28D3840D18AD233DC46B7 /* V.ConfirmationSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = V.ConfirmationSheet.swift; sourceTree = "<group>"; };
 		8A1E2C3E020DFE8FF16692B5 /* ThreadingManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThreadingManager.swift; sourceTree = "<group>"; };
+		8A3C5AB7E6F1643C593E92F9 /* iCloud_sync1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = iCloud_sync1.png; sourceTree = "<group>"; };
 		8A9FE1DFB0D8788CB021B0FB /* UINavigationController+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UINavigationController+Extensions.swift"; sourceTree = "<group>"; };
 		8B0E54BB63CF9C3E4E5C7D3E /* String+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+Extensions.swift"; sourceTree = "<group>"; };
 		8B15533002B71F4DC3173EEC /* V.CounterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = V.CounterView.swift; sourceTree = "<group>"; };
@@ -1119,7 +1121,6 @@
 		D663ADA86AE4F77274907014 /* _CopyFrameworks.yml */ = {isa = PBXFileReference; lastKnownFileType = text.yaml; path = _CopyFrameworks.yml; sourceTree = "<group>"; };
 		D7A6EB94964AD288E0A000C1 /* Model+CDataEvent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Model+CDataEvent.swift"; sourceTree = "<group>"; };
 		D7B7DA29E777D87D2A5EDDAC /* E.HttpMethod.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = E.HttpMethod.swift; sourceTree = "<group>"; };
-		D7BFB7E22CB7E93800DE3E6A /* View+OnFirstAppearModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "View+OnFirstAppearModifier.swift"; sourceTree = "<group>"; };
 		D85A4C596CBB9274140C2FC6 /* DBVersion2.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = DBVersion2.xcdatamodel; sourceTree = "<group>"; };
 		D86627024BFE862917768A72 /* CategoryPickerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryPickerView.swift; sourceTree = "<group>"; };
 		D8B937923FA73CF87145E3C4 /* V.ListItemView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = V.ListItemView.swift; sourceTree = "<group>"; };
@@ -1141,6 +1142,7 @@
 		E019F8B3A7C182541F6F39FE /* View+LoaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "View+LoaderView.swift"; sourceTree = "<group>"; };
 		E07AF0A11AF7FA1ECDA7116D /* pods.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = pods.xcconfig; sourceTree = "<group>"; };
 		E0F6A297F1680E6004FFB137 /* V.GenericMapView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = V.GenericMapView.swift; sourceTree = "<group>"; };
+		E112A96B844564C91B9EA6AB /* iCloud_sync2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = iCloud_sync2.png; sourceTree = "<group>"; };
 		E207EBF54018769C04897523 /* t2.se.dark.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = t2.se.dark.jpg; sourceTree = "<group>"; };
 		E27684802EC2D29721353221 /* BasicLocationManagerViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BasicLocationManagerViewModel.swift; sourceTree = "<group>"; };
 		E2F7B3C62FB858DF3E7FDD2F /* 1_onboarding_15pro.dark.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = 1_onboarding_15pro.dark.png; sourceTree = "<group>"; };
@@ -1743,11 +1745,11 @@
 		3F23B606D5C36F81920A760E /* ViewModifiers */ = {
 			isa = PBXGroup;
 			children = (
-				D7BFB7E22CB7E93800DE3E6A /* View+OnFirstAppearModifier.swift */,
 				3F60BCB7AB44D4279315A890 /* View+BorderModifier.swift */,
 				4111BD7DACE77661457527D9 /* View+HideNavigationBar.swift */,
 				E019F8B3A7C182541F6F39FE /* View+LoaderView.swift */,
 				2A1D04C05A6502C174D8438B /* View+Modifiers.swift */,
+				7E4E19CBBB24DF0520AB9E6B /* View+OnFirstAppearModifier.swift */,
 				29F78D713B87657ED6EACE7D /* View+ResignKeyboardOnDragGesture.swift */,
 				73697C082097D735118CE022 /* View+ShadowModifier.swift */,
 				F66E8B00B1E0C4FC5EB491F1 /* View+ViewFrameGetter.swift */,
@@ -2436,6 +2438,8 @@
 				0E3BEA57370813F4BB50E43B /* Fonts.png */,
 				EC01AE90E3635EEA0658F402 /* iCloud_master.mp4 */,
 				DC9E984A32D210D1FA144887 /* iCloud_slave.mp4 */,
+				8A3C5AB7E6F1643C593E92F9 /* iCloud_sync1.png */,
+				E112A96B844564C91B9EA6AB /* iCloud_sync2.png */,
 				66F2235C362D2F536A71071F /* Install.png */,
 				309DB324FA605F64E7F09F63 /* Leaks.png */,
 				FF753085AC19CCF3C21EBE92 /* MemoryPrint.png */,
@@ -3385,7 +3389,6 @@
 				250B87E9DF71A1C70FF3014F /* CommonNetworking+ImageUtils.swift in Sources */,
 				D4D48E359356AE65EBE240CE /* CommonNetworking+JSONUtils.swift in Sources */,
 				085DACB56903E868B0E9717C /* CommonNetworking+NetworMonitor.swift in Sources */,
-				D7BFB7E32CB7E93A00DE3E6A /* View+OnFirstAppearModifier.swift in Sources */,
 				6909D0B278ED281905EAFBB1 /* CommonNetworking+ParsingUtils.swift in Sources */,
 				9CF3AE60057227B99B417622 /* CommonNetworking+Reachability.swift in Sources */,
 				9139BBF198571E117485C54F /* Common_XXXRepresentable.swift in Sources */,
@@ -3554,6 +3557,7 @@
 				0357B7C7EA1757974CC451D4 /* View+HideNavigationBar.swift in Sources */,
 				68201E4A1CC8588D2C98564B /* View+LoaderView.swift in Sources */,
 				1DAEE53D3EA33B0E0A632B70 /* View+Modifiers.swift in Sources */,
+				978FB57A642961149AA79ABE /* View+OnFirstAppearModifier.swift in Sources */,
 				41F581AC88294586E6056EEC /* View+ResignKeyboardOnDragGesture.swift in Sources */,
 				510CDFFB6C0C59746C27919B /* View+ShadowModifier.swift in Sources */,
 				E07C01FA60FD4D004C680F25 /* View+ViewBuilder.swift in Sources */,
