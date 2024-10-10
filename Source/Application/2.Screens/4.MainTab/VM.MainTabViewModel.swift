@@ -45,7 +45,7 @@ class MainTabViewModel: BaseViewModel {
         super.init()
         self.selectedTab = dependencies.model.selectedTab
         self.dataBaseRepository = dependencies.dataBaseRepository
-        startListeningDBChanges()
+        startListeningEvents()
     }
 
     func send(action: Actions) {
@@ -60,11 +60,12 @@ class MainTabViewModel: BaseViewModel {
 // MARK: - Auxiliar
 //
 private extension MainTabViewModel {
-    func startListeningDBChanges() {
+    func startListeningEvents() {
         dataBaseRepository?.output([]).sink { some in
             switch some {
             case .generic(let some):
                 switch some {
+                case .databaseReloaded: ()
                 case .databaseDidInsertedContentOn: ()
                 case .databaseDidUpdatedContentOn: ()
                 case .databaseDidDeletedContentOn: ()

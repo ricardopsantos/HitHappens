@@ -107,7 +107,9 @@ public extension DevTools {
             }
             let log = prettyPrinted(log: "\(any)", type: "🟥🟥🟥🟥 Error 🟥🟥🟥🟥", tag: tag, function: function, file: file, line: line)
             counterErrors += 1
+            // swiftlint:disable logs_rule_1
             print(log)
+            // swiftlint:enable logs_rule_1
             if !DevTools.onTargetProduction {
                 store(log: log)
             }
@@ -135,7 +137,9 @@ public extension DevTools {
             }
             counterTotal += 1
             let log = "🟢 Log_\(counterTotal) @ \(Date.utcNow) - \(any.log)\n".replace(" +0000", with: "").replace("Optional", with: "")
+            // swiftlint:disable logs_rule_1
             print(log)
+            // swiftlint:enable logs_rule_1
             if Common_Utils.false {
                 store(log: log)
             }

@@ -13,13 +13,28 @@ import DevTools
 
 class AppDelegate: UIResponder, UIApplicationDelegate {
     private let cancelBag = CancelBag()
-
+    var configuration: ConfigurationViewModel?
     func application(
         _ application: UIApplication,
         didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?
     ) -> Bool {
         DevTools.Log.debug(.appLifeCycle("\(#function)"), .appDelegate)
         AnalyticsManager.shared.handleAppLifeCycleEvent(label: #function, sender: "\(Self.self)")
+        configuration?.cloudKitService.appDidFinishLaunchingWithOptions()
+
+        // Needed (silent pushs) for iCloud Sync
+        let options: UNAuthorizationOptions = [
+            .alert,
+            .badge,
+            .sound,
+            .providesAppNotificationSettings
+        ]
+        UNUserNotificationCenter.current().requestAuthorization(options: options) { granted, _ in
+            guard granted else { return }
+            DispatchQueue.main.async {
+                UIApplication.shared.registerForRemoteNotifications()
+            }
+        }
         return true
     }
 
@@ -35,7 +50,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             sessionRole: connectingSceneSession.role
         )
 
-        configuration.delegateClass = SceneDelegateUIKit.self
+        configuration.delegateClass = SceneDelegate.self
         DevTools.Log.debug(.appLifeCycle("\(#function)"), .appDelegate)
         AnalyticsManager.shared.handleAppLifeCycleEvent(label: #function, sender: "\(Self.self)")
         return configuration
@@ -100,6 +115,12 @@ extension AppDelegate {
         didReceiveRemoteNotification userInfo: [AnyHashable: Any],
         fetchCompletionHandler completionHandler: @escaping (UIBackgroundFetchResult) -> Void
     ) {
+        if let aps = userInfo["aps"] as? [String: Any], aps["content-available"] as? Int == 1 {
+            // Handle your silent notification here
+            completionHandler(.newData)
+        } else {
+            completionHandler(.noData)
+        }
         DevTools.Log.debug(.appLifeCycle("\(#function)"), .appDelegate)
         AnalyticsManager.shared.handleAppLifeCycleEvent(label: #function, sender: "\(Self.self)")
     }
@@ -114,10 +135,11 @@ extension AppDelegate {
 }
 
 //
-// MARK: - SceneDelegateUIKit
+// MARK: - SceneDelegate
 //
 
-class SceneDelegateUIKit: UIResponder, UIWindowSceneDelegate {
+class SceneDelegate: UIResponder, UIWindowSceneDelegate {
+    var configuration: ConfigurationViewModel?
     func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
         guard (scene as? UIWindowScene) != nil else {
             return

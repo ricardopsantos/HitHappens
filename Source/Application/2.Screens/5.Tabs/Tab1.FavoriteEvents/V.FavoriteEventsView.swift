@@ -151,6 +151,7 @@ struct FavoriteEventsView: View, ViewProtocol {
                             })
                         SwiftUIUtils.FixedVerticalSpacer(height: SizeNames.defaultMargin)
                     }
+                    SyncMonitorView()
                     Spacer()
                 }
             }

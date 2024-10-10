@@ -41,7 +41,9 @@ struct RootViewCoordinator: View, ViewCoordinatorProtocol {
         case .root:
             RootView(dependencies: .init(
                 model: .init(isAppStartCompleted: false),
-                nonSecureAppPreferences: configuration.nonSecureAppPreferences
+                nonSecureAppPreferences: configuration.nonSecureAppPreferences,
+                dataBaseRepository: configuration.dataBaseRepository,
+                cloudKitService: configuration.cloudKitService
             ))
         default:
             NotImplementedView(screen: screen)

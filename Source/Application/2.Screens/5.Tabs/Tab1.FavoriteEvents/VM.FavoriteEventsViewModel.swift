@@ -58,7 +58,7 @@ class FavoriteEventsViewModel: BaseViewModel {
         self.favorits = dependencies.model.favorits
         self.onShouldDisplayTrackedLog = dependencies.onShouldDisplayTrackedLog
         super.init()
-        startListeningDBChanges()
+        startListeningEvents()
     }
 
     func send(_ action: Actions) {
@@ -110,11 +110,12 @@ class FavoriteEventsViewModel: BaseViewModel {
 //
 
 fileprivate extension FavoriteEventsViewModel {
-    func startListeningDBChanges() {
+    func startListeningEvents() {
         dataBaseRepository?.output([]).sink { [weak self] some in
             switch some {
             case .generic(let some):
                 switch some {
+                case .databaseReloaded: ()
                 case .databaseDidInsertedContentOn(let table, let id):
                     // New record added
                     // if table == "\(CDataTrackedEntity.self)" {

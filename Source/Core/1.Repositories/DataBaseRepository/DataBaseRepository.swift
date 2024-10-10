@@ -11,6 +11,7 @@ import Combine
 //
 import Common
 import Domain
+public class DataBaseRepository2: CommonBaseCoreDataManager {}
 
 public class DataBaseRepository: CommonBaseCoreDataManager, DataBaseRepositoryProtocol {
     public static var shared = DataBaseRepository(
@@ -18,6 +19,7 @@ public class DataBaseRepository: CommonBaseCoreDataManager, DataBaseRepositoryPr
         dbBundle: Domain.bundleIdentifier,
         persistence: Domain.coreDataPersistence
     )
+
     override private init(dbName: String, dbBundle: String, persistence: CommonCoreData.Utils.Persistence) {
         super.init(dbName: dbName, dbBundle: dbBundle, persistence: persistence)
     }

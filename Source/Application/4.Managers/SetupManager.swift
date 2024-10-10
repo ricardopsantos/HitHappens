@@ -6,6 +6,7 @@
 import Foundation
 import UIKit
 import Combine
+import CloudKit
 //
 #if FIREBASE_ENABLED
 import Firebase
@@ -22,7 +23,8 @@ public class SetupManager {
     static let shared = SetupManager()
     func setup(
         dataBaseRepository: DataBaseRepositoryProtocol,
-        nonSecureAppPreferences: NonSecureAppPreferencesProtocol
+        nonSecureAppPreferences: NonSecureAppPreferencesProtocol,
+        cloudKitService: CloudKitServiceProtocol
     ) {
         Common.UserDefaultsManager.numberOfLoginsIncrement()
         #if FIREBASE_ENABLED
@@ -36,11 +38,14 @@ public class SetupManager {
         if Common_Utils.onDebug, Common_Utils.false {
             UserDefaults.standard.set(true, forKey: "com.apple.CoreData.ConcurrencyDebug")
             UserDefaults.standard.set(1, forKey: "com.apple.CoreData.SQLDebug")
+            UserDefaults.standard.set(1, forKey: "com.apple.CoreData.cloudkit.debug")
         } else {
             UserDefaults.standard.set(false, forKey: "com.apple.CoreData.ConcurrencyDebug")
             UserDefaults.standard.set(0, forKey: "com.apple.CoreData.SQLDebug")
+            UserDefaults.standard.set(0, forKey: "com.apple.CoreData.cloudkit.debug")
         }
         UITestingManager.setup()
         InterfaceStyleManager.setup(nonSecureAppPreferences: nonSecureAppPreferences)
+        cloudKitService.appStarted()
     }
 }

@@ -119,11 +119,17 @@ struct SettingsScreen: View, ViewProtocol {
             publicCodeButtonView
                 .animation(.default, value: viewModel.publicCodeURL)
             onBoardingButtonView
+            SyncMonitorView()
+            SwiftUIUtils.FixedVerticalSpacer(height: SizeNames.defaultMarginSmall)
             versionView
             SwiftUIUtils.FixedVerticalSpacer(height: SizeNames.defaultMargin)
         }.paddingHorizontal(SizeNames.defaultMarginSmall)
     }
 }
+
+//
+// MARK: - Shared Views
+//
 
 //
 // MARK: - Auxiliar Views
@@ -241,6 +247,6 @@ fileprivate extension SettingsScreen {}
 #if canImport(SwiftUI) && DEBUG
 #Preview {
     SettingsViewCoordinator(presentationStyle: .notApplied)
-        .environmentObject(ConfigurationViewModel.defaultForApp)
+        .environmentObject(ConfigurationViewModel.defaultForPreviews)
 }
 #endif

@@ -32,7 +32,6 @@ struct HitHappensApp: App {
                 nonSecureAppPreferences: DependenciesManager.Repository.nonSecureAppPreferences,
                 secureAppPreferences: DependenciesManager.Repository.secureAppPreferences
             )
-            self.configuration = config
         } else {
             config = .init(
                 appConfigService: DependenciesManager.Services.appConfigService,
@@ -41,14 +40,16 @@ struct HitHappensApp: App {
                 nonSecureAppPreferences: DependenciesManager.Repository.nonSecureAppPreferences,
                 secureAppPreferences: DependenciesManager.Repository.secureAppPreferences
             )
-            self.configuration = config
         }
+        self.configuration = config
+        delegate.configuration = config
         //
         // Modules Setup
         //
         SetupManager.shared.setup(
             dataBaseRepository: config.dataBaseRepository,
-            nonSecureAppPreferences: config.nonSecureAppPreferences
+            nonSecureAppPreferences: config.nonSecureAppPreferences,
+            cloudKitService: config.cloudKitService
         )
     }
 

@@ -19,5 +19,5 @@ public extension Domain {
         Bundle(for: DomainBundleFinder.self).bundleIdentifier ?? ""
     }
 
-    static var coreDataPersistence: CommonCoreData.Utils.Persistence = .default
+    static var coreDataPersistence: CommonCoreData.Utils.Persistence = .default(iCloudEnabled: true)
 }

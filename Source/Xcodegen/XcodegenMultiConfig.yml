@@ -24,6 +24,10 @@ packages:
     url: https://github.com/Quick/Nimble
     branch: main
         
+  CloudKitSyncMonitor:
+    url: https://github.com/ggruen/CloudKitSyncMonitor.git
+    revision: "923c6b0b2360b3a70d3dd69a0c6c8320b075caa9"
+    
 ####################### Documents #######################
 ####################### Documents #######################
 ####################### Documents #######################
@@ -145,6 +149,11 @@ targets:
       - target: Domain
       - target: Core
       - target: DesignSystem
+      - package: CloudKitSyncMonitor
+        product: CloudKitSyncMonitor
+        link: true
+        
+        
 # WIDGET
 # WIDGET
 # WIDGET

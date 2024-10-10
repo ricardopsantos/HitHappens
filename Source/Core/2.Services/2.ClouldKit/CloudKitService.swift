@@ -12,31 +12,78 @@ import Common
 import Domain
 import DevTools
 
-// https://medium.com/@islammoussa.eg/implementing-seamless-app-version-management-in-ios-with-cloudkit-bf5715b78283
+public class CloudKitService: CloudKitManager {
+    private var backupsZone: CKRecordZone.ID?
+    private var eventsZone: CKRecordZone.ID?
+    private var databaseRecord: CKRecord?
+    private var zonesCreated: Bool = false
+    override open func loggerEnabled() -> Bool {
+        true
+    }
 
-public class CloudKitService {
-    private let container: CKContainer
-    private let publicCloudDatabase: CKDatabase
-    private let privateCloudDatabase: CKDatabase
-    public var zoneID: CKRecordZone.ID?
-
-    public init(cloudKit: String) {
-        self.container = CKContainer(identifier: cloudKit)
-        self.publicCloudDatabase = container.publicCloudDatabase
-        self.privateCloudDatabase = container.privateCloudDatabase
-        self.zoneID = CKRecordZone.ID(zoneName: "\(Self.self).user.zone", ownerName: CKCurrentUserDefaultName)
+    override public init(cloudKit: String) {
+        super.init(cloudKit: cloudKit)
+        self.backupsZone = CKRecordZone.ID(zoneName: "backupsZone", ownerName: CKCurrentUserDefaultName)
+        self.eventsZone = CKRecordZone.ID(zoneName: "eventsZone", ownerName: CKCurrentUserDefaultName)
     }
 }
-
-//
-// MARK: - Private
-//
 
 //
 // MARK: - CloudKitServiceProtocol
 //
 
 extension CloudKitService: CloudKitServiceProtocol {
+    public func appStarted() {
+        iCloudIsAvailable { [weak self] available in
+            guard available else {
+                return
+            }
+            self?.createZones { [weak self] _ in
+                guard let self = self else { return }
+                self.insertRecord(
+                    recordType: "Event",
+                    details: details(appLifeCycleEvent: "appStarted"),
+                    database: privateCloudDatabase,
+                    zoneID: eventsZone
+                ) { _ in }
+            }
+        }
+    }
+
+    public func applicationDidEnterBackground() {
+        iCloudIsAvailable { [weak self] available in
+            guard available else {
+                return
+            }
+            self?.createZones { [weak self] _ in
+                guard let self = self else { return }
+                self.insertRecord(
+                    recordType: "Event",
+                    details: details(appLifeCycleEvent: "applicationDidEnterBackground"),
+                    database: privateCloudDatabase,
+                    zoneID: eventsZone
+                ) { _ in }
+            }
+        }
+    }
+
+    public func appDidFinishLaunchingWithOptions() {
+        iCloudIsAvailable { [weak self] available in
+            guard available else {
+                return
+            }
+            self?.createZones { [weak self] _ in
+                guard let self = self else { return }
+                self.insertRecord(
+                    recordType: "Event",
+                    details: details(appLifeCycleEvent: "appDidFinishLaunchingWithOptions"),
+                    database: privateCloudDatabase,
+                    zoneID: eventsZone
+                ) { _ in }
+            }
+        }
+    }
+
     public func fetchAppVersion() async -> Model.AppVersion? {
         try? await withCheckedThrowingContinuation { [weak self] continuation in
             guard let self = self else { return }
@@ -50,104 +97,53 @@ extension CloudKitService: CloudKitServiceProtocol {
             }
         }
     }
-
-    public func fetchAppVersion(completion: @escaping (Result<Model.AppVersion, Error>) -> Void) {
-        iCloudIsAvailable { [weak self] available in
-            guard available else {
-                completion(.failure(AppErrors.genericError(devMessage: "iCloud not available")))
-                return
-            }
-            guard let self = self else { return }
-            let query = CKQuery(recordType: "AppVersion", predicate: NSPredicate(value: true))
-            let queryOperation = CKQueryOperation(query: query)
-            queryOperation.resultsLimit = 1
-            queryOperation.recordMatchedBlock = { _, result in
-                switch result {
-                case .success(let record):
-                    guard let storeVersion = record["store_version"] as? String,
-                          let minimumVersion = record["minimum_version"] as? String else {
-                        completion(.failure(AppErrors.genericError(devMessage: "Invalid record format")))
-                        return
-                    }
-                    completion(.success(Model.AppVersion(storeVersion: storeVersion, minimumVersion: minimumVersion)))
-                case .failure(let error):
-                    DevTools.Log.error(error, .business)
-                    completion(.failure(error))
-                }
-            }
-            publicCloudDatabase.add(queryOperation)
-        }
-    }
 }
 
+//
+// MARK: - Auxiliar
+//
+
 private extension CloudKitService {
-    func iCloudIsAvailable(completion: @escaping (Bool) -> Void) {
-        CKContainer.default().accountStatus { accountStatus, error in
-            switch accountStatus {
-            case .available:
-                DevTools.Log.debug("iCloud account available.", .business)
-                completion(true)
-            case .noAccount:
-                DevTools.Log.debug("No iCloud account is signed in.", .business)
-                completion(false)
-            case .restricted:
-                DevTools.Log.debug("iCloud access is restricted.", .business)
-            case .couldNotDetermine:
-                if let error = error {
-                    DevTools.Log.error("Error determining iCloud status: \(error.localizedDescription)", .business)
+    func details(appLifeCycleEvent name: String) -> [String: String] {
+        var userInfo: [String: String] = [:]
+        userInfo["number_of_logins"] = Common.UserDefaultsManager.numberOfLogins.description
+        userInfo["version"] = Common.AppInfo.version
+        var event: [String: String] = [:]
+        event["name"] = name
+        event["type"] = "AppLifeCycle"
+        event["user_info"] = userInfo.sorted(by: { $0.key > $1.key }).description
+        return event
+    }
+
+    func createZones(completion: @escaping (Bool) -> Void) {
+        guard !zonesCreated else { completion(false); return }
+        iCloudIsAvailable { [weak self] available in
+            guard available else { completion(false); return }
+            guard let self = self else { completion(false); return }
+            guard let backupsZone = backupsZone else { completion(false); return }
+            guard let eventsZone = eventsZone else { completion(false); return }
+            createZone(zoneID: backupsZone) { [weak self] success in
+                guard success else { completion(false); return }
+                self?.createZone(zoneID: eventsZone) { [weak self] success in
+                    self?.zonesCreated = success
+                    completion(success)
                 }
-                completion(false)
-            case .temporarilyUnavailable:
-                DevTools.Log.debug("iCloud access is temporarily unavailable.", .business)
-                completion(false)
-            @unknown default:
-                DevTools.Log.debug("Unknown iCloud account status.", .business)
-                completion(false)
             }
         }
     }
 
-    func createZone(completion: @escaping (Error?) -> Void) {
-        iCloudIsAvailable { [weak self] available in
-            guard available else { return }
-            guard let self = self else { return }
-            guard let zoneID = zoneID else { return }
-            let recordZone = CKRecordZone(zoneID: zoneID)
-            let operation = CKModifyRecordZonesOperation(recordZonesToSave: [recordZone], recordZoneIDsToDelete: [])
-            operation.modifyRecordZonesResultBlock = { result in
-                switch result {
-                case .success(let record):
-                    DevTools.Log.debug("Zone created: \(record)", .business)
-                    completion(nil)
-                case .failure(let error):
-                    DevTools.Log.error("Error creating zone: \(error)", .business)
-                    completion(error)
+    func fetchAppVersion(completion: @escaping (Result<Model.AppVersion, Error>) -> Void) {
+        fetchAllRecords(recordType: "AppVersion", resultsLimit: 1, database: publicCloudDatabase) { record in
+            if let record = record {
+                guard let storeVersion = record["store_version"] as? String,
+                      let minimumVersion = record["minimum_version"] as? String else {
+                    completion(.failure(AppErrors.genericError(devMessage: "Invalid record format")))
+                    return
                 }
+                completion(.success(Model.AppVersion(storeVersion: storeVersion, minimumVersion: minimumVersion)))
+            } else {
+                completion(.failure(AppErrors.genericError(devMessage: "Not found")))
             }
-            operation.qualityOfService = .utility
-            privateCloudDatabase.add(operation)
-        }
-    }
-
-    func writeEvent(name: String, completion: @escaping (Error?) -> Void) {
-        iCloudIsAvailable { [weak self] available in
-            guard available else { return }
-            guard let self = self else { return }
-            guard let zoneID = zoneID else { return }
-            let recordType = "Event"
-            let record = CKRecord(recordType: recordType, zoneID: zoneID)
-            record["name"] = name
-            record["date"] = Date()
-            let saveOperation = CKModifyRecordsOperation(recordsToSave: [record], recordIDsToDelete: nil)
-            saveOperation.modifyRecordsResultBlock = { result in
-                switch result {
-                case .success(let record):
-                    DevTools.Log.debug("Record saved successfully in custom zone \(record)", .business)
-                case .failure(let error):
-                    DevTools.Log.error("Error saving record: \(error)", .business)
-                }
-            }
-            publicCloudDatabase.add(saveOperation)
         }
     }
 }
