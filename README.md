@@ -27,7 +27,7 @@ ___Hit Happens___ is an open [source app](https://en.wikipedia.org/wiki/Open_sou
 
 ## Intro 
 
-_Hit Happens_ is built with __SwiftUI__ using __MVVM__, and was mainly designed to integrating various frameworks and features in a well-organized structure with support for __Unit Testing__, __UI Testing__. Also makes use of other tools like __[XcodeGen](https://github.com/yonaskolb/XcodeGen)__, __[SwiftLint](https://github.com/realm/SwiftLint)__ and __[SwiftFormat](https://github.com/nicklockwood/SwiftFormat)__
+_Hit Happens_ is built with __SwiftUI__ using __MVVM__, and was mainly designed to integrate various frameworks and features in a well-organized structure with support for __Unit Testing__, __UI Testing__. Also makes use of other tools like __[XcodeGen](https://github.com/yonaskolb/XcodeGen)__, __[SwiftLint](https://github.com/realm/SwiftLint)__ and __[SwiftFormat](https://github.com/nicklockwood/SwiftFormat)__
 
 __SwiftUI__ because is Apple's current standart and offers several advantages like including a declarative syntax that simplifies UI design, real-time previews for faster iteration, and seamless integration with Swift for a unified coding experience while also enabling cross-platform development with a single codebase, significantly reducing development time and effort.
 
