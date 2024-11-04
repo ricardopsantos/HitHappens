@@ -3,6 +3,9 @@
 clear
 #ENV TERM=xterm
 
+PROJECT_PATH="Source/HitHappens.xcodeproj"
+#PROJECT_PATH="HitHappens.xcodeproj"
+
 displayCompilerInfo() {
     printf "\n"
     echo -n "### Current Compiler"
@@ -12,18 +15,17 @@ displayCompilerInfo() {
 }
 
 build() {
-	#swift clean
-    #swift build -project Source/HitHappens.xcodeproj -scheme "HitHappens Dev" CODE_SIGNING_ALLOWED=NO CODE_SIGNING_REQUIRED=NO
-	#xcodebuild clean
-    xcodebuild build -quiet -project Source/HitHappens.xcodeproj -scheme "HitHappens Dev" CODE_SIGNING_ALLOWED=NO CODE_SIGNING_REQUIRED=NO
+	#xcodebuild clean -project $PROJECT_PATH
+    xcodebuild build -project $PROJECT_PATH -scheme "HitHappens Dev" CODE_SIGNING_ALLOWED=NO CODE_SIGNING_REQUIRED=NO #-quiet
 }
 
 test() {
     local simulator_id=$1
     if [ -n "$simulator_id" ]; then
-        xcodebuild clean test -project Source/HitHappens.xcodeproj -scheme "HitHappens Dev" -destination "id=$simulator_id" CODE_SIGNING_ALLOWED=NO CODE_SIGNING_REQUIRED=NO
+        xcodebuild clean test -project $PROJECT_PATH -scheme "HitHappens Dev" -destination "id=$simulator_id" CODE_SIGNING_ALLOWED=NO CODE_SIGNING_REQUIRED=NO
     else
         echo "No simulator ID provided."
+        xcodebuild clean test -project $PROJECT_PATH -scheme "HitHappens Dev" -destination 'platform=iOS Simulator,name=iPhone 16,OS=latest' CODE_SIGNING_ALLOWED=NO CODE_SIGNING_REQUIRED=NO
     fi
 }
 
@@ -34,7 +36,7 @@ openSimulator() {
     sleep 1
 
     # Open the iOS simulator
-    open -a Simulator && xcrun simctl boot 'iPhone 15 Pro'
+    open -a Simulator && xcrun simctl boot 'iPhone 16'
 
     # Wait a few seconds to ensure the simulator is fully opened
     sleep 5
@@ -87,7 +89,8 @@ printf "\n"
 if [ "$1" = "build" ]; then
     build
 elif [ "$1" = "test" ]; then
-    openSimulatorAndtest
+    #openSimulatorAndtest
+    test
 else
     manualOptions
 fi
