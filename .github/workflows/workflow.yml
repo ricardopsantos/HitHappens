@@ -19,4 +19,4 @@ jobs:
     - name: Build
       run: ./Source/build.sh build
     - name: Run tests
-      run: /Source/build.sh test
+      run: ./Source/build.sh test
