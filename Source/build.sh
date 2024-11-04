@@ -16,7 +16,7 @@ displayCompilerInfo() {
 
 build() {
 	#xcodebuild clean -project $PROJECT_PATH
-    xcodebuild build -project $PROJECT_PATH -scheme "HitHappens Dev" CODE_SIGNING_ALLOWED=NO CODE_SIGNING_REQUIRED=NO #-quiet
+    xcodebuild clean build -project $PROJECT_PATH -scheme "HitHappens Dev" CODE_SIGNING_ALLOWED=NO CODE_SIGNING_REQUIRED=NO -quiet
 }
 
 test() {
@@ -25,7 +25,7 @@ test() {
         xcodebuild clean test -project $PROJECT_PATH -scheme "HitHappens Dev" -destination "id=$simulator_id" CODE_SIGNING_ALLOWED=NO CODE_SIGNING_REQUIRED=NO
     else
         echo "No simulator ID provided."
-        xcodebuild clean test -project $PROJECT_PATH -scheme "HitHappens Dev" -destination 'platform=iOS Simulator,name=iPhone 16,OS=latest' CODE_SIGNING_ALLOWED=NO CODE_SIGNING_REQUIRED=NO
+        xcodebuild clean test -project $PROJECT_PATH -scheme "HitHappens Dev" -destination 'platform=iOS Simulator,name=iPhone 16,OS=latest' CODE_SIGNING_ALLOWED=NO CODE_SIGNING_REQUIRED=NO -only-testing:UnitTests
     fi
 }
 
