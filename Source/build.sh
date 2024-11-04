@@ -71,13 +71,16 @@ manualOptions() {
     printf "\n"
 
     echo "### Test"
-    echo " [1] : Test"
+    echo " [1] : UnitTest+UITests"
+    echo " [2] : UnitTest"
     echo " [2] : Skip (Default)"
     echo -n "Option? "
     read -r option
     case $option in
         1 ) 
             openSimulatorAndtest ;;
+        2 ) 
+            test ;;
         * ) echo "Ignored..." ;;
     esac
 }
