@@ -11,13 +11,13 @@ displayCompilerInfo() {
 }
 
 build() {
-    xcodebuild build -project HitHappens.xcodeproj -scheme "HitHappens Dev" CODE_SIGNING_ALLOWED=NO CODE_SIGNING_REQUIRED=NO
+    xcodebuild build -project Source/HitHappens.xcodeproj -scheme "HitHappens Dev" CODE_SIGNING_ALLOWED=NO CODE_SIGNING_REQUIRED=NO
 }
 
 test() {
     local simulator_id=$1
     if [ -n "$simulator_id" ]; then
-        xcodebuild clean test -project HitHappens.xcodeproj -scheme "HitHappens Dev" -destination "id=$simulator_id" CODE_SIGNING_ALLOWED=NO CODE_SIGNING_REQUIRED=NO
+        xcodebuild clean test -project Source/HitHappens.xcodeproj -scheme "HitHappens Dev" -destination "id=$simulator_id" CODE_SIGNING_ALLOWED=NO CODE_SIGNING_REQUIRED=NO
     else
         echo "No simulator ID provided."
     fi
