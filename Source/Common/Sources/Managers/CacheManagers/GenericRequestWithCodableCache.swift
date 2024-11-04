@@ -9,8 +9,6 @@ import Combine
 internal typealias Common_AvailabilityState = Common.RepositoryAvailabilityState
 public typealias Common_GenericRequestWithCacheResponse<T1: Codable, E1: Error> = AnyPublisher<T1, E1>
 
-extension String: Error {}
-
 public extension Common {
     struct GenericRequestWithCodableCache {
         private init() {}
