@@ -1,6 +1,7 @@
 #!/bin/bash
 
 clear
+ENV TERM=xterm
 
 displayCompilerInfo() {
     printf "\n"
@@ -11,6 +12,7 @@ displayCompilerInfo() {
 }
 
 build() {
+	xcodebuild clean
     xcodebuild build -project Source/HitHappens.xcodeproj -scheme "HitHappens Dev" CODE_SIGNING_ALLOWED=NO CODE_SIGNING_REQUIRED=NO
 }
 
