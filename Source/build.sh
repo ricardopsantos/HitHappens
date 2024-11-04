@@ -1,7 +1,7 @@
 #!/bin/bash
 
 clear
-ENV TERM=xterm
+#ENV TERM=xterm
 
 displayCompilerInfo() {
     printf "\n"
@@ -12,8 +12,10 @@ displayCompilerInfo() {
 }
 
 build() {
-	xcodebuild clean
-    xcodebuild build -project Source/HitHappens.xcodeproj -scheme "HitHappens Dev" CODE_SIGNING_ALLOWED=NO CODE_SIGNING_REQUIRED=NO
+	#swift clean
+    #swift build -project Source/HitHappens.xcodeproj -scheme "HitHappens Dev" CODE_SIGNING_ALLOWED=NO CODE_SIGNING_REQUIRED=NO
+	#xcodebuild clean
+    xcodebuild build -quiet -project Source/HitHappens.xcodeproj -scheme "HitHappens Dev" CODE_SIGNING_ALLOWED=NO CODE_SIGNING_REQUIRED=NO
 }
 
 test() {
