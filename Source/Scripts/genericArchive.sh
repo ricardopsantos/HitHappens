@@ -52,9 +52,6 @@ EXPORT_FILE_NAME="$SCHEME"_["$CONFIGURATION"]_"$APP_VERSION"
 EXPORT_FILE_NAME=$(echo "$EXPORT_FILE_NAME" | tr -d ' ')
 EXPORT_ARCHIVE_PATH=""$OUTPUT_PATH""$EXPORT_FILE_NAME""
 
-TEST_SIMULATOR_ID?=""
-TEST_SIMULATOR_NAME"iPhone 16 Pro"
-
 echo ""
 echo ""
 
@@ -71,6 +68,8 @@ echo ""
 echo ""
 
 
+TEST_SIMULATOR_ID=""
+TEST_SIMULATOR_NAME="iPhone 16"
 
 openSimulator() {
 
@@ -104,9 +103,6 @@ openSimulator() {
 	printf "\n"
 }
 
-timestamp=$(date +"%Y%m%d%H%M%S")
-
-xcodebuild ARCHS\=arm64 VALID_ARCHS\=arm64 ONLY_ACTIVE_ARCH\=NO -scheme "$SCHEME" -configuration "$CONFIGURATION" -project "$PROJECT_PATH" -destination "platform=iOS Simulator,name=iPhone 16 Pro,OS=latest" -resultBundlePath "$EXPORT_ARCHIVE_PATH""/Build/Build_$timestamp" -allowProvisioningUpdates build
 
 doArquive() {
     #to_run="xcodebuild PRODUCT_NAME='$SCHEME' -verbose archive -project '$PROJECT_PATH' -configuration '$CONFIGURATION' -scheme '$SCHEME' -archivePath '$ARCHIVE_PATH'.xcarchive -UseModernBuildSystem=NO"
@@ -143,6 +139,26 @@ doGenerateIPA() {
     eval $var_zip
 }
 
+buildForSimulator() {
+	timestamp=$(date +"%Y%m%d%H%M%S")
+	xcodebuild ARCHS\=arm64 VALID_ARCHS\=arm64 ONLY_ACTIVE_ARCH\=NO -scheme "$SCHEME" -configuration "$CONFIGURATION" -project "$PROJECT_PATH" -destination "platform=iOS Simulator,name=""$TEST_SIMULATOR_NAME"",OS=latest" -resultBundlePath "$EXPORT_ARCHIVE_PATH""/Build/Build_$timestamp" -allowProvisioningUpdates build
+}
+
+echo ""
+
+echo "### Build for Simulator?"
+echo " [1] : Yes (Default)"
+echo " [2] : No"
+echo -n "Option? "
+read option
+case $option in
+    [1] ) buildForSimulator ;;
+    [2]  )echo "Ignored...." ;;
+   *) buildForSimulator 
+;;
+esac
+
+echo ""
 
 echo "### Archive?"
 echo " [1] : Yes"
@@ -154,6 +170,8 @@ case $option in
    *) echo "Ignored...."
 ;;
 esac
+
+echo ""
 
 echo "### Generate IPA?"
 echo " [1] : Yes"
