@@ -2,7 +2,7 @@
 
 export PATH="$PATH:/opt/homebrew/bin"
 
-executeSwiftformat() {
+doWork() {
 	swiftformat --config .swiftformat.yml . --swiftversion 5.6
 	exit 0
 }
@@ -12,11 +12,9 @@ if [ -n "$USER" ]; then
 		echo "AppCenter build. Ignored."
 		exit 0
 	else
-		executeSwiftformat;
-		exit -1
+		doWork
 	fi
 else
 	echo "\$USER not set. Ignored."
 fi
-
 

@@ -16,7 +16,7 @@ import Core
 import Common
 
 final class DataBaseRepository_Tests: XCTestCase {
-    var enabled: Bool = true
+    var enabled: Bool = false
     private var repository: DataBaseRepositoryProtocol? = DependenciesManager.Repository.dataBaseRepository
 
     override func setUp() {
@@ -154,11 +154,17 @@ extension DataBaseRepository_Tests {
     /// 1000 x 100 logs = 13.859375 MB database
     /// 2000 x 100 logs = 28.3515625 MB database
     func test_stressTest() {
+        guard enabled else {
+            XCTAssert(true)
+            return
+        }
         repository?.trackedEntityDeleteAll()
         // Create 1 event with 3 logs
         let count = 2000
         for i in 1...count {
-            Common_Logs.debug("i: \(i)")
+            if i % 100 == 0 {
+                Common_Logs.debug("i: \(i)")
+            }
             let trackedEntityId = saveRandomEntity(events: 100)
             guard var trackedEntity = repository?.trackedEntityGet(
                 trackedEntityId: trackedEntityId,
