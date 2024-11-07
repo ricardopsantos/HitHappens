@@ -196,27 +196,18 @@ doArquive() {
 
 	message="doArquive"
 	printMessage  "Will start: $message Development"
-
-	# WORKS!	
+	
 	xcodebuild archive \
     	-project "$PROJECT_PATH" \
     	-scheme "$SCHEME" \
-    	-archivePath "$OUTPUT_FOLDER""xcarchive_Development.xcarchive" \
+    	-archivePath "$OUTPUT_FOLDER""xcarchive_Development_V1.xcarchive" \
+    	#CODE_SIGNING_ALLOWED=NO \
+    	#CODE_SIGNING_REQUIRED=NO
 	    DEVELOPMENT_TEAM="EP8XQ3ZY9V" \
 	    CODE_SIGN_IDENTITY="Apple Development" 
     	-allowProvisioningUpdates
     	
 
-	xcodebuild archive \
-    	-project "$PROJECT_PATH" \
-    	-scheme "$SCHEME" \
-    	-archivePath "$OUTPUT_FOLDER""xcarchive_Development_V2.xcarchive" \
-    	CODE_SIGNING_ALLOWED=NO \
-    	CODE_SIGNING_REQUIRED=NO
-	    #DEVELOPMENT_TEAM="EP8XQ3ZY9V" \
-	    CODE_SIGN_IDENTITY="Apple Development" 
-    	#-allowProvisioningUpdates
-    	
     printMessage  "Will start: $message Distribution"
 
 	#xcodebuild archive \
@@ -252,11 +243,12 @@ doGenerateIPA() {
 #
 #######################################################################################################
 
-displayCompilerInfo
+#displayCompilerInfo
 
 rm -rf ~/Library/Developer/Xcode/DerivedData/*
-
 xcodebuild clean -project "$PROJECT_PATH"
+
+doArquive
 
 echo ""
 
