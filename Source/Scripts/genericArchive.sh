@@ -1,11 +1,21 @@
 #!/bin/bash
 
-clear
-
+#######################################################################################################
+#
+# Usage
 #
 # ./genericArchive.sh "GoodToGo.xcodeproj" "MyAppName.AppStore"   "Release"  "[V2.0.2]" "~/Desktop/" "exportPlist.enterprise.plist"
 # ./genericArchive.sh "GoodToGo.xcodeproj" "MyAppName.Enterprise" "Debug"    "[V2.0.2]" "~/Desktop/" "exportPlist.appStore"
 #
+#######################################################################################################
+
+clear
+
+#######################################################################################################
+#
+# Utils functions
+#
+#######################################################################################################
 
 # Function to block the domain
 # https://dimillian.medium.com/why-is-xcodebuild-slower-than-the-xcode-gui-38f3d7b0c0bc
@@ -29,25 +39,42 @@ displayCompilerInfo() {
     eval xcode-select --print-path
 }
 
-displayCompilerInfo
+printMessage() {
+    local message="$1"
+    local green="\033[0;32m"
+    local reset="\033[0m"
+    
+    printf "\n\n"
+    echo -e "${green}#######################################################################################################"
+    echo -e "# $message"
+    echo -e "#######################################################################################################${reset}"
+    printf "\n\n"
+}
+
+#######################################################################################################
+#
+# Params Parse
+#
+#######################################################################################################
 
 PROJECT_PATH="$1"  # "Source/HitHappens.xcodeproj"
 SCHEME="$2"        #
 CONFIGURATION="$3" # "Release" | "Debug"
 APP_VERSION="$4"   # "[V2.0.2]"
 OUTPUT_PATH="$5"   # "~/Desktop/"
-PLIST_PATH="$6"    # "exportPlist.enterprise.plist" | "exportPlist.appStore.plist"
+PLIST_PATH="$6"    # ""Source/exportPlist.enterprise.plist" | ""Source/exportPlist.appStore.plist"
 
 if [ -z "$PROJECT_PATH" ]; then
     PROJECT_PATH="Source/HitHappens.xcodeproj"
 fi
 
 if [ -z "$SCHEME" ]; then
-    SCHEME="HitHappens Dev"
+    #SCHEME="HitHappens Dev"
+    SCHEME="HitHappens Production"
 fi
 
 if [ -z "$CONFIGURATION" ]; then
-    CONFIGURATION="Debug"
+    CONFIGURATION="Release"
 fi
 
 if [ -z "$APP_VERSION" ]; then
@@ -59,7 +86,7 @@ if [ -z "$OUTPUT_PATH" ]; then
 fi
 
 if [ -z "$PLIST_PATH" ]; then
-    PLIST_PATH="exportPlist.appStore.plist"
+    PLIST_PATH="Source/exportPlist.appStore.plist"
 fi
 
 TIMESTAMP=$(date +"%Y%m%d%H%M%S")
@@ -84,15 +111,30 @@ echo ""
 
 TEST_SIMULATOR_ID=""
 TEST_SIMULATOR_NAME="iPhone 16"
-openSimulator() {
 
-    printf "\n"
-    echo -n "### Checking if Simulator is already open..."
-    printf "\n"
+#######################################################################################################
+#
+# Build/Archive functions
+#
+#######################################################################################################
+
+openSimulator() {
+    local message="openSimulator"
+    printMessage "Will start: $message"
 
     # Check if the Simulator app is already running
     if pgrep -x "Simulator" > /dev/null; then
         echo "Simulator is already open."
+
+        # Set the TEST_SIMULATOR_ID for the running simulator
+        TEST_SIMULATOR_ID=$(xcrun simctl list | grep -m1 '(Booted)' | awk -F '[()]' '{print $2}')
+
+        # Check if we successfully retrieved a booted simulator ID
+        if [ -n "$TEST_SIMULATOR_ID" ]; then
+            echo "Booted Simulator ID: $TEST_SIMULATOR_ID"
+        else
+            echo "Warning: No booted simulator ID found despite Simulator being open."
+        fi
     else
         echo "Simulator is not open. Launching Simulator..."
 
@@ -101,22 +143,21 @@ openSimulator() {
 
         # Wait a few seconds to ensure the simulator is fully opened
         sleep 3
+
+        # Retrieve the ID of the newly booted simulator
+        TEST_SIMULATOR_ID=$(xcrun simctl list | grep -m1 '(Booted)' | awk -F '[()]' '{print $2}')
+
+        # Confirm that the simulator booted successfully
+        if [ -n "$TEST_SIMULATOR_ID" ]; then
+            echo "Booted Simulator ID: $TEST_SIMULATOR_ID"
+        else
+            echo "No booted simulator found."
+        fi
     fi
 
-    # List all simulators and extract the ID of the booted simulator
-    TEST_SIMULATOR_ID=$(xcrun simctl list | grep -m1 '(Booted)' | awk -F '[()]' '{print $2}')
-
-    # Check if a booted simulator was found
-    if [ -n "$TEST_SIMULATOR_ID" ]; then
-        echo "Booted Simulator ID: $TEST_SIMULATOR_ID"
-    else
-        echo "No booted simulator found."
-    fi
-
-    printf "\n"
-    echo -n "### Done"
-    printf "\n"
+    printMessage "Did end: $message"
 }
+
 
 #######################################################################################################
 #
@@ -125,13 +166,16 @@ openSimulator() {
 # ONLY_ACTIVE_ARCH=NO       : Builds for all specified architectures (arm64), not just the current one, for broader compatibility.
 # CODE_SIGNING_ALLOWED=NO   : Tells Xcode to skip code signing, speeding up builds. It's useful for simulator-only builds or CI testing, where signing isn’t needed.
 # CODE_SIGNING_REQUIRED=NO  : Allows the build to skip mandatory code signing. Useful for simulator or CI builds, it prevents errors related to missing certificates, simplifying non-deployment builds
+# CODE_SIGN_IDENTITY        : specifies the certificate for signing the app: 'Apple Development': For debugging on devices. 'Apple Distribution': For App Store or ad-hoc distribution
 # -allowProvisioningUpdates : Lets Xcode automatically update or download provisioning profiles and certificates if needed, useful in CI/CD to avoid manual intervention.
 # -resultBundlePath         : Specifies the location where Xcode saves the build results, including logs, test results, and other build artifacts, in a .xcresult bundle.
-#
 #######################################################################################################
 
 buildForSimulator() {
 	openSimulator
+
+	message="buildForSimulator"
+	printMessage  "Will start: $message"
 
     xcodebuild clean build \
     	-project "$PROJECT_PATH" \
@@ -144,29 +188,75 @@ buildForSimulator() {
     	-allowProvisioningUpdates \
     	-resultBundlePath "$OUTPUT_FOLDER""xcresult.xcresult"
 
+	printMessage  "Did end: $message"
+
 }
 
 doArquive() {
+
+	message="doArquive"
+	printMessage  "Will start: $message Development"
+
+	# WORKS!	
 	xcodebuild archive \
     	-project "$PROJECT_PATH" \
     	-scheme "$SCHEME" \
-    	-archivePath "$OUTPUT_FOLDER""xcarchive.xcarchive" \
+    	-archivePath "$OUTPUT_FOLDER""xcarchive_Development.xcarchive" \
+	    DEVELOPMENT_TEAM="EP8XQ3ZY9V" \
+	    CODE_SIGN_IDENTITY="Apple Development" 
+    	-allowProvisioningUpdates
+    	
+
+	xcodebuild archive \
+    	-project "$PROJECT_PATH" \
+    	-scheme "$SCHEME" \
+    	-archivePath "$OUTPUT_FOLDER""xcarchive_Development_V2.xcarchive" \
     	CODE_SIGNING_ALLOWED=NO \
     	CODE_SIGNING_REQUIRED=NO
+	    #DEVELOPMENT_TEAM="EP8XQ3ZY9V" \
+	    CODE_SIGN_IDENTITY="Apple Development" 
+    	#-allowProvisioningUpdates
+    	
+    printMessage  "Will start: $message Distribution"
+
+	#xcodebuild archive \
+    #	-project "$PROJECT_PATH" \
+    #	-scheme "$SCHEME" \
+   	# 	-archivePath "$OUTPUT_FOLDER""xcarchive_Production.xcarchive" \
+    #	DEVELOPMENT_TEAM="EP8XQ3ZY9V" \
+    #	CODE_SIGN_IDENTITY="Apple Distribution" \
+    #	-allowProvisioningUpdates
+    			
+	printMessage  "Did end: $message"
 }
 
 doGenerateIPA() {
-    to_run="xcodebuild -exportArchive -allowProvisioningUpdates -verbose -exportOptionsPlist "$var_plist" -archivePath "$ARCHIVE_PATH".xcarchive -exportPath "$ARCHIVE_PATH""
-    echo "#"
-    echo "# Will run: "$to_run
-    echo "#"
-    eval $to_run
 
+	message="doGenerateIPA"
+	printMessage  "Will start: $message"
+	
 	xcodebuild -exportArchive \
    		-archivePath "$OUTPUT_FOLDER""xcarchive.xcarchive" \
-    	-exportPath "$OUTPUT_FOLDER""\Build" \
-   	 	-exportOptionsPlist "$EXPORT_ARCHIVE_PATH/exportOptions.plist"
+    	-exportPath "$OUTPUT_FOLDER""IPA" \
+   	 	-exportOptionsPlist "$PLIST_PATH" \
+   	 	-allowProvisioningUpdates \
+   	 	-verbose
+   	 
+	 printMessage  "Did end: $message"
+
 }
+
+#######################################################################################################
+#
+# Control
+#
+#######################################################################################################
+
+displayCompilerInfo
+
+rm -rf ~/Library/Developer/Xcode/DerivedData/*
+
+xcodebuild clean -project "$PROJECT_PATH"
 
 echo ""
 
@@ -178,21 +268,20 @@ read option
 case $option in
     [1] ) buildForSimulator ;;
     [2] ) echo "Ignored...." ;;
-   *) buildForSimulator 
-;;
+    * ) buildForSimulator ;;
 esac
 
 echo ""
 
 echo "### Archive?"
-echo " [1] : Yes"
-echo " [2] : No (Default)"
+echo " [1] : Yes (Default)"
+echo " [2] : No"
 echo -n "Option? "
 read option
 case $option in
     [1] ) doArquive ;;
-   *) echo "Ignored...."
-;;
+    [2] ) echo "Ignored...." ;;
+    * ) doArquive ;;
 esac
 
 echo ""
@@ -204,8 +293,8 @@ echo -n "Option? "
 read option
 case $option in
     [1] ) doGenerateIPA ;;
-   *) echo "Ignored...."
-;;
+    [2] ) echo "Ignored...." ;;
+    * ) doGenerateIPA ;;
 esac
 
 echo ""
