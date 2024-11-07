@@ -198,7 +198,7 @@ buildForSimulator() {
     	-destination "platform=iOS Simulator,name=""$TEST_SIMULATOR_NAME"",OS=latest" \
     	-allowProvisioningUpdates \
     	-resultBundlePath "$OUTPUT_FOLDER""xcresult.xcresult"
-
+ 
 	printMessage  "Did end: $message"
 
 }
