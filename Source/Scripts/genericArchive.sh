@@ -118,6 +118,17 @@ TEST_SIMULATOR_NAME="iPhone 16"
 #
 #######################################################################################################
 
+cleanDerivedData() {
+    local message="cleanDerivedData"
+    printMessage "Will start: $message"
+    
+	rm -rf ~/Library/Developer/Xcode/DerivedData/*
+	xcodebuild clean -project "$PROJECT_PATH"
+	
+	printMessage "Did end: $message"
+
+}
+
 openSimulator() {
     local message="openSimulator"
     printMessage "Will start: $message"
@@ -201,14 +212,12 @@ doArquive() {
     	-project "$PROJECT_PATH" \
     	-scheme "$SCHEME" \
     	-archivePath "$OUTPUT_FOLDER""xcarchive.xcarchive" \
-    	-quiet
 
 	xcodebuild archive \
     	-project "$PROJECT_PATH" \
     	-scheme "$SCHEME" \
     	-archivePath "$OUTPUT_FOLDER""xcarchive_allowProvisioningUpdates.xcarchive" \
     	-allowProvisioningUpdates \
-    	-quiet
     	    	    	
 	printMessage  "Did end: $message"
 }
@@ -221,9 +230,12 @@ doGenerateIPA() {
 	xcodebuild -exportArchive \
    		-archivePath "$OUTPUT_FOLDER""xcarchive.xcarchive" \
     	-exportPath "$OUTPUT_FOLDER""IPA" \
-   	 	-exportOptionsPlist "$PLIST_PATH" \
-   	 	-allowProvisioningUpdates \
-   	 	-verbose
+   	 	-exportOptionsPlist "$PLIST_PATH" 
+   	 	
+	xcodebuild -exportArchive \
+   		-archivePath "$OUTPUT_FOLDER""xcarchive_allowProvisioningUpdates.xcarchive" \
+    	-exportPath "$OUTPUT_FOLDER""IPA_allowProvisioningUpdates" \
+   	 	-exportOptionsPlist "$PLIST_PATH" 
    	 
 	 printMessage  "Did end: $message"
 
@@ -237,8 +249,18 @@ doGenerateIPA() {
 
 #displayCompilerInfo
 
-rm -rf ~/Library/Developer/Xcode/DerivedData/*
-xcodebuild clean -project "$PROJECT_PATH"
+echo ""
+
+echo "### Clean Derived Data?"
+echo " [1] : Yes"
+echo " [2] : No (Default)"
+echo -n "Option? "
+read option
+case $option in
+    [1] ) cleanDerivedData ;;
+    [2] ) echo "Ignored...." ;;
+    * ) echo "Ignored...." ;;
+esac
 
 echo ""
 
@@ -281,4 +303,4 @@ esac
 
 echo ""
 
-echo "*** END ***"
+printMessage  "!! END !!"
