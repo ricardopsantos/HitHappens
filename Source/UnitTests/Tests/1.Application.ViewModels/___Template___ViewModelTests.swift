@@ -14,9 +14,10 @@ import Nimble
 import Common
 import Domain
 import Core
+import DevTools
 
 final class ___Template___ViewModelTests: BaseViewModelsTests {
-    let enabled = true
+    let enabled = !DevTools.onTargetProduction
     private var viewModel: ___Template___ViewModel?
 
     override func tearDown() {

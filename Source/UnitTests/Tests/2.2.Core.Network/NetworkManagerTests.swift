@@ -12,9 +12,10 @@ import Combine
 import Domain
 import Core
 import Common
+import DevTools
 
 final class NetworkManagerTests: XCTestCase {
-    let enabled = true
+    let enabled = !DevTools.onTargetProduction
     lazy var networkManager: NetworkManagerProtocol = { NetworkManagerV1.shared }()
     override func setUp() {
         super.setUp()

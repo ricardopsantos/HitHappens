@@ -14,9 +14,10 @@ import Combine
 import Nimble
 //
 import Common
+import DevTools
 
 final class ApplicationLaunchPerformanceTests: BaseUITests {
-    let enabled = false
+    let enabled = !DevTools.onTargetProduction
     override class var runsForEachTargetApplicationUIConfiguration: Bool {
         false
     }

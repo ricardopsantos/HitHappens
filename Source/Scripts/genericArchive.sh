@@ -200,7 +200,7 @@ buildForSimulator() {
     	-resultBundlePath "$OUTPUT_FOLDER""xcresult.xcresult"
  
 	printMessage  "Did end: $message"
-
+ 
 }
 
 doArquive() {

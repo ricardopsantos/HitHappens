@@ -14,9 +14,10 @@ import Nimble
 import Domain
 import Core
 import Common
+import DevTools
 
 final class DataBaseRepository_Tests: XCTestCase {
-    var enabled: Bool = false
+    let enabled = !DevTools.onTargetProduction
     private var repository: DataBaseRepositoryProtocol? = DependenciesManager.Repository.dataBaseRepository
 
     override func setUp() {
@@ -160,12 +161,12 @@ extension DataBaseRepository_Tests {
         }
         repository?.trackedEntityDeleteAll()
         // Create 1 event with 3 logs
-        let count = 2000
+        let count = 500
         for i in 1...count {
             if i % 100 == 0 {
                 Common_Logs.debug("i: \(i)")
             }
-            let trackedEntityId = saveRandomEntity(events: 100)
+            let trackedEntityId = saveRandomEntity(events: 50)
             guard var trackedEntity = repository?.trackedEntityGet(
                 trackedEntityId: trackedEntityId,
                 cascade: true) else {

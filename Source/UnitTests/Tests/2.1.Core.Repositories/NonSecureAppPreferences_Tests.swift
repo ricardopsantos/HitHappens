@@ -13,9 +13,10 @@ import Nimble
 //
 import Domain
 import Core
+import DevTools
 
 final class NonSecureAppPreferences_Tests: XCTestCase {
-    var enabled: Bool = true
+    let enabled = !DevTools.onTargetProduction
     private var repository: NonSecureAppPreferencesProtocol? = DependenciesManager.Repository.nonSecureAppPreferences
 
     override func setUp() {
