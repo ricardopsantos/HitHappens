@@ -195,29 +195,21 @@ buildForSimulator() {
 doArquive() {
 
 	message="doArquive"
-	printMessage  "Will start: $message Development"
+	printMessage  "Will start: $message"
 	
 	xcodebuild archive \
     	-project "$PROJECT_PATH" \
     	-scheme "$SCHEME" \
-    	-archivePath "$OUTPUT_FOLDER""xcarchive_Development_V1.xcarchive" \
-    	#CODE_SIGNING_ALLOWED=NO \
-    	#CODE_SIGNING_REQUIRED=NO
-	    DEVELOPMENT_TEAM="EP8XQ3ZY9V" \
-	    CODE_SIGN_IDENTITY="Apple Development" 
-    	-allowProvisioningUpdates
-    	
+    	-archivePath "$OUTPUT_FOLDER""xcarchive.xcarchive" \
+    	-quiet
 
-    printMessage  "Will start: $message Distribution"
-
-	#xcodebuild archive \
-    #	-project "$PROJECT_PATH" \
-    #	-scheme "$SCHEME" \
-   	# 	-archivePath "$OUTPUT_FOLDER""xcarchive_Production.xcarchive" \
-    #	DEVELOPMENT_TEAM="EP8XQ3ZY9V" \
-    #	CODE_SIGN_IDENTITY="Apple Distribution" \
-    #	-allowProvisioningUpdates
-    			
+	xcodebuild archive \
+    	-project "$PROJECT_PATH" \
+    	-scheme "$SCHEME" \
+    	-archivePath "$OUTPUT_FOLDER""xcarchive_allowProvisioningUpdates.xcarchive" \
+    	-allowProvisioningUpdates \
+    	-quiet
+    	    	    	
 	printMessage  "Did end: $message"
 }
 
@@ -248,19 +240,17 @@ doGenerateIPA() {
 rm -rf ~/Library/Developer/Xcode/DerivedData/*
 xcodebuild clean -project "$PROJECT_PATH"
 
-doArquive
-
 echo ""
 
 echo "### Build for Simulator?"
-echo " [1] : Yes (Default)"
-echo " [2] : No"
+echo " [1] : Yes"
+echo " [2] : No (Default)"
 echo -n "Option? "
 read option
 case $option in
     [1] ) buildForSimulator ;;
     [2] ) echo "Ignored...." ;;
-    * ) buildForSimulator ;;
+    * ) echo "Ignored...." ;;
 esac
 
 echo ""
