@@ -4,8 +4,8 @@
 name: Swift
 
 on:
-#  push:
-#    branches: [ "main"]
+  push:
+    branches: [ "dev/V1.5.0", "dev/V1.6.0", "dev/V1.5.7", "dev/V1.8.0"]
   pull_request:
     branches: [ "main" ]
 
