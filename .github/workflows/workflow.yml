@@ -17,7 +17,10 @@ jobs:
 
     steps:
     - uses: actions/checkout@v4
+    - name: Get swift version
+      run: swift --version 
     - name: Build
       run: ./Source/Scripts/github_workflow_v1.sh
-    #- name: Run tests
-    #  run: ./Source/build.sh test
+      #run: swift build
+    - name: Run tests
+      run: swift test
