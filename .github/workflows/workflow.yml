@@ -5,7 +5,8 @@ name: Swift
 
 on:
   push:
-    branches: [ "main", "dev*", "^dev"]
+#    branches: [ "main", "dev*", "^dev"]
+    branches: [ "^dev"]
   pull_request:
     branches: [ "main" ]
 
