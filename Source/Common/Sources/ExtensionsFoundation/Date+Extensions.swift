@@ -102,6 +102,13 @@ public extension Date {
         return formatter.string(from: self)
     }
 
+    var monthAndYear_enUS: String {
+         let formatter = DateFormatter()
+         formatter.dateFormat = "MMMM yyyy"
+         formatter.locale = Locale(identifier: "en_US")
+         return formatter.string(from: self)
+     }
+    
     var monthAndYear: String {
         let formatter = DateFormatter.monthAndYear
         return formatter.string(from: self)

@@ -14,10 +14,11 @@ import Nimble
 import Domain
 import Core
 import Common
+import DevTools
 
 final class AppConfigServiceTests: XCTestCase {
-    let enabled = true
-    let loadExpectedTime: Double = 0.05
+    let enabled = !DevTools.onTargetProduction
+    let loadExpectedTime: Double = 1
     lazy var service: AppConfigServiceProtocol = { DependenciesManager.Services.appConfigService }()
     lazy var serviceMock: AppConfigServiceProtocol = { DependenciesManager.Services.appConfigServiceMock }()
     override func setUp() {

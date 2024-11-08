@@ -1,4 +1,8 @@
-execute() {
+#!/bin/bash
+
+clear
+
+doWork() {
 	rm -rf "Pods/TspEdgeIOVSDK/TspEdgeIOVSDK.framework"
 	cp -f "Frameworks-PreCompiled/TspEdgeIOVSDK.zip" "Pods/TspEdgeIOVSDK"
 	cd Pods/TspEdgeIOVSDK
@@ -8,13 +12,12 @@ execute() {
 
 if [ -n "$USER" ]; then
 	if [ "$USER" == "runner" ]; then
-		echo "AppCenter build. Not running copy frameworks."
+		echo "AppCenter build. Ignored."
 		exit 0
 	else
-		execute
+		doWork
 	fi
 else
-	echo "\$USER not set. Not running swiftlint copy frameworks."
+	echo "\$USER not set. Ignored."
 fi
-
 

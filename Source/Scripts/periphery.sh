@@ -1,4 +1,8 @@
-execute() {
+#!/bin/bash
+
+clear
+
+doWork() {
 	if which periphery >/dev/null; then
         periphery scan --project "SmartApp.xcodeproj" --schemes "SmartApp Production" --targets "SmartApp" --format xcode
 	else
@@ -9,13 +13,13 @@ execute() {
 
 if [ -n "$USER" ]; then
 	if [ "$USER" == "runner" ]; then
-		echo "AppCenter build. Not running periphery."
+		echo "AppCenter build. Ignored."
 		exit 0
 	else
-		execute
+		doWork
 	fi
 else
-	echo "\$USER not set. Not running periphery."
+	echo "\$USER not set. Ignored."
 fi
 
 

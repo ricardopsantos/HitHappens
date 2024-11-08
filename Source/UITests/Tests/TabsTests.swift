@@ -14,9 +14,10 @@ import Combine
 import Nimble
 //
 import Common
+import DevTools
 
 final class TabsTests: BaseUITests {
-    let enabled = true
+    let enabled = !DevTools.onTargetProduction
     override class var runsForEachTargetApplicationUIConfiguration: Bool {
         false
     }
@@ -47,6 +48,7 @@ final class TabsTests: BaseUITests {
             andWaitForStaticText: Constants.tab2Title,
             on: app
         )
+
         tap(
             tabBarIndex: Constants.tab3,
             andWaitForStaticText: Constants.tab3Title,

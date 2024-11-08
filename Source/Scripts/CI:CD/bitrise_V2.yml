@@ -1,0 +1,63 @@
+---
+format_version: '13'
+default_step_lib_source: https://github.com/bitrise-io/bitrise-steplib.git
+project_type: ios
+workflows:
+  archive_and_export_app:
+    summary: Create an IPA file to install your app on a device or share it with your
+      team.
+    description: None
+    steps:
+    - activate-ssh-key@4: {}
+    - git-clone@8: {}
+    - xcode-archive@5:
+        inputs:
+        - project_path: "$BITRISE_PROJECT_PATH"
+        - scheme: "$BITRISE_SCHEME"
+        - distribution_method: "$BITRISE_DISTRIBUTION_METHOD"
+        - automatic_code_signing: api-key
+        - cache_level: none
+        is_always_run: true
+        is_skippable: true
+    - deploy-to-bitrise-io@2: {}
+  run_tests:
+    summary: Run your Xcode tests and get the test report.
+    description: None.
+    steps:
+    - activate-ssh-key@4: {}
+    - git-clone@8: {}
+    - restore-spm-cache@1: {}
+    - xcode-test@5:
+        inputs:
+        - project_path: "$BITRISE_PROJECT_PATH"
+        - scheme: "$BITRISE_TEST_SCHEME"
+        - test_repetition_mode: retry_on_failure
+        - cache_level: none
+    - save-spm-cache@1: {}
+    - deploy-to-bitrise-io@2: {}
+meta:
+  bitrise.io:
+    stack: osx-xcode-15.4.x
+    machine_type_id: g2-m1.4core
+app:
+  envs:
+  - opts:
+      is_expand: false
+    BITRISE_PROJECT_PATH: Source/HitHappens.xcodeproj
+  - opts:
+      is_expand: false
+    BITRISE_SCHEME: HitHappens Production
+  - opts:
+      is_expand: false
+    BITRISE_TEST_SCHEME: HitHappens Dev
+  - opts:
+      is_expand: false
+    BITRISE_DISTRIBUTION_METHOD: app-store
+trigger_map:
+- push_branch:
+    regex: "^dev"
+  type: push
+  workflow: run_tests
+- push_branch: main
+  type: push
+  workflow: archive_and_export_app

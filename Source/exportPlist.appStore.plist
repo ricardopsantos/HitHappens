@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>teamID</key><string>EP8XQ3ZY9V</string>
+	<key>method</key><string>app-store-connect</string>
+    <key>iCloudContainerEnvironment</key><string>Production</string> 
+    <key>signingStyle</key><string>automatic</string>
+	<key>uploadSymbols</key><true/>
+	<key>uploadBitcode</key><false/>
+    <key>compileBitcode</key><false/>
+	<key>iCloud</key><true/>
+    <key>pushNotifications</key><true/>
+    <key>destination</key><string>export</string>
+    <key>thinning</key><string>none</string>
+</dict>
+</plist>

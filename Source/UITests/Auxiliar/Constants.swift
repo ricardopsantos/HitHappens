@@ -55,7 +55,7 @@ enum Constants {
     static let tab2Title = "\(entityNamePlural)"
     //
     static let tab3 = 2
-    static let tab3Title = "September 2024" // "\(Date().monthAndYear)"
+    static let tab3Title = "\(Date().monthAndYear_enUS)"
     //
     static let tab4 = 3
     static let tab4Title = "\(entityOccurrenceNamePlural1) by region"
