@@ -5,7 +5,7 @@ name: Swift
 
 on:
   push:
-    branches: [ "main" , "dev/V1.5.0"]
+    branches: [ "main", "dev*", "^dev"]
   pull_request:
     branches: [ "main" ]
 
@@ -17,6 +17,6 @@ jobs:
     steps:
     - uses: actions/checkout@v4
     - name: Build
-      run: ./Source/build.sh build
+      run: ./Source/Scripts/github_workflow_v1.sh
     #- name: Run tests
     #  run: ./Source/build.sh test
