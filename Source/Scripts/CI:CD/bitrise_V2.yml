@@ -4,20 +4,12 @@ default_step_lib_source: https://github.com/bitrise-io/bitrise-steplib.git
 project_type: ios
 workflows:
   archive_and_export_app:
-    summary: Run your Xcode tests and create an IPA file to install your app on a
-      device or share it with your team.
-    description: The workflow will first clone your Git repository, cache and install
-      your project's dependencies if any, run your Xcode tests, export an IPA file
-      from the project and save it.
+    summary: Create an IPA file to install your app on a device or share it with your
+      team.
+    description: None
     steps:
     - activate-ssh-key@4: {}
     - git-clone@8: {}
-    - xcode-test@5:
-        inputs:
-        - project_path: "$BITRISE_PROJECT_PATH"
-        - scheme: "$BITRISE_SCHEME"
-        - test_repetition_mode: retry_on_failure
-        - cache_level: none
     - xcode-archive@5:
         inputs:
         - project_path: "$BITRISE_PROJECT_PATH"
@@ -25,11 +17,12 @@ workflows:
         - distribution_method: "$BITRISE_DISTRIBUTION_METHOD"
         - automatic_code_signing: api-key
         - cache_level: none
+        is_always_run: true
+        is_skippable: true
     - deploy-to-bitrise-io@2: {}
   run_tests:
     summary: Run your Xcode tests and get the test report.
-    description: The workflow will first clone your Git repository, cache and install
-      your project's dependencies if any, run your Xcode tests and save the test results.
+    description: None.
     steps:
     - activate-ssh-key@4: {}
     - git-clone@8: {}
@@ -37,7 +30,7 @@ workflows:
     - xcode-test@5:
         inputs:
         - project_path: "$BITRISE_PROJECT_PATH"
-        - scheme: "$BITRISE_SCHEME"
+        - scheme: "$BITRISE_TEST_SCHEME"
         - test_repetition_mode: retry_on_failure
         - cache_level: none
     - save-spm-cache@1: {}
@@ -53,12 +46,18 @@ app:
     BITRISE_PROJECT_PATH: Source/HitHappens.xcodeproj
   - opts:
       is_expand: false
-    BITRISE_SCHEME: "$BITRISE_SCHEME"
+    BITRISE_SCHEME: HitHappens Production
+  - opts:
+      is_expand: false
+    BITRISE_TEST_SCHEME: HitHappens Dev
   - opts:
       is_expand: false
     BITRISE_DISTRIBUTION_METHOD: app-store
 trigger_map:
+- push_branch:
+    regex: "^dev"
+  type: push
+  workflow: run_tests
 - push_branch: main
-  workflow: run_tests
-- pull_request_source_branch: "*"
-  workflow: run_tests
+  type: push
+  workflow: archive_and_export_app
