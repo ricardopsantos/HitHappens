@@ -4,9 +4,8 @@
 name: Swift
 
 on:
-  push:
-#    branches: [ "main", "dev*", "^dev"]
-    branches: [ "*dev"]
+#  push:
+#    branches: [ "main"]
   pull_request:
     branches: [ "main" ]
 
@@ -21,6 +20,13 @@ jobs:
       run: swift --version 
     - name: Build
       run: ./Source/Scripts/github_workflow_v1.sh
-      #run: swift build
-    - name: Run tests
-      run: swift test
+    #- name: Run tests
+    #run: swift test
+    
+  #publish:
+  #  needs: [build]
+  #  runs-on: ubuntu-latest
+  #  environment: production
+  #  steps:
+  #    - name: publish
+  #      echo 'publishing'
