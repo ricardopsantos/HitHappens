@@ -40,6 +40,7 @@ extension AppConfigServiceTests {
             XCTAssert(true)
             return
         }
+        DevTools.Log.debug("Test #\(#function) will start", .business)
         XCTAssertTrue(ModelDto.AppConfigResponse.mock != nil, "mock data should be loaded successfully.")
     }
 
@@ -48,6 +49,7 @@ extension AppConfigServiceTests {
             XCTAssert(true)
             return
         }
+        DevTools.Log.debug("Test #\(#function) will start", .business)
         do {
             // Attempt to fetch
             loadedAny = try await service.requestAppConfig(.init(), cachePolicy: .load)
@@ -71,6 +73,8 @@ extension AppConfigServiceTests {
             XCTAssert(true)
             return
         }
+        DevTools.Log.debug("Test #\(#function) will start", .business)
+
         let cachePolicy: ServiceCachePolicy = .load
         let expectedTime: Double = loadExpectedTime
         let count = 10
@@ -97,6 +101,7 @@ extension AppConfigServiceTests {
             XCTAssert(true)
             return
         }
+        DevTools.Log.debug("Test #\(#function) will start", .business)
         let cachePolicy: ServiceCachePolicy = .cacheElseLoad
         let expectedTime: Double = loadExpectedTime / 3
         let count = 10

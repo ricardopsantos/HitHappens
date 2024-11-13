@@ -9,9 +9,12 @@ import Foundation
 import XCTest
 import SwiftUI
 @testable import HitHappens_Dev
+//
+import DevTools
 
 class PreferenceKeyTests: XCTestCase {
     func testTotalWidthPreferenceKey() {
+        DevTools.Log.debug("Test #\(#function) will start", .business)
         let rootView = ParentView()
         let hostingController = UIHostingController(rootView: rootView)
 

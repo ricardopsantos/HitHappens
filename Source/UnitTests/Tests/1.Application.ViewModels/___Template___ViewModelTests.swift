@@ -49,6 +49,7 @@ extension ___Template___ViewModelTests {
             XCTAssert(true)
             return
         }
+        DevTools.Log.debug("Test #\(#function) will start", .business)
         _ = await MainActor.run {
             expect(self.viewModel).notTo(beNil()) // Assert that the template view model is not nil
         }
@@ -60,6 +61,7 @@ extension ___Template___ViewModelTests {
             XCTAssert(true)
             return
         }
+        DevTools.Log.debug("Test #\(#function) will start", .business)
         // Assert initial counter value is 0
         expect(self.viewModel?.counter == 0).toEventually(beTrue(), timeout: .seconds(timeout))
 

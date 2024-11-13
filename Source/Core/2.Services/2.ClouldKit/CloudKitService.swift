@@ -38,6 +38,9 @@ extension CloudKitService: CloudKitServiceProtocol {
             guard available else {
                 return
             }
+            guard let privateCloudDatabase = self?.privateCloudDatabase else {
+                return
+            }
             self?.createZones { [weak self] _ in
                 guard let self = self else { return }
                 self.insertRecord(
@@ -55,6 +58,9 @@ extension CloudKitService: CloudKitServiceProtocol {
             guard available else {
                 return
             }
+            guard let privateCloudDatabase = self?.privateCloudDatabase else {
+                return
+            }
             self?.createZones { [weak self] _ in
                 guard let self = self else { return }
                 self.insertRecord(
@@ -70,6 +76,9 @@ extension CloudKitService: CloudKitServiceProtocol {
     public func appDidFinishLaunchingWithOptions() {
         iCloudIsAvailable { [weak self] available in
             guard available else {
+                return
+            }
+            guard let privateCloudDatabase = self?.privateCloudDatabase else {
                 return
             }
             self?.createZones { [weak self] _ in
@@ -133,6 +142,10 @@ private extension CloudKitService {
     }
 
     func fetchAppVersion(completion: @escaping (Result<Model.AppVersion, Error>) -> Void) {
+        guard let publicCloudDatabase else {
+            completion(.failure(AppErrors.genericError(devMessage: "publicCloudDatabase is nil")))
+            return
+        }
         fetchAllRecords(recordType: "AppVersion", resultsLimit: 1, database: publicCloudDatabase) { record in
             if let record = record {
                 guard let storeVersion = record["store_version"] as? String,

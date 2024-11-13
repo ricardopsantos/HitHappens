@@ -38,6 +38,7 @@ extension NonSecureAppPreferences_Tests {
             XCTAssert(true)
             return
         }
+        DevTools.Log.debug("Test #\(#function) will start", .business)
         var emittedEvent = false
 
         // Subscribe to output events for the .changedKey event with key .isAuthenticated

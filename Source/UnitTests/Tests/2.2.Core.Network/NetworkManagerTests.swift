@@ -36,6 +36,7 @@ extension NetworkManagerTests {
             XCTAssert(true)
             return
         }
+        DevTools.Log.debug("Test #\(#function) will start", .business)
         do {
             // Attempt to fetch CompanyInfo
             let result: ModelDto.AppConfigResponse? = try await networkManager.requestAsync(.getAppConfiguration(.init()))
@@ -59,6 +60,7 @@ extension NetworkManagerTests {
             XCTAssert(true)
             return
         }
+        DevTools.Log.debug("Test #\(#function) will start", .business)
         let expectedTime: Double = 0.3
         measure {
             let expectation = expectation(description: #function)

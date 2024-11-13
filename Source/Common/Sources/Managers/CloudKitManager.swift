@@ -31,9 +31,9 @@ import CloudKit
   */
 
 open class CloudKitManager {
-    public private(set) var container: CKContainer
-    public private(set) var publicCloudDatabase: CKDatabase
-    public private(set) var privateCloudDatabase: CKDatabase
+    public private(set) var container: CKContainer?
+    public private(set) var publicCloudDatabase: CKDatabase?
+    public private(set) var privateCloudDatabase: CKDatabase?
 
     /// Can be overridden by subclase to disable logs
     open func loggerEnabled() -> Bool {
@@ -41,9 +41,13 @@ open class CloudKitManager {
     }
 
     public init(cloudKit: String) {
+        guard Common_Utils.onUnitTests || Common_Utils.onUITests else {
+            Common_Logs.debug("UnitTests! Ignored...")
+            return
+        }
         self.container = CKContainer(identifier: cloudKit)
-        self.publicCloudDatabase = container.publicCloudDatabase
-        self.privateCloudDatabase = container.privateCloudDatabase
+        self.publicCloudDatabase = container?.publicCloudDatabase
+        self.privateCloudDatabase = container?.privateCloudDatabase
     }
 }
 
@@ -95,7 +99,7 @@ public extension CloudKitManager {
             guard let zoneID = zoneID else { return }
 
             // Check if the zone already exists
-            self.privateCloudDatabase.fetch(withRecordZoneID: zoneID) { [weak self] zone, error in
+            self.privateCloudDatabase?.fetch(withRecordZoneID: zoneID) { [weak self] zone, error in
                 guard let self = self else { return }
 
                 if zone != nil {
@@ -119,7 +123,7 @@ public extension CloudKitManager {
                         }
                     }
                     operation.qualityOfService = .utility
-                    self.privateCloudDatabase.add(operation)
+                    self.privateCloudDatabase?.add(operation)
                 } else {
                     // Handle other errors (e.g., network errors)
                     Common_Logs.error("Error fetching zone: \(error?.localizedDescription ?? "Unknown error")")

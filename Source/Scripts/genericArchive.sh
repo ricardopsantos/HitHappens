@@ -4,8 +4,8 @@
 #
 # Usage
 #
-# ./genericArchive.sh "GoodToGo.xcodeproj" "MyAppName.AppStore"   "Release"  "[V2.0.2]" "~/Desktop/" "exportPlist.enterprise.plist"
-# ./genericArchive.sh "GoodToGo.xcodeproj" "MyAppName.Enterprise" "Debug"    "[V2.0.2]" "~/Desktop/" "exportPlist.appStore"
+# ./genericArchive.sh "GoodToGo.xcodeproj" "MyAppName.AppStore"   "MyAppName.AppStore_Dev" "Release"  "[V2.0.2]" "~/Desktop/" "exportPlist.enterprise.plist"
+# ./genericArchive.sh "GoodToGo.xcodeproj" "MyAppName.Enterprise" "MyAppName.Enterprise_Dev" "Debug"    "[V2.0.2]" "~/Desktop/" "exportPlist.appStore"
 #
 #######################################################################################################
 
@@ -59,10 +59,11 @@ printMessage() {
 
 PROJECT_PATH="$1"  # "Source/HitHappens.xcodeproj"
 SCHEME="$2"        #
-CONFIGURATION="$3" # "Release" | "Debug"
-APP_VERSION="$4"   # "[V2.0.2]"
-OUTPUT_PATH="$5"   # "~/Desktop/"
-PLIST_PATH="$6"    # ""Source/exportPlist.enterprise.plist" | ""Source/exportPlist.appStore.plist"
+SCHEME_TEST="$3"   #
+CONFIGURATION="$4" # "Release" | "Debug"
+APP_VERSION="$5"   # "[V2.0.2]"
+OUTPUT_PATH="$6"   # "~/Desktop/"
+PLIST_PATH="$7"    # ""Source/exportPlist.enterprise.plist" | ""Source/exportPlist.appStore.plist"
 
 if [ -z "$PROJECT_PATH" ]; then
     PROJECT_PATH="Source/HitHappens.xcodeproj"
@@ -71,6 +72,10 @@ fi
 if [ -z "$SCHEME" ]; then
     #SCHEME="HitHappens Dev"
     SCHEME="HitHappens Production"
+fi
+
+if [ -z "$SCHEME_TEST" ]; then
+    SCHEME_TEST="HitHappens Dev"
 fi
 
 if [ -z "$CONFIGURATION" ]; then
@@ -110,7 +115,7 @@ echo ""
 echo ""
 
 TEST_SIMULATOR_ID=""
-TEST_SIMULATOR_NAME="iPhone 16"
+TEST_SIMULATOR_NAME="iPhone 16 - Testing"
 
 #######################################################################################################
 #
@@ -182,6 +187,25 @@ openSimulator() {
 # -resultBundlePath         : Specifies the location where Xcode saves the build results, including logs, test results, and other build artifacts, in a .xcresult bundle.
 #######################################################################################################
 
+
+performUnitTests() {
+	openSimulator
+
+	message="performUnitTests"
+	printMessage  "Will start: $message"
+
+    xcodebuild test \
+    	-project "$PROJECT_PATH" \
+    	-scheme "$SCHEME_TEST" \
+    	-sdk iphonesimulator \
+    	CODE_SIGNING_ALLOWED=NO CODE_SIGNING_REQUIRED=NO \
+    	-destination "platform=iOS Simulator,name=""$TEST_SIMULATOR_NAME"",OS=latest" \
+    	-resultBundlePath "$OUTPUT_FOLDER""xcresult.xcresult" 
+    	
+	printMessage  "Did end: $message"
+ 
+}
+
 buildForSimulator() {
 	openSimulator
 
@@ -248,6 +272,8 @@ doGenerateIPA() {
 #######################################################################################################
 
 #displayCompilerInfo
+
+performUnitTests
 
 echo ""
 

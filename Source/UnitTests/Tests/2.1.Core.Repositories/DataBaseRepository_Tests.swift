@@ -51,6 +51,7 @@ extension DataBaseRepository_Tests {
             XCTAssert(true)
             return
         }
+        DevTools.Log.debug("Test #\(#function) will start", .business)
         repository?.trackedEntityDeleteAll()
         XCTAssertEqual(repository?.trackedEntityGetAll(favorite: nil, archived: nil, cascade: false).count ?? 0, 0)
         XCTAssertEqual(repository?.trackedLogGetAll(cascade: false).count ?? 0, 0)
@@ -76,6 +77,7 @@ extension DataBaseRepository_Tests {
             XCTAssert(true)
             return
         }
+        DevTools.Log.debug("Test #\(#function) will start", .business)
         repository?.trackedEntityDeleteAll()
         XCTAssertEqual(repository?.trackedEntityGetAll(favorite: nil, archived: nil, cascade: false).count ?? 0, 0)
         XCTAssertEqual(repository?.trackedLogGetAll(cascade: false).count ?? 0, 0)
@@ -96,6 +98,8 @@ extension DataBaseRepository_Tests {
             XCTAssert(true)
             return
         }
+        DevTools.Log.debug("Test #\(#function) will start", .business)
+
         repository?.trackedEntityDeleteAll()
         XCTAssertEqual(repository?.trackedEntityGetAll(favorite: nil, archived: nil, cascade: false).count ?? 0, 0)
         XCTAssertEqual(repository?.trackedLogGetAll(cascade: false).count ?? 0, 0)
@@ -159,6 +163,7 @@ extension DataBaseRepository_Tests {
             XCTAssert(true)
             return
         }
+        DevTools.Log.debug("Test #\(#function) will start", .business)
         repository?.trackedEntityDeleteAll()
         // Create 1 event with 3 logs
         let count = 500
