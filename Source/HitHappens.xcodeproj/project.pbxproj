@@ -686,6 +686,7 @@
 		078722A953A4338274DBD9E1 /* V.TabItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = V.TabItem.swift; sourceTree = "<group>"; };
 		07E03C21BCD7ABF3A3B567C2 /* AppSizes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppSizes.swift; sourceTree = "<group>"; };
 		087BAF1EB93042D53EF7A704 /* CommonNetworking+JSONUtils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CommonNetworking+JSONUtils.swift"; sourceTree = "<group>"; };
+		089E746DC008C510C532F1F9 /* Bitrise_2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Bitrise_2.png; sourceTree = "<group>"; };
 		08A9CBE4EF193A1AF12EF4FF /* Graph.viz */ = {isa = PBXFileReference; lastKnownFileType = text; path = Graph.viz; sourceTree = "<group>"; };
 		08FDE5EB3445F50D63C740C4 /* EncryptionManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EncryptionManager.swift; sourceTree = "<group>"; };
 		0931A99EBD367FEBDB61CA9E /* AnyPublisher+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AnyPublisher+Extensions.swift"; sourceTree = "<group>"; };
@@ -1069,6 +1070,7 @@
 		B97354F078230E06AB88AD66 /* t2.15pro.light.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = t2.15pro.light.jpg; sourceTree = "<group>"; };
 		B9C047DFE2B84DE7B4986B97 /* CombineCompatibleProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CombineCompatibleProtocol.swift; sourceTree = "<group>"; };
 		BA42DE946499984605311B66 /* InterfaceStyleManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InterfaceStyleManager.swift; sourceTree = "<group>"; };
+		BB569F725017D99272BCE321 /* UnitTests_2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = UnitTests_2.png; sourceTree = "<group>"; };
 		BB72DAA4CA8F5EA2D7439B06 /* t4.se.light.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = t4.se.light.jpg; sourceTree = "<group>"; };
 		BC0365A38BCA88EEBD797698 /* UISwitch+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UISwitch+Extensions.swift"; sourceTree = "<group>"; };
 		BC52773BB6AB49A0E188539C /* HelveticaNeueLTComBlkCn.ttf */ = {isa = PBXFileReference; lastKnownFileType = text; path = HelveticaNeueLTComBlkCn.ttf; sourceTree = "<group>"; };
@@ -1156,6 +1158,7 @@
 		E76B8687E060162560516E86 /* production-release.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = "production-release.xcconfig"; sourceTree = "<group>"; };
 		E88122409023E69CF72D1C89 /* 3_onboarding_15pro.dark.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = 3_onboarding_15pro.dark.png; sourceTree = "<group>"; };
 		E8C880ED279582D79033D075 /* Data+Extentions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Data+Extentions.swift"; sourceTree = "<group>"; };
+		E910948F396D24231ED931A4 /* Bitrise_1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Bitrise_1.png; sourceTree = "<group>"; };
 		E9714E4570F89D4B165B92B6 /* ModelDto+AppConfigRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ModelDto+AppConfigRequest.swift"; sourceTree = "<group>"; };
 		E9C783117B1B203921F45178 /* store.t3.55display.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = store.t3.55display.jpg; sourceTree = "<group>"; };
 		E9C82B1F475F968746B156CE /* V.SplashScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = V.SplashScreen.swift; sourceTree = "<group>"; };
@@ -2428,6 +2431,8 @@
 			children = (
 				B87ACF431A08F90D347B0CCB /* Previews */,
 				16EEF2505341D79B9520A166 /* Application.png */,
+				E910948F396D24231ED931A4 /* Bitrise_1.png */,
+				089E746DC008C510C532F1F9 /* Bitrise_2.png */,
 				6BF3045986E56DC3AA37BB93 /* Colors.png */,
 				7E8BE34CE51E501594C4E8DA /* Common.png */,
 				101704339DD6A5C6FE6ED376 /* Core.png */,
@@ -2447,6 +2452,7 @@
 				6F76B925CA4E1EC7B3EAFF57 /* PreviewLight.jpg */,
 				3074849C78317AC264EF820F /* PreviewOnboarding.jpg */,
 				8CC244BB09E8B8FF63A33009 /* UITests.png */,
+				BB569F725017D99272BCE321 /* UnitTests_2.png */,
 				3A193179F9BF833D8581725F /* UnitTests.png */,
 				EDA1F1DF702922F1DF35759B /* UnitTests.services.png */,
 				C8A2FF35EC9CF99F779D4179 /* UnitTests.vm.png */,
