@@ -175,23 +175,11 @@ class EventDetailsViewModel: BaseViewModel {
                     DevTools.Log.error("Invalid trackedEntityId", .business)
                     return
                 }
-                let locationRelevant = trackedEntity?.locationRelevant ?? false
-                let location = Common.SharedLocationManager.lastKnowLocation?.coordinate
-                if locationRelevant, let location = location {
-                    Common.LocationUtils.getAddressFrom(
-                        latitude: location.latitude,
-                        longitude: location.longitude) { [weak self] result in
-                            let event: Model.TrackedLog = .init(
-                                latitude: location.latitude,
-                                longitude: location.longitude,
-                                addressMin: result.addressMin,
-                                note: "")
-                            self?.dataBaseRepository?.trackedLogInsertOrUpdate(trackedLog: event, trackedEntityId: trackedEntityId)
-                        }
-                } else {
-                    let event: Model.TrackedLog = .init(latitude: 0, longitude: 0, addressMin: "", note: "")
-                    dataBaseRepository?.trackedLogInsertOrUpdate(trackedLog: event, trackedEntityId: trackedEntityId)
-                }
+                insertTrackedLog(
+                    trackedEntityId: trackedEntityId,
+                    locationRelevant: trackedEntity?.locationRelevant ?? false,
+                    using: dataBaseRepository
+                )
             }
         case .handleConfirmation:
             displayTip("")
@@ -203,9 +191,9 @@ class EventDetailsViewModel: BaseViewModel {
             case .resetOccurrences:
                 send(.resetAllOccurrences(confirmed: true))
             case nil:
-                let errorMessage = "No bottom sheet found"
+        let errorMessage = "No bottom sheet found"
                 alertModel = .init(type: .error, message: errorMessage)
-                ErrorsManager.handleError(message: "\(Self.self).\(action)", error: nil)
+                errorsManager.handleError(message: "\(Self.self).\(action)", error: nil)
             }
 
         case .deleteEvent(confirmed: let confirmed):

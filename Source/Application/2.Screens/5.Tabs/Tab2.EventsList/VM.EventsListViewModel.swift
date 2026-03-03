@@ -39,7 +39,7 @@ extension EventsListViewModel {
         let model: EventsListModel
         let onShouldDisplayTrackedEntity: (Model.TrackedEntity) -> Void
         let onShouldDisplayNewTrackedEntity: () -> Void
-        let dataBaseRepository: DataBaseRepositoryProtocol
+        let dataBaseRepository: DatabaseOutputRepositoryProtocol & TrackedEntityReadRepositoryProtocol
     }
 }
 
@@ -51,7 +51,7 @@ class EventsListViewModel: BaseViewModel {
     @Published private(set) var message: String = ""
     @Published private(set) var events: [Model.TrackedEntity] = []
     private let cancelBag = CancelBag()
-    private let dataBaseRepository: DataBaseRepositoryProtocol?
+    private let dataBaseRepository: (DatabaseOutputRepositoryProtocol & TrackedEntityReadRepositoryProtocol)?
     public init(dependencies: Dependencies) {
         self.dataBaseRepository = dependencies.dataBaseRepository
         self.message = dependencies.model.message
@@ -71,8 +71,8 @@ class EventsListViewModel: BaseViewModel {
                     favorite: nil,
                     archived: nil,
                     cascade: true) {
-                    events = records
-                        .sorted(by: { $0.favorite != $1.favorite })
+                events = records
+                        .sorted(by: { $0.favorite && !$1.favorite })
                 }
             }
         }

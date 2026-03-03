@@ -43,6 +43,10 @@ struct HitHappensApp: App {
         }
         self.configuration = config
         delegate.configuration = config
+        // Suppress real analytics events during UI tests
+        if UITestingManager.Options.onUITesting.enabled {
+            delegate.analyticsManager = NullAnalyticsManager()
+        }
         //
         // Modules Setup
         //

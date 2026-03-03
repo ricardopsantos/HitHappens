@@ -35,37 +35,32 @@ struct FavoriteEventsViewCoordinator: View, ViewCoordinatorProtocol {
             }
     }
 
-    @ViewBuilder
-    func buildScreen(_ screen: AppScreen, presentationStyle: ViewPresentationStyle) -> some View {
-        switch screen {
-        case .favoriteEvents:
-            let dependencies: FavoriteEventsViewModel.Dependencies = .init(
-                model: .init(), onShouldDisplayTrackedLog: { trackerLog in
+    var screenRegistry: ScreenBuilderRegistry {
+        let coordinator = coordinator
+        let configuration = configuration
+        let parentCoordinator = parentCoordinator
+        var registry = ScreenBuilderRegistry()
+        registry.register { screen, _ in
+            guard case .favoriteEvents = screen else { return nil }
+            return AnyView(FavoriteEventsView(dependencies: .init(
+                model: .init(),
+                onShouldDisplayTrackedLog: { trackerLog in
                     coordinator.coverLink = .eventLogDetails(model: .init(trackedLog: trackerLog))
-                }, onShouldDisplayTrackedEntity: { model in
+                },
+                onShouldDisplayTrackedEntity: { model in
                     coordinator.coverLink = .eventDetails(model: .init(event: model))
                 },
                 onShouldDisplayNewTrackedEntity: {
                     coordinator.coverLink = .eventDetails(model: nil)
                 },
-                dataBaseRepository: configuration.dataBaseRepository)
-            FavoriteEventsView(dependencies: dependencies)
-        case .eventLogDetails(model: let model):
-            EventLogDetailsViewCoordinator(
-                presentationStyle: presentationStyle,
-                model: model)
-                .environmentObject(configuration)
-                .environmentObject(parentCoordinator)
-
-        case .eventDetails(model: let model):
-            EventDetailsViewCoordinator(
-                presentationStyle: presentationStyle,
-                model: model)
-                .environmentObject(configuration)
-                .environmentObject(parentCoordinator)
-        default:
-            NotImplementedView(screen: screen)
+                dataBaseRepository: configuration.dataBaseRepository
+            )))
         }
+        registry.register(ScreenBuilderRegistry.makeEventLogDetailsFactory(
+            configuration: configuration, parentCoordinator: parentCoordinator))
+        registry.register(ScreenBuilderRegistry.makeEventDetailsFactory(
+            configuration: configuration, parentCoordinator: parentCoordinator))
+        return registry
     }
 }
 
@@ -109,9 +104,8 @@ struct FavoriteEventsView: View, ViewProtocol {
                 viewModel.send(.didDisappear)
                 locationViewModel.stop(sender: "\(Self.self)")
             }
-            .onChange(of: viewModel.favorits) { value in
-                let locationRelevant = !value.filter(\.locationRelevant).isEmpty
-                if locationRelevant {
+            .onChange(of: viewModel.isLocationTrackingNeeded) { isNeeded in
+                if isNeeded {
                     locationViewModel.start(sender: "\(Self.self)")
                 } else {
                     locationViewModel.stop(sender: "\(Self.self)")

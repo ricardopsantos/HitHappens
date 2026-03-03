@@ -55,19 +55,18 @@ struct ___Template___ViewCoordinator: View, ViewCoordinatorProtocol {
         }
     }
 
-    @ViewBuilder
-    func buildScreen(_ screen: AppScreen, presentationStyle: ViewPresentationStyle) -> some View {
-        switch screen {
-        case .templateWith(model: let model):
-            let dependencies: ___Template___ViewModel.Dependencies = .init(
-                model: model, onCompletion: { _ in
-
-                },
-                dataBaseRepository: configuration.dataBaseRepository)
-            ___Template___View(dependencies: dependencies)
-        default:
-            NotImplementedView(screen: screen)
+    var screenRegistry: ScreenBuilderRegistry {
+        let configuration = configuration
+        var registry = ScreenBuilderRegistry()
+        registry.register { screen, _ in
+            guard case .templateWith(let model) = screen else { return nil }
+            return AnyView(___Template___View(dependencies: .init(
+                model: model,
+                onCompletion: { _ in },
+                dataBaseRepository: configuration.dataBaseRepository
+            )))
         }
+        return registry
     }
 }
 

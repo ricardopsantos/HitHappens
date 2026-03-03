@@ -41,7 +41,7 @@ extension EventsMapViewModel {
     struct Dependencies {
         let model: EventsMapModel
         let onShouldDisplayTrackedLog: (Model.TrackedLog) -> Void
-        let dataBaseRepository: DataBaseRepositoryProtocol
+        let dataBaseRepository: DatabaseOutputRepositoryProtocol & TrackedLogRepositoryProtocol
     }
 }
 
@@ -55,7 +55,7 @@ class EventsMapViewModel: BaseViewModel {
     @Published private(set) var logs: [CascadeEventListItem]?
     private var lastRegion: MKCoordinateRegion?
     private let cancelBag = CancelBag()
-    private let dataBaseRepository: DataBaseRepositoryProtocol?
+    private let dataBaseRepository: (DatabaseOutputRepositoryProtocol & TrackedLogRepositoryProtocol)?
     private let onShouldDisplayTrackedLog: (Model.TrackedLog) -> Void
     public init(dependencies: Dependencies) {
         self.dataBaseRepository = dependencies.dataBaseRepository

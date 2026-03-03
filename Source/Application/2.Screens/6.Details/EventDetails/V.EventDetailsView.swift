@@ -38,13 +38,19 @@ struct EventDetailsViewCoordinator: View, ViewCoordinatorProtocol {
             }
     }
 
-    @ViewBuilder
-    func buildScreen(_ screen: AppScreen, presentationStyle: ViewPresentationStyle) -> some View {
-        switch screen {
-        case .eventDetails(model: let model):
-            let dependencies: EventDetailsViewModel.Dependencies = .init(
-                model: model, onPerformRouteBack: {
-                    switch presentationStyle {
+    var screenRegistry: ScreenBuilderRegistry {
+        let coordinator = coordinator
+        let configuration = configuration
+        let parentCoordinator = parentCoordinator
+        let dismiss = dismiss
+        let selfPresentationStyle = presentationStyle
+        var registry = ScreenBuilderRegistry()
+        registry.register { screen, style in
+            guard case .eventDetails(let model) = screen else { return nil }
+            return AnyView(EventDetailsView(dependencies: .init(
+                model: model,
+                onPerformRouteBack: {
+                    switch selfPresentationStyle {
                     case .notApplied: ()
                     case .navigation:
                         coordinator.coverLink = nil
@@ -57,20 +63,17 @@ struct EventDetailsViewCoordinator: View, ViewCoordinatorProtocol {
                         parentCoordinator.navigateBack()
                         dismiss()
                     }
-                }, onShouldDisplayTrackedLog: { trackedLog in
+                },
+                onShouldDisplayTrackedLog: { trackedLog in
                     coordinator.coverLink = .eventLogDetails(model: .init(trackedLog: trackedLog))
                 },
                 dataBaseRepository: configuration.dataBaseRepository,
-                presentationStyle: presentationStyle)
-            EventDetailsView(dependencies: dependencies)
-        case .eventLogDetails(model: let model):
-            EventLogDetailsViewCoordinator(
-                presentationStyle: presentationStyle, model: model)
-                .environmentObject(configuration)
-                .environmentObject(parentCoordinator)
-        default:
-            NotImplementedView(screen: screen)
+                presentationStyle: selfPresentationStyle
+            )))
         }
+        registry.register(ScreenBuilderRegistry.makeEventLogDetailsFactory(
+            configuration: configuration, parentCoordinator: parentCoordinator))
+        return registry
     }
 }
 
@@ -81,6 +84,7 @@ struct EventDetailsViewCoordinator: View, ViewCoordinatorProtocol {
 struct EventDetailsView: View, ViewProtocol {
     // MARK: - ViewProtocol
     @Environment(\.colorScheme) var colorScheme
+    @Environment(\.analyticsManager) private var analyticsManager
     @StateObject var viewModel: EventDetailsViewModel
     public init(dependencies: EventDetailsViewModel.Dependencies) {
         DevTools.Log.debug(.viewInit("\(Self.self)"), .view)
@@ -245,10 +249,11 @@ fileprivate extension EventDetailsView {
         if viewModel.isNewEvent {
             TextButton(
                 onClick: {
-                    AnalyticsManager.shared.handleButtonClickEvent(
+                    analyticsManager.handleButtonClickEvent(
                         buttonType: .primary,
                         label: "Save \(AppConstants.entityNameSingle)",
-                        sender: "\(Self.self)")
+                        sender: "\(Self.self)",
+                        properties: [:])
                     onConfirmEdit()
                 },
                 text: "Save \(AppConstants.entityNameSingle)".localizedMissing,
@@ -266,10 +271,11 @@ fileprivate extension EventDetailsView {
                 if !onEdit {
                     TextButton(
                         onClick: {
-                            AnalyticsManager.shared.handleButtonClickEvent(
+                            analyticsManager.handleButtonClickEvent(
                                 buttonType: .primary,
                                 label: "Delete",
-                                sender: "\(Self.self)")
+                                sender: "\(Self.self)",
+                                properties: [:])
                             viewModel.send(.deleteEvent(confirmed: false))
                         },
                         text: "Delete \(AppConstants.entityNameSingle)".localizedMissing,
@@ -351,10 +357,11 @@ fileprivate extension EventDetailsView {
             if !(viewModel.trackedEntity?.cascadeEvents?.isEmpty ?? true) {
                 TextButton(
                     onClick: {
-                        AnalyticsManager.shared.handleButtonClickEvent(
+                        analyticsManager.handleButtonClickEvent(
                             buttonType: .primary,
                             label: "Reset",
-                            sender: "\(Self.self)")
+                            sender: "\(Self.self)",
+                            properties: [:])
                         viewModel.send(.resetAllOccurrences(confirmed: false))
                     },
                     text: "Reset counter".localizedMissing,

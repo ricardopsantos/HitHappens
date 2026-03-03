@@ -1,20 +1,18 @@
 <p align="center">
    <img src="https://img.shields.io/badge/status-active-brightgreen">
-<img src="https://img.shields.io/badge/Swift-5.10-orange.svg?style=flat">
+<img src="https://img.shields.io/badge/Swift-6.2.4-orange.svg?style=flat">
 
-<img src="https://img.shields.io/badge/Xcode-15.4-blue.svg">
-   <a href="https://twitter.com/ricardo_psantos/">
-      <img src="https://img.shields.io/badge/Twitter-@ricardo_psantos-blue.svg?style=flat" alt="Twitter">
-   </a>
+<img src="https://img.shields.io/badge/Xcode-26.3-blue.svg">
 </p>
 
 
 # Index
 
-* __About__: _Into_
+* __About__: _Intro_ | _Features_
 * __Architecture I__: _Overview_ | _Additional Modules_ | _Dependencies Manager_ 
 * __Architecture II__: _Application_ | _Domain_ | _Core_ | _Common_ | _DesignSystem_ | _DevTools_
 * __Tests__: _UI Tests_ | _Unit Tests_
+* __Architecture Evaluation__
 * __Misc__: _Design Language_ | _XcodeGen_ | _SwiftLint and SwiftFormat_  | _Profiling_ | _CI/CD (Bitrise)_ | _Install_
 	
 # About 
@@ -27,13 +25,31 @@ ___Hit Happens___ is an open [source app](https://en.wikipedia.org/wiki/Open_sou
 
 ## Intro 
 
-_Hit Happens_ is built with __SwiftUI__ using __MVVM__, and was mainly designed to integrate various frameworks and features in a well-organized structure with support for __Unit Testing__, __UI Testing__. Also makes use of other tools like __[XcodeGen](https://github.com/yonaskolb/XcodeGen)__, __[SwiftLint](https://github.com/realm/SwiftLint)__ and __[SwiftFormat](https://github.com/nicklockwood/SwiftFormat)__
+_Hit Happens_ is a personal life-event tracking app. The idea is simple: you define **Trackers** (e.g. _"Went for a run"_, _"Had a coffee"_) and then tap them whenever the event happens. Each occurrence (called a **Log**) is timestamped and can optionally capture your current location. Over time you build a rich, searchable history of your habits and life moments, browsable via a list, a calendar heat-map, and a map.
 
-__SwiftUI__ because is Apple's current standart and offers several advantages like including a declarative syntax that simplifies UI design, real-time previews for faster iteration, and seamless integration with Swift for a unified coding experience while also enabling cross-platform development with a single codebase, significantly reducing development time and effort.
+It is built with __SwiftUI__ using __MVVM__, and was mainly designed to integrate various frameworks and features in a well-organized structure with support for __Unit Testing__ and __UI Testing__. It also makes use of tooling like __[XcodeGen](https://github.com/yonaskolb/XcodeGen)__, __[SwiftLint](https://github.com/realm/SwiftLint)__ and __[SwiftFormat](https://github.com/nicklockwood/SwiftFormat)__.
 
-__MVVM__ (Model-View-ViewModel) because separates concerns by dividing code into _Model_, _View_, and _ViewModel_, making maintenance easier. Also improves testability by isolating the _ViewModel_ for _unit tests_, enhancing code reliability. It also boosts reusability, allowing _ViewModels_ and _Views_ to be used across different contexts. Additionally, _MVVM_ simplifies data binding, integrating smoothly with _SwiftUI_ and _Combine_ for reactive and responsive user interfaces.
+__SwiftUI__ because it is Apple's current standard and offers several advantages: a declarative syntax that simplifies UI design, real-time previews for faster iteration, and seamless integration with Swift for a unified coding experience, while also enabling cross-platform development with a single codebase, significantly reducing development time and effort.
+
+__MVVM__ (Model-View-ViewModel) because it separates concerns by dividing code into _Model_, _View_, and _ViewModel_, making maintenance easier. It also improves testability by isolating the _ViewModel_ for _unit tests_, enhancing code reliability. It boosts reusability, allowing _ViewModels_ and _Views_ to be used across different contexts. Additionally, _MVVM_ simplifies data binding, integrating smoothly with _SwiftUI_ and _Combine_ for reactive and responsive user interfaces.
 
 The navigation was inspired by [Modular Navigation in SwiftUI: A Comprehensive Guide](https://medium.com/gitconnected/modular-navigation-in-swiftui-a-comprehensive-guide-5eeb8a511583).
+
+## Features
+
+| Feature | Description |
+|---|---|
+| **Quick-log from Favorites** | Pin your most-used Trackers as favorites and log them in one tap from the home tab |
+| **Categories** | Organise Trackers into 10 categories: Health, Lifestyle, Professional, Personal, Financial, Cultural, Entertainment, Social, Educational and Fitness |
+| **Location tagging** | Optionally attach your GPS coordinates and a reverse-geocoded address to every Log |
+| **Notes** | Add free-text notes to any Log for extra context |
+| **Sound effects** | Assign a fun sound effect to each Tracker (air horn, applause, sad trombone, etc.) |
+| **Calendar view** | Browse Logs by month; colour-coded dots per category show activity at a glance |
+| **Map view** | Visualise location-tagged Logs on a map, filtered to the visible region |
+| **Archive** | Hide Trackers you no longer use without deleting their history |
+| **iCloud Sync** | Data syncs automatically across your devices via CloudKit |
+| **Light / Dark mode** | Full support for the system appearance |
+| **App version check** | Settings screen alerts you when a new version is available on the App Store |
 
 ## Architecture I
 
@@ -62,7 +78,7 @@ There are 2 other modules not displayed for simplicity.
 
 * __Common:__ A utility toolbox containing helper extensions, property wrappers, and other utilities. It has its own unit tests and can be used in any project as it has no dependencies. More info at [https://github.com/ricardopsantos/Common](https://github.com/ricardopsantos/Common)
  
-* __DevTools:__ Manages essencialy app logs, is its a module know across all other modules to facilitate logging.
+* __DevTools:__ Manages essentially app logs; it is a module known across all other modules to facilitate logging.
 
 This modular structure ensures each component is focused on a specific responsibility, promoting clean, efficient, and easily testable code.
 
@@ -86,7 +102,7 @@ The project is organized into several key directories/targets, each serving a sp
 <img src=Source/_Documents/images/Application.png width=800/>
 </center>
 
-It's the main application target. Contains the `Views` (scenes), `ViewModels` (glue betweeen _Views_ and Logic), `Coordinators` (routing logic). 
+It's the main application target. Contains the `Views` (scenes), `ViewModels` (glue between _Views_ and Logic), `Coordinators` (routing logic).
 
 ## Domain
 
@@ -97,7 +113,7 @@ It's the main application target. Contains the `Views` (scenes), `ViewModels` (g
 This target encapsulates the interface functionality of the application. Providing the _Models_ and _Protocols_ it define what the app can do and the data structures to do it.
 
 - __Repositories__: Local data storage protocols.
-- __Services__: Bigde betweens _ViewModels_ and _Network_ and where we can have more logic associated (eg. caching)
+- __Services__: Bridge between _ViewModels_ and _Network_, where additional logic can be applied (e.g. caching)
 
 ## Core
 
@@ -109,7 +125,7 @@ This target implements the _Domain_ functionalities, providing essential compone
 
 - __Network__: Remote communication implementations.
 - __Repositories__: Local data storage implementations.
-- __Services__: Bigde betweens _ViewModels_ and _Network_ and where we can have more logic associated (eg. caching)
+- __Services__: Bridge between _ViewModels_ and _Network_, where additional logic can be applied (e.g. caching)
 
 Notably, `Services`, `Repositories` and `Network` are defined and implemented via _protocols_. The actual implementation is determined in the main app target, which is crucial for testing and ensuring scalable, maintainable code.
 
@@ -126,7 +142,7 @@ A shared framework that includes extensions and utility functions used across mu
 This target houses design-related components, ensuring a consistent and reusable visual style throughout the application. Also houses the applications _Colors_ and _Fonts_
 
 <center>
-<img src=Source/_Documents/images/DesignSystem.png width=800/>
+<img src=Source/_Documents/images/DesignSystem.jpg width=800/>
 </center>
 
 ## DevTools
@@ -136,6 +152,15 @@ Includes various development tools and utilities such as logging, facilitating s
 <center>
 <img src=Source/_Documents/images/DevTools.png width=800/>
 </center>
+
+# Architecture Evaluation (S.O.L.I.D. & MVVM)
+
+
+- **Dependency Inversion (DIP)** — all cross-layer dependencies flow through protocols (`DataBaseRepositoryProtocol`, `AppConfigServiceProtocol`, `CloudKitServiceProtocol`, etc.). _ViewModels_ never import _Core_; _Core_ never imports _Application_.
+- **Liskov Substitution (LSP)** — mock implementations exist for all service protocols (`AppConfigServiceMock`), and the test targets swap them in without changing any production code.
+- **MVVM separation** — _Views_ never contain business logic; all state is owned by `@Published` properties on _ViewModels_. The _Coordinator_ pattern keeps routing completely outside of both _View_ and _ViewModel_.
+- **Dependency injection** — `ConfigurationViewModel` is the single DI root, injected through the _SwiftUI_ environment, giving every screen access to production or test implementations.
+- **Testability** — _ViewModels_ receive all their dependencies through a typed `Dependencies` struct, making unit testing straightforward without any singleton touching.
 
 # Tests 
 
@@ -149,40 +174,40 @@ This revision aims to clearly communicate the purpose and scope of the tests whi
 
 The app includes UI Tests for views and routing logic
 
-<img src=Source/_Documents/images/UITests.png width=800/>
+<img src=Source/_Documents/images/UITests.jpg width=800/>
 
     
 ### Unit Testing (ViewModels & Services)
 
 The app _ViewModels_ are built on a way that can be tested.
 
-<img src=Source/_Documents/images/UnitTests.vm.png width=800/>
+<img src=Source/_Documents/images/UnitTestsVM.png width=800/>
 
 The app _Services_ are built on a way that can be tested.
 
-<img src=Source/_Documents/images/UnitTests.services.png width=800/>
+<img src=Source/_Documents/images/UnitTestsServices.png width=800/>
 
 # Misc
 
-## iClould Sync
+## iCloud Sync
 
 <table>
 <tr>
 <td>
 <center>
-<img src=Source/_Documents/images/iCloud_sync1.png width=200/>
+<img src=Source/_Documents/images/iCloud_sync1.jpg width=200/>
 </center>
 
 </td>
 <td>
 <center>
-<img src=Source/_Documents/images/iCloud_sync2.png width=200/>
+<img src=Source/_Documents/images/iCloud_sync2.jpg width=200/>
 </center>
 </td>
 </tr>
 </table>
 
-## Ligth / Dark mode support 
+## Light / Dark mode support 
 
 <center>
 <img src=Source/_Documents/images/PreviewDark.jpg width=800/>
@@ -198,21 +223,21 @@ Design language in mobile apps refers to a set of guidelines and principles that
 
 More about at [Adding a Design Language to your Xcode project.](https://medium.com/@ricardojpsantos/adding-a-design-language-to-your-xcode-project-fef5be39bef7)
 
-### Custom Colors (for Ligth/Dark mode)
+### Custom Colors (for Light/Dark mode)
 
 <img src=Source/_Documents/images/Colors.png width=800/>
 
 ### Custom Fonts 
 
-<img src=Source/_Documents/images/Fonts.png width=800/>
+<img src=Source/_Documents/images/Fonts.jpg width=800/>
 
 ### Custom Designables 
 
-<img src=Source/_Documents/images/Designables.png width=800/>
+<img src=Source/_Documents/images/Designables.jpg width=800/>
 
 ##  XcodeGen
 
-__XcodeGen__ treamlines project management by allowing you to generate Xcode project files from a simple YAML or JSON specification. This approach reduces merge conflicts, ensures consistency across teams, and makes it easier to version control project settings. By automating project setup, XcodeGen enhances productivity and maintains a cleaner, more organized codebase.
+__XcodeGen__ streamlines project management by allowing you to generate Xcode project files from a simple YAML or JSON specification. This approach reduces merge conflicts, ensures consistency across teams, and makes it easier to version control project settings. By automating project setup, XcodeGen enhances productivity and maintains a cleaner, more organized codebase.
 
 
 ## SwiftLint and SwiftFormat
@@ -227,7 +252,7 @@ As of today, the project is free from memory [leaks](https://developer.apple.com
 
 The app maintains a minimal memory footprint, consistently staying around 50-60 MB after adding 50 new events and navigating through various screens.
 
-<img src=Source/_Documents/images/MemoryPrint.png width=800/>
+<img src=Source/_Documents/images/MemoryPrint.jpg width=800/>
 
 ## CI/CD (Bitrise)
 

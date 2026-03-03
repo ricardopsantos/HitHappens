@@ -37,42 +37,26 @@ struct EventsMapViewCoordinator: View, ViewCoordinatorProtocol {
             }
     }
 
-    @ViewBuilder
-    func buildScreen(_ screen: AppScreen, presentationStyle: ViewPresentationStyle) -> some View {
-        switch screen {
-        case .map:
-            let dependencies: EventsMapViewModel.Dependencies = .init(
-                model: .init(), onShouldDisplayTrackedLog: { trackedLog in
+    var screenRegistry: ScreenBuilderRegistry {
+        let coordinator = coordinator
+        let configuration = configuration
+        let parentCoordinator = parentCoordinator
+        var registry = ScreenBuilderRegistry()
+        registry.register { screen, _ in
+            guard case .map = screen else { return nil }
+            return AnyView(EventsMapView(dependencies: .init(
+                model: .init(),
+                onShouldDisplayTrackedLog: { trackedLog in
                     coordinator.coverLink = .eventLogDetails(model: .init(trackedLog: trackedLog))
                 },
-                dataBaseRepository: configuration.dataBaseRepository)
-            EventsMapView(dependencies: dependencies)
-        case .eventLogDetails(model: let model):
-            /*
-             let dependencies: EventLogDetailsViewModel.Dependencies = .init(
-                 model: model,
-                 onPerformDisplayEntityDetails: { model in
-                     coordinator.coverLink = .eventDetails(model: .init(event: model))
-                 }, onPerformRouteBack: {
-                     parentCoordinator.navigateBack()
-                 },
-                 dataBaseRepository: configuration.dataBaseRepository,
-                 presentationStyle: presentationStyle)
-             EventLogDetailsView(dependencies: dependencies)*/
-            EventLogDetailsViewCoordinator(
-                presentationStyle: presentationStyle,
-                model: model)
-                .environmentObject(configuration)
-                .environmentObject(parentCoordinator)
-        case .eventDetails(model: let model):
-            EventDetailsViewCoordinator(
-                presentationStyle: presentationStyle,
-                model: model)
-                .environmentObject(configuration)
-                .environmentObject(parentCoordinator)
-        default:
-            NotImplementedView(screen: screen)
+                dataBaseRepository: configuration.dataBaseRepository
+            )))
         }
+        registry.register(ScreenBuilderRegistry.makeEventLogDetailsFactory(
+            configuration: configuration, parentCoordinator: parentCoordinator))
+        registry.register(ScreenBuilderRegistry.makeEventDetailsFactory(
+            configuration: configuration, parentCoordinator: parentCoordinator))
+        return registry
     }
 }
 

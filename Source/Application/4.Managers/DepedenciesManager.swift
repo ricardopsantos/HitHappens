@@ -19,13 +19,14 @@ public class DependenciesManager {
 
     enum Services {
         public static var appConfigServiceMock: AppConfigServiceProtocol { AppConfigServiceMock.shared }
-        public static var cloudKitService: CloudKitServiceProtocol { CloudKitService(cloudKit: AppConstants.cloudKitId) }
-        public static var appConfigService: AppConfigServiceProtocol {
-            AppConfigService(
-                webAPI: WebAPI.webAPI,
-                dataBaseRepository: Repository.dataBaseRepository
-            )
-        }
+        /// Stable singleton – creating a new instance per call would discard the internal cache.
+        public static let cloudKitService: CloudKitServiceProtocol = CloudKitService(cloudKit: AppConstants.cloudKitId)
+        /// Stable singleton – `AppConfigService` owns a `cacheManager`; a new instance per call
+        /// would silently discard cached responses and re-insert default events on first login.
+        public static let appConfigService: AppConfigServiceProtocol = AppConfigService(
+            webAPI: WebAPI.webAPI,
+            dataBaseRepository: Repository.dataBaseRepository
+        )
     }
 
     public enum Repository {

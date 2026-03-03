@@ -37,28 +37,27 @@ struct EventsListViewCoordinator: View, ViewCoordinatorProtocol {
             }
     }
 
-    @ViewBuilder
-    func buildScreen(_ screen: AppScreen, presentationStyle: ViewPresentationStyle) -> some View {
-        switch screen {
-        case .eventsList:
-            let dependencies: EventsListViewModel.Dependencies = .init(
-                model: .init(), onShouldDisplayTrackedEntity: { model in
-                    let detailsModel: EventDetailsModel = .init(event: model)
-                    parentCoordinator.navigate(to: .eventDetails(model: detailsModel))
-                }, onShouldDisplayNewTrackedEntity: {
+    var screenRegistry: ScreenBuilderRegistry {
+        let coordinator = coordinator
+        let configuration = configuration
+        let parentCoordinator = parentCoordinator
+        var registry = ScreenBuilderRegistry()
+        registry.register { screen, _ in
+            guard case .eventsList = screen else { return nil }
+            return AnyView(EventsListView(dependencies: .init(
+                model: .init(),
+                onShouldDisplayTrackedEntity: { model in
+                    parentCoordinator.navigate(to: .eventDetails(model: .init(event: model)))
+                },
+                onShouldDisplayNewTrackedEntity: {
                     coordinator.coverLink = .eventDetails(model: nil)
                 },
-                dataBaseRepository: configuration.dataBaseRepository)
-            EventsListView(dependencies: dependencies)
-        case .eventDetails(model: let model):
-            EventDetailsViewCoordinator(
-                presentationStyle: presentationStyle,
-                model: model)
-                .environmentObject(configuration)
-                .environmentObject(parentCoordinator)
-        default:
-            NotImplementedView(screen: screen)
+                dataBaseRepository: configuration.dataBaseRepository
+            )))
         }
+        registry.register(ScreenBuilderRegistry.makeEventDetailsFactory(
+            configuration: configuration, parentCoordinator: parentCoordinator))
+        return registry
     }
 }
 

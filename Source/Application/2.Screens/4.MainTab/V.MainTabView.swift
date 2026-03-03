@@ -129,25 +129,18 @@ struct MainTabView: View, ViewProtocol {
         }.onChange(of: tab5Router.navPath) { value in
             DevTools.Log.debug(.valueChanged("\(Self.self)", "tab5Router", "\(value)"), .view)
         }
-        .background(Color.red)
     }
 
-    @ViewBuilder
-    func buildScreen(_ screen: AppScreen, presentationStyle: ViewPresentationStyle) -> some View {
-        switch screen {
-        case .eventLogDetails(model: let model):
-            EventLogDetailsViewCoordinator(
-                presentationStyle: presentationStyle, model: model
-            )
-            .environmentObject(configuration)
-            .environmentObject(tab1Router)
-        case .eventDetails(model: let model):
-            EventDetailsViewCoordinator(presentationStyle: presentationStyle, model: model)
-                .environmentObject(configuration)
-                .environmentObject(tab2Router)
-        default:
-            NotImplementedView(screen: screen)
-        }
+    func buildScreen(_ screen: AppScreen, presentationStyle: ViewPresentationStyle) -> AnyView {
+        let configuration = configuration
+        let tab1Router = tab1Router
+        let tab2Router = tab2Router
+        var registry = ScreenBuilderRegistry()
+        registry.register(ScreenBuilderRegistry.makeEventLogDetailsFactory(
+            configuration: configuration, parentCoordinator: tab1Router))
+        registry.register(ScreenBuilderRegistry.makeEventDetailsFactory(
+            configuration: configuration, parentCoordinator: tab2Router))
+        return registry.build(screen, presentationStyle: presentationStyle)
     }
 }
 

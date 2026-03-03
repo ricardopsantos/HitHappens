@@ -64,7 +64,7 @@ extension EventLogDetailsViewModel {
         let model: EventLogDetailsModel
         let onPerformDisplayEntityDetails: ((Model.TrackedEntity) -> Void)?
         let onPerformRouteBack: () -> Void
-        let dataBaseRepository: DataBaseRepositoryProtocol
+        let dataBaseRepository: DatabaseOutputRepositoryProtocol & TrackedLogRepositoryProtocol
         let presentationStyle: ViewPresentationStyle
     }
 }
@@ -83,7 +83,7 @@ class EventLogDetailsViewModel: BaseViewModel {
     @Published var addressLongitude: Double = 0
     @Published var mapItems: [GenericMapView.ModelItem] = []
     private let cancelBag = CancelBag()
-    private let dataBaseRepository: DataBaseRepositoryProtocol?
+    private let dataBaseRepository: (DatabaseOutputRepositoryProtocol & TrackedLogRepositoryProtocol)?
     private let onPerformRouteBack: () -> Void
     private let screenID = UUID().uuidString
     public init(dependencies: Dependencies) {
@@ -120,9 +120,9 @@ class EventLogDetailsViewModel: BaseViewModel {
             case .delete:
                 send(.delete(confirmed: true))
             case nil:
-                let errorMessage = "No bottom sheet found"
+        let errorMessage = "No bottom sheet found"
                 alertModel = .init(type: .error, message: errorMessage)
-                ErrorsManager.handleError(message: "\(Self.self).\(action)", error: nil)
+                errorsManager.handleError(message: "\(Self.self).\(action)", error: nil)
             }
 
         case .userDidChangedNote(value: let value):
