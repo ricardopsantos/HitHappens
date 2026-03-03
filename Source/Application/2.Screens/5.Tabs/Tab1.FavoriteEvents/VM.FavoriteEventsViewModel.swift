@@ -50,6 +50,10 @@ extension FavoriteEventsViewModel {
 class FavoriteEventsViewModel: BaseViewModel {
     // MARK: - Usage/Auxiliar Attributes
     @Published private(set) var favorits: [Model.TrackedEntity] = []
+    /// Exposed so the View can react without embedding business logic in `onChange`.
+    var isLocationTrackingNeeded: Bool {
+        favorits.contains(where: \.locationRelevant)
+    }
     private let cancelBag = CancelBag()
     private let dataBaseRepository: DataBaseRepositoryProtocol?
     private let onShouldDisplayTrackedLog: (Model.TrackedLog) -> Void
@@ -79,27 +83,16 @@ class FavoriteEventsViewModel: BaseViewModel {
         case .addNewEvent(trackedEntityId: let trackedEntityId):
             Task { [weak self] in
                 guard let self = self else { return }
-                var trackedEntityId = trackedEntityId
-                if trackedEntityId.isEmpty {
-                    trackedEntityId = favorits.first?.id.description ?? ""
+                var resolvedId = trackedEntityId
+                if resolvedId.isEmpty {
+                    resolvedId = favorits.first?.id.description ?? ""
                 }
-                let locationRelevant = favorits.filter { $0.id == trackedEntityId }.first?.locationRelevant ?? false
-                let location = Common.SharedLocationManager.lastKnowLocation?.coordinate
-                if locationRelevant, let location = location {
-                    Common.LocationUtils.getAddressFrom(
-                        latitude: location.latitude,
-                        longitude: location.longitude) { [weak self] result in
-                            let event: Model.TrackedLog = .init(
-                                latitude: location.latitude,
-                                longitude: location.longitude,
-                                addressMin: result.addressMin,
-                                note: "")
-                            self?.dataBaseRepository?.trackedLogInsertOrUpdate(trackedLog: event, trackedEntityId: trackedEntityId)
-                        }
-                } else {
-                    let event: Model.TrackedLog = .init(latitude: 0, longitude: 0, addressMin: "", note: "")
-                    dataBaseRepository?.trackedLogInsertOrUpdate(trackedLog: event, trackedEntityId: trackedEntityId)
-                }
+                let locationRelevant = favorits.first(where: { $0.id == resolvedId })?.locationRelevant ?? false
+                insertTrackedLog(
+                    trackedEntityId: resolvedId,
+                    locationRelevant: locationRelevant,
+                    using: dataBaseRepository
+                )
             }
         }
     }

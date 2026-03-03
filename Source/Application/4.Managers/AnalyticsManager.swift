@@ -139,6 +139,10 @@ class AnalyticsManager {
     }
 }
 
+// MARK: - AnalyticsManagerProtocol conformance
+// All required methods are already implemented above; no extra code needed.
+extension AnalyticsManager: AnalyticsManagerProtocol {}
+
 private extension AnalyticsManager {
     func handle(baseEvent: BaseEvent) {
         guard FirebaseApp.configIsValidAndAvailable else {

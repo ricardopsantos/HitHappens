@@ -81,6 +81,7 @@ struct EventLogDetailsViewCoordinator: View, ViewCoordinatorProtocol {
 struct EventLogDetailsView: View, ViewProtocol {
     // MARK: - ViewProtocol
     @Environment(\.colorScheme) var colorScheme
+    @Environment(\.analyticsManager) private var analyticsManager
     @StateObject var viewModel: EventLogDetailsViewModel
     public init(dependencies: EventLogDetailsViewModel.Dependencies) {
         DevTools.Log.debug(.viewInit("\(Self.self)"), .view)
@@ -314,7 +315,7 @@ extension EventLogDetailsView {
         if !onEdit, let onPerformDisplayEntityDetails = onPerformDisplayEntityDetails {
             TextButton(
                 onClick: {
-                    AnalyticsManager.shared.handleButtonClickEvent(
+                    analyticsManager.handleButtonClickEvent(
                         buttonType: .primary,
                         label: "RouteToEntity",
                         sender: "\(Self.self)")
@@ -335,7 +336,7 @@ extension EventLogDetailsView {
         if !onEdit {
             TextButton(
                 onClick: {
-                    AnalyticsManager.shared.handleButtonClickEvent(
+                    analyticsManager.handleButtonClickEvent(
                         buttonType: .primary,
                         label: "Delete",
                         sender: "\(Self.self)")

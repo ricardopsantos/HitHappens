@@ -71,8 +71,8 @@ class EventsListViewModel: BaseViewModel {
                     favorite: nil,
                     archived: nil,
                     cascade: true) {
-                    events = records
-                        .sorted(by: { $0.favorite != $1.favorite })
+                events = records
+                        .sorted(by: { $0.favorite && !$1.favorite })
                 }
             }
         }

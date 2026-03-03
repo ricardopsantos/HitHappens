@@ -36,3 +36,12 @@ class ErrorsManager {
         #endif
     }
 }
+
+// MARK: - ErrorsManagerProtocol conformance
+
+extension ErrorsManager: ErrorsManagerProtocol {
+    /// Instance-method bridge to the static implementation, enabling protocol-based injection.
+    func handleError(message: String, error: Error?) {
+        ErrorsManager.handleError(message: message, error: error)
+    }
+}

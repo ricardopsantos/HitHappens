@@ -70,6 +70,7 @@ struct OnboardingViewCoordinator: View, ViewCoordinatorProtocol {
 struct OnboardingView: View {
     // MARK: - ViewProtocol
     @Environment(\.colorScheme) var colorScheme
+    @Environment(\.analyticsManager) private var analyticsManager
     @StateObject var viewModel: OnboardingViewModel
     let onCompletion: (String) -> Void
     public init(dependencies: OnboardingViewModel.Dependencies) {
@@ -171,7 +172,7 @@ fileprivate extension OnboardingView {
 //
 fileprivate extension OnboardingView {
     private func onNextButtonPressed() {
-        AnalyticsManager.shared.handleButtonClickEvent(
+        analyticsManager.handleButtonClickEvent(
             buttonType: .primary,
             label: selectedTab == (viewModel.onboardingModel.count - 1) ? "GetStarted" : "Next",
             sender: "\(Self.self)"

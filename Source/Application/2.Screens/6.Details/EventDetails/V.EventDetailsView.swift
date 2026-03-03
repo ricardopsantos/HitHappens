@@ -81,6 +81,7 @@ struct EventDetailsViewCoordinator: View, ViewCoordinatorProtocol {
 struct EventDetailsView: View, ViewProtocol {
     // MARK: - ViewProtocol
     @Environment(\.colorScheme) var colorScheme
+    @Environment(\.analyticsManager) private var analyticsManager
     @StateObject var viewModel: EventDetailsViewModel
     public init(dependencies: EventDetailsViewModel.Dependencies) {
         DevTools.Log.debug(.viewInit("\(Self.self)"), .view)
@@ -245,7 +246,7 @@ fileprivate extension EventDetailsView {
         if viewModel.isNewEvent {
             TextButton(
                 onClick: {
-                    AnalyticsManager.shared.handleButtonClickEvent(
+                    analyticsManager.handleButtonClickEvent(
                         buttonType: .primary,
                         label: "Save \(AppConstants.entityNameSingle)",
                         sender: "\(Self.self)")
@@ -266,7 +267,7 @@ fileprivate extension EventDetailsView {
                 if !onEdit {
                     TextButton(
                         onClick: {
-                            AnalyticsManager.shared.handleButtonClickEvent(
+                            analyticsManager.handleButtonClickEvent(
                                 buttonType: .primary,
                                 label: "Delete",
                                 sender: "\(Self.self)")
@@ -351,7 +352,7 @@ fileprivate extension EventDetailsView {
             if !(viewModel.trackedEntity?.cascadeEvents?.isEmpty ?? true) {
                 TextButton(
                     onClick: {
-                        AnalyticsManager.shared.handleButtonClickEvent(
+                        analyticsManager.handleButtonClickEvent(
                             buttonType: .primary,
                             label: "Reset",
                             sender: "\(Self.self)")

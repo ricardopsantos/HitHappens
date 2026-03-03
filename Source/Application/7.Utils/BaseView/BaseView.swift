@@ -101,13 +101,7 @@ enum BaseView {
                 .opacity(existsInternetConnection ? 0 : 1)
                 .animation(.easeInOut, value: existsInternetConnection)
             )
-            .onAppear {
-                DevTools.Log.debug(DevTools.Log.LogTemplate.screenIn(sender), .view)
-                AnalyticsManager.shared.handleScreenIn(appScreen: appScreen)
-
-            }.onDisappear {
-                DevTools.Log.debug(DevTools.Log.LogTemplate.screenOut(sender), .view)
-            }
+            .modifier(ScreenTrackingModifier(appScreen: appScreen, sender: sender))
 
         Group {
             if let navigationViewModel = navigationViewModel {
@@ -143,6 +137,27 @@ enum BaseView {
     }
 }
 
+// MARK: - Private: screen-tracking view modifier
+// Reads the analytics manager from the SwiftUI environment, breaking the hard dependency
+// on AnalyticsManager.shared and making screen-view events suppressible in tests/Previews.
+private struct ScreenTrackingModifier: ViewModifier {
+    @Environment(\.analyticsManager) private var analyticsManager
+    let appScreen: AppScreen
+    let sender: String
+
+    func body(content: Content) -> some View {
+        content
+            .onAppear {
+                DevTools.Log.debug(DevTools.Log.LogTemplate.screenIn(sender), .view)
+                analyticsManager.handleScreenIn(appScreen: appScreen)
+            }
+            .onDisappear {
+                DevTools.Log.debug(DevTools.Log.LogTemplate.screenOut(sender), .view)
+            }
+    }
+}
+
+#if canImport(SwiftUI) && DEBUG
 struct TestView: View {
     @State var loadingModel: Model.LoadingModel?
     @State var networkStatus: CommonNetworking.NetworkStatus?
@@ -205,3 +220,4 @@ struct TestView: View {
 #Preview("Preview") {
     TestView()
 }
+#endif

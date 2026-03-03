@@ -14,12 +14,16 @@ import DevTools
 class AppDelegate: UIResponder, UIApplicationDelegate {
     private let cancelBag = CancelBag()
     var configuration: ConfigurationViewModel?
+    /// Injected from `HitHappensApp.init`. Defaults to the production singleton so that
+    /// lifecycle events fired before injection (e.g. the very first `didFinishLaunchingWithOptions`
+    /// call) are still tracked. Override with `NullAnalyticsManager()` during UI testing.
+    var analyticsManager: any AnalyticsManagerProtocol = AnalyticsManager.shared
     func application(
         _ application: UIApplication,
         didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?
     ) -> Bool {
         DevTools.Log.debug(.appLifeCycle("\(#function)"), .appDelegate)
-        AnalyticsManager.shared.handleAppLifeCycleEvent(label: #function, sender: "\(Self.self)")
+        analyticsManager.handleAppLifeCycleEvent(label: #function, sender: "\(Self.self)")
         configuration?.cloudKitService.appDidFinishLaunchingWithOptions()
 
         // Needed (silent pushs) for iCloud Sync
@@ -52,14 +56,14 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
         configuration.delegateClass = SceneDelegate.self
         DevTools.Log.debug(.appLifeCycle("\(#function)"), .appDelegate)
-        AnalyticsManager.shared.handleAppLifeCycleEvent(label: #function, sender: "\(Self.self)")
+        analyticsManager.handleAppLifeCycleEvent(label: #function, sender: "\(Self.self)")
         return configuration
     }
 
     /// The `applicationWillTerminate` must be here because don't exists on the `SceneDelegate` class
     func applicationWillTerminate(_ application: UIApplication) {
         DevTools.Log.debug(.appLifeCycle("\(#function)"), .appDelegate)
-        AnalyticsManager.shared.handleAppLifeCycleEvent(label: #function, sender: "\(Self.self)")
+        analyticsManager.handleAppLifeCycleEvent(label: #function, sender: "\(Self.self)")
     }
 }
 
@@ -74,7 +78,7 @@ extension AppDelegate: UNUserNotificationCenterDelegate {
         withCompletionHandler completionHandler: @escaping (UNNotificationPresentationOptions) -> Void
     ) {
         DevTools.Log.debug(.appLifeCycle("\(#function)"), .appDelegate)
-        AnalyticsManager.shared.handleAppLifeCycleEvent(label: #function, sender: "\(Self.self)")
+        analyticsManager.handleAppLifeCycleEvent(label: #function, sender: "\(Self.self)")
         completionHandler([[.sound, .banner]])
     }
 
@@ -84,7 +88,7 @@ extension AppDelegate: UNUserNotificationCenterDelegate {
         withCompletionHandler completionHandler: @escaping () -> Void
     ) {
         DevTools.Log.debug(.appLifeCycle("\(#function)"), .appDelegate)
-        AnalyticsManager.shared.handleAppLifeCycleEvent(label: #function, sender: "\(Self.self)")
+        analyticsManager.handleAppLifeCycleEvent(label: #function, sender: "\(Self.self)")
         completionHandler()
     }
 }
@@ -99,7 +103,7 @@ extension AppDelegate {
         didRegisterForRemoteNotificationsWithDeviceToken deviceToken: Data
     ) {
         DevTools.Log.debug(.appLifeCycle("\(#function)"), .appDelegate)
-        AnalyticsManager.shared.handleAppLifeCycleEvent(label: #function, sender: "\(Self.self)")
+        analyticsManager.handleAppLifeCycleEvent(label: #function, sender: "\(Self.self)")
     }
 
     func application(
@@ -107,7 +111,7 @@ extension AppDelegate {
         didFailToRegisterForRemoteNotificationsWithError error: Error
     ) {
         DevTools.Log.debug(.appLifeCycle("\(#function)"), .appDelegate)
-        AnalyticsManager.shared.handleAppLifeCycleEvent(label: #function, sender: "\(Self.self)")
+        analyticsManager.handleAppLifeCycleEvent(label: #function, sender: "\(Self.self)")
     }
 
     func application(
@@ -122,7 +126,7 @@ extension AppDelegate {
             completionHandler(.noData)
         }
         DevTools.Log.debug(.appLifeCycle("\(#function)"), .appDelegate)
-        AnalyticsManager.shared.handleAppLifeCycleEvent(label: #function, sender: "\(Self.self)")
+        analyticsManager.handleAppLifeCycleEvent(label: #function, sender: "\(Self.self)")
     }
 
     func application(
@@ -130,7 +134,7 @@ extension AppDelegate {
         didReceiveRemoteNotification userInfo: [AnyHashable: Any]
     ) {
         DevTools.Log.debug(.appLifeCycle("\(#function)"), .appDelegate)
-        AnalyticsManager.shared.handleAppLifeCycleEvent(label: #function, sender: "\(Self.self)")
+        analyticsManager.handleAppLifeCycleEvent(label: #function, sender: "\(Self.self)")
     }
 }
 
@@ -145,34 +149,34 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
             return
         }
         DevTools.Log.debug(.appLifeCycle("\(#function)"), .appDelegate)
-        AnalyticsManager.shared.handleAppLifeCycleEvent(label: #function, sender: "\(Self.self)")
+        analyticsManager.handleAppLifeCycleEvent(label: #function, sender: "\(Self.self)")
     }
 
     /// Active -> Background/Closed : Part 1
     /// Tells the delegate that the scene is about to resign the active state and stop responding to user events.
     func sceneWillResignActive(_ scene: UIScene) {
         DevTools.Log.debug(.appLifeCycle("\(#function) (Active -> Background/Closed : Part 1)"), .appDelegate)
-        AnalyticsManager.shared.handleAppLifeCycleEvent(label: #function, sender: "\(Self.self)")
+        analyticsManager.handleAppLifeCycleEvent(label: #function, sender: "\(Self.self)")
     }
 
     /// Active -> Background/Closed : Part 2
     /// Tells the delegate that the scene is running in the background and is no longer onscreen.
     func sceneDidEnterBackground(_ scene: UIScene) {
         DevTools.Log.debug(.appLifeCycle("\(#function) (Active -> Background/Closed : Part 2)"), .appDelegate)
-        AnalyticsManager.shared.handleAppLifeCycleEvent(label: #function, sender: "\(Self.self)")
+        analyticsManager.handleAppLifeCycleEvent(label: #function, sender: "\(Self.self)")
     }
 
     /// Background/Closed -> Active : Part 1
     /// Tells the delegate that the scene is about to begin running in the foreground and become visible to the user.
     func sceneWillEnterForeground(_ scene: UIScene) {
         DevTools.Log.debug(.appLifeCycle("\(#function) (Background/Closed -> Active : Part 1)"), .appDelegate)
-        AnalyticsManager.shared.handleAppLifeCycleEvent(label: #function, sender: "\(Self.self)")
+        analyticsManager.handleAppLifeCycleEvent(label: #function, sender: "\(Self.self)")
     }
 
     /// Background/Closed -> Active : Part 2
     /// Tells the delegate that the scene became active and is now responding to user events.
     func sceneDidBecomeActive(_ scene: UIScene) {
         DevTools.Log.debug(.appLifeCycle("\(#function) (Background/Closed -> Active : Part 2)"), .appDelegate)
-        AnalyticsManager.shared.handleAppLifeCycleEvent(label: #function, sender: "\(Self.self)")
+        analyticsManager.handleAppLifeCycleEvent(label: #function, sender: "\(Self.self)")
     }
 }

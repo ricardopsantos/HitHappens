@@ -120,9 +120,9 @@ class EventLogDetailsViewModel: BaseViewModel {
             case .delete:
                 send(.delete(confirmed: true))
             case nil:
-                let errorMessage = "No bottom sheet found"
+        let errorMessage = "No bottom sheet found"
                 alertModel = .init(type: .error, message: errorMessage)
-                ErrorsManager.handleError(message: "\(Self.self).\(action)", error: nil)
+                errorsManager.handleError(message: "\(Self.self).\(action)", error: nil)
             }
 
         case .userDidChangedNote(value: let value):

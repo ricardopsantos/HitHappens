@@ -109,9 +109,8 @@ struct FavoriteEventsView: View, ViewProtocol {
                 viewModel.send(.didDisappear)
                 locationViewModel.stop(sender: "\(Self.self)")
             }
-            .onChange(of: viewModel.favorits) { value in
-                let locationRelevant = !value.filter(\.locationRelevant).isEmpty
-                if locationRelevant {
+            .onChange(of: viewModel.isLocationTrackingNeeded) { isNeeded in
+                if isNeeded {
                     locationViewModel.start(sender: "\(Self.self)")
                 } else {
                     locationViewModel.stop(sender: "\(Self.self)")

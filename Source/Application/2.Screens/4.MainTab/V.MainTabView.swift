@@ -129,7 +129,6 @@ struct MainTabView: View, ViewProtocol {
         }.onChange(of: tab5Router.navPath) { value in
             DevTools.Log.debug(.valueChanged("\(Self.self)", "tab5Router", "\(value)"), .view)
         }
-        .background(Color.red)
     }
 
     @ViewBuilder
