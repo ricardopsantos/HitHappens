@@ -233,7 +233,7 @@ public extension ModelDto.AppConfigResponse {
                   }
                 ],
                 "sound": "cheer1.caf",
-                "name": "Concerts 2024",
+                "name": "Concerts 2026",
                 "id": "CF616E21-81CE-446A-9FA0-E8F561642F20",
                 "locationRelevant": true,
                 "info": "Capturing my live music experiences and favorite performances of the year.",
@@ -274,7 +274,7 @@ public extension ModelDto.AppConfigResponse {
                     "longitude": -74.006
                   }
                 ],
-                "name": "Books 2024"
+                "name": "Books 2026"
               }
             ],
             "onboarding": {
