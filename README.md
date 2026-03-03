@@ -1,11 +1,8 @@
 <p align="center">
    <img src="https://img.shields.io/badge/status-active-brightgreen">
-<img src="https://img.shields.io/badge/Swift-5.10-orange.svg?style=flat">
+<img src="https://img.shields.io/badge/Swift-6.2.4-orange.svg?style=flat">
 
-<img src="https://img.shields.io/badge/Xcode-15.4-blue.svg">
-   <a href="https://twitter.com/ricardo_psantos/">
-      <img src="https://img.shields.io/badge/Twitter-@ricardo_psantos-blue.svg?style=flat" alt="Twitter">
-   </a>
+<img src="https://img.shields.io/badge/Xcode-26.3-blue.svg">
 </p>
 
 
@@ -145,7 +142,7 @@ A shared framework that includes extensions and utility functions used across mu
 This target houses design-related components, ensuring a consistent and reusable visual style throughout the application. Also houses the applications _Colors_ and _Fonts_
 
 <center>
-<img src=Source/_Documents/images/DesignSystem.png width=800/>
+<img src=Source/_Documents/images/DesignSystem.jpg width=800/>
 </center>
 
 ## DevTools
@@ -177,18 +174,18 @@ This revision aims to clearly communicate the purpose and scope of the tests whi
 
 The app includes UI Tests for views and routing logic
 
-<img src=Source/_Documents/images/UITests.png width=800/>
+<img src=Source/_Documents/images/UITests.jpg width=800/>
 
     
 ### Unit Testing (ViewModels & Services)
 
 The app _ViewModels_ are built on a way that can be tested.
 
-<img src=Source/_Documents/images/UnitTests.vm.png width=800/>
+<img src=Source/_Documents/images/UnitTestsVM.png width=800/>
 
 The app _Services_ are built on a way that can be tested.
 
-<img src=Source/_Documents/images/UnitTests.services.png width=800/>
+<img src=Source/_Documents/images/UnitTestsServices.png width=800/>
 
 # Misc
 
@@ -198,13 +195,13 @@ The app _Services_ are built on a way that can be tested.
 <tr>
 <td>
 <center>
-<img src=Source/_Documents/images/iCloud_sync1.png width=200/>
+<img src=Source/_Documents/images/iCloud_sync1.jpg width=200/>
 </center>
 
 </td>
 <td>
 <center>
-<img src=Source/_Documents/images/iCloud_sync2.png width=200/>
+<img src=Source/_Documents/images/iCloud_sync2.jpg width=200/>
 </center>
 </td>
 </tr>
@@ -232,11 +229,11 @@ More about at [Adding a Design Language to your Xcode project.](https://medium.c
 
 ### Custom Fonts 
 
-<img src=Source/_Documents/images/Fonts.png width=800/>
+<img src=Source/_Documents/images/Fonts.jpg width=800/>
 
 ### Custom Designables 
 
-<img src=Source/_Documents/images/Designables.png width=800/>
+<img src=Source/_Documents/images/Designables.jpg width=800/>
 
 ##  XcodeGen
 
@@ -255,7 +252,7 @@ As of today, the project is free from memory [leaks](https://developer.apple.com
 
 The app maintains a minimal memory footprint, consistently staying around 50-60 MB after adding 50 new events and navigating through various screens.
 
-<img src=Source/_Documents/images/MemoryPrint.png width=800/>
+<img src=Source/_Documents/images/MemoryPrint.jpg width=800/>
 
 ## CI/CD (Bitrise)
 
