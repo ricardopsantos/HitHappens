@@ -52,18 +52,19 @@ struct OnboardingViewCoordinator: View, ViewCoordinatorProtocol {
         }
     }
 
-    @ViewBuilder
-    func buildScreen(_ screen: AppScreen, presentationStyle: ViewPresentationStyle) -> some View {
-        switch screen {
-        case .onboarding(model: let model):
-            let dependencies: OnboardingViewModel.Dependencies = .init(
-                model: model, onCompletion: onCompletion,
+    var screenRegistry: ScreenBuilderRegistry {
+        let onCompletion = onCompletion
+        let configuration = configuration
+        var registry = ScreenBuilderRegistry()
+        registry.register { screen, _ in
+            guard case .onboarding(let model) = screen else { return nil }
+            return AnyView(OnboardingView(dependencies: .init(
+                model: model,
+                onCompletion: onCompletion,
                 appConfigService: configuration.appConfigService
-            )
-            OnboardingView(dependencies: dependencies)
-        default:
-            NotImplementedView(screen: screen)
+            )))
         }
+        return registry
     }
 }
 
@@ -175,7 +176,8 @@ fileprivate extension OnboardingView {
         analyticsManager.handleButtonClickEvent(
             buttonType: .primary,
             label: selectedTab == (viewModel.onboardingModel.count - 1) ? "GetStarted" : "Next",
-            sender: "\(Self.self)"
+            sender: "\(Self.self)",
+            properties: [:]
         )
         if selectedTab < (viewModel.onboardingModel.count - 1) {
             withAnimation {

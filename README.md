@@ -159,11 +159,11 @@ Includes various development tools and utilities such as logging, facilitating s
 # Architecture Evaluation (S.O.L.I.D. & MVVM)
 
 
-- **Dependency Inversion (DIP)** — all cross-layer dependencies flow through protocols (`DataBaseRepositoryProtocol`, `AppConfigServiceProtocol`, `CloudKitServiceProtocol`, etc.). ViewModels never import Core; Core never imports Application.
+- **Dependency Inversion (DIP)** — all cross-layer dependencies flow through protocols (`DataBaseRepositoryProtocol`, `AppConfigServiceProtocol`, `CloudKitServiceProtocol`, etc.). _ViewModels_ never import _Core_; _Core_ never imports _Application_.
 - **Liskov Substitution (LSP)** — mock implementations exist for all service protocols (`AppConfigServiceMock`), and the test targets swap them in without changing any production code.
-- **MVVM separation** — Views never contain business logic; all state is owned by `@Published` properties on ViewModels. The Coordinator pattern keeps routing completely outside of both View and ViewModel.
-- **Dependency injection** — `ConfigurationViewModel` is the single DI root, injected through the SwiftUI environment, giving every screen access to production or test implementations.
-- **Testability** — ViewModels receive all their dependencies through a typed `Dependencies` struct, making unit testing straightforward without any singleton touching.
+- **MVVM separation** — _Views_ never contain business logic; all state is owned by `@Published` properties on _ViewModels_. The _Coordinator_ pattern keeps routing completely outside of both _View_ and _ViewModel_.
+- **Dependency injection** — `ConfigurationViewModel` is the single DI root, injected through the _SwiftUI_ environment, giving every screen access to production or test implementations.
+- **Testability** — _ViewModels_ receive all their dependencies through a typed `Dependencies` struct, making unit testing straightforward without any singleton touching.
 
 # Tests 
 

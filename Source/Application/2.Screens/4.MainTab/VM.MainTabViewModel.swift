@@ -32,14 +32,14 @@ extension MainTabViewModel {
 
     struct Dependencies {
         let model: MainTabModel
-        let dataBaseRepository: DataBaseRepositoryProtocol
+        let dataBaseRepository: DatabaseOutputRepositoryProtocol
     }
 }
 
 class MainTabViewModel: BaseViewModel {
     // MARK: - Usage/Auxiliar Attributes
     @Published var selectedTab: AppTab = .tab1
-    private var dataBaseRepository: DataBaseRepositoryProtocol?
+    private var dataBaseRepository: DatabaseOutputRepositoryProtocol?
     private let cancelBag: CancelBag = .init()
     public init(dependencies: Dependencies) {
         super.init()

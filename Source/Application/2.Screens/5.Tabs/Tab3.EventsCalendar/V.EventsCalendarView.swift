@@ -37,31 +37,26 @@ struct EventsCalendarViewCoordinator: View, ViewCoordinatorProtocol {
             }
     }
 
-    @ViewBuilder
-    func buildScreen(_ screen: AppScreen, presentationStyle: ViewPresentationStyle) -> some View {
-        switch screen {
-        case .calendar:
-            let dependencies: EventsCalendarViewModel.Dependencies = .init(
-                model: .init(), onShouldDisplayTrackedLog: { trackedLog in
+    var screenRegistry: ScreenBuilderRegistry {
+        let coordinator = coordinator
+        let configuration = configuration
+        let parentCoordinator = parentCoordinator
+        var registry = ScreenBuilderRegistry()
+        registry.register { screen, _ in
+            guard case .calendar = screen else { return nil }
+            return AnyView(EventsCalendarView(dependencies: .init(
+                model: .init(),
+                onShouldDisplayTrackedLog: { trackedLog in
                     coordinator.coverLink = .eventLogDetails(model: .init(trackedLog: trackedLog))
                 },
-                dataBaseRepository: configuration.dataBaseRepository)
-            EventsCalendarView(dependencies: dependencies)
-        case .eventLogDetails(model: let model):
-            EventLogDetailsViewCoordinator(
-                presentationStyle: presentationStyle,
-                model: model)
-                .environmentObject(configuration)
-                .environmentObject(parentCoordinator)
-        case .eventDetails(model: let model):
-            EventDetailsViewCoordinator(
-                presentationStyle: presentationStyle,
-                model: model)
-                .environmentObject(configuration)
-                .environmentObject(parentCoordinator)
-        default:
-            NotImplementedView(screen: screen)
+                dataBaseRepository: configuration.dataBaseRepository
+            )))
         }
+        registry.register(ScreenBuilderRegistry.makeEventLogDetailsFactory(
+            configuration: configuration, parentCoordinator: parentCoordinator))
+        registry.register(ScreenBuilderRegistry.makeEventDetailsFactory(
+            configuration: configuration, parentCoordinator: parentCoordinator))
+        return registry
     }
 }
 

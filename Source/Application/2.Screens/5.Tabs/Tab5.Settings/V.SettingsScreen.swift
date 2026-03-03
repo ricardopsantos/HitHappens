@@ -37,12 +37,15 @@ struct SettingsViewCoordinator: View, ViewCoordinatorProtocol {
             }
     }
 
-    @ViewBuilder
-    func buildScreen(_ screen: AppScreen, presentationStyle: ViewPresentationStyle) -> some View {
-        switch screen {
-        case .settings:
-            let dependencies: SettingsViewModel.Dependencies = .init(
-                model: .init(), onShouldDisplayPublicCode: { url in
+    var screenRegistry: ScreenBuilderRegistry {
+        let coordinator = coordinator
+        let configuration = configuration
+        var registry = ScreenBuilderRegistry()
+        registry.register { screen, _ in
+            guard case .settings = screen else { return nil }
+            return AnyView(SettingsScreen(dependencies: .init(
+                model: .init(),
+                onShouldDisplayPublicCode: { url in
                     coordinator.coverLink = .webView(model: .init(
                         title: "Public Code".localizedMissing,
                         url: url
@@ -51,13 +54,10 @@ struct SettingsViewCoordinator: View, ViewCoordinatorProtocol {
                 appConfigService: configuration.appConfigService,
                 nonSecureAppPreferences: configuration.nonSecureAppPreferences,
                 cloudKitService: configuration.cloudKitService
-            )
-            SettingsScreen(dependencies: dependencies)
-        case .webView(model: let model):
-            WebView(model: model)
-        default:
-            NotImplementedView(screen: screen)
+            )))
         }
+        registry.register(ScreenBuilderRegistry.makeWebViewFactory())
+        return registry
     }
 }
 

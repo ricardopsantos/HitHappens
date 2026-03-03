@@ -1,5 +1,5 @@
 //
-//  TipView.swift
+//  EditableTitleAndValueView.swift
 //  HitHappens
 //
 //  Created by Ricardo Santos on 08/09/2024.

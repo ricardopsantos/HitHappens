@@ -38,16 +38,21 @@ struct EventLogDetailsViewCoordinator: View, ViewCoordinatorProtocol {
             }
     }
 
-    @ViewBuilder
-    func buildScreen(_ screen: AppScreen, presentationStyle: ViewPresentationStyle) -> some View {
-        switch screen {
-        case .eventLogDetails(model: let model):
-            let dependencies: EventLogDetailsViewModel.Dependencies = .init(
+    var screenRegistry: ScreenBuilderRegistry {
+        let coordinator = coordinator
+        let configuration = configuration
+        let parentCoordinator = parentCoordinator
+        let dismiss = dismiss
+        var registry = ScreenBuilderRegistry()
+        registry.register { screen, style in
+            guard case .eventLogDetails(let model) = screen else { return nil }
+            return AnyView(EventLogDetailsView(dependencies: .init(
                 model: model,
                 onPerformDisplayEntityDetails: { model in
                     coordinator.coverLink = .eventDetails(model: .init(event: model))
-                }, onPerformRouteBack: {
-                    switch presentationStyle {
+                },
+                onPerformRouteBack: {
+                    switch style {
                     case .notApplied:
                         ()
                     case .navigation:
@@ -61,16 +66,12 @@ struct EventLogDetailsViewCoordinator: View, ViewCoordinatorProtocol {
                     }
                 },
                 dataBaseRepository: configuration.dataBaseRepository,
-                presentationStyle: presentationStyle)
-            EventLogDetailsView(dependencies: dependencies)
-        case .eventDetails(model: let model):
-            EventDetailsViewCoordinator(
-                presentationStyle: presentationStyle, model: model)
-                .environmentObject(configuration)
-                .environmentObject(parentCoordinator)
-        default:
-            NotImplementedView(screen: screen)
+                presentationStyle: style
+            )))
         }
+        registry.register(ScreenBuilderRegistry.makeEventDetailsFactory(
+            configuration: configuration, parentCoordinator: parentCoordinator))
+        return registry
     }
 }
 
@@ -318,7 +319,8 @@ extension EventLogDetailsView {
                     analyticsManager.handleButtonClickEvent(
                         buttonType: .primary,
                         label: "RouteToEntity",
-                        sender: "\(Self.self)")
+                        sender: "\(Self.self)",
+                        properties: [:])
                     if let cascadeEntity = viewModel.trackedLog?.cascadeEntity {
                         onPerformDisplayEntityDetails(cascadeEntity)
                     }
@@ -339,7 +341,8 @@ extension EventLogDetailsView {
                     analyticsManager.handleButtonClickEvent(
                         buttonType: .primary,
                         label: "Delete",
-                        sender: "\(Self.self)")
+                        sender: "\(Self.self)",
+                        properties: [:])
                     viewModel.send(.delete(confirmed: false))
                 },
                 text: "Delete".localizedMissing,

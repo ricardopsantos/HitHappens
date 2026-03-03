@@ -37,7 +37,26 @@ class ErrorsManager {
     }
 }
 
-// MARK: - ErrorsManagerProtocol conformance
+// MARK: - Protocol
+
+/// Abstracts error/crash reporting so the concrete `ErrorsManager` singleton is never
+/// hard-coded at call sites. Override `BaseViewModel.errorsManager` in tests:
+///
+///     viewModel.errorsManager = NullErrorsManager()
+///
+protocol ErrorsManagerProtocol {
+    func handleError(message: String, error: Error?)
+}
+
+// MARK: - Null implementation
+
+/// No-op errors manager for unit tests.
+/// Prevents real Crashlytics calls from being fired when testing ViewModels.
+struct NullErrorsManager: ErrorsManagerProtocol {
+    func handleError(message: String, error: Error?) {}
+}
+
+// MARK: - Conformance
 
 extension ErrorsManager: ErrorsManagerProtocol {
     /// Instance-method bridge to the static implementation, enabling protocol-based injection.

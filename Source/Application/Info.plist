@@ -49,9 +49,9 @@
 	<key>NSFileProtectionComplete</key>
 	<true/>
 	<key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
-	<string>$(PRODUCT_NAME) requires access to your location to help you capture where your events took place. Don’t worry, we only use your location when you're adding new events or viewing the Map.</string>
+	<string>$(PRODUCT_NAME) requires access to your location to help you capture where your events took place. Don’t worry, we only use your location when you&apos;re adding new events or viewing the Map.</string>
 	<key>NSLocationWhenInUseUsageDescription</key>
-	<string>$(PRODUCT_NAME) requires access to your location to help you capture where your events took place. Don’t worry, we only use your location when you're adding new events or viewing the Map.</string>
+	<string>$(PRODUCT_NAME) requires access to your location to help you capture where your events took place. Don’t worry, we only use your location when you&apos;re adding new events or viewing the Map.</string>
 	<key>SMARTSDK_APP_SECRET</key>
 	<string>$(SMARTSDK_APP_SECRET)</string>
 	<key>TARGET_ENVIRONMENT</key>

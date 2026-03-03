@@ -35,19 +35,19 @@ struct RootViewCoordinator: View, ViewCoordinatorProtocol {
             }
     }
 
-    /// Navigation Links
-    func buildScreen(_ screen: AppScreen, presentationStyle: ViewPresentationStyle) -> some View {
-        switch screen {
-        case .root:
-            RootView(dependencies: .init(
+    var screenRegistry: ScreenBuilderRegistry {
+        let configuration = configuration
+        var registry = ScreenBuilderRegistry()
+        registry.register { screen, _ in
+            guard case .root = screen else { return nil }
+            return AnyView(RootView(dependencies: .init(
                 model: .init(isAppStartCompleted: false),
                 nonSecureAppPreferences: configuration.nonSecureAppPreferences,
                 dataBaseRepository: configuration.dataBaseRepository,
                 cloudKitService: configuration.cloudKitService
-            ))
-        default:
-            NotImplementedView(screen: screen)
+            )))
         }
+        return registry
     }
 }
 
@@ -84,24 +84,29 @@ struct RootView: View, ViewProtocol {
             .onChange(of: viewModel.isOnboardingCompleted) { _ in updateRoot() }
     }
 
-    /// Navigation Links
-    @ViewBuilder private func buildScreen(_ appScreen: AppScreen) -> some View {
-        switch appScreen {
-        case .splash:
-            SplashViewCoordinator(presentationStyle: .fullScreenCover, onCompletion: {
+    /// Navigation Links — resolved via registry instead of a switch statement.
+    private func buildScreen(_ appScreen: AppScreen) -> some View {
+        let viewModel = viewModel
+        var registry = ScreenBuilderRegistry()
+        registry.register { screen, _ in
+            guard case .splash = screen else { return nil }
+            return AnyView(SplashViewCoordinator(presentationStyle: .fullScreenCover, onCompletion: {
                 viewModel.send(action: .start)
-            })
-        case .mainApp:
-            MainTabViewCoordinator()
-        case .onboarding:
-            OnboardingViewCoordinator(
+            }))
+        }
+        registry.register { screen, _ in
+            guard case .mainApp = screen else { return nil }
+            return AnyView(MainTabViewCoordinator())
+        }
+        registry.register { screen, _ in
+            guard case .onboarding = screen else { return nil }
+            return AnyView(OnboardingViewCoordinator(
                 presentationStyle: .fullScreenCover, haveNavigationStack: false,
                 model: .init(),
                 onCompletion: { _ in viewModel.send(action: .markOnboardingAsCompleted) }
-            )
-        default:
-            Text("Not predicted \(root)")
+            ))
         }
+        return registry.build(appScreen, presentationStyle: .notApplied)
     }
 }
 

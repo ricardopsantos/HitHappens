@@ -40,18 +40,14 @@ struct SplashViewCoordinator: View, ViewCoordinatorProtocol {
         }
     }
 
-    @ViewBuilder
-    func buildScreen(_ screen: AppScreen, presentationStyle: ViewPresentationStyle) -> some View {
-        switch screen {
-        case .splash:
-            let dependencies: SplashViewModel.Dependencies = .init(
-                model: nil,
-                onCompletion: onCompletion
-            )
-            SplashView(dependencies: dependencies)
-        default:
-            NotImplementedView(screen: screen)
+    var screenRegistry: ScreenBuilderRegistry {
+        let onCompletion = onCompletion
+        var registry = ScreenBuilderRegistry()
+        registry.register { screen, _ in
+            guard case .splash = screen else { return nil }
+            return AnyView(SplashView(dependencies: .init(model: nil, onCompletion: onCompletion)))
         }
+        return registry
     }
 }
 

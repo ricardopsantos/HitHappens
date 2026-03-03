@@ -39,7 +39,7 @@ extension EventsCalendarViewModel {
     struct Dependencies {
         let model: EventsCalendarModel
         let onShouldDisplayTrackedLog: (Model.TrackedLog) -> Void
-        let dataBaseRepository: DataBaseRepositoryProtocol
+        let dataBaseRepository: DatabaseOutputRepositoryProtocol & TrackedLogRepositoryProtocol
     }
 }
 
@@ -55,7 +55,7 @@ class EventsCalendarViewModel: BaseViewModel {
     @Published var selectedMonth: Date = .now
     @Published var eventsForDay: [Date: [Color]] = [:]
     private let cancelBag = CancelBag()
-    private let dataBaseRepository: DataBaseRepositoryProtocol?
+    private let dataBaseRepository: (DatabaseOutputRepositoryProtocol & TrackedLogRepositoryProtocol)?
     private let onShouldDisplayTrackedLog: (Model.TrackedLog) -> Void
     public init(dependencies: Dependencies) {
         self.dataBaseRepository = dependencies.dataBaseRepository

@@ -64,7 +64,7 @@ extension EventLogDetailsViewModel {
         let model: EventLogDetailsModel
         let onPerformDisplayEntityDetails: ((Model.TrackedEntity) -> Void)?
         let onPerformRouteBack: () -> Void
-        let dataBaseRepository: DataBaseRepositoryProtocol
+        let dataBaseRepository: DatabaseOutputRepositoryProtocol & TrackedLogRepositoryProtocol
         let presentationStyle: ViewPresentationStyle
     }
 }
@@ -83,7 +83,7 @@ class EventLogDetailsViewModel: BaseViewModel {
     @Published var addressLongitude: Double = 0
     @Published var mapItems: [GenericMapView.ModelItem] = []
     private let cancelBag = CancelBag()
-    private let dataBaseRepository: DataBaseRepositoryProtocol?
+    private let dataBaseRepository: (DatabaseOutputRepositoryProtocol & TrackedLogRepositoryProtocol)?
     private let onPerformRouteBack: () -> Void
     private let screenID = UUID().uuidString
     public init(dependencies: Dependencies) {

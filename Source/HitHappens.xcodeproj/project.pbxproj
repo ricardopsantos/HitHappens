@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 56;
+	objectVersion = 63;
 	objects = {
 
 /* Begin PBXAggregateTarget section */
@@ -16,6 +16,8 @@
 			dependencies = (
 			);
 			name = SwiftFormat;
+			packageProductDependencies = (
+			);
 			productName = SwiftFormat;
 		};
 		844DF0D5BE70724EB31B20D8 /* SwiftLint */ = {
@@ -27,6 +29,8 @@
 			dependencies = (
 			);
 			name = SwiftLint;
+			packageProductDependencies = (
+			);
 			productName = SwiftLint;
 		};
 /* End PBXAggregateTarget section */
@@ -855,7 +859,7 @@
 		59ADA2A80587014BCBF81C2E /* Tabs1Tests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Tabs1Tests.swift; sourceTree = "<group>"; };
 		59EECF08F7A0E37449ABCF1D /* AnyPublisher+Async.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AnyPublisher+Async.swift"; sourceTree = "<group>"; };
 		5A0F5524ACC7AE12154CDB3C /* UIControl+CombineCompatible.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIControl+CombineCompatible.swift"; sourceTree = "<group>"; };
-		5C019ED81A967EE4965806ED /* UnitTests.xctest */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.cfbundle; path = UnitTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		5C019ED81A967EE4965806ED /* UnitTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = UnitTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		5E0EFDABBC89E6955C045187 /* _FrameworkTemplate.yml */ = {isa = PBXFileReference; lastKnownFileType = text.yaml; path = _FrameworkTemplate.yml; sourceTree = "<group>"; };
 		5ECBB518570CE6AD411E09FB /* SwiftDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwiftDataManager.swift; sourceTree = "<group>"; };
 		5ED4F524BE62E4713143FBB0 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
@@ -944,7 +948,7 @@
 		81F6EE28E623ACEE172ABB79 /* Designables.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Designables.png; sourceTree = "<group>"; };
 		82AAC0590F5F20BC806B3007 /* DesignSystem.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = DesignSystem.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		82D566E5926A96CC46928DB9 /* onboarding_15pro.light.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = onboarding_15pro.light.jpg; sourceTree = "<group>"; };
-		833D281025396845B399E4ED /* UITests.xctest */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.cfbundle; path = UITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		833D281025396845B399E4ED /* UITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = UITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		8364FDA81049E3C189B44966 /* BaseViewModelsTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseViewModelsTests.swift; sourceTree = "<group>"; };
 		841BCDCF789645BBF0759CEB /* SolvingRedraw.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SolvingRedraw.swift; sourceTree = "<group>"; };
 		848023DB37E6F014DF0DF349 /* Image+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Image+Extensions.swift"; sourceTree = "<group>"; };
@@ -3046,6 +3050,8 @@
 				390BC0AC75EBAE9127165A91 /* PBXTargetDependency */,
 			);
 			name = Domain;
+			packageProductDependencies = (
+			);
 			productName = Domain;
 			productReference = 50900AE93714414999A66957 /* Domain.framework */;
 			productType = "com.apple.product-type.framework";
@@ -3088,6 +3094,8 @@
 				078E3A97E20811C8DB52CD90 /* PBXTargetDependency */,
 			);
 			name = DevTools;
+			packageProductDependencies = (
+			);
 			productName = DevTools;
 			productReference = 44D52D0BEED29C4D8DFC3A83 /* DevTools.framework */;
 			productType = "com.apple.product-type.framework";
@@ -3107,6 +3115,8 @@
 				74A2E97CE27B82DF05110DC9 /* PBXTargetDependency */,
 			);
 			name = Core;
+			packageProductDependencies = (
+			);
 			productName = Core;
 			productReference = E5005CF9815CB8388F24D5F6 /* Core.framework */;
 			productType = "com.apple.product-type.framework";
@@ -3127,6 +3137,8 @@
 				B4077F682B751A348CDD6CB2 /* PBXTargetDependency */,
 			);
 			name = DesignSystem;
+			packageProductDependencies = (
+			);
 			productName = DesignSystem;
 			productReference = 82AAC0590F5F20BC806B3007 /* DesignSystem.framework */;
 			productType = "com.apple.product-type.framework";
@@ -3170,6 +3182,8 @@
 			dependencies = (
 			);
 			name = Common;
+			packageProductDependencies = (
+			);
 			productName = Common;
 			productReference = FFF39C519E284BB9BED8F7C7 /* Common.framework */;
 			productType = "com.apple.product-type.framework";
@@ -3181,7 +3195,7 @@
 			isa = PBXProject;
 			attributes = {
 				BuildIndependentTargetsInParallel = YES;
-				LastUpgradeCheck = 1501;
+				LastUpgradeCheck = 2630;
 				TargetAttributes = {
 					7FC1D4A9405E52C5CA9319C9 = {
 						TestTargetID = F7A7E879415146CCE92FA8DF;
@@ -3201,6 +3215,7 @@
 				es,
 			);
 			mainGroup = 9EA5AB85CDD268099834EAE5;
+			minimizedProjectReferenceProxies = 1;
 			packageReferences = (
 				F372BDE05C4EA8FD7C82363F /* XCRemoteSwiftPackageReference "CloudKitSyncMonitor" */,
 				2E7E71E1846D880C62C8C743 /* XCRemoteSwiftPackageReference "Nimble" */,
@@ -3897,7 +3912,6 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = DD0DA4E4955C4B0732C54BFD /* production-debug.xcconfig */;
 			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ENABLE_USER_SCRIPT_SANDBOXING = YES;
 				INFOPLIST_FILE = Application/Info.plist;
@@ -4364,6 +4378,7 @@
 				ONLY_ACTIVE_ARCH = YES;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = iphoneos;
+				STRING_CATALOG_GENERATE_SYMBOLS = YES;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
 				SWIFT_OBJC_BRIDGING_HEADER = "Application/Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
@@ -4375,7 +4390,6 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = D95D93D539F1F36375A07927 /* qa-release.xcconfig */;
 			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ENABLE_USER_SCRIPT_SANDBOXING = YES;
 				INFOPLIST_FILE = Application/Info.plist;
@@ -4514,6 +4528,7 @@
 				MTL_FAST_MATH = YES;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = iphoneos;
+				STRING_CATALOG_GENERATE_SYMBOLS = YES;
 				SWIFT_COMPILATION_MODE = wholemodule;
 				SWIFT_OBJC_BRIDGING_HEADER = "Application/Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-O";
@@ -4572,6 +4587,7 @@
 				MTL_FAST_MATH = YES;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = iphoneos;
+				STRING_CATALOG_GENERATE_SYMBOLS = YES;
 				SWIFT_COMPILATION_MODE = wholemodule;
 				SWIFT_OBJC_BRIDGING_HEADER = "Application/Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-O";
@@ -4602,7 +4618,6 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = F73D9B8BE84D0324B9A93E71 /* dev-debug.xcconfig */;
 			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ENABLE_USER_SCRIPT_SANDBOXING = YES;
 				INFOPLIST_FILE = Application/Info.plist;
@@ -4779,6 +4794,7 @@
 				ONLY_ACTIVE_ARCH = YES;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = iphoneos;
+				STRING_CATALOG_GENERATE_SYMBOLS = YES;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
 				SWIFT_OBJC_BRIDGING_HEADER = "Application/Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
@@ -4863,6 +4879,7 @@
 				ONLY_ACTIVE_ARCH = YES;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = iphoneos;
+				STRING_CATALOG_GENERATE_SYMBOLS = YES;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
 				SWIFT_OBJC_BRIDGING_HEADER = "Application/Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
@@ -5031,7 +5048,6 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 45F570CFE670D023A614D242 /* qa-debug.xcconfig */;
 			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ENABLE_USER_SCRIPT_SANDBOXING = YES;
 				INFOPLIST_FILE = Application/Info.plist;
@@ -5129,7 +5145,6 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = E76B8687E060162560516E86 /* production-release.xcconfig */;
 			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ENABLE_USER_SCRIPT_SANDBOXING = YES;
 				INFOPLIST_FILE = Application/Info.plist;
@@ -5196,6 +5211,7 @@
 				MTL_FAST_MATH = YES;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = iphoneos;
+				STRING_CATALOG_GENERATE_SYMBOLS = YES;
 				SWIFT_COMPILATION_MODE = wholemodule;
 				SWIFT_OBJC_BRIDGING_HEADER = "Application/Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-O";
@@ -5274,7 +5290,6 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = FF28DB0DCEE4B829E8D3A60F /* dev-release.xcconfig */;
 			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ENABLE_USER_SCRIPT_SANDBOXING = YES;
 				INFOPLIST_FILE = Application/Info.plist;
