@@ -15,20 +15,11 @@ if [ -z "$SCHEME" ]; then
     SCHEME="HitHappens Dev"
 fi
 
-displayCompilerInfo() {
-    printf "\n"
-    echo -n "### Current Compiler"
-    printf "\n"
-    eval xcrun swift -version
-    eval xcode-select --print-path
-}
-
 build() {
-	#xcodebuild clean -project $PROJECT_PATH
 	printf "\n"
 	echo -n "### Will build"
 	printf "\n"
-    xcodebuild clean build -project "$PROJECT_PATH" -scheme "$SCHEME" CODE_SIGNING_ALLOWED=NO CODE_SIGNING_REQUIRED=NO -quiet | xcpretty --error
+    xcodebuild clean build -project "$PROJECT_PATH" -scheme "$SCHEME" CODE_SIGNING_ALLOWED=NO CODE_SIGNING_REQUIRED=NO
     printf "\n"
 	echo -n "### Will build: Done"
     printf "\n"
@@ -88,9 +79,7 @@ openSimulator() {
 
 printf "\n"
 
-displayCompilerInfo
-
 build
 
-openSimulator
-testUsingBootedSimulator
+#openSimulator
+#testUsingBootedSimulator

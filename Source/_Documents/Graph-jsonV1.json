@@ -150,12 +150,18 @@
           "target" : "DevTools"
         }
       ],
+      "settings" : {
+        "base" : {
+          "MARKETING_VERSION" : 1
+        }
+      },
       "sources" : [
         {
           "path" : "..\/DesignSystem",
           "excludes" : [
             "Info.plist"
-          ]
+          ],
+          "path" : "..\/DesignSystem"
         }
       ]
     },
@@ -278,10 +284,10 @@
       ],
       "sources" : [
         {
+          "path" : "..\/Domain",
           "excludes" : [
             "Info.plist"
-          ],
-          "path" : "..\/DevTools"
+          ]
         }
       ],
       "settings" : {

@@ -171,12 +171,14 @@ The app includes comprehensive testing coverage with both UI Tests and Unit Test
 
 This revision aims to clearly communicate the purpose and scope of the tests while emphasizing their importance in maintaining app quality and performance.
 
+<img src=Source/_Documents/images/UnitTests_2.png width=800/> 
 
 ### UITesting
 
 The app includes UI Tests for views and routing logic
 
 <img src=Source/_Documents/images/UITests.png width=800/>
+
     
 ### Unit Testing (ViewModels & Services)
 
@@ -207,8 +209,6 @@ The app _Services_ are built on a way that can be tested.
 </td>
 </tr>
 </table>
-
-
 
 ## Light / Dark mode support 
 
@@ -256,6 +256,18 @@ As of today, the project is free from memory [leaks](https://developer.apple.com
 The app maintains a minimal memory footprint, consistently staying around 50-60 MB after adding 50 new events and navigating through various screens.
 
 <img src=Source/_Documents/images/MemoryPrint.png width=800/>
+
+## CI/CD (Bitrise)
+
+Bitrise, a mobile-focused CI/CD platform, automates build, test, and deployment workflows to streamline development and accelerate quality app delivery—making it the chosen platform for this project.
+
+<center>
+<img src=Source/_Documents/images/Bitrise_1.png width=800/>
+</center>
+
+<center>
+<img src=Source/_Documents/images/Bitrise_2.png width=800/>
+</center>
 
 ## Install 
 

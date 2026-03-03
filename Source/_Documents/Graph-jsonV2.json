@@ -75,22 +75,67 @@
       "configFiles" : {
 
       },
+      "settings" : {
+
+      },
+      "attributes" : {
+
+      },
+      "scheme" : null
+    }
+  },
+  "projectReferences" : {
+
+  },
+  "settingGroups" : {
+
+  },
+  "targets" : {
+    "HitHappens" : {
+      "configFiles" : {
+        "Production Release" : "..\/Configuration\/production-release.xcconfig",
+        "Dev Release" : "..\/Configuration\/dev-release.xcconfig",
+        "QA Debug" : "..\/Configuration\/qa-debug.xcconfig",
+        "Dev Debug" : "..\/Configuration\/dev-debug.xcconfig",
+        "Production Debug" : "..\/Configuration\/production-debug.xcconfig",
+        "QA Release" : "..\/Configuration\/qa-release.xcconfig"
+      },
+      "attributes" : {
+
+      },
+      "postCompileScripts" : [
+
+      ],
+      "prebuildScripts" : [
+
+      ],
+      "buildToolPlugins" : [
+
+      ],
+      "postbuildScripts" : [
+
+      ],
+      "requiresObjCLinking" : null,
       "dependencies" : [
         {
-          "copy" : null,
+          "platforms" : null,
           "embed" : null,
           "codeSign" : null,
           "platforms" : null,
           "link" : null,
           "destinationFilters" : null,
-          "target" : "Common"
+          "codeSign" : null,
+          "copy" : null
         },
         {
+          "link" : null,
           "platforms" : null,
           "target" : "DevTools",
           "embed" : null,
           "link" : null,
           "codeSign" : null,
+          "link" : null,
+          "target" : "Core",
           "destinationFilters" : null,
           "copy" : null
         }
@@ -118,12 +163,9 @@
       "sources" : [
         {
           "excludes" : [
-            "Tests",
-            "Sources\/Info.plist",
-            ".gitignore",
-            ".swiftpm",
-            "Package.swift",
-            "Package.resolved"
+            "*.md",
+            "*.png",
+            "GoogleService*"
           ],
           "name" : null,
           "destinationFilters" : null,
@@ -193,7 +235,12 @@
       ],
       "buildRules" : [
 
-      ],
+      },
+      "type" : "bundle.ui-testing",
+      "platform" : "iOS",
+      "deploymentTarget" : "16.0",
+      "entitlements" : null,
+      "transitivelyLinkDependencies" : null,
       "dependencies" : [
         {
           "codeSign" : null,
@@ -292,6 +339,9 @@
       },
       "prebuildScripts" : [
 
+          ],
+          "path" : "..\/Core"
+        }
       ],
       "postbuildScripts" : [
 
@@ -508,7 +558,9 @@
       },
       "sources" : [
         {
-          "compilerFlags" : [
+          "inferDestinationFiltersByPath" : null,
+          "group" : null,
+          "resourceTags" : [
 
           ],
           "group" : null,
@@ -921,7 +973,12 @@
         }
       ],
       "settings" : {
-
+        "ENABLE_USER_SCRIPT_SANDBOXING" : true,
+        "CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED" : true,
+        "MODULE_VERIFIER_SUPPORTED_LANGUAGE_STANDARDS" : "gnu11 gnu++14",
+        "ENABLE_MODULE_VERIFIER" : true,
+        "MARKETING_VERSION" : 1,
+        "ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS" : true
       },
       "targets" : [
 
