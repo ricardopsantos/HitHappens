@@ -39,7 +39,9 @@ public extension DataBaseRepository {
                 stored?.bind(model: trackedLog)
             }
             CommonCoreData.Utils.save(viewContext: context)
-        } catch {}
+        } catch {
+            DevTools.Log.error("Failed to insert/update tracked log: \(error)", .business)
+        }
     }
 
     //
@@ -103,8 +105,6 @@ public extension DataBaseRepository {
         if let maxLongitude = maxLongitude {
             predicates.append(NSPredicate(format: "longitude <= %f", maxLongitude))
         }
-        predicates.append(NSPredicate(format: "longitude != %f", Double(0)))
-        predicates.append(NSPredicate(format: "latitude != %f", Double(0)))
         if !predicates.isEmpty {
             fetchRequest.predicate = NSCompoundPredicate(andPredicateWithSubpredicates: predicates)
         }
@@ -150,13 +150,27 @@ public extension DataBaseRepository {
                 context.delete(record)
             }
             CommonCoreData.Utils.save(viewContext: context)
-        } catch {}
+        } catch {
+            DevTools.Log.error("Failed to delete tracked log: \(error)", .business)
+        }
     }
 
     func trackedLogDelete(trackedEntityId: String) {
-        let records = trackedLogGet(trackedEntityId: trackedEntityId, cascade: false)
-        records.forEach { record in
-            trackedLogDelete(trackedLogId: record.id)
+        typealias DBEntity = CDataTrackedLog
+        let context = viewContext
+        do {
+            guard let trackedEntity = try context.fetch(
+                CDataTrackedEntity.fetchRequestWith(id: trackedEntityId)
+            ).first else {
+                return
+            }
+            let records = try context.fetch(DBEntity.fetchRequestWith(relationship: trackedEntity))
+            records.forEach { record in
+                context.delete(record)
+            }
+            CommonCoreData.Utils.save(viewContext: context)
+        } catch {
+            DevTools.Log.error("Failed to delete tracked logs for entity: \(error)", .business)
         }
     }
 }

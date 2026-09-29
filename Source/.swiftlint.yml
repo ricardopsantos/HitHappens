@@ -5,23 +5,14 @@
 
 excluded:
     - Carthage
-
+    - Pods
+    - Pods.config
+    - R.generated.swift
+    - "**/.build"
+    
 custom_rules:
 
 # All project
-
-    tca_explicit_generics_reducer:
-        included: ".*\\.swift"
-        name: "Explicit Generics for Reducer"
-        regex: 'Reduce\s+\{'
-        message: "Use explicit generics in ReducerBuilder (Reduce<State, Action>) for successful autocompletion."
-        severity: error
-
-    tca_scope_unused_closure_parameter:
-        name: "TCA Scope Unused Closure Parameter"
-        regex: '\.scope\(\s*state\s*:\s*\{\s*\_'
-        message: "Explicitly use closure parameter when scoping store (ensures the right state is being mutated)"
-        severity: error
 
     xctassertnodifference_preferred:
         name: "XCTAssertNoDifference Preferred"
@@ -29,13 +20,6 @@ custom_rules:
         message: "Use PointFree's XCTAssertNoDifference from CustomDump library when possible"
         severity: warning
     
-    #no_letUnderscore:
-    #    included: ".*\\.swift"
-    #    name: ""
-    #    regex: 'let[ ][_][ ][=]'
-    #    message: "Don't use let _ = xxx , use xxx != nil"
-    #    severity: error
-
     naming_Singletons:
         included: ".*\\.swift"
         name: ""
@@ -50,12 +34,7 @@ custom_rules:
         message: "Use AppConstants.TimeZones..."
         severity: error
 
-    no_AppStateShared:
-        included: ".*\\.swift"
-        name: ""
-        regex: "AppState.shared"
-        message: "Use @EnvironmentObject"
-        severity: error
+
         
     no_TODO:
         included: ".*\\.swift"
@@ -64,18 +43,11 @@ custom_rules:
         message: "Use #warning"
         severity: error
 
-#    no_hardCodedDateFormats:
-#        included: ".*\\.swift"
-#        name: ""
-#        regex: '= "yyyy|DateFormatter(withFormat'
-#        message: "Use a DateFormats on AppContants.Date or DateFormatterTypes"
-#        severity: error
-
     logs_rule_1:
         included: ".*\\.swift"
         name: "Fordiden print"
         regex: "print[(]"
-        message: "Use DevTools.Log..."
+        message: "Use LogsManager...."
         severity: error
         
 #    no_hardCodedImages:
@@ -85,19 +57,6 @@ custom_rules:
 #        message: "Don't use hardCoded images"
 #        severity: error
         
-    random_rule_1:
-        included: ".*\\.swift"
-        name: ""
-        regex: "[.]withAlphaComponent[(]"
-        message: "Use .alpha("
-        severity: error
-           
-    random_rule_2:
-        included: ".*\\.swift"
-        name: ""
-        regex: "[.]font ="
-        message: "Use .layoutStyle = "
-        severity: warning
         
 # On SmartApp target only
 
@@ -107,55 +66,6 @@ custom_rules:
         regex: "[.]localizedMissing"
         message: "Fix this...."
         severity: warning
-        
-    no_UIKitAdhocConstruction:
-        included: "_SmartApp/.*\\.swift"
-        name: ""
-        regex: "UIImageView[(][)]|UILabel[(][)]|UIButton[(][)]|UIView[(][)]"
-        message: "Use UIKitViewFactory or Designables"
-        severity: error
-           
-    #mvvmRule_1:
-    #    included: "_SmartApp/.*\\.swift"
-    #    name: ""
-    #    regex: "output[.]value[.]send"
-    #    message: "func fwdStateToViewController(_ state: ViewOutput)"
-    #    severity: error
-        
-    mvvmRule_2:
-        included: "_SmartApp/.*\\.swift"
-        name: ""
-        regex: "viewState[.]state[.]send"
-        message: "func fwdViewStateToView(_ state: MVVMViewState<ViewData>)"
-        severity: error
-        
-    mvvmRule_3:
-        included: "_SmartApp/.*\\.swift"
-        name: ""
-        regex: "coordinatorActions[.]value[.]send"
-        message: "func fwdViewStateToCoordinator(_ state: CoordinatorTargets)"
-        severity: error
-      
- #   mvvmRule_4:
- #       included: "_SmartApp/.*\\.swift"
- #       name: ""
- #       regex: "dismiss[(]animated"
- #       message: "func dismiss(viewController:from:on:animated:)"
- #       severity: warning
-
-#    mvvmRule_5:
-#        included: "_SmartApp/.*\\.swift"
-#        name: ""
-#        regex: "[.]pushViewController[(]"
-#        message: "func push(viewController:from:on:animated:)"
-#        severity: warning
-        
-#    mvvmRule_6:
-#        included: "_SmartApp/.*\\.swift"
-#        name: ""
-#        regex: "[.]present[(]"
-#        message: "func push(viewController:from:on:animated:)"
-#        severity: warning
                         
 file_length:
     - 1000 # warning
@@ -206,12 +116,6 @@ type_name:
         - AS
         - DI
 
-identifier_name:
-    max_length: 60
-    excluded:
-        - iPhone
-        - id
-
 function_parameter_count: 10
 
 disabled_rules:
@@ -237,7 +141,7 @@ disabled_rules:
 duplicate_imports:
     severity: error
 
-operator_whitespace:
+function_name_whitespace:
     severity: error
 
 redundant_string_enum_value:

@@ -86,7 +86,10 @@ extension CloudKitService: CloudKitServiceProtocol {
 
     public func fetchAppVersion() async -> Model.AppVersion? {
         try? await withCheckedThrowingContinuation { [weak self] continuation in
-            guard let self = self else { return }
+            guard let self = self else {
+                continuation.resume(returning: nil)
+                return
+            }
             fetchAppVersion { some in
                 switch some {
                 case .success(let some):

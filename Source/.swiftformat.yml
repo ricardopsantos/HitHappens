@@ -33,7 +33,7 @@
 --stripunusedargs always
 --trimwhitespace always
 --typeattributes prev-line
---varattributes prev-line
+--storedvarattrs prev-line
 --voidtype void
 --wraparguments before-first
 --wrapcollections before-first

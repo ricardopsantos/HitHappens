@@ -15,7 +15,10 @@ public extension CDataTrackedEntity {
     static func fetchRequestAll(sorted: Bool = false) -> NSFetchRequest<DBEntity> {
         let request = NSFetchRequest<DBEntity>(entityName: DBEntity.entityName)
         if sorted {
-            request.sortDescriptors = [NSSortDescriptor(keyPath: \DBEntity.favorite, ascending: true)]
+            request.sortDescriptors = [
+                NSSortDescriptor(keyPath: \DBEntity.favorite, ascending: true),
+                NSSortDescriptor(keyPath: \DBEntity.name, ascending: true)
+            ]
         }
         return request
     }
