@@ -143,8 +143,14 @@ public extension DataBaseRepository {
     }
 
     func trackedEntityDeleteAll() {
-        trackedEntityGetAll(cascade: false).forEach { item in
-            trackedEntityDelete(trackedEntity: item)
-        }
+        typealias DBEntity = CDataTrackedEntity
+        let context = viewContext
+        do {
+            let records = try context.fetch(DBEntity.fetchRequest())
+            records.forEach { record in
+                context.delete(record)
+            }
+            CommonCoreData.Utils.save(viewContext: context)
+        } catch {}
     }
 }

@@ -100,10 +100,16 @@ fileprivate extension OnboardingViewModel {
         let imagesDarkURL = config.hitHappens.onboarding.pages
             .map(\.imageDark)
         var onboardingModelAcc: [OnboardingModel] = []
+        var completedCount = 0
+        let lock = NSLock()
         var imagesURL: [String] = []
         switch InterfaceStyleManager.appInterfaceStyle {
         case .light: imagesURL = imagesLightURL
         case .dark: imagesURL = imagesDarkURL
+        }
+        guard pages > 0 else {
+            loadingModel = .notLoading
+            return
         }
         imagesURL.forEach { url in
             CommonNetworking.ImageUtils.imageFrom(
@@ -111,17 +117,25 @@ fileprivate extension OnboardingViewModel {
                 caching: .none,
                 downsample: .zero
             ) { [weak self] image, url in
+                lock.lock()
+                defer { lock.unlock() }
                 if let image = image,
                    let page = config.hitHappens.onboarding.pages
                    .filter({ $0.imageLight == url || $0.imageDark == url })
                    .first {
                     onboardingModelAcc.append(.init(text: page.text, image: image, order: page.order))
-                    if onboardingModelAcc.count == pages {
-                        let intro: OnboardingModel = .init(
-                            text: intro,
-                            image: UIImage(named: "logo")!
-                        )
-                        self?.onboardingModel = [intro] + onboardingModelAcc.sorted(by: { $0.order < $1.order })
+                }
+                // Count every completion (success or failure) so a failed/unmatched
+                // image can never leave the onboarding screen stuck loading forever.
+                completedCount += 1
+                if completedCount == pages {
+                    let intro: OnboardingModel = .init(
+                        text: intro,
+                        image: UIImage(named: "logo")!
+                    )
+                    let sortedAcc = onboardingModelAcc.sorted(by: { $0.order < $1.order })
+                    Common_Utils.executeInMainTread {
+                        self?.onboardingModel = [intro] + sortedAcc
                         self?.loadingModel = .notLoading
                         self?.loaded = true
                     }
