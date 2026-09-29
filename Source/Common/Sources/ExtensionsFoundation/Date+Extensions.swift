@@ -177,9 +177,9 @@ public extension Date {
     func add(days: Int) -> Date { add(hours: days * 24) }
     func add(hours: Int) -> Date { add(minutes: hours * 60) }
     func add(minutes: Int) -> Date { add(seconds: minutes * 60) }
-    func add(seconds: Int) -> Date { NSCalendar.current.date(byAdding: .second, value: seconds, to: self)! }
-    func add(month: Int) -> Date { NSCalendar.current.date(byAdding: .month, value: month, to: self)! }
-    func add(years: Int) -> Date { NSCalendar.current.date(byAdding: .year, value: years, to: self)! }
+    func add(seconds: Int) -> Date { NSCalendar.current.date(byAdding: .second, value: seconds, to: self) ?? self }
+    func add(month: Int) -> Date { NSCalendar.current.date(byAdding: .month, value: month, to: self) ?? self }
+    func add(years: Int) -> Date { NSCalendar.current.date(byAdding: .year, value: years, to: self) ?? self }
     func set(month: Int) -> Date {
         var components = Calendar.current.dateComponents([.year, .month, .day], from: self)
         components.month = month
@@ -204,7 +204,7 @@ public extension Date {
             minute: minutes,
             second: seconds,
             of: self
-        )!
+        ) ?? self
     }
 
     func set(minute: Int) -> Date {
@@ -213,7 +213,7 @@ public extension Date {
             minute: minute >= 60 ? 0 : minute,
             second: seconds,
             of: self
-        )!
+        ) ?? self
     }
 
     func set(second: Int) -> Date {
@@ -222,7 +222,7 @@ public extension Date {
             minute: minutes,
             second: second >= 60 ? 0 : second,
             of: self
-        )!
+        ) ?? self
     }
 
     var beginningOfDay: Date? {
@@ -269,7 +269,7 @@ public extension Date {
     }
 
     func wasLessThan(secondsAgo: Int, refDate: Date) -> Bool {
-        !isBiggerThan(refDate.add(seconds: seconds))
+        isBiggerThan(refDate.add(seconds: -secondsAgo))
     }
 
     func wasLessThan(secondsAgo: Int) -> Bool {
@@ -297,11 +297,11 @@ public extension Date {
             let months = days / 30
             let years = days / 365
             if years > 0 {
-                return "\(years) \(resources[7])"
+                return "\(years) \(resources[6])"
             } else if months > 0 {
-                return "\(months) \(resources[6])"
+                return "\(months) \(resources[5])"
             } else if weeks > 0 {
-                return "\(weeks) \(resources[5])"
+                return "\(weeks) \(resources[4])"
             } else if days > 0 {
                 return "\(days) \(resources[3])"
             } else if hours > 0 {
@@ -332,6 +332,6 @@ public extension Date {
         if considerToday, calendar.component(.weekday, from: self) == weekday {
             return self
         }
-        return calendar.nextDate(after: self, matching: components, matchingPolicy: .nextTime, direction: direction)!
+        return calendar.nextDate(after: self, matching: components, matchingPolicy: .nextTime, direction: direction) ?? self
     }
 }
