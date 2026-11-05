@@ -105,6 +105,7 @@ class FavoriteEventsViewModel: BaseViewModel {
 
 fileprivate extension FavoriteEventsViewModel {
     func startListeningEvents() {
+        let instanceID = instanceID
         dataBaseRepository?.output([]).sink { [weak self] some in
             switch some {
             case .generic(let some):
@@ -113,7 +114,7 @@ fileprivate extension FavoriteEventsViewModel {
                 case .databaseDidInsertedContentOn(let table, let id):
                     // New record added
                     // if table == "\(CDataTrackedEntity.self)" {
-                    //    Common.ExecutionControlManager.debounce(operationId: "\(Self.self)|\(#function)") { [weak self] in
+                    //    Common.ExecutionControlManager.debounce(operationId: "\(Self.self)|\(#function)|\(instanceID)") { [weak self] in
                     //        self?.send(.loadFavorits)
                     //      }
                     //    } else
@@ -139,14 +140,14 @@ fileprivate extension FavoriteEventsViewModel {
                     ()
                 // Entity updated
                 /* if table == "\(CDataTrackedEntity.self)" {
-                     Common.ExecutionControlManager.debounce(operationId: "\(Self.self)|\(#function)") { [weak self] in
+                     Common.ExecutionControlManager.debounce(operationId: "\(Self.self)|\(#function)|\(instanceID)") { [weak self] in
                          self?.send(.loadFavorits)
                      }
                  }*/
                 case .databaseDidDeletedContentOn(let table, _):
                     if table == "\(CDataTrackedLog.self)" || table == "\(CDataTrackedEntity.self)" {
                         // Record deleted
-                        Common.ExecutionControlManager.debounce(operationId: "\(Self.self)|\(#function)") { [weak self] in
+                        Common.ExecutionControlManager.debounce(operationId: "\(Self.self)|\(#function)|\(instanceID)") { [weak self] in
                             self?.send(.loadFavorits)
                         }
                     }
@@ -154,7 +155,7 @@ fileprivate extension FavoriteEventsViewModel {
                 case .databaseDidFinishChangeContentItemsOn(let table):
                     if table == "\(CDataTrackedLog.self)" || table == "\(CDataTrackedEntity.self)" {
                         // Record updated
-                        Common.ExecutionControlManager.debounce(operationId: "\(Self.self)|\(#function)") { [weak self] in
+                        Common.ExecutionControlManager.debounce(operationId: "\(Self.self)|\(#function)|\(instanceID)") { [weak self] in
                             self?.send(.loadFavorits)
                         }
                     }

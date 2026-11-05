@@ -71,7 +71,7 @@ class EventsMapViewModel: BaseViewModel {
         case .didAppear: ()
         case .didDisappear: ()
         case .loadEvents(region: let region):
-            Common.ExecutionControlManager.debounce(operationId: "\(Self.self)|\(#function)") { [weak self] in
+            Common.ExecutionControlManager.debounce(operationId: "\(Self.self)|\(#function)|\(instanceID)") { [weak self] in
                 self?.lastRegion = region
                 Task { [weak self] in
                     guard let self = self else { return }
@@ -120,6 +120,7 @@ fileprivate extension EventsMapViewModel {
     }
 
     func startListeningEvents() {
+        let instanceID = instanceID
         dataBaseRepository?.output([]).sink { [weak self] some in
             switch some {
             case .generic(let some):
@@ -131,7 +132,7 @@ fileprivate extension EventsMapViewModel {
                 case .databaseDidChangedContentItemOn: break
                 case .databaseDidFinishChangeContentItemsOn(let table):
                     if table == "\(CDataTrackedLog.self)" {
-                        Common.ExecutionControlManager.debounce(operationId: "\(Self.self)|\(#function)") { [weak self] in
+                        Common.ExecutionControlManager.debounce(operationId: "\(Self.self)|\(#function)|\(instanceID)") { [weak self] in
                             if let lastRegion = self?.lastRegion {
                                 self?.send(.loadEvents(region: lastRegion))
                             }

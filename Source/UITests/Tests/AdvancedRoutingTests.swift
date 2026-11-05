@@ -130,7 +130,7 @@ final class AdvancedRoutingTests: BaseUITests {
 
         tap(
             button: "\(Constants.entityNameSingle) details",
-            andWaitForStaticText: "\(Constants.entityOccurrenceSingle) details",
+            andWaitForStaticText: "\(Constants.entityNameSingle) details",
             on: app
         )
 
@@ -169,7 +169,7 @@ final class AdvancedRoutingTests: BaseUITests {
 
         tap(
             button: "\(Constants.entityNameSingle) details",
-            andWaitForStaticText: "\(Constants.entityOccurrenceSingle) details",
+            andWaitForStaticText: "\(Constants.entityNameSingle) details",
             on: app
         )
 

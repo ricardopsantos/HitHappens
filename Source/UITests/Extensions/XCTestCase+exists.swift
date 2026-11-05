@@ -69,6 +69,10 @@ public extension XCTestCase {
         on app: XCUIApplication,
         timeout: TimeInterval = XCTestCase.timeout
     ) {
-        XCTAssertFalse(app.staticTexts[staticText].waitForExistence(timeout: timeout))
+        // Wait for the element to DISAPPEAR (not just "not appear"): after a delete the
+        // screen/list may still show the item for a few frames while it animates out.
+        let gone = expectation(for: NSPredicate(format: "exists == false"), evaluatedWith: app.staticTexts[staticText])
+        let result = XCTWaiter().wait(for: [gone], timeout: timeout)
+        XCTAssertEqual(result, .completed, "'\(staticText)' still exists after \(timeout)s")
     }
 }

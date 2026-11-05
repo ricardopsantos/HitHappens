@@ -74,7 +74,7 @@ class EventsCalendarViewModel: BaseViewModel {
             send(.loadEvents(fullMonth: true, value: Date()))
         case .didDisappear: ()
         case .loadEvents(fullMonth: let fullMonth, let value):
-            Common.ExecutionControlManager.debounce(operationId: "\(Self.self)|\(#function)") { [weak self] in
+            Common.ExecutionControlManager.debounce(operationId: "\(Self.self)|\(#function)|\(instanceID)") { [weak self] in
                 Task { [weak self] in
                     guard let self = self else { return }
                     let min: Date!
@@ -144,6 +144,7 @@ fileprivate extension EventsCalendarViewModel {
     }
 
     func startListeningEvents() {
+        let instanceID = instanceID
         dataBaseRepository?.output([]).sink { [weak self] some in
             switch some {
             case .generic(let some):
@@ -155,7 +156,7 @@ fileprivate extension EventsCalendarViewModel {
                 case .databaseDidChangedContentItemOn: break
                 case .databaseDidFinishChangeContentItemsOn(let table):
                     if table == "\(CDataTrackedLog.self)" {
-                        Common.ExecutionControlManager.debounce(operationId: "\(Self.self)|\(#function)") { [weak self] in
+                        Common.ExecutionControlManager.debounce(operationId: "\(Self.self)|\(#function)|\(instanceID)") { [weak self] in
                             self?.send(.loadEvents(fullMonth: true, value: Date()))
                         }
                     }

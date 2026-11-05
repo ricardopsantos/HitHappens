@@ -31,6 +31,17 @@ struct RouteView: View {
     /// is a navigationDestination, closes the modal when this is a modal root.
     @Environment(\.dismiss) private var dismiss
 
+    /// Pops one level of this router's stack if there is one, else dismisses the modal.
+    /// Deterministic when a deleted tracker makes several stacked screens route back at once
+    /// (each pops one level, ending at the root) — `dismiss()` alone raced in that case.
+    private func routeBack() {
+        if !router.path.isEmpty {
+            router.pop()
+        } else {
+            dismiss()
+        }
+    }
+
     var body: some View {
         switch screen {
         case .favoriteEvents:
@@ -71,7 +82,7 @@ struct RouteView: View {
         case .eventDetails(let model):
             EventDetailsView(dependencies: .init(
                 model: model,
-                onPerformRouteBack: { dismiss() },
+                onPerformRouteBack: { routeBack() },
                 onShouldDisplayTrackedLog: { router.push(.eventLogDetails(model: .init(trackedLog: $0))) },
                 dataBaseRepository: configuration.dataBaseRepository,
                 presentationStyle: style))
@@ -80,7 +91,7 @@ struct RouteView: View {
             EventLogDetailsView(dependencies: .init(
                 model: model,
                 onPerformDisplayEntityDetails: { router.push(.eventDetails(model: .init(event: $0))) },
-                onPerformRouteBack: { dismiss() },
+                onPerformRouteBack: { routeBack() },
                 dataBaseRepository: configuration.dataBaseRepository,
                 presentationStyle: style))
 

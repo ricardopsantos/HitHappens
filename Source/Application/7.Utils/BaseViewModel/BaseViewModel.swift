@@ -17,6 +17,10 @@ import DesignSystem
 @Observable
 public class BaseViewModel {
     // MARK: - Usage/Auxiliar Attributes
+    /// Unique per instance. Debounce ids must include it: SwiftUI re-runs a view's `init`
+    /// (and so creates throw-away ViewModels) whenever the parent re-evaluates, and a shared
+    /// debounce id lets those throw-away instances cancel the live instance's pending work.
+    let instanceID = UUID().uuidString
     var tip: (text: String, color: ColorSemantic) = ("", .clear)
     var loadingModel: Model.LoadingModel?
     var alertModel: Model.AlertModel? {
@@ -36,7 +40,7 @@ public class BaseViewModel {
 
             Common.ExecutionControlManager.debounce(
                 alertModel.visibleTime,
-                operationId: "\(Self.self)_\(#function)"
+                operationId: "\(Self.self)_\(#function)_\(instanceID)"
             ) { [weak self] in
                 self?.alertModel = nil
             }

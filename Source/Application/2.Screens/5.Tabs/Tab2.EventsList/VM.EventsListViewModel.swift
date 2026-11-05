@@ -109,6 +109,7 @@ class EventsListViewModel: BaseViewModel {
 
 fileprivate extension EventsListViewModel {
     func startListeningEvents() {
+        let instanceID = instanceID
         dataBaseRepository?.output([]).sink { [weak self] some in
             switch some {
             case .generic(let some):
@@ -118,14 +119,14 @@ fileprivate extension EventsListViewModel {
                 case .databaseDidUpdatedContentOn: break
                 case .databaseDidDeletedContentOn(_, let table):
                     if table == "\(CDataTrackedLog.self)" || table == "\(CDataTrackedEntity.self)" {
-                        Common.ExecutionControlManager.debounce(operationId: "\(Self.self)|\(#function)") { [weak self] in
+                        Common.ExecutionControlManager.debounce(operationId: "\(Self.self)|\(#function)|\(instanceID)") { [weak self] in
                             self?.send(.loadEvents)
                         }
                     }
                 case .databaseDidChangedContentItemOn: break
                 case .databaseDidFinishChangeContentItemsOn(let table):
                     if table == "\(CDataTrackedLog.self)" || table == "\(CDataTrackedEntity.self)" {
-                        Common.ExecutionControlManager.debounce(operationId: "\(Self.self)|\(#function)") { [weak self] in
+                        Common.ExecutionControlManager.debounce(operationId: "\(Self.self)|\(#function)|\(instanceID)") { [weak self] in
                             self?.send(.loadEvents)
                         }
                     }
