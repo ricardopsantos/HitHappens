@@ -116,19 +116,20 @@ final class UnfairLockManager_Tests: XCTestCase {
         let queue1 = DispatchQueue(label: "com.test.queue1")
         let queue2 = DispatchQueue(label: "com.test.queue2")
 
+        // os_unfair_lock is owned by the thread that locked it: unlocking from another thread
+        // aborts the process. So the holder must lock, hold and unlock on the SAME thread.
         queue1.async {
             self.lockManager.lock()
-            DispatchQueue.global().asyncAfter(deadline: .now() + 0.1) {
-                self.lockManager.unlock()
-            }
+            Thread.sleep(forTimeInterval: 0.1)
+            self.lockManager.unlock()
         }
 
-        queue2.async {
-            DispatchQueue.global().asyncAfter(deadline: .now() + 0.05) {
-                self.lockManager.lock()
-                self.lockManager.unlock()
-                expectation.fulfill()
-            }
+        // The second thread tries to lock while the first still holds it: it must block until
+        // the first unlocks, then get the lock (i.e. no deadlock).
+        queue2.asyncAfter(deadline: .now() + 0.05) {
+            self.lockManager.lock()
+            self.lockManager.unlock()
+            expectation.fulfill()
         }
 
         wait(for: [expectation], timeout: TimeInterval(TestsGlobal.timeout))
@@ -179,67 +180,60 @@ final class UnfairLockManager_Tests: XCTestCase {
         wait(for: [expectation], timeout: TimeInterval(TestsGlobal.timeout))
     }
 
-    // FAILS!
-    // XCTAssertEqual failed: ("9860") is not equal to ("10000")
-    func test_FAIL_highContentionWithTryLock() {
+    /// Counters are mutated from many threads, so they get their own lock (the lock under test
+    /// only guards `tryLock`). Completion is awaited with a DispatchGroup, not a fixed sleep.
+    func test_highContentionWithTryLock() {
         var successCount = 0
         var failureCount = 0
+        let counterLock = NSLock()
         let iterations = 10_000
-        let expectation = XCTestExpectation(description: #function)
-        let queue = DispatchQueue(label: #function, attributes: .concurrent)
+        let group = DispatchGroup()
 
         DispatchQueue.concurrentPerform(iterations: iterations) { _ in
-            queue.async {
-                if self.lockManager.tryLock() {
-                    successCount += 1
+            group.enter()
+            DispatchQueue.global().async {
+                let acquired = self.lockManager.tryLock()
+                if acquired {
                     self.lockManager.unlock()
-                } else {
-                    failureCount += 1
                 }
+                counterLock.lock()
+                if acquired { successCount += 1 } else { failureCount += 1 }
+                counterLock.unlock()
+                group.leave()
             }
         }
 
-        // Allow some time for the concurrent operations to finish
-        DispatchQueue.global().asyncAfter(deadline: .now() + 1) {
-            XCTAssertEqual(successCount + failureCount, iterations) // FAILS ("9860") is not equal to ("10000")
-            XCTAssertGreaterThan(successCount, 0)
-            expectation.fulfill()
-        }
-
-        wait(for: [expectation], timeout: TimeInterval(TestsGlobal.timeout))
+        XCTAssertEqual(group.wait(timeout: .now() + TimeInterval(TestsGlobal.timeout)), .success)
+        XCTAssertEqual(successCount + failureCount, iterations)
+        XCTAssertGreaterThan(successCount, 0)
     }
 
-    func test_FAIL_simultaneousReadsAndWritesWithLock() {
+    func test_simultaneousReadsAndWritesWithLock() {
         var value = 0
         let iterations = 1_000
-        let expectation = XCTestExpectation(description: #function)
-        let queue = DispatchQueue(label: #function, attributes: .concurrent)
+        let resultsLock = NSLock()
         var readResults = [Int]()
+        let group = DispatchGroup()
 
         DispatchQueue.concurrentPerform(iterations: iterations) { _ in
-            queue.async {
+            group.enter()
+            DispatchQueue.global().async {
                 self.lockManager.lock()
                 value += 1
-                self.lockManager.unlock()
-
-                self.lockManager.lock()
                 let readValue = value
                 self.lockManager.unlock()
 
-                queue.async(flags: .barrier) {
-                    readResults.append(readValue)
-                }
+                resultsLock.lock()
+                readResults.append(readValue)
+                resultsLock.unlock()
+                group.leave()
             }
         }
 
-        // Allow some time for the concurrent operations to finish
-        DispatchQueue.global().asyncAfter(deadline: .now() + 1) {
-            XCTAssertEqual(readResults.count, iterations)
-            XCTAssertEqual(value, iterations)
-            XCTAssertTrue(readResults.allSatisfy { $0 == readResults.first })
-            expectation.fulfill()
-        }
-
-        wait(for: [expectation], timeout: TimeInterval(TestsGlobal.timeout))
+        XCTAssertEqual(group.wait(timeout: .now() + TimeInterval(TestsGlobal.timeout)), .success)
+        XCTAssertEqual(readResults.count, iterations)
+        XCTAssertEqual(value, iterations)
+        // Every increment happened exactly once under the lock, so each read is unique: 1...iterations.
+        XCTAssertEqual(Set(readResults), Set(1...iterations))
     }
 }

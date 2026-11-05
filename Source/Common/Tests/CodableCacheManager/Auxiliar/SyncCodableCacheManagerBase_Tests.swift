@@ -195,12 +195,13 @@ class SyncCodableCacheManagerBase_Tests: XCTestCase {
             return
         }
         var counter = 0
+        let cacheId = UUID().uuidString // Both calls must share the cache entry
         syncClearAll()
-        sampleWebAPIUseCase.fetchEmployees(cachePolicy: .ignoringCache)
+        sampleWebAPIUseCase.fetchEmployees(cachePolicy: .ignoringCache, cacheId: cacheId)
             .sinkToReceiveValue { some in
                 switch some {
                 case .success:
-                    self.sampleWebAPIUseCase.fetchEmployees(cachePolicy: .cacheAndLoad)
+                    self.sampleWebAPIUseCase.fetchEmployees(cachePolicy: .cacheAndLoad, cacheId: cacheId)
                         .sinkToReceiveValue { some in
                             switch some {
                             case .success:

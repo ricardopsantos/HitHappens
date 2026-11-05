@@ -54,13 +54,17 @@ public extension Common_PropertyWrappers {
     /**
      The property wrapper ensures that access to its underlying value is synchronized,
      preventing concurrent read and write operations from causing data races or inconsistent states.
-     It uses a DispatchQueue configured for concurrent access to manage thread safety.
+     It guards the value with an NSLock to manage thread safety.
 
-     __This FAILS on way more unit tests than `ThreadSafeUnfairLock`__
+     Reads and writes are atomic, and so are read-modify-write operations such as `value += 1`
+     (they go through `_modify`, which holds the lock for the whole mutation). A plain
+     get/set pair is NOT enough for those: two threads can both read the old value and
+     both write back old + 1, losing an update.
      */
     @propertyWrapper
     struct ThreadSafeDispatchQueue<T> {
-        private let synchronizedQueue = DispatchQueue.synchronizedQueue(label: "\(Common.self)_\(T.self)_\(UUID().uuidString)")
+        // Reference type: copies of the wrapper (it is a struct) all share the same lock.
+        private let lock = NSLock()
         private var objectValue: T!
 
         public init(wrappedValue value: T) {
@@ -68,10 +72,21 @@ public extension Common_PropertyWrappers {
         }
 
         /// The underlying value wrapped by the bindable state.
-        /// The property that stores the wrapped value of the property. It is the value that is accessed when the property is read or written.
+        // swiftlint:disable implicit_getter
         public var wrappedValue: T {
-            get { synchronizedQueue.sync { objectValue } }
-            set { synchronizedQueue.sync(flags: .barrier) { objectValue = newValue } }
+            get {
+                lock.lock(); defer { lock.unlock() }
+                return objectValue
+            }
+            set {
+                lock.lock(); defer { lock.unlock() }
+                objectValue = newValue
+            }
+            _modify {
+                lock.lock(); defer { lock.unlock() }
+                yield &objectValue
+            }
         }
+        // swiftlint:enable implicit_getter
     }
 }

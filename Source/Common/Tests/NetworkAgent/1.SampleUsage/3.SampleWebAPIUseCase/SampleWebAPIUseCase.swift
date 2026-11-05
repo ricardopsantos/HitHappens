@@ -37,10 +37,13 @@ public class SampleWebAPIUseCase {
     //
     // MARK: - API Request + Cache
     //
-    func fetchEmployees(cachePolicy: Common.CachePolicy) -> EmployeesAvailabilityResponse {
+    /// `cacheId` is part of the cache key (`serviceParams`). The default is unique per call, so
+    /// calls never share cache entries (and tests cannot pollute each other). Pass the same
+    /// value to several calls to make them hit the same cache entry.
+    func fetchEmployees(cachePolicy: Common.CachePolicy, cacheId: String = UUID().uuidString) -> EmployeesAvailabilityResponse {
         //
         let serviceKey = #function
-        let requestDto = RequestDto.Employee(id: UUID().uuidString)
+        let requestDto = RequestDto.Employee(id: cacheId)
         let apiRequest: AnyPublisher<
             ResponseDto.EmployeeServiceAvailability,
             CommonNetworking.APIError

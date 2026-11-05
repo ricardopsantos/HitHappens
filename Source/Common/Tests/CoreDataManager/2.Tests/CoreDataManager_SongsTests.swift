@@ -210,6 +210,7 @@ extension CommonCoreData_SongsTests {
                         didChangedContent += 1
                     case .databaseDidUpdatedContentOn: ()
                     case .databaseDidDeletedContentOn: ()
+                    case .databaseReloaded: ()
                     case .databaseDidFinishChangeContentItemsOn:
                         didFinishChangeContent += 1
                     }

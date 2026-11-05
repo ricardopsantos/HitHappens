@@ -76,7 +76,9 @@ public extension CommonNetworking.AuthenticationHandler.Server {
     static var googleUkWithHashKeys: Self {
         Self(
             url: "https://www.google.co.uk/",
-            publicHashKeys: ["caMXMXM6GkN65HHqWbN8rm32m0Td+FXeMwVaraqJies="],
+            // Leaf public key of www.google.co.uk (expires 2026-12-30). Google rotates leaf keys every few
+            // months, so this sample pin (and Resources/google.co.uk.cer) must be refreshed when it does.
+            publicHashKeys: ["yb2hfrRaDROWbmkqSPFYtFuuI4evk7zUG9+8bZkBdhw="],
             pathToCertificates: nil
         )
     }
@@ -145,6 +147,45 @@ public extension CommonNetworking {
             super.init()
         }
 
+        /// Base64 SHA-256 of the certificate's SubjectPublicKeyInfo (the usual "public key pin").
+        /// `SecKeyCopyExternalRepresentation` returns the raw key without the ASN.1 header, so the
+        /// header that matches the key type has to be put back (RSA 2048/4096, ECDSA P-256/P-384).
+        public static func publicKeyHash(of certificate: SecCertificate) -> String? {
+            guard let key = SecCertificateCopyKey(certificate),
+                  let raw = SecKeyCopyExternalRepresentation(key, nil) as Data?,
+                  let attributes = SecKeyCopyAttributes(key) as? [CFString: Any],
+                  let type = attributes[kSecAttrKeyType] as? String,
+                  let bits = attributes[kSecAttrKeySizeInBits] as? Int else {
+                return nil
+            }
+            let rsa = kSecAttrKeyTypeRSA as String
+            let ec = kSecAttrKeyTypeECSECPrimeRandom as String
+            let header: [UInt8]
+            switch (type, bits) {
+            case (rsa, 2048):
+                header = [0x30, 0x82, 0x01, 0x22, 0x30, 0x0d, 0x06, 0x09, 0x2a, 0x86, 0x48, 0x86,
+                          0xf7, 0x0d, 0x01, 0x01, 0x01, 0x05, 0x00, 0x03, 0x82, 0x01, 0x0f, 0x00]
+            case (rsa, 4096):
+                header = [0x30, 0x82, 0x02, 0x22, 0x30, 0x0d, 0x06, 0x09, 0x2a, 0x86, 0x48, 0x86,
+                          0xf7, 0x0d, 0x01, 0x01, 0x01, 0x05, 0x00, 0x03, 0x82, 0x02, 0x0f, 0x00]
+            case (ec, 256):
+                header = [0x30, 0x59, 0x30, 0x13, 0x06, 0x07, 0x2a, 0x86, 0x48, 0xce, 0x3d, 0x02,
+                          0x01, 0x06, 0x08, 0x2a, 0x86, 0x48, 0xce, 0x3d, 0x03, 0x01, 0x07, 0x03, 0x42, 0x00]
+            case (ec, 384):
+                header = [0x30, 0x76, 0x30, 0x10, 0x06, 0x07, 0x2a, 0x86, 0x48, 0xce, 0x3d, 0x02,
+                          0x01, 0x06, 0x05, 0x2b, 0x81, 0x04, 0x00, 0x22, 0x03, 0x62, 0x00]
+            default:
+                return nil
+            }
+            var keyWithHeader = Data(header)
+            keyWithHeader.append(raw)
+            var hash = [UInt8](repeating: 0, count: Int(CC_SHA256_DIGEST_LENGTH))
+            keyWithHeader.withUnsafeBytes {
+                _ = CC_SHA256($0.baseAddress, CC_LONG(keyWithHeader.count), &hash)
+            }
+            return Data(hash).base64EncodedString()
+        }
+
         // Delegate method for handling authentication challenges.
         public func urlSession(
             _ session: URLSession,
@@ -188,23 +229,8 @@ public extension CommonNetworking {
 
             // Handle SSL Pinning with public key hashes.
             if let serverPublicHashKeys = serverPublicHashKeys, !serverPublicHashKeys.isEmpty {
-                func sha256(data: Data) -> String {
-                    // Add ASN.1 header for RSA 2048 public key.
-                    let rsa2048Asn1Header: [UInt8] = [
-                        0x30, 0x82, 0x01, 0x22, 0x30, 0x0d, 0x06, 0x09, 0x2a, 0x86, 0x48, 0x86,
-                        0xf7, 0x0d, 0x01, 0x01, 0x01, 0x05, 0x00, 0x03, 0x82, 0x01, 0x0f, 0x00
-                    ]
-                    var keyWithHeader = Data(rsa2048Asn1Header)
-                    keyWithHeader.append(data)
-                    var hash = [UInt8](repeating: 0, count: Int(CC_SHA256_DIGEST_LENGTH))
-                    keyWithHeader.withUnsafeBytes {
-                        _ = CC_SHA256($0.baseAddress, CC_LONG(keyWithHeader.count), &hash)
-                    }
-                    return Data(hash).base64EncodedString()
-                }
-
                 // Compute the hash of the server's public key.
-                let serverPublicKeyDataHash = sha256(data: serverPublicKeyData as Data)
+                let serverPublicKeyDataHash = Self.publicKeyHash(of: serverCertificate) ?? "unsupported-key-type"
                 if serverPublicHashKeys.contains(serverPublicKeyDataHash) {
                     // Public key hash matches, authentication successful.
                     completionHandler(.useCredential, URLCredential(trust: serverTrust))
