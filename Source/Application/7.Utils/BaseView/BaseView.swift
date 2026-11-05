@@ -11,6 +11,7 @@ import DevTools
 import Common
 import DesignSystem
 import Core
+import Domain
 
 //
 // MARK: - BaseView

@@ -11,6 +11,7 @@ import SwiftUI
 import DevTools
 import Common
 import DesignSystem
+import Domain
 
 //
 // MARK: - Coordinator
