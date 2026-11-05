@@ -17,7 +17,7 @@ import DesignSystem
 //
 struct FavoriteEventsViewCoordinator: View, ViewCoordinatorProtocol {
     // MARK: - ViewCoordinatorProtocol
-    @EnvironmentObject var configuration: ConfigurationViewModel
+    @Environment(ConfigurationViewModel.self) var configuration
     @EnvironmentObject var parentCoordinator: RouterViewModel
     @StateObject var coordinator = RouterViewModel()
     var presentationStyle: ViewPresentationStyle
@@ -71,12 +71,12 @@ struct FavoriteEventsViewCoordinator: View, ViewCoordinatorProtocol {
 struct FavoriteEventsView: View, ViewProtocol {
     // MARK: - ViewProtocol
     @Environment(\.colorScheme) var colorScheme
-    @StateObject var viewModel: FavoriteEventsViewModel
+    @State var viewModel: FavoriteEventsViewModel
     let onShouldDisplayNewTrackedEntity: () -> Void
     let onShouldDisplayTrackedEntity: (Model.TrackedEntity) -> Void
     public init(dependencies: FavoriteEventsViewModel.Dependencies) {
         DevTools.Log.debug(.viewInit("\(Self.self)"), .view)
-        _viewModel = StateObject(wrappedValue: .init(dependencies: dependencies))
+        _viewModel = State(initialValue: .init(dependencies: dependencies))
         self.onShouldDisplayNewTrackedEntity = dependencies.onShouldDisplayNewTrackedEntity
         self.onShouldDisplayTrackedEntity = dependencies.onShouldDisplayTrackedEntity
     }
@@ -88,23 +88,17 @@ struct FavoriteEventsView: View, ViewProtocol {
 
     // MARK: - Body & View
     var body: some View {
-        BaseView.withLoading(
-            sender: "\(Self.self)",
-            appScreen: .favoriteEvents,
-            navigationViewModel: .disabled,
-            ignoresSafeArea: false,
-            background: .defaultBackground,
-            loadingModel: viewModel.loadingModel,
-            alertModel: viewModel.alertModel,
-            networkStatus: nil) {
-                content
-            }.onAppear {
+        content
+            .baseScreen(
+                sender: "\(Self.self)",
+                appScreen: .favoriteEvents,
+                viewModel: viewModel).onAppear {
                 viewModel.send(.didAppear)
             }.onDisappear {
                 viewModel.send(.didDisappear)
                 locationViewModel.stop(sender: "\(Self.self)")
             }
-            .onChange(of: viewModel.isLocationTrackingNeeded) { isNeeded in
+            .onChange(of: viewModel.isLocationTrackingNeeded) { _, isNeeded in
                 if isNeeded {
                     locationViewModel.start(sender: "\(Self.self)")
                 } else {
@@ -118,14 +112,16 @@ struct FavoriteEventsView: View, ViewProtocol {
             LazyVStack(spacing: 0) {
                 Header(text: "Favorites")
                 if viewModel.favorits.isEmpty {
-                    SwiftUIUtils.FixedVerticalSpacer(height: screenHeight * 0.33)
-                    Text("You don't have any \(AppConstants.entityNamePlural.lowercased()) marked as favorite\n\nTap to add one!".localizedMissing)
-                        .multilineTextAlignment(.center)
-                        .textColor(ColorSemantic.labelPrimary.color)
-                        .fontSemantic(.headline)
-                        .onTapGesture {
+                    SwiftUIUtils.FixedVerticalSpacer(height: screenHeight * 0.2)
+                    EmptyStateView(
+                        systemImageName: "star",
+                        title: "No favorites yet".localizedMissing,
+                        subTitle: "You don't have any \(AppConstants.entityNamePlural.lowercased()) marked as favorite.".localizedMissing,
+                        buttonText: "Create your first \(AppConstants.entityNameSingle.lowercased())".localizedMissing,
+                        accessibility: .emptyStateAddButton,
+                        onButtonTap: {
                             onShouldDisplayNewTrackedEntity()
-                        }
+                        })
                     Spacer()
                 } else {
                     Spacer()
@@ -162,6 +158,7 @@ struct FavoriteEventsView: View, ViewProtocol {
 #if canImport(SwiftUI) && DEBUG
 #Preview {
     FavoriteEventsViewCoordinator(presentationStyle: .fullScreenCover)
-        .environmentObject(ConfigurationViewModel.defaultForPreviews)
+        .environment(ConfigurationViewModel.defaultForPreviews)
+        .environmentObject(RouterViewModel())
 }
 #endif

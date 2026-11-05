@@ -18,7 +18,7 @@ import DesignSystem
 //
 struct EventLogDetailsViewCoordinator: View, ViewCoordinatorProtocol {
     // MARK: - ViewCoordinatorProtocol
-    @EnvironmentObject var configuration: ConfigurationViewModel
+    @Environment(ConfigurationViewModel.self) var configuration
     @EnvironmentObject var parentCoordinator: RouterViewModel
     @StateObject var coordinator = RouterViewModel()
     var presentationStyle: ViewPresentationStyle
@@ -83,10 +83,10 @@ struct EventLogDetailsView: View, ViewProtocol {
     // MARK: - ViewProtocol
     @Environment(\.colorScheme) var colorScheme
     @Environment(\.analyticsManager) private var analyticsManager
-    @StateObject var viewModel: EventLogDetailsViewModel
+    @State var viewModel: EventLogDetailsViewModel
     public init(dependencies: EventLogDetailsViewModel.Dependencies) {
         DevTools.Log.debug(.viewInit("\(Self.self)"), .view)
-        _viewModel = StateObject(wrappedValue: .init(dependencies: dependencies))
+        _viewModel = State(initialValue: .init(dependencies: dependencies))
         self.onPerformRouteBack = dependencies.onPerformRouteBack
         self.onPerformDisplayEntityDetails = dependencies.onPerformDisplayEntityDetails
     }
@@ -107,19 +107,14 @@ struct EventLogDetailsView: View, ViewProtocol {
 
     // MARK: - Body & View
     var body: some View {
-        BaseView.withLoading(
-            sender: "\(Self.self)",
-            appScreen: .eventLogDetails(model: .init(trackedLog: .random)),
-            navigationViewModel: .custom(onBackButtonTap: {
-                onPerformRouteBack()
-            }, title: "\(AppConstants.entityOccurrenceSingle) details".localizedMissing),
-            ignoresSafeArea: false,
-            background: .defaultBackground,
-            loadingModel: viewModel.loadingModel,
-            alertModel: viewModel.alertModel,
-            networkStatus: nil) {
-                content
-            }.onAppear {
+        content
+            .baseScreen(
+                sender: "\(Self.self)",
+                appScreen: .eventLogDetails(model: .init(trackedLog: .random)),
+                viewModel: viewModel,
+                navigationViewModel: .custom(onBackButtonTap: {
+                    onPerformRouteBack()
+                }, title: "\(AppConstants.entityOccurrenceSingle) details".localizedMissing)).onAppear {
                 viewModel.send(.didAppear)
             }.onDisappear {
                 viewModel.send(.didDisappear)
@@ -138,7 +133,7 @@ struct EventLogDetailsView: View, ViewProtocol {
                         title: "Note".localizedMissing,
                         placeholder: "Add a note".localizedMissing,
                         onEdit: $onEdit,
-                        originalValue: !viewModel.note.isEmpty ? viewModel.note : "...",
+                        originalValue: !viewModel.note.isEmpty ? viewModel.note : "No note yet".localizedMissing,
                         changedValue: $noteCopy,
                         accessibility: .txtNote)
                     SwiftUIUtils.FixedVerticalSpacer(height: SizeNames.defaultMarginSmall)
@@ -161,11 +156,11 @@ struct EventLogDetailsView: View, ViewProtocol {
                 confirmationSheet
             }
             TipView(tip: $viewModel.tip)
-        }.onChange(of: viewModel.eventDate) { _ in
+        }.onChange(of: viewModel.eventDate) { _, _ in
             updateStateCopyWithViewModelCurrentState()
-        }.onChange(of: viewModel.note) { _ in
+        }.onChange(of: viewModel.note) { _, _ in
             updateStateCopyWithViewModelCurrentState()
-        }.onChange(of: viewModel.address) { _ in
+        }.onChange(of: viewModel.address) { _, _ in
             updateStateCopyWithViewModelCurrentState()
         }.onAppear {
             updateStateCopyWithViewModelCurrentState()
@@ -392,6 +387,7 @@ fileprivate extension EventLogDetailsView {
 #Preview {
     EventLogDetailsViewCoordinator(
         presentationStyle: .fullScreenCover, model: .init(trackedLog: .random))
-        .environmentObject(ConfigurationViewModel.defaultForPreviews)
+        .environment(ConfigurationViewModel.defaultForPreviews)
+        .environmentObject(RouterViewModel())
 }
 #endif

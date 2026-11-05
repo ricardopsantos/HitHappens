@@ -36,9 +36,10 @@ extension MainTabViewModel {
     }
 }
 
+@Observable
 class MainTabViewModel: BaseViewModel {
     // MARK: - Usage/Auxiliar Attributes
-    @Published var selectedTab: AppTab = .tab1
+    var selectedTab: AppTab = .tab1
     private var dataBaseRepository: DatabaseOutputRepositoryProtocol?
     private let cancelBag: CancelBag = .init()
     public init(dependencies: Dependencies) {
@@ -84,6 +85,7 @@ private extension MainTabViewModel {
 #if canImport(SwiftUI) && DEBUG
 #Preview {
     MainTabViewCoordinator()
-        .environmentObject(ConfigurationViewModel.defaultForPreviews)
+        .environment(ConfigurationViewModel.defaultForPreviews)
+        .environmentObject(RouterViewModel())
 }
 #endif

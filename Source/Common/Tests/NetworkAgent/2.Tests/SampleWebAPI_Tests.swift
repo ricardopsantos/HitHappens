@@ -6,8 +6,6 @@ import XCTest
 import Foundation
 import Combine
 //
-import Nimble
-//
 @testable import Common
 class SampleWebAPI_Tests: XCTestCase {
     func enabled() -> Bool {
@@ -39,7 +37,8 @@ class SampleWebAPI_Tests: XCTestCase {
                 case .failure: ()
                 }
             }.store(in: TestsGlobal.cancelBag)
-        expect(counter == 1).toEventually(beTrue(), timeout: .seconds(TestsGlobal.timeout))
+        waitUntil(TimeInterval(TestsGlobal.timeout)) { counter == 1 }
+        XCTAssertEqual(counter, 1)
     }
 
     func test_fetchEmployeesAvailabilityGenericPublisher() {
@@ -56,7 +55,8 @@ class SampleWebAPI_Tests: XCTestCase {
                 case .failure: ()
                 }
             }.store(in: TestsGlobal.cancelBag)
-        expect(counter == 1).toEventually(beTrue(), timeout: .seconds(TestsGlobal.timeout))
+        waitUntil(TimeInterval(TestsGlobal.timeout)) { counter == 1 }
+        XCTAssertEqual(counter, 1)
     }
 
     func test_fetchEmployeesAvailabilityGenericAsync() async {
@@ -65,7 +65,7 @@ class SampleWebAPI_Tests: XCTestCase {
             return
         }
         let value = try? await sampleWebAPIUseCase.fetchEmployeesAsync()
-        await expect(value != nil).toEventually(beTrue(), timeout: .seconds(TestsGlobal.timeout))
+        XCTAssertNotNil(value)
     }
 
     func test_fetchEmployeesAvailabilityCustomWithCache() {
@@ -82,7 +82,8 @@ class SampleWebAPI_Tests: XCTestCase {
                 case .failure: ()
                 }
             }.store(in: TestsGlobal.cancelBag)
-        expect(counter == 1).toEventually(beTrue(), timeout: .seconds(TestsGlobal.timeout))
+        waitUntil(TimeInterval(TestsGlobal.timeout)) { counter == 1 }
+        XCTAssertEqual(counter, 1)
     }
 
     func test_fetchEmployeesAvailabilityGenericPublisherWithCache() {
@@ -99,7 +100,8 @@ class SampleWebAPI_Tests: XCTestCase {
                 case .failure: ()
                 }
             }.store(in: TestsGlobal.cancelBag)
-        expect(counter == 1).toEventually(beTrue(), timeout: .seconds(TestsGlobal.timeout))
+        waitUntil(TimeInterval(TestsGlobal.timeout)) { counter == 1 }
+        XCTAssertEqual(counter, 1)
     }
 
     func test_sslPiningWithCertificates() {
@@ -116,7 +118,8 @@ class SampleWebAPI_Tests: XCTestCase {
                 case .failure: ()
                 }
             }.store(in: TestsGlobal.cancelBag)
-        expect(counter == 1).toEventually(beTrue(), timeout: .seconds(TestsGlobal.timeout))
+        waitUntil(TimeInterval(TestsGlobal.timeout)) { counter == 1 }
+        XCTAssertEqual(counter, 1)
     }
 
     func test_sslPiningWithPublicHashKeys() async {
@@ -125,7 +128,7 @@ class SampleWebAPI_Tests: XCTestCase {
             return
         }
         let value = try? await sampleWebAPIUseCase.fetchEmployeesAvailabilitySLLHashKeys(server: .gitHub).async()
-        await expect(value != nil).toEventually(beTrue(), timeout: .seconds(TestsGlobal.timeout))
+        XCTAssertNotNil(value)
     }
 
     func test_authenticationHandlerWithHashKeys() async {

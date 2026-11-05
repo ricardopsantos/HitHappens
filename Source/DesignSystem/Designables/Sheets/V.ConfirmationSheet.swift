@@ -47,12 +47,8 @@ public struct ConfirmationSheetV2: View {
             .padding(SizeNames.defaultMargin)
             Spacer()
         }.shadow(radius: SizeNames.shadowRadiusRegular)
-        if #available(iOS 16.0, *) {
-            content
-                .presentationDetents([.fraction(0.25), .medium, .large])
-        } else {
-            content
-        }
+        content
+            .presentationDetents([.fraction(0.25), .medium, .large])
     }
 }
 

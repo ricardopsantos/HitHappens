@@ -52,23 +52,20 @@ struct InterfaceStyleManager {
             return
         }
         Common_Utils.executeInMainTread {
-            if let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene {
-                windowScene.windows.forEach { window in
-                    ColorSemantic.applyUserCustomInterfaceStyle(style)
-                    _selectedByUser = style
-                    switch style {
-                    case .light:
-                        window.overrideUserInterfaceStyle = .light
-                        nonSecureAppPreferences?.selectedAppearance = Common.InterfaceStyle.light.rawValue
-                    case .dark:
-                        window.overrideUserInterfaceStyle = .dark
-                        nonSecureAppPreferences?.selectedAppearance = Common.InterfaceStyle.dark.rawValue
-                    case .none:
-                        nonSecureAppPreferences?.selectedAppearance = nil
-                        window.overrideUserInterfaceStyle = .unspecified
-                    }
-                }
+            // Global state is applied once, not once per window
+            ColorSemantic.applyUserCustomInterfaceStyle(style)
+            _selectedByUser = style
+            nonSecureAppPreferences?.selectedAppearance = style?.rawValue
+            let interfaceStyle: UIUserInterfaceStyle
+            switch style {
+            case .light: interfaceStyle = .light
+            case .dark: interfaceStyle = .dark
+            case .none: interfaceStyle = .unspecified
             }
+            UIApplication.shared.connectedScenes
+                .compactMap { $0 as? UIWindowScene }
+                .flatMap(\.windows)
+                .forEach { $0.overrideUserInterfaceStyle = interfaceStyle }
         }
     }
 }

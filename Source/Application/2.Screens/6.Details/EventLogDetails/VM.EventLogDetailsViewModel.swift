@@ -72,16 +72,17 @@ extension EventLogDetailsViewModel {
 //
 // MARK: - ViewModel
 //
+@Observable
 class EventLogDetailsViewModel: BaseViewModel {
     // MARK: - Usage/Auxiliar Attributes
-    @Published private(set) var trackedLog: Model.TrackedLog?
-    @Published var confirmationSheetType: ConfirmationSheet?
-    @Published var note: String = ""
-    @Published var eventDate: Date = .now
-    @Published var address: String = ""
-    @Published var addressLatitude: Double = 0
-    @Published var addressLongitude: Double = 0
-    @Published var mapItems: [GenericMapView.ModelItem] = []
+    private(set) var trackedLog: Model.TrackedLog?
+    var confirmationSheetType: ConfirmationSheet?
+    var note: String = ""
+    var eventDate: Date = .now
+    var address: String = ""
+    var addressLatitude: Double = 0
+    var addressLongitude: Double = 0
+    var mapItems: [GenericMapView.ModelItem] = []
     private let cancelBag = CancelBag()
     private let dataBaseRepository: (DatabaseOutputRepositoryProtocol & TrackedLogRepositoryProtocol)?
     private let onPerformRouteBack: () -> Void
@@ -160,6 +161,7 @@ class EventLogDetailsViewModel: BaseViewModel {
             }
         case .delete(confirmed: let confirmed):
             if !confirmed {
+                HapticFeedback.notify(.warning)
                 confirmationSheetType = .delete
             } else {
                 Task { [weak self] in
@@ -240,6 +242,7 @@ fileprivate extension EventLogDetailsViewModel {
 #Preview {
     EventLogDetailsViewCoordinator(
         presentationStyle: .fullScreenCover, model: .init(trackedLog: .random))
-        .environmentObject(ConfigurationViewModel.defaultForPreviews)
+        .environment(ConfigurationViewModel.defaultForPreviews)
+        .environmentObject(RouterViewModel())
 }
 #endif

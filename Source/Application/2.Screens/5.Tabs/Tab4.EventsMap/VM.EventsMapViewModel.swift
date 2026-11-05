@@ -48,11 +48,12 @@ extension EventsMapViewModel {
 //
 // MARK: - ViewModel
 //
+@Observable
 class EventsMapViewModel: BaseViewModel {
     // MARK: - Usage/Auxiliar Attributes
-    @Published private(set) var message: String = ""
-    @Published var mapItems: [GenericMapView.ModelItem] = []
-    @Published private(set) var logs: [CascadeEventListItem]?
+    private(set) var message: String = ""
+    var mapItems: [GenericMapView.ModelItem] = []
+    private(set) var logs: [CascadeEventListItem]?
     private var lastRegion: MKCoordinateRegion?
     private let cancelBag = CancelBag()
     private let dataBaseRepository: (DatabaseOutputRepositoryProtocol & TrackedLogRepositoryProtocol)?
@@ -102,7 +103,7 @@ class EventsMapViewModel: BaseViewModel {
 fileprivate extension EventsMapViewModel {
     func updateUI(logs trackedLogs: [Model.TrackedLog]) {
         let count = trackedLogs.count
-        logs = trackedLogs
+        let newLogs: [CascadeEventListItem] = trackedLogs
             .sorted(by: { $0.recordDate > $1.recordDate })
             .enumerated()
             .map { index, event in
@@ -111,6 +112,10 @@ fileprivate extension EventsMapViewModel {
                     title: "\(count - index). \(event.localizedListItemTitleV2(cascadeTrackedEntity: event.cascadeEntity))",
                     value: event.localizedListItemValueV2)
             }
+        // Equality guard (mapItems holds closures and can't be compared; the
+        // logs comparison is the reliable proxy for "data actually changed")
+        guard newLogs != logs else { return }
+        logs = newLogs
         mapItems = trackedLogs.map { .with(trackedLog: $0, onTap: {}) }
     }
 
@@ -145,6 +150,7 @@ fileprivate extension EventsMapViewModel {
 #if canImport(SwiftUI) && DEBUG
 #Preview {
     EventsMapViewCoordinator(presentationStyle: .fullScreenCover)
-        .environmentObject(ConfigurationViewModel.defaultForPreviews)
+        .environment(ConfigurationViewModel.defaultForPreviews)
+        .environmentObject(RouterViewModel())
 }
 #endif

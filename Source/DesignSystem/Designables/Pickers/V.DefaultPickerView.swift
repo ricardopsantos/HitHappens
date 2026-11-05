@@ -37,12 +37,8 @@ public struct DefaultPickerView: View {
                     }
                 }
                 .pickerStyle(DefaultPickerStyle())
-                if #available(iOS 16.0, *) {
-                    picker
-                        .tint(ColorSemantic.primary.color)
-                } else {
-                    picker
-                }
+                picker
+                    .tint(ColorSemantic.primary.color)
             }
         } // .debugBackground()
     }

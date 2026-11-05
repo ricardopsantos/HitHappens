@@ -16,7 +16,7 @@ import DevTools
 //
 struct OnboardingViewCoordinator: View, ViewCoordinatorProtocol {
     // MARK: - ViewCoordinatorProtocol
-    @EnvironmentObject var configuration: ConfigurationViewModel
+    @Environment(ConfigurationViewModel.self) var configuration
     @EnvironmentObject var parentCoordinator: RouterViewModel
     @StateObject var coordinator = RouterViewModel()
     var presentationStyle: ViewPresentationStyle
@@ -72,11 +72,11 @@ struct OnboardingView: View {
     // MARK: - ViewProtocol
     @Environment(\.colorScheme) var colorScheme
     @Environment(\.analyticsManager) private var analyticsManager
-    @StateObject var viewModel: OnboardingViewModel
+    @State var viewModel: OnboardingViewModel
     let onCompletion: (String) -> Void
     public init(dependencies: OnboardingViewModel.Dependencies) {
         DevTools.Log.debug(.viewInit("\(Self.self)"), .view)
-        _viewModel = StateObject(wrappedValue: .init(dependencies: dependencies))
+        _viewModel = State(initialValue: .init(dependencies: dependencies))
         self.onCompletion = dependencies.onCompletion
     }
 
@@ -85,25 +85,23 @@ struct OnboardingView: View {
     private let cancelBag: CancelBag = .init()
     @State private var selectedTab = 0
 
+    var isLastPage: Bool {
+        selectedTab == (viewModel.onboardingModel.count - 1)
+    }
+
     var buttonText: String {
-        selectedTab == (viewModel.onboardingModel.count - 1) ? "Get Started".localizedMissing : "Next".localizedMissing
+        isLastPage ? "Get Started".localizedMissing : "Next".localizedMissing
     }
 
     // MARK: - Views
 
     var body: some View {
-        BaseView.withLoading(
-            sender: "\(Self.self)",
-            appScreen: .onboarding(model: .init()),
-            navigationViewModel: .disabled,
-            ignoresSafeArea: true,
-            background: .defaultBackground,
-            loadingModel: viewModel.loadingModel,
-            alertModel: viewModel.alertModel,
-            networkStatus: nil
-        ) {
-            content
-        }.onAppear {
+        content
+            .baseScreen(
+                sender: "\(Self.self)",
+                appScreen: .onboarding(model: .init()),
+                viewModel: viewModel,
+                ignoresSafeArea: true).onAppear {
             viewModel.send(action: .didAppear)
         }.onDisappear {
             viewModel.send(action: .didDisappear)
@@ -117,13 +115,26 @@ struct OnboardingView: View {
             } else {
                 pageView
                 SwiftUIUtils.FixedVerticalSpacer(height: SizeNames.defaultMarginSmall)
+                pageIndicator
+                SwiftUIUtils.FixedVerticalSpacer(height: SizeNames.defaultMarginSmall)
                 TextButton(
                     onClick: onNextButtonPressed,
                     text: buttonText,
                     accessibility: .fwdButton
                 )
                 .paddingHorizontal(SizeNames.defaultMargin)
-                SwiftUIUtils.FixedVerticalSpacer(height: SizeNames.defaultMargin * 2)
+                TextButton(
+                    onClick: onSkipButtonPressed,
+                    text: "Skip".localizedMissing,
+                    style: .textOnly,
+                    accessibility: .skipButton
+                )
+                .paddingHorizontal(SizeNames.defaultMargin)
+                // Kept in the layout on the last page (just invisible) so the
+                // buttons don't jump when the label changes to "Get Started".
+                .opacity(isLastPage ? 0 : 1)
+                .disabled(isLastPage)
+                SwiftUIUtils.FixedVerticalSpacer(height: SizeNames.defaultMargin)
             }
         }.animation(.default, value: viewModel.loaded)
     }
@@ -133,6 +144,26 @@ struct OnboardingView: View {
 // MARK: - Auxiliar Views
 //
 fileprivate extension OnboardingView {
+    var pageIndicator: some View {
+        HStack(spacing: SizeNames.defaultMarginSmall / 2) {
+            ForEach(0..<viewModel.onboardingModel.count, id: \.self) { index in
+                Circle()
+                    .fill(index == selectedTab
+                        ? ColorSemantic.primary.color
+                        : ColorSemantic.labelSecondary.color.opacity(0.35))
+                    .frame(width: 8, height: 8)
+                    .onTapGesture {
+                        withAnimation {
+                            selectedTab = index
+                        }
+                    }
+            }
+        }
+        .animation(.default, value: selectedTab)
+        .accessibilityElement(children: .ignore)
+        .accessibilityLabel("Page \(selectedTab + 1) of \(viewModel.onboardingModel.count)".localizedMissing)
+    }
+
     var pageView: some View {
         TabView(selection: $selectedTab) {
             ForEach(0..<viewModel.onboardingModel.count, id: \.self) { index in
@@ -172,6 +203,16 @@ fileprivate extension OnboardingView {
 // MARK: - Private
 //
 fileprivate extension OnboardingView {
+    private func onSkipButtonPressed() {
+        analyticsManager.handleButtonClickEvent(
+            buttonType: .secondary,
+            label: "Skip",
+            sender: "\(Self.self)",
+            properties: [:]
+        )
+        onCompletion(#function)
+    }
+
     private func onNextButtonPressed() {
         analyticsManager.handleButtonClickEvent(
             buttonType: .primary,
@@ -196,6 +237,7 @@ fileprivate extension OnboardingView {
 #if canImport(SwiftUI) && DEBUG
 #Preview {
     OnboardingViewCoordinator(presentationStyle: .notApplied, haveNavigationStack: true, model: .init(), onCompletion: { _ in })
-        .environmentObject(ConfigurationViewModel.defaultForPreviews)
+        .environment(ConfigurationViewModel.defaultForPreviews)
+        .environmentObject(RouterViewModel())
 }
 #endif

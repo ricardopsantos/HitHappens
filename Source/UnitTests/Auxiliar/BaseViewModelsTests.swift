@@ -9,7 +9,6 @@
 
 import XCTest
 import Combine
-import Nimble
 //
 import Common
 import Domain
@@ -18,6 +17,17 @@ import Core
 let cancelBag = CancelBag()
 var timeout: Int = 5
 var loadedAny: Any?
+
+extension XCTestCase {
+    /// Polls the main run loop until `condition` is true or `timeout` seconds pass, then asserts it.
+    func assertEventually(timeout: Int, _ message: String = "", file: StaticString = #filePath, line: UInt = #line, _ condition: () -> Bool) {
+        let deadline = Date().addingTimeInterval(TimeInterval(timeout))
+        while !condition() && Date() < deadline {
+            RunLoop.current.run(until: Date().addingTimeInterval(0.01))
+        }
+        XCTAssertTrue(condition(), message, file: file, line: line)
+    }
+}
 
 class BaseViewModelsTests: XCTestCase {
     lazy var dataBaseRepository: DataBaseRepositoryProtocol = { DependenciesManager.Repository.dataBaseRepository }()

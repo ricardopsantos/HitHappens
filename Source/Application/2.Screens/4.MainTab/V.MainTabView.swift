@@ -14,7 +14,7 @@ import DevTools
 import DesignSystem
 
 struct MainTabViewCoordinator: View {
-    @EnvironmentObject var configuration: ConfigurationViewModel
+    @Environment(ConfigurationViewModel.self) var configuration
     var body: some View {
         MainTabView(dependencies: .init(
             model: .init(selectedTab: .tab1),
@@ -26,20 +26,22 @@ struct MainTabViewCoordinator: View {
 struct MainTabView: View, ViewProtocol {
     // MARK: - ViewProtocol
     @Environment(\.colorScheme) var colorScheme
-    @StateObject var viewModel: MainTabViewModel
+    @State var viewModel: MainTabViewModel
 
     // MARK: - Usage/Auxiliar Attributes
     @Environment(\.dismiss) var dismiss
-    @EnvironmentObject var configuration: ConfigurationViewModel
-    @StateObject var tab1Router = RouterViewModel()
-    @StateObject var tab2Router = RouterViewModel()
-    @StateObject var tab3Router = RouterViewModel()
-    @StateObject var tab4Router = RouterViewModel()
-    @StateObject var tab5Router = RouterViewModel()
+    @Environment(ConfigurationViewModel.self) var configuration
+    // One Router per tab (see README+Improvements.md §4). NavigationStack path,
+    // sheet, and cover are all declared once at the tab root below.
+    @StateObject var tab1Router = Router()
+    @StateObject var tab2Router = Router()
+    @StateObject var tab3Router = Router()
+    @StateObject var tab4Router = Router()
+    @StateObject var tab5Router = Router()
 
     public init(dependencies: MainTabViewModel.Dependencies) {
         DevTools.Log.debug(.viewInit("\(Self.self)"), .view)
-        _viewModel = StateObject(wrappedValue: .init(dependencies: dependencies))
+        _viewModel = State(initialValue: .init(dependencies: dependencies))
     }
 
     // MARK: - Body & View
@@ -50,97 +52,54 @@ struct MainTabView: View, ViewProtocol {
     @ViewBuilder
     var content: some View {
         TabView(selection: selectedTab()) {
-            //
-            // Tab 1 - Favorits
-            //
-            NavigationStack(path: $tab1Router.navPath) {
-                FavoriteEventsViewCoordinator(presentationStyle: .fullScreenCover)
-                    .navigationDestination(for: AppScreen.self, destination: { screen in
-                        buildScreen(screen, presentationStyle: .notApplied)
-                    })
-                    .environmentObject(tab1Router)
-            }
-            .tabItem { TabItemView(title: AppTab.tab1.title, icon: AppTab.tab1.icon) }
-            .tag(AppTab.tab1)
-            //
-            // Tab 2 - Event as List
-            //
-            NavigationStack(path: $tab2Router.navPath) {
-                EventsListViewCoordinator(presentationStyle: .fullScreenCover)
-                    .navigationDestination(for: AppScreen.self, destination: { screen in
-                        buildScreen(screen, presentationStyle: .navigation)
-                    })
-                    .environmentObject(tab2Router)
-            }
-            .tabItem { TabItemView(title: AppTab.tab2.title, icon: AppTab.tab2.icon) }
-            .tag(AppTab.tab2)
-            //
-            // Tab 3 - Event as Calendar
-            //
-            NavigationStack(path: $tab3Router.navPath) {
-                EventsCalendarViewCoordinator(presentationStyle: .fullScreenCover)
-                    .navigationDestination(for: AppScreen.self, destination: { screen in
-                        buildScreen(screen, presentationStyle: .notApplied)
-                    })
-                    .environmentObject(tab3Router)
-            }
-            .tabItem { TabItemView(title: AppTab.tab3.title, icon: AppTab.tab3.icon) }
-            .tag(AppTab.tab3)
-            //
-            // Tab 4 - Event as Map
-            //
-            NavigationStack(path: $tab4Router.navPath) {
-                EventsMapViewCoordinator(presentationStyle: .fullScreenCover)
-                    .navigationDestination(for: AppScreen.self, destination: { screen in
-                        buildScreen(screen, presentationStyle: .notApplied)
-                    })
-                    .environmentObject(tab4Router)
-            }
-            .tabItem { TabItemView(title: AppTab.tab4.title, icon: AppTab.tab4.icon) }
-            .tag(AppTab.tab4)
-            //
-            // Tab 5
-            //
-            NavigationStack(path: $tab5Router.navPath) {
-                SettingsViewCoordinator(presentationStyle: .notApplied)
-                    .navigationDestination(for: AppScreen.self, destination: { screen in
-                        buildScreen(screen, presentationStyle: .notApplied)
-                    })
-                    .environmentObject(tab5Router)
-            }
-            .tabItem { TabItemView(title: AppTab.tab5.title, icon: AppTab.tab5.icon) }
-            .tag(AppTab.tab5)
+            tabStack(root: .favoriteEvents, router: tab1Router, tab: .tab1)
+            tabStack(root: .eventsList, router: tab2Router, tab: .tab2)
+            tabStack(root: .calendar, router: tab3Router, tab: .tab3)
+            tabStack(root: .map, router: tab4Router, tab: .tab4)
+            tabStack(root: .settings, router: tab5Router, tab: .tab5)
         }
         .tint(ColorSemantic.primary.color)
         .onAppear {
             updateAppearance()
         }
-        .onChange(of: colorScheme) { _ in
+        .onChange(of: colorScheme) { _, _ in
             updateAppearance()
-        }
-        .onChange(of: tab1Router.navPath) { value in
-            DevTools.Log.debug(.valueChanged("\(Self.self)", "tab1Router", "\(value)"), .view)
-        }.onChange(of: tab2Router.navPath) { value in
-            DevTools.Log.debug(.valueChanged("\(Self.self)", "tab2Router", "\(value)"), .view)
-        }.onChange(of: tab3Router.navPath) { value in
-            DevTools.Log.debug(.valueChanged("\(Self.self)", "tab3Router", "\(value)"), .view)
-        }.onChange(of: tab4Router.navPath) { value in
-            DevTools.Log.debug(.valueChanged("\(Self.self)", "tab4Router", "\(value)"), .view)
-        }.onChange(of: tab5Router.navPath) { value in
-            DevTools.Log.debug(.valueChanged("\(Self.self)", "tab5Router", "\(value)"), .view)
         }
     }
 
-    func buildScreen(_ screen: AppScreen, presentationStyle: ViewPresentationStyle) -> AnyView {
-        let configuration = configuration
-        let tab1Router = tab1Router
-        let tab2Router = tab2Router
-        var registry = ScreenBuilderRegistry()
-        registry.register(ScreenBuilderRegistry.makeEventLogDetailsFactory(
-            configuration: configuration, parentCoordinator: tab1Router))
-        registry.register(ScreenBuilderRegistry.makeEventDetailsFactory(
-            configuration: configuration, parentCoordinator: tab2Router))
-        return registry.build(screen, presentationStyle: presentationStyle)
+    /// One tab: a NavigationStack driven by the tab's typed Router path, with
+    /// sheet/cover presented from the same Router. Modals get their own nested
+    /// Router via `ModalRouteRoot` so they can push internally.
+    @ViewBuilder
+    func tabStack(root: AppScreen, router: Router, tab: AppTab) -> some View {
+        NavigationStack(path: bindingPath(router)) {
+            RouteView(screen: root, style: .navigation)
+                .navigationDestination(for: AppScreen.self) { pushed in
+                    RouteView(screen: pushed, style: .navigation)
+                }
+        }
+        .sheet(item: bindingSheet(router)) { screen in
+            ModalRouteRoot(screen: screen, style: .sheet, configuration: configuration)
+        }
+        .fullScreenCover(item: bindingCover(router)) { screen in
+            ModalRouteRoot(screen: screen, style: .fullScreenCover, configuration: configuration)
+        }
+        .environmentObject(router)
+        .tabItem { TabItemView(title: tab.title, icon: tab.icon) }
+        .tag(tab)
+    }
+
+    // Router is ObservableObject; derive plain bindings for its properties.
+    private func bindingPath(_ router: Router) -> Binding<[AppScreen]> {
+        Binding { router.path } set: { router.path = $0 }
+    }
+
+    private func bindingSheet(_ router: Router) -> Binding<AppScreen?> {
+        Binding { router.sheet } set: { router.sheet = $0 }
+    }
+
+    private func bindingCover(_ router: Router) -> Binding<AppScreen?> {
+        Binding { router.cover } set: { router.cover = $0 }
     }
 }
 
@@ -166,28 +125,13 @@ private extension MainTabView {
             viewModel.selectedTab
         } set: { tappedTab in
             if tappedTab == viewModel.selectedTab {
-                DevTools.Log.debug("Double Tap", .view)
+                // Re-tapping the active tab pops it to root
                 switch viewModel.selectedTab {
-                case .tab1:
-                    if !tab1Router.navigateToRoot() {
-                        // Already at root. Implement Scroll up?
-                    }
-                case .tab2:
-                    if !tab2Router.navigateToRoot() {
-                        // Already at root. Implement Scroll up?
-                    }
-                case .tab3:
-                    if !tab3Router.navigateToRoot() {
-                        // Already at root. Implement Scroll up?
-                    }
-                case .tab4:
-                    if !tab4Router.navigateToRoot() {
-                        // Already at root. Implement Scroll up?
-                    }
-                case .tab5:
-                    if !tab5Router.navigateToRoot() {
-                        // Already at root. Implement Scroll up?
-                    }
+                case .tab1: tab1Router.popToRoot()
+                case .tab2: tab2Router.popToRoot()
+                case .tab3: tab3Router.popToRoot()
+                case .tab4: tab4Router.popToRoot()
+                case .tab5: tab5Router.popToRoot()
                 }
             } else {
                 viewModel.selectedTab = tappedTab
@@ -203,6 +147,7 @@ private extension MainTabView {
 #if canImport(SwiftUI) && DEBUG
 #Preview {
     MainTabViewCoordinator()
-        .environmentObject(ConfigurationViewModel.defaultForPreviews)
+        .environment(ConfigurationViewModel.defaultForPreviews)
+        .environmentObject(RouterViewModel())
 }
 #endif

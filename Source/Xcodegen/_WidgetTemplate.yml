@@ -1,7 +1,7 @@
 targetTemplates:
   Widget:
     platform: iOS
-    deploymentTarget: '17.0'
+    deploymentTarget: '18.0'
     type: app-extension
     settings:
       base:

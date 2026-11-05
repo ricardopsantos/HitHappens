@@ -25,6 +25,11 @@ public protocol DatabaseOutputRepositoryProtocol {
 public protocol TrackedEntityReadRepositoryProtocol {
     @discardableResult func trackedEntityGet(trackedEntityId: String, cascade: Bool) -> Model.TrackedEntity?
     @discardableResult func trackedEntityGetAll(favorite: Bool?, archived: Bool?, cascade: Bool) -> [Model.TrackedEntity]
+    /// Async variant that performs the fetch on a background context, keeping
+    /// the main thread free. Prefer this from ViewModels.
+    func trackedEntityGetAll(favorite: Bool?, archived: Bool?, cascade: Bool) async -> [Model.TrackedEntity]
+    /// Store-level `count(for:)` — use instead of fetching and counting records.
+    func trackedEntityCount(favorite: Bool?, archived: Bool?) -> Int
 }
 
 /// Mutating operations for `TrackedEntity` records.

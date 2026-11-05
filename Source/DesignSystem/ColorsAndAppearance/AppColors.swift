@@ -132,11 +132,18 @@ public indirect enum ColorSemantic: CaseIterable, Hashable {
         switch self {
         case .color(let color, alpha: let alpha): result = color.uiColor.alpha(alpha)
         case .clear: result = UIColor.clear
-        case .danger: result = ColorPalletSmart.red2.uiColor
+        // Light mode uses darker variants: the brand tones fail WCAG AA
+        // contrast (4.5:1) as text/button fill on white. Dark mode keeps the
+        // lighter tones, which pass against black.
+        case .danger: result = on == .light ?
+            ColorPalletSmart.red3.uiColor :
+            ColorPalletSmart.red2.uiColor
         case .allCool: result = ColorPalletSmart.green2.uiColor
         case .warning: result = ColorPalletSmart.yellow.uiColor
         case .white: result = UIColor.white
-        case .primary: result = ColorPalletSmart.primary.uiColor
+        case .primary: result = on == .light ?
+            ColorPalletSmart.primaryDark.uiColor :
+            ColorPalletSmart.primary.uiColor
 
         case .labelPrimary: result = on == .light ?
             ColorPalletSmart.black.uiColor :
@@ -163,13 +170,15 @@ public indirect enum ColorSemantic: CaseIterable, Hashable {
             ColorPalletSmart.white.uiColor :
             ColorPalletSmart.black.uiColor
 
+        // Dark-mode surfaces are elevated greys, not black: cards and sections
+        // must remain distinguishable from the (black) backgroundPrimary.
         case .backgroundSecondary: result = on == .light ?
             ColorPalletSmart.grey2.uiColor :
-            ColorPalletSmart.black.uiColor
+            UIColor.colorFromRGBString("28,30,32")
 
         case .backgroundTertiary: result = on == .light ?
             ColorPalletSmart.silver1.colorFaded02 :
-            UIColor.colorFromRGBString("0,0,0")
+            ColorPalletSmart.grey2.uiColor
 
         case .backgroundGradient: result = on == .light ?
             UIColor.colorFromRGBString("201,208,214") :
@@ -190,6 +199,7 @@ enum ColorPalletSmart: CaseIterable {
     //
 
     case primary
+    case primaryDark
     case systemPrimary
 
     case white
@@ -206,6 +216,7 @@ enum ColorPalletSmart: CaseIterable {
     case blue2
     case red1
     case red2
+    case red3
     case orange
     case yellow
 
@@ -241,6 +252,7 @@ enum ColorPalletSmart: CaseIterable {
     public var rawValue: UIColor {
         switch self {
         case .primary: return UIColor.colorFromRGBString("98,157,228") // #629DE4(Twitter Blue)
+        case .primaryDark: return UIColor.colorFromRGBString("54,114,185") // #3672B9 — 4.9:1 on white (WCAG AA)
         case .white: return UIColor.colorFromRGBString("255,255,255") // #FFFFFF
         case .black: return UIColor.colorFromRGBString("20,20,19") // #141413
         case .grey1: return UIColor.colorFromRGBString("89,89,89") // #595959
@@ -253,6 +265,7 @@ enum ColorPalletSmart: CaseIterable {
         case .blue2: return UIColor.colorFromRGBString("10,132,255") // #0A84FF
         case .red1: return UIColor.colorFromRGBString("230,156,152") // #E69C98
         case .red2: return UIColor.colorFromRGBString("230,64,64") // #E64040
+        case .red3: return UIColor.colorFromRGBString("211,47,47") // #D32F2F — 5.0:1 on white (WCAG AA)
         case .orange: return UIColor.colorFromRGBString("246,190,49") // #F6BE31
         case .yellow: return UIColor.colorFromRGBString("255,204,0") // #FFCC00
 
@@ -291,7 +304,7 @@ private struct ColorsCache {
         VStack(spacing: 1) {
             ForEach(ColorSemantic.allCases.filter { $0 != .clear }, id: \.self) { style in
                 Text("\(style)")
-                    .foregroundColor(.black)
+                    .foregroundStyle(.black)
                     .frame(maxWidth: .infinity)
                 SwiftUIUtils.FixedVerticalSpacer(height: 5)
             }
@@ -299,7 +312,7 @@ private struct ColorsCache {
         VStack(spacing: 1) {
             ForEach(ColorSemantic.allCases.filter { $0 != .clear }, id: \.self) { style in
                 Text("\(style)")
-                    .foregroundColor(.black)
+                    .foregroundStyle(.black)
                     .frame(maxWidth: .infinity)
                     .background(style.color(.light))
                 SwiftUIUtils.FixedVerticalSpacer(height: 5)
@@ -308,7 +321,7 @@ private struct ColorsCache {
         VStack(spacing: 1) {
             ForEach(ColorSemantic.allCases.filter { $0 != .clear }, id: \.self) { style in
                 Text("\(style)")
-                    .foregroundColor(.white)
+                    .foregroundStyle(.white)
                     .frame(maxWidth: .infinity)
                     .background(style.color(.dark))
                 SwiftUIUtils.FixedVerticalSpacer(height: 5)

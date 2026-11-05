@@ -63,32 +63,49 @@ extension BaseView {
         }
 
         var textView: some View {
-            Text(model?.message ?? "")
-                .fontSemantic(.body)
-                .accessibilityIdentifier(Accessibility.txtAlertModelText.identifier)
-                .lineLimit(nil) // Unlimited lines
-                .multilineTextAlignment(.center)
-                .fixedSize(horizontal: false, vertical: true) // Prevents truncation
-                .padding()
-                .doIf(model?.type == .success, transform: {
-                    $0.background(ColorSemantic.primary.color.opacity(0.9))
-                })
-                .doIf(model?.type == .warning, transform: {
-                    $0.background(ColorSemantic.warning.color.opacity(0.9))
-                })
-                .doIf(model?.type == .error, transform: {
-                    $0.background(ColorSemantic.danger.color.opacity(0.9))
-                })
-                .cornerRadius(SizeNames.cornerRadius)
-                .shadow(radius: SizeNames.shadowRadiusRegular)
-                .onTapGesture {
-                    if let onUserTapGesture = model?.onUserTapGesture {
-                        onUserTapGesture()
+            VStack(spacing: 0) {
+                Text(model?.message ?? "")
+                    .fontSemantic(.body)
+                    .accessibilityIdentifier(Accessibility.txtAlertModelText.identifier)
+                    .lineLimit(nil) // Unlimited lines
+                    .multilineTextAlignment(.center)
+                    .fixedSize(horizontal: false, vertical: true) // Prevents truncation
+                if let undo = model?.undo {
+                    SwiftUIUtils.FixedVerticalSpacer(height: SizeNames.defaultMarginSmall)
+                    Button(action: {
+                        undo()
+                        if let parentDismiss = model?.parentDismiss {
+                            parentDismiss()
+                        }
+                    }) {
+                        Text("Undo".localizedMissing)
+                            .fontSemantic(.bodyBold)
+                            .underline()
                     }
-                    if let parentDismiss = model?.parentDismiss {
-                        parentDismiss()
-                    }
+                    .buttonStyle(.plain)
+                    .accessibilityIdentifier(Accessibility.undoButton.identifier)
                 }
+            }
+            .padding()
+            .doIf(model?.type == .success, transform: {
+                $0.background(ColorSemantic.primary.color.opacity(0.9))
+            })
+            .doIf(model?.type == .warning, transform: {
+                $0.background(ColorSemantic.warning.color.opacity(0.9))
+            })
+            .doIf(model?.type == .error, transform: {
+                $0.background(ColorSemantic.danger.color.opacity(0.9))
+            })
+            .clipShape(RoundedRectangle(cornerRadius: SizeNames.cornerRadius))
+            .shadow(radius: SizeNames.shadowRadiusRegular)
+            .onTapGesture {
+                if let onUserTapGesture = model?.onUserTapGesture {
+                    onUserTapGesture()
+                }
+                if let parentDismiss = model?.parentDismiss {
+                    parentDismiss()
+                }
+            }
         }
 
         private var baseColor: Color {

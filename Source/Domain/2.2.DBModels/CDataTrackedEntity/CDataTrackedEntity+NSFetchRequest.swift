@@ -23,6 +23,23 @@ public extension CDataTrackedEntity {
         return request
     }
 
+    /// Filtering is pushed down to the store (SQLite) via predicates instead of
+    /// fetching all records and filtering in memory.
+    static func fetchRequestWith(favorite: Bool?, archived: Bool?) -> NSFetchRequest<DBEntity> {
+        let request = NSFetchRequest<DBEntity>(entityName: DBEntity.entityName)
+        var predicates: [NSPredicate] = []
+        if let favorite = favorite {
+            predicates.append(NSPredicate(format: "favorite == %@", NSNumber(value: favorite)))
+        }
+        if let archived = archived {
+            predicates.append(NSPredicate(format: "archived == %@", NSNumber(value: archived)))
+        }
+        if !predicates.isEmpty {
+            request.predicate = NSCompoundPredicate(andPredicateWithSubpredicates: predicates)
+        }
+        return request
+    }
+
     static func fetchRequestWith(id: String) -> NSFetchRequest<DBEntity> {
         let request = NSFetchRequest<DBEntity>(entityName: DBEntity.entityName)
         request.predicate = NSPredicate.anyField(DBEntity.idFields, with: id)

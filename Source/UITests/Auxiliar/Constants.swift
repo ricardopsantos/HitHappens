@@ -45,7 +45,7 @@ enum Constants {
     //
     //
     // static let alertWhenAddNewEvent = "Event tracked!\nTap for edit/add details."
-    static let noFavoritsMessage = "You don't have any \(entityNamePlural.lowercased()) marked as favorite\n\nTap to add one!"
+    static let noFavoritsMessage = "No favorites yet"
     //
     //
     static let tab1 = 0
@@ -91,6 +91,7 @@ public enum Accessibility: String, CaseIterable {
     case txtUserName
     case txtEmail
     case txtPassword
+    case txtSearch
 
     // Toggle
     case toggleFavorits
@@ -104,9 +105,15 @@ public enum Accessibility: String, CaseIterable {
     case fwdButton
     case backButton
     case addButton
+    case emptyStateAddButton
     case editButton
     case confirmButton
     case cancelButton
+    case undoButton
+    case skipButton
+    case supportButton
+    case publicCodeButton
+    case onboardingButton
 
     // CheckBox
     case readTermsAndConditions

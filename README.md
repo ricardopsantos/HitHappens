@@ -84,13 +84,12 @@ This modular structure ensures each component is focused on a specific responsib
 
 ### Dependencies Manager 
 
-As package dependencies manager was choosen [__Swift Package Manager__](https://www.swift.org/documentation/package-manager/), as it simplifies dependency management and project organization for Swift developers. Also, enables you to easily add, update, and manage third-party libraries and frameworks. Integrated seamlessly with Xcode, Swift Package Manager promotes modularity, improves build performance, and ensures that your dependencies are up-to-date, making it an essential tool for modern Swift development.
+As package dependencies manager was chosen [__Swift Package Manager__](https://www.swift.org/documentation/package-manager/), as it simplifies dependency management and project organization for Swift developers. Also, enables you to easily add, update, and manage third-party libraries and frameworks. Integrated seamlessly with Xcode, Swift Package Manager promotes modularity, improves build performance, and ensures that your dependencies are up-to-date, making it an essential tool for modern Swift development.
 
 The app philosophy emphasizes avoiding the addition of large dependencies for simple tasks (e.g., using Alamofire for a basic REST GET method). Instead, we carefully selected only three essential dependencies to handle complex or time-consuming (to implement) tasks:
 
 * [__KeychainAccess__](https://github.com/kishikawakatsumi/KeychainAccess): _"KeychainAccess is a simple Swift wrapper for Keychain that works on iOS and macOS. Makes using Keychain APIs extremely easy and much more palatable to use in Swift."_
 * [__TinyConstraints__](https://github.com/roberthein/TinyConstraints): _"TinyConstraints is the syntactic sugar that makes Auto Layout sweeter for human use."_
-* [__Nimble__](https://github.com/Quick/Nimble): _"A matcher framework that enables writing expressive and readable tests."_
 
 # Architecture II
 
@@ -110,7 +109,7 @@ It's the main application target. Contains the `Views` (scenes), `ViewModels` (g
 <img src=Source/_Documents/images/Domain.png width=800/>
 </center>
 
-This target encapsulates the interface functionality of the application. Providing the _Models_ and _Protocols_ it define what the app can do and the data structures to do it.
+This target encapsulates the interface functionality of the application. By providing the _Models_ and _Protocols_, it defines what the app can do and the data structures to do it.
 
 - __Repositories__: Local data storage protocols.
 - __Services__: Bridge between _ViewModels_ and _Network_, where additional logic can be applied (e.g. caching)
@@ -135,7 +134,7 @@ Notably, `Services`, `Repositories` and `Network` are defined and implemented vi
 <img src=Source/_Documents/images/Common.png width=800/>
 </center>
 
-A shared framework that includes extensions and utility functions used across multiple targets, promoting code reuse and modularity. Should not depend on any target, and should seamless work on any project. 
+A shared framework that includes extensions and utility functions used across multiple targets, promoting code reuse and modularity. Should not depend on any other target, and should work seamlessly on any project. 
 
 ## DesignSystem
 
@@ -166,8 +165,6 @@ Includes various development tools and utilities such as logging, facilitating s
 
 The app includes comprehensive testing coverage with both UI Tests and Unit Tests. These tests are designed to cover a wide range of daily development scenarios, ensuring the app's reliability and performance. Additionally, we have incorporated measure/performance tests to monitor and optimize the app's efficiency.
 
-This revision aims to clearly communicate the purpose and scope of the tests while emphasizing their importance in maintaining app quality and performance.
-
 <img src=Source/_Documents/images/UnitTests_2.png width=800/> 
 
 ### UITesting
@@ -179,11 +176,11 @@ The app includes UI Tests for views and routing logic
     
 ### Unit Testing (ViewModels & Services)
 
-The app _ViewModels_ are built on a way that can be tested.
+The app _ViewModels_ are built in a way that they can be tested.
 
 <img src=Source/_Documents/images/UnitTestsVM.png width=800/>
 
-The app _Services_ are built on a way that can be tested.
+The app _Services_ are built in a way that they can be tested.
 
 <img src=Source/_Documents/images/UnitTestsServices.png width=800/>
 
@@ -268,10 +265,12 @@ Bitrise, a mobile-focused CI/CD platform, automates build, test, and deployment 
 
 ## Install 
 
-No need to install anything, as all app dependencies are managed via [Swift Package Manager](https://www.swift.org/documentation/package-manager/).
+__Requirements__: Xcode 26, iOS 18.0+ deployment target. Optionally [XcodeGen](https://github.com/yonaskolb/XcodeGen) (via Homebrew) if you want to regenerate the project.
+
+No need to install anything else, as all app dependencies are managed via [Swift Package Manager](https://www.swift.org/documentation/package-manager/).
 
 However, the project can be fully rebuilt with `./makefile.sh` (for a total cleanup and conflict fixing) using [XcodeGen](https://github.com/yonaskolb/XcodeGen). If you are not familiar with XcodeGen, please check [Avoiding merge conflicts with XcodeGen](https://medium.com/@ricardojpsantos/avoiding-merge-conflicts-with-xcodegen-a0e2a1647bcb).
 
-The scripts can be found at `Source/XcodeGen`
+The XcodeGen project specs live in `Source/Xcodegen`, and the helper scripts (project generation, linting, archiving) in `Source/Scripts`.
 
 <img src=Source/_Documents/images/Install.png width=800/>

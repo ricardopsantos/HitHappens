@@ -47,9 +47,10 @@ extension FavoriteEventsViewModel {
 //
 // MARK: - ViewModel
 //
+@Observable
 class FavoriteEventsViewModel: BaseViewModel {
     // MARK: - Usage/Auxiliar Attributes
-    @Published private(set) var favorits: [Model.TrackedEntity] = []
+    private(set) var favorits: [Model.TrackedEntity] = []
     /// Exposed so the View can react without embedding business logic in `onChange`.
     var isLocationTrackingNeeded: Bool {
         favorits.contains(where: \.locationRelevant)
@@ -73,10 +74,10 @@ class FavoriteEventsViewModel: BaseViewModel {
         case .loadFavorits:
             Task { [weak self] in
                 guard let self = self else { return }
-                if let records = dataBaseRepository?.trackedEntityGetAll(
+                if let records = await dataBaseRepository?.trackedEntityGetAll(
                     favorite: true,
                     archived: false,
-                    cascade: true) {
+                    cascade: true), records != favorits {
                     favorits = records
                 }
             }
@@ -126,6 +127,10 @@ fileprivate extension FavoriteEventsViewModel {
                                     message: "\(AppConstants.entityOccurrenceSingle) tracked!\n\n(Tap here to edit/add details.)",
                                     onUserTapGesture: { [weak self] in
                                         self?.onShouldDisplayTrackedLog(trackedEntity)
+                                    },
+                                    undo: { [weak self] in
+                                        // Mis-taps happen: remove the just-inserted log
+                                        self?.dataBaseRepository?.trackedLogDelete(trackedLogId: trackedEntity.id)
                                     })
                             }
                         }
@@ -166,6 +171,7 @@ fileprivate extension FavoriteEventsViewModel {
 #if canImport(SwiftUI) && DEBUG
 #Preview {
     FavoriteEventsViewCoordinator(presentationStyle: .fullScreenCover)
-        .environmentObject(ConfigurationViewModel.defaultForPreviews)
+        .environment(ConfigurationViewModel.defaultForPreviews)
+        .environmentObject(RouterViewModel())
 }
 #endif

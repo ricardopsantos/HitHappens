@@ -69,9 +69,6 @@ public struct TextButton: View {
         .animation(.spring(response: 0.3, dampingFraction: 0.5, blendDuration: 0.5), value: isPressed)
         .accessibilityIdentifier(accessibility.identifier)
         .buttonStyle(.plain)
-        .doIf(style == .textOnly, transform: {
-            $0.shadow(radius: SizeNames.shadowRadiusRegular)
-        })
         .userInteractionEnabled(enabled)
     }
 
@@ -87,8 +84,10 @@ public struct TextButton: View {
             })
             .frame(maxWidth: .infinity, alignment: alignment)
             .padding(SizeNames.defaultMarginSmall)
+            // HIG minimum tap target (44pt)
+            .frame(minHeight: SizeNames.defaultButtonPrimaryHeight)
             .background(backgroundColor)
-            .cornerRadius(SizeNames.defaultButtonPrimaryHeight)
+            .clipShape(RoundedRectangle(cornerRadius: SizeNames.defaultButtonPrimaryHeight))
             .overlay(
                 RoundedRectangle(cornerRadius: SizeNames.defaultButtonPrimaryHeight)
                     .inset(by: 0.75)

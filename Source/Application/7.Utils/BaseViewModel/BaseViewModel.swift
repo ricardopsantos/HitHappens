@@ -14,11 +14,12 @@ import DevTools
 import DesignSystem
 
 @MainActor
-public class BaseViewModel: ObservableObject {
+@Observable
+public class BaseViewModel {
     // MARK: - Usage/Auxiliar Attributes
-    @Published var tip: (text: String, color: ColorSemantic) = ("", .clear)
-    @Published var loadingModel: Model.LoadingModel?
-    @Published var alertModel: Model.AlertModel? {
+    var tip: (text: String, color: ColorSemantic) = ("", .clear)
+    var loadingModel: Model.LoadingModel?
+    var alertModel: Model.AlertModel? {
         didSet {
             guard var alertModel = alertModel else {
                 return
@@ -51,8 +52,11 @@ public class BaseViewModel: ObservableObject {
     var errorsManager: any ErrorsManagerProtocol = ErrorsManager.shared
 
     func displayTip(_ message: String) {
-        tip.text = message
-        tip.color = .allCool
+        // Equality guard: @Observable fires on every set, and several VMs call
+        // displayTip("") on every action — don't re-render for identical tips.
+        let new: (text: String, color: ColorSemantic) = (message, .allCool)
+        guard tip != new else { return }
+        tip = new
     }
 
     /// Inserts a new `TrackedLog` for the given entity, attaching the current GPS location

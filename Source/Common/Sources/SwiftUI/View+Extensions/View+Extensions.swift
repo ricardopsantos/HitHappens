@@ -125,12 +125,8 @@ public extension View {
                     Button {
                         action()
                     } label: {
-                        if #available(iOS 15.0, *) {
-                            Image(systemName: "arrow.backward")
-                                .tint(.secondary)
-                        } else {
-                            Image(systemName: "arrow.backward")
-                        }
+                        Image(systemName: "arrow.backward")
+                            .tint(.secondary)
                     }
                 }
             }

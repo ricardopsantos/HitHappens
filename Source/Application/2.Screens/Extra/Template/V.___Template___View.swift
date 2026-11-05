@@ -17,7 +17,7 @@ import DesignSystem
 //
 struct ___Template___ViewCoordinator: View, ViewCoordinatorProtocol {
     // MARK: - ViewCoordinatorProtocol
-    @EnvironmentObject var configuration: ConfigurationViewModel
+    @Environment(ConfigurationViewModel.self) var configuration
     @EnvironmentObject var parentCoordinator: RouterViewModel
     @StateObject var coordinator = RouterViewModel()
     var presentationStyle: ViewPresentationStyle
@@ -77,10 +77,10 @@ struct ___Template___ViewCoordinator: View, ViewCoordinatorProtocol {
 struct ___Template___View: View, ViewProtocol {
     // MARK: - ViewProtocol
     @Environment(\.colorScheme) var colorScheme
-    @StateObject var viewModel: ___Template___ViewModel
+    @State var viewModel: ___Template___ViewModel
     public init(dependencies: ___Template___ViewModel.Dependencies) {
         DevTools.Log.debug(.viewInit("\(Self.self)"), .view)
-        _viewModel = StateObject(wrappedValue: .init(dependencies: dependencies))
+        _viewModel = State(initialValue: .init(dependencies: dependencies))
     }
 
     // MARK: - Usage/Auxiliar Attributes
@@ -88,17 +88,11 @@ struct ___Template___View: View, ViewProtocol {
     private let cancelBag: CancelBag = .init()
     // MARK: - Body & View
     var body: some View {
-        BaseView.withLoading(
-            sender: "\(Self.self)",
-            appScreen: .templateWith(model: .init()),
-            navigationViewModel: .disabled,
-            ignoresSafeArea: false,
-            background: .defaultBackground,
-            loadingModel: viewModel.loadingModel,
-            alertModel: viewModel.alertModel,
-            networkStatus: nil) {
-                content
-            }.onAppear {
+        content
+            .baseScreen(
+                sender: "\(Self.self)",
+                appScreen: .templateWith(model: .init()),
+                viewModel: viewModel).onAppear {
                 viewModel.send(.didAppear)
             }.onDisappear {
                 viewModel.send(.didDisappear)
@@ -145,6 +139,7 @@ fileprivate extension ___Template___View {
 #if canImport(SwiftUI) && DEBUG
 #Preview {
     ___Template___ViewCoordinator(presentationStyle: .fullScreenCover, haveNavigationStack: false, model: .init(message: "Hi"))
-        .environmentObject(ConfigurationViewModel.defaultForPreviews)
+        .environment(ConfigurationViewModel.defaultForPreviews)
+        .environmentObject(RouterViewModel())
 }
 #endif

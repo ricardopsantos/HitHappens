@@ -9,6 +9,10 @@ import Foundation
 import SwiftUI
 import DevTools
 
+/// Deliberately ObservableObject (NOT @Observable): binding a NavigationStack
+/// path to an @Observable class property makes pushes bounce back immediately
+/// in this hierarchy (verified by bisect + UI test, July 2026). Mixing both
+/// observation systems is fine — see CLAUDE.md.
 public final class RouterViewModel: ObservableObject {
     // MARK: - Dependency Attributes
 

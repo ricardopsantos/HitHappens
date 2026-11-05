@@ -51,7 +51,7 @@ extension ScreenBuilderRegistry {
             guard case .eventDetails(let model) = screen else { return nil }
             return AnyView(
                 EventDetailsViewCoordinator(presentationStyle: style, model: model)
-                    .environmentObject(configuration)
+                    .environment(configuration)
                     .environmentObject(parentCoordinator)
             )
         }
@@ -66,7 +66,7 @@ extension ScreenBuilderRegistry {
             guard case .eventLogDetails(let model) = screen else { return nil }
             return AnyView(
                 EventLogDetailsViewCoordinator(presentationStyle: style, model: model)
-                    .environmentObject(configuration)
+                    .environment(configuration)
                     .environmentObject(parentCoordinator)
             )
         }
@@ -110,10 +110,10 @@ protocol ViewProtocol {
      ```
      // MARK: - ViewProtocol
      @Environment(\.colorScheme) var colorScheme
-     @StateObject var viewModel: SomeViewModel
+     @State var viewModel: SomeViewModel
      public init(dependencies: SomeViewModel.Dependencies) {
          DevTools.Log.debug(.viewInit("\(Self.self)"), .view)
-         _viewModel = StateObject(wrappedValue: .init(dependencies: dependencies))
+         _viewModel = State(initialValue: .init(dependencies: dependencies))
      }
 
      // MARK: - Usage/Auxiliar Attributes
@@ -137,7 +137,7 @@ protocol ViewProtocol {
      ```
      */
 
-    associatedtype ViewModel: ObservableObject
+    associatedtype ViewModel: AnyObject
     associatedtype ContentView: View
     associatedtype Dependencies
     var colorScheme: ColorScheme { get }

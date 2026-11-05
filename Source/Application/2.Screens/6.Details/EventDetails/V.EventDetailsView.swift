@@ -18,7 +18,7 @@ import Domain
 //
 struct EventDetailsViewCoordinator: View, ViewCoordinatorProtocol {
     // MARK: - ViewCoordinatorProtocol
-    @EnvironmentObject var configuration: ConfigurationViewModel
+    @Environment(ConfigurationViewModel.self) var configuration
     @EnvironmentObject var parentCoordinator: RouterViewModel
     @StateObject var coordinator = RouterViewModel()
     var presentationStyle: ViewPresentationStyle
@@ -85,10 +85,10 @@ struct EventDetailsView: View, ViewProtocol {
     // MARK: - ViewProtocol
     @Environment(\.colorScheme) var colorScheme
     @Environment(\.analyticsManager) private var analyticsManager
-    @StateObject var viewModel: EventDetailsViewModel
+    @State var viewModel: EventDetailsViewModel
     public init(dependencies: EventDetailsViewModel.Dependencies) {
         DevTools.Log.debug(.viewInit("\(Self.self)"), .view)
-        _viewModel = StateObject(wrappedValue: .init(dependencies: dependencies))
+        _viewModel = State(initialValue: .init(dependencies: dependencies))
         self.onPerformRouteBack = dependencies.onPerformRouteBack
         self.presentationStyle = dependencies.presentationStyle
     }
@@ -111,29 +111,24 @@ struct EventDetailsView: View, ViewProtocol {
 
     // MARK: - Body & View
     var body: some View {
-        BaseView.withLoading(
-            sender: "\(Self.self)",
-            appScreen: .eventDetails(model: .init(event: .random(cascadeEvents: []))),
-            navigationViewModel: navigationViewModel,
-            ignoresSafeArea: false,
-            background: .defaultBackground,
-            loadingModel: viewModel.loadingModel,
-            alertModel: viewModel.alertModel,
-            networkStatus: nil) {
-                content
-            }.onAppear {
+        content
+            .baseScreen(
+                sender: "\(Self.self)",
+                appScreen: .eventDetails(model: .init(event: .random(cascadeEvents: []))),
+                viewModel: viewModel,
+                navigationViewModel: navigationViewModel).onAppear {
                 viewModel.send(.didAppear)
             }.onDisappear {
                 viewModel.send(.didDisappear)
             }
-            .onChange(of: viewModel.isNewEvent) { isNew in
+            .onChange(of: viewModel.isNewEvent) { _, isNew in
                 if isNew {
                     onEdit = true
                 } else {
                     onEdit = false
                 }
             }
-            .onChange(of: viewModel.trackedEntity?.locationRelevant ?? false) { locationRelevant in
+            .onChange(of: viewModel.trackedEntity?.locationRelevant ?? false) { _, locationRelevant in
                 DevTools.Log.debug(.valueChanged("\(Self.self)", "locationRelevant", locationRelevant.description), .view)
                 if locationRelevant {
                     locationViewModel.start(sender: "\(Self.self)")
@@ -164,7 +159,7 @@ struct EventDetailsView: View, ViewProtocol {
             TipView(tip: $viewModel.tip)
         }
         .animation(.default, value: onEdit)
-        .onChange(of: viewModel.trackedEntityUpdated) { _ in
+        .onChange(of: viewModel.trackedEntityUpdated) { _, _ in
             updateStateCopyWithViewModelCurrentState()
         }.onAppear {
             updateStateCopyWithViewModelCurrentState()
@@ -212,7 +207,7 @@ fileprivate extension EventDetailsView {
                 title: "Info".localizedMissing,
                 placeholder: "Info".localizedMissing,
                 onEdit: $onEdit,
-                originalValue: (viewModel.trackedEntity?.info ?? "").isEmpty ? "..." : viewModel.trackedEntity?.info ?? "",
+                originalValue: (viewModel.trackedEntity?.info ?? "").isEmpty ? "No info yet".localizedMissing : viewModel.trackedEntity?.info ?? "",
                 changedValue: $eventInfoCopy,
                 accessibility: .txtInfo)
             SwiftUIUtils.FixedVerticalSpacer(height: SizeNames.defaultMarginSmall)
@@ -463,7 +458,8 @@ fileprivate extension EventDetailsView {
     }
 
     func onConfirmEdit() {
-        viewModel.send(.saveEvent(confirmed: false))
+        updateViewModelWithStateCopy()
+        viewModel.send(.saveEvent)
     }
 
     func onCancelEdit() {
@@ -492,14 +488,6 @@ extension EventDetailsView {
                 switch sheetType {
                 case .delete:
                     viewModel.send(.deleteEvent(confirmed: true))
-                case .save:
-                    if viewModel.isNewEvent {
-                        updateViewModelWithStateCopy()
-                        viewModel.send(.saveEvent(confirmed: true))
-                    } else {
-                        updateViewModelWithStateCopy()
-                        viewModel.send(.saveEvent(confirmed: true))
-                    }
                 case .resetOccurrences:
                     viewModel.send(.resetAllOccurrences(confirmed: true))
                 }
@@ -518,11 +506,13 @@ extension EventDetailsView {
             .random,
             .random
         ])))
-        .environmentObject(ConfigurationViewModel.defaultForPreviews)
+        .environment(ConfigurationViewModel.defaultForPreviews)
+        .environmentObject(RouterViewModel())
 }
 
 #Preview("New") {
     EventDetailsViewCoordinator(presentationStyle: .fullScreenCover, model: nil)
-        .environmentObject(ConfigurationViewModel.defaultForPreviews)
+        .environment(ConfigurationViewModel.defaultForPreviews)
+        .environmentObject(RouterViewModel())
 }
 #endif

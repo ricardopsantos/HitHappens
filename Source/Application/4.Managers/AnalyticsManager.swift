@@ -15,11 +15,6 @@ import DevTools
 import SwiftUI
 
 extension AnalyticsManager {
-    struct BaseEvent {
-        let eventType: EventType
-        var eventProperties: [String: Any] = [:]
-    }
-
     enum EventType {
         // Bussines Events
         case login
@@ -49,6 +44,12 @@ extension AnalyticsManager {
                 return "\(self)"
             }
         }
+
+        /// Firebase event names must be alphanumeric/underscore, max 40 chars —
+        /// labels with spaces (e.g. "Save Tracker") would be rejected otherwise.
+        var firebaseEventName: String {
+            String(rawValue.map { $0.isLetter || $0.isNumber ? $0 : "_" }.prefix(40))
+        }
     }
 }
 
@@ -74,13 +75,7 @@ class AnalyticsManager {
         properties: [String: Any] = [:],
         sender: String
     ) {
-        guard FirebaseApp.configIsValidAndAvailable else {
-            return
-        }
-        var newProperties = properties
-        newProperties["sender"] = sender
-        let baseEvent = BaseEvent(eventType: eventType, eventProperties: properties)
-        handle(baseEvent: baseEvent)
+        handle(eventType: eventType, properties: properties, label: nil, sender: sender)
     }
 
     func handleAppLifeCycleEvent(
@@ -88,15 +83,7 @@ class AnalyticsManager {
         sender: String,
         properties: [String: Any] = [:]
     ) {
-        guard FirebaseApp.configIsValidAndAvailable else {
-            return
-        }
-        DevTools.assert(!label.isEmpty, message: "Empty label")
-        DevTools.assert(!sender.isEmpty, message: "Empty sender")
-        var newProperties = properties
-        newProperties["sender"] = sender
-        let baseEvent = BaseEvent(eventType: EventType.appLifeCycleEvent(label: label), eventProperties: properties)
-        handle(baseEvent: baseEvent)
+        handle(eventType: .appLifeCycleEvent(label: label), properties: properties, label: label, sender: sender)
     }
 
     func handleListItemTapEvent(
@@ -104,15 +91,7 @@ class AnalyticsManager {
         sender: String,
         properties: [String: Any] = [:]
     ) {
-        guard FirebaseApp.configIsValidAndAvailable else {
-            return
-        }
-        DevTools.assert(!label.isEmpty, message: "Empty label")
-        DevTools.assert(!sender.isEmpty, message: "Empty sender")
-        var newProperties = properties
-        newProperties["sender"] = sender
-        let baseEvent = BaseEvent(eventType: EventType.listItemTap(label: label), eventProperties: properties)
-        handle(baseEvent: baseEvent)
+        handle(eventType: .listItemTap(label: label), properties: properties, label: label, sender: sender)
     }
 
     func handleButtonClickEvent(
@@ -121,22 +100,7 @@ class AnalyticsManager {
         sender: String,
         properties: [String: Any] = [:]
     ) {
-        guard FirebaseApp.configIsValidAndAvailable else {
-            return
-        }
-        DevTools.assert(!label.isEmpty, message: "Empty label")
-        DevTools.assert(!sender.isEmpty, message: "Empty sender")
-        var newProperties = properties
-        newProperties["sender"] = sender
-        let baseEvent = BaseEvent(
-            eventType: EventType.buttonClick(
-                type: buttonType,
-
-                label: label
-            ),
-            eventProperties: properties
-        )
-        handle(baseEvent: baseEvent)
+        handle(eventType: .buttonClick(type: buttonType, label: label), properties: properties, label: label, sender: sender)
     }
 }
 
@@ -221,13 +185,24 @@ struct NullAnalyticsManager: AnalyticsManagerProtocol {
 extension AnalyticsManager: AnalyticsManagerProtocol {}
 
 private extension AnalyticsManager {
-    func handle(baseEvent: BaseEvent) {
+    /// Single funnel for all events: validates, attaches `sender`/`label` as
+    /// parameters, and logs with a Firebase-safe event name.
+    func handle(eventType: EventType, properties: [String: Any], label: String?, sender: String) {
         guard FirebaseApp.configIsValidAndAvailable else {
             return
         }
-        DevTools.Log.debug(.log("\(AnalyticsManager.self) : \(baseEvent.eventType)"), .business)
+        if let label = label {
+            DevTools.assert(!label.isEmpty, message: "Empty label")
+        }
+        DevTools.assert(!sender.isEmpty, message: "Empty sender")
+        var eventProperties = properties
+        eventProperties["sender"] = sender
+        if let label = label {
+            eventProperties["label"] = label
+        }
+        DevTools.Log.debug(.log("\(AnalyticsManager.self) : \(eventType)"), .business)
         #if FIREBASE_ENABLED
-        Analytics.logEvent(baseEvent.eventType.rawValue, parameters: baseEvent.eventProperties)
+        Analytics.logEvent(eventType.firebaseEventName, parameters: eventProperties)
         #endif
     }
 }

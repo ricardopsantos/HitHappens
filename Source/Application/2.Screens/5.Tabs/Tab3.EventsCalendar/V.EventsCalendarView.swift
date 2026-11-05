@@ -18,7 +18,7 @@ import Domain
 //
 struct EventsCalendarViewCoordinator: View, ViewCoordinatorProtocol {
     // MARK: - ViewCoordinatorProtocol
-    @EnvironmentObject var configuration: ConfigurationViewModel
+    @Environment(ConfigurationViewModel.self) var configuration
     @EnvironmentObject var parentCoordinator: RouterViewModel
     @StateObject var coordinator = RouterViewModel()
     var presentationStyle: ViewPresentationStyle
@@ -67,10 +67,10 @@ struct EventsCalendarViewCoordinator: View, ViewCoordinatorProtocol {
 struct EventsCalendarView: View, ViewProtocol {
     // MARK: - ViewProtocol
     @Environment(\.colorScheme) var colorScheme
-    @StateObject var viewModel: EventsCalendarViewModel
+    @State var viewModel: EventsCalendarViewModel
     public init(dependencies: EventsCalendarViewModel.Dependencies) {
         DevTools.Log.debug(.viewInit("\(Self.self)"), .view)
-        _viewModel = StateObject(wrappedValue: .init(dependencies: dependencies))
+        _viewModel = State(initialValue: .init(dependencies: dependencies))
     }
 
     // MARK: - Usage/Auxiliar Attributes
@@ -79,17 +79,11 @@ struct EventsCalendarView: View, ViewProtocol {
 
     // MARK: - Body & View
     var body: some View {
-        BaseView.withLoading(
-            sender: "\(Self.self)",
-            appScreen: .calendar,
-            navigationViewModel: .disabled,
-            ignoresSafeArea: false,
-            background: .defaultBackground,
-            loadingModel: viewModel.loadingModel,
-            alertModel: viewModel.alertModel,
-            networkStatus: nil) {
-                content
-            }.onAppear {
+        content
+            .baseScreen(
+                sender: "\(Self.self)",
+                appScreen: .calendar,
+                viewModel: viewModel).onAppear {
                 viewModel.send(.didAppear)
             }.onDisappear {
                 viewModel.send(.didDisappear)
@@ -110,6 +104,7 @@ struct EventsCalendarView: View, ViewProtocol {
                     onSelectedMonth: { month in
                         viewModel.send(.loadEvents(fullMonth: true, value: month))
                     })
+                legendView
                 Divider().padding(.vertical, SizeNames.defaultMarginSmall)
                 listTitle
                 SwiftUIUtils.FixedVerticalSpacer(height: SizeNames.defaultMarginSmall)
@@ -118,6 +113,29 @@ struct EventsCalendarView: View, ViewProtocol {
         }
         .paddingHorizontal(SizeNames.defaultMarginSmall)
         .padding(.top)
+    }
+
+    /// Decodes the calendar's per-category color dots.
+    @ViewBuilder
+    var legendView: some View {
+        if !viewModel.categoriesInMonth.isEmpty {
+            ScrollView(.horizontal, showsIndicators: false) {
+                HStack(spacing: SizeNames.defaultMarginSmall) {
+                    ForEach(viewModel.categoriesInMonth, id: \.self) { category in
+                        HStack(spacing: SizeNames.defaultMarginSmall / 2) {
+                            Circle()
+                                .fill(category.color)
+                                .frame(width: 8, height: 8)
+                            Text(category.localized)
+                                .fontSemantic(.footnote)
+                                .textColor(ColorSemantic.labelSecondary.color)
+                        }
+                    }
+                }
+                .padding(.vertical, SizeNames.defaultMarginSmall / 2)
+            }
+            .animation(.default, value: viewModel.categoriesInMonth)
+        }
     }
 
     var listTitle: some View {
@@ -174,6 +192,7 @@ struct EventsCalendarView: View, ViewProtocol {
 #if canImport(SwiftUI) && DEBUG
 #Preview {
     EventsCalendarViewCoordinator(presentationStyle: .fullScreenCover)
-        .environmentObject(ConfigurationViewModel.defaultForPreviews)
+        .environment(ConfigurationViewModel.defaultForPreviews)
+        .environmentObject(RouterViewModel())
 }
 #endif

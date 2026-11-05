@@ -11,7 +11,6 @@
 
 import XCTest
 import Combine
-import Nimble
 //
 import Common
 import DevTools
@@ -52,7 +51,6 @@ final class AdvancedRoutingTests: BaseUITests {
         tap(button: Accessibility.addButton.identifier, on: app)
         tap(textField: Accessibility.txtName.identifier, andType: trackerName, dismissKeyboard: false, on: app)
         tap(button: Accessibility.saveButton.identifier, on: app)
-        tap(button: "Yes", on: app) // Confirm save
         tap(button: Accessibility.deleteButton.identifier, on: app)
         tap(button: "Yes", andWaitForStaticText: Constants.tab2Title, on: app) // Confirm delete
 
@@ -162,7 +160,6 @@ final class AdvancedRoutingTests: BaseUITests {
         tap(button: Accessibility.addButton.identifier, on: app)
         tap(textField: Accessibility.txtName.identifier, andType: trackerName, dismissKeyboard: false, on: app)
         tap(button: Accessibility.saveButton.identifier, on: app)
-        tap(button: "Yes", on: app) // Confirm save
 
         tapCounterWithV2(number: 0)
         tap(

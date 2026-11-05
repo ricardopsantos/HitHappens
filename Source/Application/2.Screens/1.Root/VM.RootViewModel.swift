@@ -36,11 +36,12 @@ extension RootViewModel {
 }
 
 @MainActor
-class RootViewModel: ObservableObject {
+@Observable
+class RootViewModel {
     // MARK: - Usage/Auxiliar Attributes
-    @Published private(set) var alertModel: Model.AlertModel?
-    @Published private(set) var isAppStartCompleted: Bool = false
-    @Published private(set) var isOnboardingCompleted: Bool = false
+    private(set) var alertModel: Model.AlertModel?
+    private(set) var isAppStartCompleted: Bool = false
+    private(set) var isOnboardingCompleted: Bool = false
     private var cancelBag = CancelBag()
     private var nonSecureAppPreferences: NonSecureAppPreferencesProtocol?
     private var dataBaseRepository: DataBaseRepositoryProtocol
@@ -102,6 +103,7 @@ fileprivate extension RootViewModel {
 #if canImport(SwiftUI) && DEBUG
 #Preview {
     RootViewCoordinator(presentationStyle: .fullScreenCover)
-        .environmentObject(ConfigurationViewModel.defaultForPreviews)
+        .environment(ConfigurationViewModel.defaultForPreviews)
+        .environmentObject(RouterViewModel())
 }
 #endif

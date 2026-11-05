@@ -11,7 +11,6 @@
 
 import XCTest
 import Combine
-import Nimble
 //
 import Common
 import DevTools
@@ -76,7 +75,6 @@ final class Tabs1Tests: BaseUITests {
             on: app
         )
         tap(button: Accessibility.confirmButton.identifier, on: app)
-        tap(button: "Yes", on: app) // Confirmation alert
         tap(button: Accessibility.backButton.identifier, on: app) // Close details
         exists(staticText: Constants.tab1Title, on: app)
         exists(staticText: Constants.Entities.Book.alternativeName, on: app) // New name on favorits screen
@@ -208,7 +206,7 @@ final class Tabs1Tests: BaseUITests {
 
         // Check message
         exists(staticText: Constants.noFavoritsMessage, on: app)
-        tap(staticText: Constants.noFavoritsMessage, on: app)
+        tap(button: Accessibility.emptyStateAddButton.identifier, on: app)
 
         // Add new
         tap(
@@ -219,7 +217,6 @@ final class Tabs1Tests: BaseUITests {
         )
 
         tap(button: Accessibility.saveButton.identifier, on: app)
-        tap(button: "Yes", on: app) // Confirmation alert
         tap(button: Accessibility.backButton.identifier, on: app) // Close details
 
         // Route back

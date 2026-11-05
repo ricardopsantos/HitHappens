@@ -74,11 +74,7 @@ public extension Common {
             if battery == -1 {
                 return "Unknown"
             }
-            if #available(iOS 15.0, *) {
-                return "\(battery.formatted(.percent))"
-            } else {
-                return "\(battery)"
-            }
+            return "\(battery.formatted(.percent))"
         }
 
         public static var uuid: String { UIDevice.current.identifierForVendor!.uuidString }

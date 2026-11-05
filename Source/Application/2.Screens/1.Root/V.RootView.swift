@@ -16,7 +16,7 @@ import DesignSystem
 //
 struct RootViewCoordinator: View, ViewCoordinatorProtocol {
     // MARK: - ViewCoordinatorProtocol
-    @EnvironmentObject var configuration: ConfigurationViewModel
+    @Environment(ConfigurationViewModel.self) var configuration
     @EnvironmentObject var parentCoordinator: RouterViewModel
     @StateObject var coordinator = RouterViewModel()
     var presentationStyle: ViewPresentationStyle
@@ -57,10 +57,10 @@ struct RootViewCoordinator: View, ViewCoordinatorProtocol {
 struct RootView: View, ViewProtocol {
     // MARK: - ViewProtocol
     @Environment(\.colorScheme) var colorScheme
-    @StateObject var viewModel: RootViewModel
+    @State var viewModel: RootViewModel
     public init(dependencies: RootViewModel.Dependencies) {
         DevTools.Log.debug(.viewInit("\(Self.self)"), .view)
-        _viewModel = StateObject(wrappedValue: .init(dependencies: dependencies))
+        _viewModel = State(initialValue: .init(dependencies: dependencies))
     }
 
     // MARK: - Usage/Auxiliar Attributes
@@ -80,8 +80,8 @@ struct RootView: View, ViewProtocol {
             // swiftlint:enable redundant_discardable_let
         }
         buildScreen(root)
-            .onChange(of: viewModel.isAppStartCompleted) { _ in updateRoot() }
-            .onChange(of: viewModel.isOnboardingCompleted) { _ in updateRoot() }
+            .onChange(of: viewModel.isAppStartCompleted) { _, _ in updateRoot() }
+            .onChange(of: viewModel.isOnboardingCompleted) { _, _ in updateRoot() }
     }
 
     /// Navigation Links — resolved via registry instead of a switch statement.
@@ -137,6 +137,7 @@ fileprivate extension RootView {
 #if canImport(SwiftUI) && DEBUG
 #Preview {
     RootViewCoordinator(presentationStyle: .fullScreenCover)
-        .environmentObject(ConfigurationViewModel.defaultForPreviews)
+        .environment(ConfigurationViewModel.defaultForPreviews)
+        .environmentObject(RouterViewModel())
 }
 #endif

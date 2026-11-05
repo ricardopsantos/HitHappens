@@ -13,6 +13,9 @@ import Domain
 import DevTools
 
 public class CloudKitService: CloudKitManager {
+    
+    // MARK: - Public Callbacks
+    /// Called whenever iCloud is unavailable (not signed in, restricted, etc.)
     private var backupsZone: CKRecordZone.ID?
     private var eventsZone: CKRecordZone.ID?
     private var databaseRecord: CKRecord?

@@ -46,14 +46,17 @@ extension EventsCalendarViewModel {
 //
 // MARK: - ViewModel
 //
+@Observable
 class EventsCalendarViewModel: BaseViewModel {
     // MARK: - Usage/Auxiliar Attributes
-    @Published private(set) var message: String = ""
-    @Published private(set) var events: [Model.TrackedEntity] = []
-    @Published private(set) var logs: [CascadeEventListItem]?
-    @Published var selectedDay: Date?
-    @Published var selectedMonth: Date = .now
-    @Published var eventsForDay: [Date: [Color]] = [:]
+    private(set) var message: String = ""
+    private(set) var events: [Model.TrackedEntity] = []
+    private(set) var logs: [CascadeEventListItem]?
+    var selectedDay: Date?
+    var selectedMonth: Date = .now
+    var eventsForDay: [Date: [Color]] = [:]
+    /// Distinct categories with activity on the visible month — feeds the color legend.
+    var categoriesInMonth: [HitHappensEventCategory] = []
     private let cancelBag = CancelBag()
     private let dataBaseRepository: (DatabaseOutputRepositoryProtocol & TrackedLogRepositoryProtocol)?
     private let onShouldDisplayTrackedLog: (Model.TrackedLog) -> Void
@@ -105,8 +108,10 @@ class EventsCalendarViewModel: BaseViewModel {
 
 fileprivate extension EventsCalendarViewModel {
     func updateUI(logs trackedLogs: [Model.TrackedLog], canUpdateEventsForDay: Bool) {
+        // Equality guards throughout: @Observable fires on set, not on change,
+        // and this runs on every debounced DB event.
         let count = trackedLogs.count
-        logs = trackedLogs
+        let newLogs: [CascadeEventListItem] = trackedLogs
             .sorted(by: { $0.recordDate > $1.recordDate })
             .enumerated()
             .map { index, event in
@@ -115,22 +120,26 @@ fileprivate extension EventsCalendarViewModel {
                     title: "\(count - index). \(event.localizedListItemTitleV2(cascadeTrackedEntity: event.cascadeEntity))",
                     value: event.localizedListItemValueV2)
             }
+        if newLogs != logs {
+            logs = newLogs
+        }
         if canUpdateEventsForDay {
             var eventsForDayAcc: [Date: [Color]] = [:]
             trackedLogs.forEach { log in
                 let key = log.recordDate.middleOfDay
                 let color = log.cascadeEntity?.category.color
                 if let key = key, let color = color {
-                    if eventsForDayAcc[key] == nil {
-                        eventsForDayAcc[key] = [color]
-                    } else {
-                        var colors: [Color] = (eventsForDayAcc[key] ?? [])
-                        colors.append(color)
-                        eventsForDayAcc[key] = colors
-                    }
+                    eventsForDayAcc[key, default: []].append(color)
                 }
             }
-            eventsForDay = eventsForDayAcc
+            if eventsForDayAcc != eventsForDay {
+                eventsForDay = eventsForDayAcc
+            }
+            let newCategories = Array(Set(trackedLogs.compactMap(\.cascadeEntity?.category)))
+                .sorted(by: { $0.localized < $1.localized })
+            if newCategories != categoriesInMonth {
+                categoriesInMonth = newCategories
+            }
         }
     }
 
@@ -163,6 +172,7 @@ fileprivate extension EventsCalendarViewModel {
 #if canImport(SwiftUI) && DEBUG
 #Preview {
     EventsCalendarViewCoordinator(presentationStyle: .fullScreenCover)
-        .environmentObject(ConfigurationViewModel.defaultForPreviews)
+        .environment(ConfigurationViewModel.defaultForPreviews)
+        .environmentObject(RouterViewModel())
 }
 #endif

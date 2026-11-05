@@ -1,5 +1,5 @@
 //
-//  CoreProtocolsResolved.swift
+//  DependenciesManager.swift
 //  HitHappens
 //
 //  Created by Ricardo Santos on 16/05/2024.

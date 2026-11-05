@@ -9,7 +9,6 @@
 
 import XCTest
 import Combine
-import Nimble
 //
 import Domain
 import Core
@@ -52,6 +51,6 @@ extension NonSecureAppPreferences_Tests {
         }
 
         // Verify that the event is emitted
-        expect(emittedEvent).toEventually(beTrue(), timeout: .seconds(timeout))
+        assertEventually(timeout: timeout) { emittedEvent }
     }
 }

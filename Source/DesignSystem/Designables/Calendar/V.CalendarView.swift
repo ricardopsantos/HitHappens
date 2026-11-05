@@ -63,7 +63,13 @@ public extension CalendarView {
             self.isCurrentMonth = isCurrentMonth
             self.isPrevMonth = isPrevMonth
             self.isNextMonth = isNextMonth
-            self.events = Array(Set(events)) // Remove duplicated
+            // Remove duplicates but keep order — Array(Set(...)) shuffled the
+            // gradient colors between renders.
+            self.events = events.reduce(into: [Color]()) { acc, color in
+                if !acc.contains(color) {
+                    acc.append(color)
+                }
+            }
         }
     }
 }
@@ -141,7 +147,7 @@ public struct DayView: View {
             .frame(height: cellHeight)
             .frame(maxWidth: .infinity)
             .background(backgroundColor())
-            .foregroundColor(textColor())
+            .foregroundStyle(textColor())
             .doIf(CalendarView.Config.CurrentDay.currentDayShapeIsCircle, transform: {
                 $0.cornerRadius2(day.date.isToday ? cellHeight / 2 : SizeNames.cornerRadius / 2)
             })
@@ -153,10 +159,12 @@ public struct DayView: View {
     @ViewBuilder
     func backgroundColor() -> some View {
         Group {
-            if day.date.isToday {
-                CalendarView.Config.CurrentDay.cellBackgroundColor()
-            } else if day.date == selectedDay {
+            // Selection wins over "today", otherwise selecting the current day
+            // gives no visual feedback at all.
+            if day.date == selectedDay {
                 CalendarView.Config.CurrentDay.cellBackgroundColor().opacity(0.5)
+            } else if day.date.isToday {
+                CalendarView.Config.CurrentDay.cellBackgroundColor()
             } else {
                 day.isCurrentMonth ?
                     CalendarView.Config.CurrentMonth.cellBackgroundColor() :
@@ -193,16 +201,11 @@ public struct CalendarHeaderView: View {
                     selectedDay = nil
                 }
             }) {
-                let view = Image("back")
+                Image("back")
                     .resizable()
                     .scaledToFit()
                     .frame(width: SizeNames.defaultMargin * 1.5)
-                if #available(iOS 16.0, *) {
-                    view
-                        .tint(ColorSemantic.primary.color)
-                } else {
-                    view
-                }
+                    .tint(ColorSemantic.primary.color)
             }
             Spacer()
             Text(currentDate, formatter: DateFormatter.monthAndYear)
@@ -215,17 +218,12 @@ public struct CalendarHeaderView: View {
                     selectedDay = nil
                 }
             }) {
-                let view = Image("back")
+                Image("back")
                     .resizable()
                     .scaledToFit()
                     .frame(width: SizeNames.defaultMargin * 1.5)
                     .rotate(degrees: 180)
-                if #available(iOS 16.0, *) {
-                    view
-                        .tint(ColorSemantic.primary.color)
-                } else {
-                    view
-                }
+                    .tint(ColorSemantic.primary.color)
             }
         }
     }
@@ -233,11 +231,19 @@ public struct CalendarHeaderView: View {
 
 public struct DaysOfWeekView: View {
     @Environment(\.colorScheme) var colorScheme
-    private var daysOfWeek: [String] {
+    /// `shortWeekdaySymbols` is Sunday-first; rotate so index 0 matches the
+    /// locale's `firstWeekday` — the day grid uses the same rule, keeping the
+    /// header aligned with the columns.
+    private static let daysOfWeek: [String] = {
         let formatter = DateFormatter()
         formatter.locale = Locale.current
-        return formatter.shortWeekdaySymbols
-    }
+        let symbols = formatter.shortWeekdaySymbols ?? []
+        let offset = Calendar.current.firstWeekday - 1 // firstWeekday is 1-based
+        guard symbols.count == 7 else { return symbols }
+        return Array(symbols[offset...] + symbols[..<offset])
+    }()
+
+    private var daysOfWeek: [String] { Self.daysOfWeek }
 
     public var body: some View {
         HStack {
@@ -267,20 +273,18 @@ public struct CalendarMonthlyView: View {
         let days = generateDays(for: currentDate)
         VStack(spacing: 0) {
             ForEach(0..<6) { row in
-                HStack(spacing: CalendarView.Config.innerSpace) {
-                    let allDays = (0..<7).map { days[row * 7 + $0] }
-                    let someDaysAreCurrentMonth = !allDays.filter(\.isCurrentMonth).isEmpty
-                    if someDaysAreCurrentMonth {
+                let allDays = (0..<7).map { days[row * 7 + $0] }
+                let someDaysAreCurrentMonth = !allDays.filter(\.isCurrentMonth).isEmpty
+                // Don't display full rows that have only days from other months
+                if someDaysAreCurrentMonth {
+                    HStack(spacing: CalendarView.Config.innerSpace) {
                         ForEach(0..<7) { col in
                             let day = days[row * 7 + col]
                             DayView(day: day, currentDate: $currentDate, selectedDay: $selectedDay)
                         }
-                    } else {
-                        // Don't display full rows that have only days from other month
-                        EmptyView()
                     }
+                    SwiftUIUtils.FixedVerticalSpacer(height: CalendarView.Config.innerSpace)
                 }
-                SwiftUIUtils.FixedVerticalSpacer(height: CalendarView.Config.innerSpace)
             }
         }
     }
@@ -293,7 +297,17 @@ public struct CalendarMonthlyView: View {
         let firstDayOfMonth = monthInterval.start
         let firstWeekdayOfMonth = calendar.component(.weekday, from: firstDayOfMonth)
 
-        let daysBefore = (firstWeekdayOfMonth + 5) % 7 // Days before the start of the month, adjusted for Monday
+        // Grid starts on the locale's first weekday — must match DaysOfWeekView's
+        // header rotation, or every column is shifted against its header.
+        let daysBefore = (firstWeekdayOfMonth - calendar.firstWeekday + 7) % 7
+
+        // Normalize the events dictionary once for O(1) per-day lookups
+        // (was a linear scan per day: 42 × entries `isSame(day:)` calls).
+        let eventsByDay: [Date: [Color]] = eventsForDay.reduce(into: [:]) { acc, pair in
+            if let key = pair.key.middleOfDay {
+                acc[key, default: []] += pair.value
+            }
+        }
 
         for i in 0..<42 {
             let dayOffset = i - daysBefore
@@ -302,8 +316,7 @@ public struct CalendarMonthlyView: View {
             let isPrevMonth = dayOffset < 0
             let isNextMonth = !isCurrentMonth && !isPrevMonth
 
-            let associated = eventsForDay.filter { $0.key.isSame(day: dayDate) }.first?.value ?? []
-            // Get the events for this date from the dateDic dictionary
+            let associated = dayDate.middleOfDay.flatMap { eventsByDay[$0] } ?? []
             days.append(.init(
                 date: dayDate,
                 isCurrentMonth: isCurrentMonth,
@@ -344,10 +357,14 @@ public struct CalendarView: View {
             DaysOfWeekView()
             CalendarMonthlyView(currentDate: $currentDate, selectedDay: $selectedDay, eventsForDay: $eventsForDay)
             Spacer()
-        }.onChange(of: currentDate) { value in
+        }.onChange(of: currentDate) { old, value in
             DevTools.Log.debug(.valueChanged("\(Self.self)", "currentDate", "\(value)"), .view)
-            onSelectedMonth(value)
-        }.onChange(of: selectedDay) { value in
+            // Selecting a day also mutates currentDate (same month); only an
+            // actual month change should trigger a month reload.
+            if !Calendar.current.isDate(old, equalTo: value, toGranularity: .month) {
+                onSelectedMonth(value)
+            }
+        }.onChange(of: selectedDay) { _, value in
             DevTools.Log.debug(.valueChanged("\(Self.self)", "selectedDay", "\(String(describing: value))"), .view)
             onSelectedDay(value)
         }

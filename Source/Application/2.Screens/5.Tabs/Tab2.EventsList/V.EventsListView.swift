@@ -18,7 +18,7 @@ import Domain
 //
 struct EventsListViewCoordinator: View, ViewCoordinatorProtocol {
     // MARK: - ViewCoordinatorProtocol
-    @EnvironmentObject var configuration: ConfigurationViewModel
+    @Environment(ConfigurationViewModel.self) var configuration
     @EnvironmentObject var parentCoordinator: RouterViewModel
     @StateObject var coordinator = RouterViewModel()
     var presentationStyle: ViewPresentationStyle
@@ -68,33 +68,39 @@ struct EventsListViewCoordinator: View, ViewCoordinatorProtocol {
 struct EventsListView: View, ViewProtocol {
     // MARK: - ViewProtocol
     @Environment(\.colorScheme) var colorScheme
-    @StateObject var viewModel: EventsListViewModel
+    @State var viewModel: EventsListViewModel
     public init(dependencies: EventsListViewModel.Dependencies) {
         DevTools.Log.debug(.viewInit("\(Self.self)"), .view)
-        _viewModel = StateObject(wrappedValue: .init(dependencies: dependencies))
+        _viewModel = State(initialValue: .init(dependencies: dependencies))
         self.onShouldDisplayTrackedEntity = dependencies.onShouldDisplayTrackedEntity
         self.onShouldDisplayNewTrackedEntity = dependencies.onShouldDisplayNewTrackedEntity
     }
 
     // MARK: - Usage/Auxiliar Attributes
     @Environment(\.dismiss) var dismiss
+    @State private var searchText: String = ""
     private let cancelBag: CancelBag = .init()
     private let onShouldDisplayTrackedEntity: (Model.TrackedEntity) -> Void
     private let onShouldDisplayNewTrackedEntity: () -> Void
 
+    private var filteredEvents: [Model.TrackedEntity] {
+        let query = searchText.trim.lowercased()
+        guard !query.isEmpty else {
+            return viewModel.events
+        }
+        return viewModel.events.filter {
+            $0.name.lowercased().contains(query) ||
+                $0.category.localized.lowercased().contains(query)
+        }
+    }
+
     // MARK: - Body & View
     var body: some View {
-        BaseView.withLoading(
-            sender: "\(Self.self)",
-            appScreen: .eventsList,
-            navigationViewModel: .disabled,
-            ignoresSafeArea: false,
-            background: .defaultBackground,
-            loadingModel: viewModel.loadingModel,
-            alertModel: viewModel.alertModel,
-            networkStatus: nil) {
-                content
-            }.onAppear {
+        content
+            .baseScreen(
+                sender: "\(Self.self)",
+                appScreen: .eventsList,
+                viewModel: viewModel).onAppear {
                 viewModel.send(.didAppear)
             }.onDisappear {
                 viewModel.send(.didDisappear)
@@ -103,9 +109,12 @@ struct EventsListView: View, ViewProtocol {
 
     @ViewBuilder
     var content: some View {
-        let sectionA = viewModel.events.filter(\.favorite)
-        let sectionB = viewModel.events.filter { !$0.favorite && !$0.archived }
-        let sectionC = viewModel.events.filter(\.archived)
+        // Sections must be disjoint: an archived favorite in both Favorites and
+        // Archived puts the same ForEach ID in one LazyVStack twice (undefined
+        // results, per SwiftUI's runtime warning).
+        let sectionA = filteredEvents.filter { $0.favorite && !$0.archived }
+        let sectionB = filteredEvents.filter { !$0.favorite && !$0.archived }
+        let sectionC = filteredEvents.filter(\.archived)
         ScrollView {
             ZStack {
                 ZStack {
@@ -121,18 +130,36 @@ struct EventsListView: View, ViewProtocol {
                     }
                 }
             }
+            if !viewModel.events.isEmpty {
+                SwiftUIUtils.FixedVerticalSpacer(height: SizeNames.defaultMarginSmall)
+                CustomTextField(
+                    inputText: $searchText,
+                    placeholder: "Search \(AppConstants.entityNamePlural.lowercased())".localizedMissing,
+                    cornerRadius: SizeNames.cornerRadius,
+                    borderColor: ColorSemantic.primary.color,
+                    accessibility: .txtSearch)
+                SwiftUIUtils.FixedVerticalSpacer(height: SizeNames.defaultMarginSmall)
+            }
             LazyVStack(spacing: 0) {
-                if sectionA.count + sectionB.count + sectionC.count == 0 {
+                if viewModel.events.isEmpty {
                     VStack {
-                        SwiftUIUtils.FixedVerticalSpacer(height: screenHeight * 0.33)
-                        Text("You don't have any \(AppConstants.entityNamePlural.lowercased())\n\nTap to add one!".localizedMissing)
-                            .multilineTextAlignment(.center)
-                            .textColor(ColorSemantic.labelPrimary.color)
-                            .fontSemantic(.headline)
-                            .onTapGesture {
+                        SwiftUIUtils.FixedVerticalSpacer(height: screenHeight * 0.2)
+                        EmptyStateView(
+                            systemImageName: "list.bullet.rectangle",
+                            title: "No \(AppConstants.entityNamePlural.lowercased()) yet".localizedMissing,
+                            subTitle: "Create a \(AppConstants.entityNameSingle.lowercased()) and tap it whenever it happens.".localizedMissing,
+                            buttonText: "Create your first \(AppConstants.entityNameSingle.lowercased())".localizedMissing,
+                            accessibility: .emptyStateAddButton,
+                            onButtonTap: {
                                 onShouldDisplayNewTrackedEntity()
-                            }
+                            })
                     }
+                } else if sectionA.count + sectionB.count + sectionC.count == 0 {
+                    SwiftUIUtils.FixedVerticalSpacer(height: SizeNames.defaultMargin * 2)
+                    Text("No \(AppConstants.entityNamePlural.lowercased()) match your search".localizedMissing)
+                        .multilineTextAlignment(.center)
+                        .textColor(ColorSemantic.labelSecondary.color)
+                        .fontSemantic(.body)
                 }
                 if !sectionA.isEmpty {
                     HStack(spacing: 0) {
@@ -182,6 +209,22 @@ struct EventsListView: View, ViewProtocol {
                     onShouldDisplayTrackedEntity(item)
                 })
                 .paddingVertical(SizeNames.defaultMarginSmall / 2)
+                .contextMenu {
+                    Button {
+                        viewModel.send(.toggleFavorite(trackedEntityId: item.id))
+                    } label: {
+                        Label(
+                            item.favorite ? "Remove from favorites".localizedMissing : "Add to favorites".localizedMissing,
+                            systemImage: item.favorite ? "star.slash" : "star")
+                    }
+                    Button {
+                        viewModel.send(.toggleArchived(trackedEntityId: item.id))
+                    } label: {
+                        Label(
+                            item.archived ? "Unarchive".localizedMissing : "Archive".localizedMissing,
+                            systemImage: item.archived ? "tray.and.arrow.up" : "archivebox")
+                    }
+                }
         }
     }
 }
@@ -193,6 +236,7 @@ struct EventsListView: View, ViewProtocol {
 #if canImport(SwiftUI) && DEBUG
 #Preview {
     EventsListViewCoordinator(presentationStyle: .fullScreenCover)
-        .environmentObject(ConfigurationViewModel.defaultForPreviews)
+        .environment(ConfigurationViewModel.defaultForPreviews)
+        .environmentObject(RouterViewModel())
 }
 #endif

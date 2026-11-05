@@ -109,23 +109,28 @@ enum BaseView {
                 case .disabled:
                     baseView
                 case .custom:
-                    NavigationView {
-                        baseView
-                    }
-                    .customBackButtonV1(action: {
-                        if let onBackButtonTap = navigationViewModel.onBackButtonTap {
-                            onBackButtonTap()
-                        }
-                    }, title: navigationViewModel.title)
-                    .hideNavigationBar()
+                    // See BaseScreenModifier: no nested NavigationStack for pushed
+                    // screens; toolbar modifiers attach to the enclosing stack.
+                    baseView
+                        // .navigationTitle (not a .principal toolbar item): the
+                        // principal Header doesn't materialize in the enclosing
+                        // stack's bar; the standard title API does.
+                        .navigationTitle(navigationViewModel.title)
+                        .navigationBarTitleDisplayMode(.inline)
+                        .toolbar(.visible, for: .navigationBar)
+                        .customBackButtonV1(action: {
+                            if let onBackButtonTap = navigationViewModel.onBackButtonTap {
+                                onBackButtonTap()
+                            }
+                        }, title: "")
 
                 case .default:
-                    NavigationView {
+                    NavigationStack {
                         baseView
                     }
                     .navigationTitle(navigationViewModel.title)
                 case .defaultHidden:
-                    NavigationView {
+                    NavigationStack {
                         baseView
                     }
                     .hideNavigationBar()
@@ -137,10 +142,11 @@ enum BaseView {
     }
 }
 
-// MARK: - Private: screen-tracking view modifier
+// MARK: - Screen-tracking view modifier
 // Reads the analytics manager from the SwiftUI environment, breaking the hard dependency
 // on AnalyticsManager.shared and making screen-view events suppressible in tests/Previews.
-private struct ScreenTrackingModifier: ViewModifier {
+// Shared with BaseScreenModifier (BaseView+Modifier.swift).
+struct ScreenTrackingModifier: ViewModifier {
     @Environment(\.analyticsManager) private var analyticsManager
     let appScreen: AppScreen
     let sender: String

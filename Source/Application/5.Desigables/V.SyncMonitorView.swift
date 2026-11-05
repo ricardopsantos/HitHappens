@@ -21,21 +21,21 @@ public struct SyncMonitorView: View {
         VStack(alignment: .center, spacing: SizeNames.size_2.cgFloat) {
             if syncMonitor.syncStateSummary.isBroken {
                 Image(systemName: syncMonitor.syncStateSummary.symbolName)
-                    .foregroundColor(syncMonitor.syncStateSummary.symbolColor)
+                    .foregroundStyle(syncMonitor.syncStateSummary.symbolColor)
                 Text("Sync Broken")
                     .multilineTextAlignment(.center)
                     .fontSemantic(font)
                     .opacity(opacity)
             } else if syncMonitor.syncStateSummary.inProgress {
                 Image(systemName: syncMonitor.syncStateSummary.symbolName)
-                    .foregroundColor(syncMonitor.syncStateSummary.symbolColor)
+                    .foregroundStyle(syncMonitor.syncStateSummary.symbolColor)
                 Text("Sync In progress")
                     .multilineTextAlignment(.center)
                     .fontSemantic(font)
                     .opacity(opacity)
             } else {
                 Image(systemName: syncMonitor.syncStateSummary.symbolName)
-                    .foregroundColor(syncMonitor.syncStateSummary.symbolColor)
+                    .foregroundStyle(syncMonitor.syncStateSummary.symbolColor)
                 Text(syncMonitor.syncStateSummary.description)
                     .multilineTextAlignment(.center)
                     .fontSemantic(font)

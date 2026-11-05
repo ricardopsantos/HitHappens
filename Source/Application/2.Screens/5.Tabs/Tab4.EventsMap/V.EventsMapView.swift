@@ -18,7 +18,7 @@ import Domain
 //
 struct EventsMapViewCoordinator: View, ViewCoordinatorProtocol {
     // MARK: - ViewCoordinatorProtocol
-    @EnvironmentObject var configuration: ConfigurationViewModel
+    @Environment(ConfigurationViewModel.self) var configuration
     @EnvironmentObject var parentCoordinator: RouterViewModel
     @StateObject var coordinator = RouterViewModel()
     var presentationStyle: ViewPresentationStyle
@@ -67,10 +67,10 @@ struct EventsMapViewCoordinator: View, ViewCoordinatorProtocol {
 struct EventsMapView: View, ViewProtocol {
     // MARK: - ViewProtocol
     @Environment(\.colorScheme) var colorScheme
-    @StateObject var viewModel: EventsMapViewModel
+    @State var viewModel: EventsMapViewModel
     public init(dependencies: EventsMapViewModel.Dependencies) {
         DevTools.Log.debug(.viewInit("\(Self.self)"), .view)
-        _viewModel = StateObject(wrappedValue: .init(dependencies: dependencies))
+        _viewModel = State(initialValue: .init(dependencies: dependencies))
     }
 
     // MARK: - Usage/Auxiliar Attributes
@@ -80,17 +80,11 @@ struct EventsMapView: View, ViewProtocol {
 
     // MARK: - Body & View
     var body: some View {
-        BaseView.withLoading(
-            sender: "\(Self.self)",
-            appScreen: .map,
-            navigationViewModel: .disabled,
-            ignoresSafeArea: false,
-            background: .defaultBackground,
-            loadingModel: viewModel.loadingModel,
-            alertModel: viewModel.alertModel,
-            networkStatus: nil) {
-                content
-            }.onAppear {
+        content
+            .baseScreen(
+                sender: "\(Self.self)",
+                appScreen: .map,
+                viewModel: viewModel).onAppear {
                 viewModel.send(.didAppear)
                 locationViewModel.start(sender: "\(Self.self)")
                 Common_Utils.delay {
@@ -174,6 +168,7 @@ extension EventsMapView {
 #if canImport(SwiftUI) && DEBUG
 #Preview {
     EventsMapViewCoordinator(presentationStyle: .fullScreenCover)
-        .environmentObject(ConfigurationViewModel.defaultForPreviews)
+        .environment(ConfigurationViewModel.defaultForPreviews)
+        .environmentObject(RouterViewModel())
 }
 #endif

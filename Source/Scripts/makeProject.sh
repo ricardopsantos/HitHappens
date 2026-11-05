@@ -189,23 +189,6 @@ xcodegen dump --spec ./XcodeGen/XcodegenMultiConfig.yml --type json --file ./_Do
 xcodegen dump --spec ./XcodeGen/XcodegenMultiConfig.yml --type parsed-json --file ./_Documents/Graph-jsonV2.json
 xcodegen dump --spec ./XcodeGen/XcodegenMultiConfig.yml --type summary --file ./_Documents/Graph-summary.txt
 
-################################################################################
-
-# Use plutil to remove the file from the target's build phases
-echo ""
-echo "↓ ↓ ↓ ↓ ↓ ↓ ↓ ↓ ↓ ↓ ↓ ↓ ↓ ↓ ↓ ↓ WARNING ↓ ↓ ↓ ↓ ↓ ↓ ↓ ↓ ↓ ↓ ↓ ↓ ↓ ↓ ↓ ↓"
-echo "↓ ↓ ↓ ↓ ↓ ↓ ↓ ↓ ↓ ↓ ↓ ↓ ↓ ↓ ↓ ↓ WARNING ↓ ↓ ↓ ↓ ↓ ↓ ↓ ↓ ↓ ↓ ↓ ↓ ↓ ↓ ↓ ↓"
-echo ""
-echo " Dont forget to:"
-echo "  - For Main target: Remove Info.plist from target Membership!!"
-echo ""
-echo "↑ ↑ ↑ ↑ ↑ ↑ ↑ ↑ ↑ ↑ ↑ ↑ ↑ ↑ ↑ ↑ WARNING ↑ ↑ ↑ ↑ ↑ ↑ ↑ ↑ ↑ ↑ ↑ ↑ ↑ ↑ ↑ ↑"
-echo "↑ ↑ ↑ ↑ ↑ ↑ ↑ ↑ ↑ ↑ ↑ ↑ ↑ ↑ ↑ ↑ WARNING ↑ ↑ ↑ ↑ ↑ ↑ ↑ ↑ ↑ ↑ ↑ ↑ ↑ ↑ ↑ ↑"
-echo ""
-echo " ╔═══════════════════════╗"
-echo " ║ Done! You're all set! ║"
-echo " ╚═══════════════════════╝"
-
 #chmod u+rw HitHappens.xcodeproj/project.pbxproj
 #removePlistFromMainTarget
 #sed -i '' "/Application\/Info.plist/d" HitHappens.xcodeproj
