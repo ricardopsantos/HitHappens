@@ -47,6 +47,9 @@ public extension CronometerAverageMetrics {
     }
 
     func reset() {
+        // Also clear the in-memory metrics, otherwise they survive a reset and accumulate.
+        measuresCount = [:]
+        measuresTime = [:]
         let defaults = Common.UserDefaultsManager.defaults
         let key = Common.UserDefaultsManager.Keys.averageMetrics.defaultsKey
         let dictionary = defaults?.dictionaryRepresentation().filter { $0.key.contains(key) }

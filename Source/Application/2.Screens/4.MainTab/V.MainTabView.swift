@@ -31,7 +31,7 @@ struct MainTabView: View, ViewProtocol {
     // MARK: - Usage/Auxiliar Attributes
     @Environment(\.dismiss) var dismiss
     @Environment(ConfigurationViewModel.self) var configuration
-    // One Router per tab (see README+Improvements.md §4). NavigationStack path,
+    // One Router per tab (see Documentation/TODO+Navigation.md §4). NavigationStack path,
     // sheet, and cover are all declared once at the tab root below.
     @StateObject var tab1Router = Router()
     @StateObject var tab2Router = Router()

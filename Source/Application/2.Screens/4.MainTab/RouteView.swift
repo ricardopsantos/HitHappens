@@ -4,7 +4,7 @@
 //
 //  Created by Ricardo Santos on 03/07/2026.
 //
-//  Single builder for the tab subtree (see README+Improvements.md §4). Replaces
+//  Single builder for the tab subtree (see Documentation/TODO+Navigation.md §4). Replaces
 //  the per-screen `...ViewCoordinator` + `ScreenBuilderRegistry` inside the tabs:
 //  navigation intents map to `router` (push / present sheet / present cover),
 //  and route-back is `@Environment(\.dismiss)` *inside each screen* — which pops

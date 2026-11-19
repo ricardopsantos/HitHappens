@@ -4,7 +4,7 @@
 //
 //  Created by Ricardo Santos on 03/07/2026.
 //
-//  New navigation core (see README+Improvements.md §4). One Router per
+//  New navigation core (see Documentation/TODO+Navigation.md §4). One Router per
 //  navigation context (each tab root, and each presented modal). The path is a
 //  TYPED array of AppScreen — inspectable, Codable-friendly, and it drives a
 //  single NavigationStack declared at the context root. Sheets/covers are
@@ -12,7 +12,7 @@
 //
 //  Deliberately ObservableObject (NOT @Observable): binding a NavigationStack
 //  path to an @Observable class property makes pushes bounce in this app's
-//  hierarchy (see CLAUDE.md / README+Improvements.md §2).
+//  hierarchy (see CLAUDE.md / Documentation/TODO+Navigation.md §2).
 
 import Foundation
 import SwiftUI

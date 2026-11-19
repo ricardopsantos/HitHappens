@@ -14,22 +14,18 @@
   and the `NavigationPath` silently accumulates stale entries.
 - **Confirmed by git bisect** over `UITests/Tab2Tests/test_routeToEntityDetailsAndEditConfirm`:
   `0a3a4bd` PASS → `c4f96a4` FAIL (first bad). See §2.
-- **⚠️ STATUS: NOT YET FIXED.** Two hypotheses were tested and **falsified**:
-  1. *RouterViewModel `@Observable`* — reverted to `ObservableObject`; MainTabView restored
-     to the exact passing shape (`@StateObject` routers, `.environmentObject`,
-     `$router.navPath`). **Push still fails.** So the router observation type is *not* the
-     cause (necessary to match the baseline, but not sufficient).
-  2. *Nested `NavigationStack` in screen chrome* — the current tree removed the nested
-     container entirely. **Push still fails.** (And `0a3a4bd`, which had a nested
-     `NavigationView`, passed — so a nested container was not itself the problem.)
-- **Remaining suspect:** another change inside the large `c4f96a4` commit — most likely the
-  `NavigationView → NavigationStack` deprecation sweep interacting with how the pushed
-  screen renders, or an `@Observable` interaction on the pushed screen / its ViewModel. Not
-  yet isolated (would need a within-commit bisect).
-- **Longer term:** the navigation layer is workable but fragile (multiple routers,
-  `presentationStyle` threaded into screens, untyped `NavigationPath`, nav containers hidden
-  in screen chrome). The [§4 redesign](#4-recommended-redesign-future-work) would eliminate
-  this whole class of bug and is a strong alternative to patching the exact line.
+- **✅ STATUS: FIXED (V1.8.0, commit `f1ed1e2`; verified 2026-11-19).** The tabs were moved to
+  the §4 redesign: one `Router` per tab (`Source/Application/3.AppViewModels/Router.swift`,
+  deliberately `ObservableObject` with a typed `[AppScreen]` path) and a single builder,
+  `RouteView` (`Source/Application/2.Screens/4.MainTab/RouteView.swift`). The root cause was
+  binding the `NavigationStack` path to an `@Observable` class property. Route-back inside a tab
+  pops the router's path (falling back to `dismiss()` for modal roots).
+  `test_routeToEntityDetailsAndEditConfirm` and the rest of the UI suite pass.
+  `RouterViewModel` + `ScreenBuilderRegistry` are still used outside the tabs (root, splash,
+  onboarding, and the per-screen coordinators). Sections 2–3 below are kept as history.
+- **Remaining (optional):** the §4 redesign is applied to the tabs only. Moving the root /
+  splash / onboarding flow and the remaining `...ViewCoordinator`s onto `Router` would let
+  `RouterViewModel` and `ScreenBuilderRegistry` be deleted.
 
 ---
 

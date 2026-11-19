@@ -1,6 +1,6 @@
 # CLAUDE.md — HitHappens
 
-Context file for AI-assisted sessions. Everything here was verified against the codebase (July 2026, branch `dev/V2.0.0`). The user-facing [README.md](README.md) covers the same ground with screenshots; this file adds the operational knowledge that isn't written down anywhere else.
+Context file for AI-assisted sessions. Everything here was verified against the codebase (July 2026, re-checked 2026-11-19 on branch `dev/V2.0.0` for the 2.0.0 release). The user-facing [README.md](README.md) covers the same ground with screenshots; this file adds the operational knowledge that isn't written down anywhere else.
 
 ## What the app is
 
@@ -8,10 +8,10 @@ Personal life-event tracker (SwiftUI, App Store). Users create **Trackers** (e.g
 
 Naming glossary (code vs UI): `TrackedEntity` = "Tracker", `TrackedLog` = "Event"/occurrence. UI strings come from `AppConstants.entityNameSingle/Plural` etc. in `Source/Application/7.Utils/AppConstants.swift`.
 
-## Current state (as of July 2026)
+## Current state (as of November 2026, version 2.0.0)
 
-- **Xcode 26, Swift 5.10 language mode, min iOS 18.0**, Swift 6.2 toolchain.
-- App layer fully migrated to **`@Observable`** (`@State`/`@Environment(Type.self)`/`.environment()`). Exceptions kept on `ObservableObject` deliberately: `Common.SharedLocationManagerViewModel` (in Common) and `SyncMonitor` (CloudKitSyncMonitor package) — still consumed with `@StateObject`; mixing is fine.
+- **Xcode 27.2, Swift 5.10 language mode, min iOS 18.0**, Swift 6.4 toolchain. App version lives in `Configuration/product-version.xcconfig` (`MARKETING_VERSION`, `PRODUCT_BUILD`); the `MARKETING_VERSION: 1.0` entries in the XcodeGen specs are for the framework targets only.
+- App layer fully migrated to **`@Observable`** (`@State`/`@Environment(Type.self)`/`.environment()`). Exceptions kept on `ObservableObject` deliberately: the tab `Router` (an `@Observable` path binding makes pushes bounce — see `Documentation/TODO+Navigation.md`), `Common.SharedLocationManagerViewModel` (in Common) and `SyncMonitor` (CloudKitSyncMonitor package) — still consumed with `@StateObject`; mixing is fine.
 - Deprecated-API sweep done: two-param `onChange`, `NavigationStack`, `.foregroundStyle`, `.clipShape` — don't reintroduce old forms.
 - **Deferred (agreed, not yet done):** Swift 6 strict concurrency; removing `UIScreen.main`-based globals (`screenWidth` etc. in Common); `.task` instead of `onAppear`+`Task`; `TimelineView` for the flip-counter `Timer`; `.sensoryFeedback` / `ContentUnavailableView` swaps.
 
@@ -28,7 +28,7 @@ Naming glossary (code vs UI): `TrackedEntity` = "Tracker", `TrackedLog` = "Event
 | `UnitTests/`, `UITests/` | test targets | See Testing below |
 | `Xcodegen/`, `Scripts/`, `Configuration/` | — | Project specs, helper scripts, per-env xcconfigs |
 
-Application subfolders: `1.Main` (App entry, AppDelegate), `2.Screens` (per-screen folders, `ScreenProtocols.swift`), `3.AppViewModels` (`ConfigurationViewModel` DI root, `RouterViewModel`), `4.Managers` (Analytics, Setup, Dependencies), `5.Desigables` (app-level reusable views: EditView, SyncMonitorView, PickerViews, TipView), `7.Utils` (BaseView, BaseViewModel, AppConstants, model extensions).
+Application subfolders: `1.Main` (App entry, AppDelegate), `2.Screens` (per-screen folders, `ScreenProtocols.swift`), `3.AppViewModels` (`ConfigurationViewModel` DI root, `Router` for the tabs, `RouterViewModel` for the rest), `4.Managers` (Analytics, Setup, Dependencies), `5.Desigables` (app-level reusable views: EditView, SyncMonitorView, PickerViews, TipView), `7.Utils` (BaseView, BaseViewModel, AppConstants, model extensions).
 
 ### 4.Managers (cleaned up July 2026)
 
@@ -42,7 +42,8 @@ Application subfolders: `1.Main` (App entry, AppDelegate), `2.Screens` (per-scre
 
 ## Architecture & patterns
 
-- **MVVM + Coordinator.** Each screen folder has `V.<Name>View.swift` (contains BOTH the `...ViewCoordinator` and the View) and `VM.<Name>ViewModel.swift`. Coordinators conform to `ViewCoordinatorProtocol` and declare a `screenRegistry: ScreenBuilderRegistry` (closure factories, no switch). Routing state lives in `RouterViewModel` (`navPath`/`sheetLink`/`coverLink`).
+- **Navigation inside the tabs (since V1.8.0):** `MainTabView` owns one `Router` per tab (`@StateObject`, injected with `.environmentObject`), each driving one `NavigationStack` over a typed `[AppScreen]` path. `RouteView` (`2.Screens/4.MainTab/RouteView.swift`) is the single builder that maps `AppScreen` → screen and wires navigation callbacks to `router.push` / `present(sheet:)` / `present(cover:)`; route-back pops the path, or calls `dismiss()` on a modal root. Add new tab screens there.
+- **MVVM + Coordinator (outside the tabs).** Each screen folder has `V.<Name>View.swift` (contains BOTH the `...ViewCoordinator` and the View) and `VM.<Name>ViewModel.swift`. Coordinators conform to `ViewCoordinatorProtocol` and declare a `screenRegistry: ScreenBuilderRegistry` (closure factories, no switch). Routing state lives in `RouterViewModel` (`navPath`/`sheetLink`/`coverLink`).
 - **⚠️ Environment routers**: every coordinator declares `@Environment(RouterViewModel.self) var parentCoordinator`. Unlike `@EnvironmentObject` (lazy — fatals only on read), **`@Environment(Type.self)` resolves eagerly when the view is installed** — a missing ancestor injection crashes at boot ("No Observable object of type RouterViewModel found"). `HitHappensApp` injects a `rootRouter` for top-level coordinators; **every `#Preview` must inject BOTH** `.environment(ConfigurationViewModel.defaultForPreviews)` and `.environment(RouterViewModel())`. Any new view presented outside the coordinator chain needs the same pair.
 - **ViewModels**: subclass `BaseViewModel` (`@MainActor @Observable`, provides `alertModel` with auto-dismiss, `loadingModel`, `tip`, `insertTrackedLog`, error handling). Screen VMs expose a single `send(_ action: Actions)` with an `Actions` enum; dependencies arrive via a typed `Dependencies` struct.
 - **DI root**: `ConfigurationViewModel`, injected via `.environment()` from `HitHappensApp`; previews use `ConfigurationViewModel.defaultForPreviews`.
@@ -67,13 +68,14 @@ Application subfolders: `1.Main` (App entry, AppDelegate), `2.Screens` (per-scre
 
 ## Build, run, test
 
-- **Adding/removing files requires regenerating the project**: from `Source/`: `xcodegen -s ./Xcodegen/XcodegenMultiConfig.yml -p ./` (pbxproj is old-format, not filesystem-synchronized). Full clean rebuild: `./makefile.sh` → `Scripts/makeProject.sh`. The Firebase variant spec is `XcodegenMultiConfigAndFirebase.yml`.
+- **Adding/removing files requires regenerating the project**: from `Source/`: `xcodegen -s ./Xcodegen/XcodegenMultiConfig.yml -p ./` (pbxproj is old-format, not filesystem-synchronized). Full clean rebuild: `./makeProject.sh` (from `Source/`) → `Scripts/makeProject.sh`. The Firebase variant spec is `XcodegenMultiConfigAndFirebase.yml`.
 - The app-target spec must keep `Info.plist` excluded from sources + `INFOPLIST_FILE` pinned in settings, or the build fails with "Multiple commands produce Info.plist" (fixed July 2026 in both specs — keep it that way after XcodeGen upgrades).
-- Build: scheme **"HitHappens Dev"**, config "Dev Debug", `platform=iOS Simulator,name=iPhone 17 Pro`. Schemes: Dev / QA / Production variants.
+- Build: scheme **"HitHappens Dev"**, config "Dev Debug", `platform=iOS Simulator,name=iPhone 18 Pro`. Schemes: Dev / QA / Production variants.
 - Unit tests: `-only-testing:UnitTests` (fast, ~15s). **`DataBaseRepository_Tests.test_stressTest` is flaky under simulator load** — rerun in isolation before treating a batch failure as real.
-- UI tests: compile-check with `build-for-testing`; full execution is slow — leave to CI (Bitrise). Tests tap by accessibility id via helpers (`tap(button:on:)` etc. in `UITests/Auxiliar`).
+- UI tests: compile-check with `build-for-testing`; a full run takes ~10 min (21 tests). CI (GitHub Actions, `.github/workflows/workflow.yml`) only builds — the test step is commented out, so run tests locally before a release.
+- Common package tests: `xcodebuild test -scheme Common` from `Source/Common` on a simulator (`swift test` fails: it builds for macOS and Common imports UIKit). `CoreDataManager_CRUDPerformanceTests` compare against timings recorded on another machine, with a fixed floor. Tests tap by accessibility id via helpers (`tap(button:on:)` etc. in `UITests/Auxiliar`).
 - SwiftLint + SwiftFormat run as build phases; match their style (they may reformat files after edits).
-- **Runtime verification on simulator** (compile-green is not enough — the @Observable boot crash compiled fine): `xcrun simctl bootstatus "iPhone 17 Pro" -b` (headless `simctl boot` alone is flaky — "server died"/screen-surface timeouts), then `simctl install` the built `.app` from DerivedData, `simctl launch --terminate-running-process "iPhone 17 Pro" com.hit.happens.app.id`, wait ~5s and confirm the pid is still in `simctl spawn ... launchctl list | grep hit.happens`; `simctl io ... screenshot` to eyeball the UI. Dev-build banner "Redraw[n]: <View>" at the top is the render tracker, not a bug.
+- **Runtime verification on simulator** (compile-green is not enough — the @Observable boot crash compiled fine): `xcrun simctl bootstatus "iPhone 18 Pro" -b` (headless `simctl boot` alone is flaky — "server died"/screen-surface timeouts), then `simctl install` the built `.app` from DerivedData, `simctl launch --terminate-running-process "iPhone 18 Pro" com.hit.happens.app.id`, wait ~5s and confirm the pid is still in `simctl spawn ... launchctl list | grep hit.happens`; `simctl io ... screenshot` to eyeball the UI. Dev-build banner "Redraw[n]: <View>" at the top is the render tracker, not a bug.
 
 ## Working preferences (owner: Ricardo Santos)
 
