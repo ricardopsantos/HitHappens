@@ -32,13 +32,8 @@ public struct LoadingIndicator: View {
                             // NB: There seems to be a bug in SwiftUI where the progress view does not show
                             // a second time unless it is given a new identity.
                             .id(UUID())
-                        if #available(iOS 16.0, *) {
-                            view
-                                .tint(ColorSemantic.primary.color)
-
-                        } else {
-                            view
-                        }
+                        view
+                            .tint(ColorSemantic.primary.color)
                         SwiftUIUtils.FixedVerticalSpacer(height: SizeNames.defaultMarginSmall)
                         Text(loadingMessage)
                             .foregroundColorSemantic(.labelPrimary)

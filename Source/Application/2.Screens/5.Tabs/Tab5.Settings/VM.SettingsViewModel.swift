@@ -44,12 +44,13 @@ extension SettingsViewModel {
     }
 }
 
+@Observable
 class SettingsViewModel: BaseViewModel {
     // MARK: - View Usage Attributes
     private var cancelBag = CancelBag()
-    @Published var supportEmail: String = ""
-    @Published var publicCodeURL: String = ""
-    @Published var appVersionInfo: String = ""
+    var supportEmail: String = ""
+    var publicCodeURL: String = ""
+    var appVersionInfo: String = ""
     private var appVersion: Model.AppVersion?
     private var nonSecureAppPreferences: NonSecureAppPreferencesProtocol?
     private var cloudKitService: CloudKitServiceProtocol?
@@ -134,6 +135,7 @@ private extension SettingsViewModel {
 #if canImport(SwiftUI) && DEBUG
 #Preview {
     SettingsViewCoordinator(presentationStyle: .notApplied)
-        .environmentObject(ConfigurationViewModel.defaultForPreviews)
+        .environment(ConfigurationViewModel.defaultForPreviews)
+        .environmentObject(RouterViewModel())
 }
 #endif

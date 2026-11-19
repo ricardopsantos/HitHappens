@@ -38,6 +38,7 @@ public extension Model {
         public let message: String
         public let date: Date
         public var onUserTapGesture: (() -> Void)? // Custom code to run when user tapped alert
+        public var undo: (() -> Void)? // When set, the alert view renders an "Undo" button that runs this
         public var parentDismiss: (() -> Void)? // Inject code to dismiss alert externally (by parent view)
 
         public func onTapGesture() {
@@ -49,11 +50,18 @@ public extension Model {
             }
         }
 
-        public init(type: AlertType, location: AlertLocation = .top, message: String, onUserTapGesture: (() -> Void)? = nil) {
+        public init(
+            type: AlertType,
+            location: AlertLocation = .top,
+            message: String,
+            onUserTapGesture: (() -> Void)? = nil,
+            undo: (() -> Void)? = nil
+        ) {
             self.type = type
             self.message = message
             self.location = location
             self.onUserTapGesture = onUserTapGesture
+            self.undo = undo
             self.date = Date()
         }
     }
@@ -68,7 +76,8 @@ extension Model.AlertModel: Equatable {
             lhs.location == rhs.location &&
             lhs.message == rhs.message &&
             lhs.date == rhs.date &&
-            lhs.onUserTapGesture.debugDescription == rhs.onUserTapGesture.debugDescription
+            lhs.onUserTapGesture.debugDescription == rhs.onUserTapGesture.debugDescription &&
+            lhs.undo.debugDescription == rhs.undo.debugDescription
     }
 }
 

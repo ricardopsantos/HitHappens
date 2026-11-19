@@ -48,10 +48,11 @@ extension ___Template___ViewModel {
 //
 // MARK: - ViewModel
 //
+@Observable
 class ___Template___ViewModel: BaseViewModel {
     // MARK: - Usage/Auxiliar Attributes
-    @Published private(set) var message: String = ""
-    @Published var counter: Int = 0
+    private(set) var message: String = ""
+    var counter: Int = 0
     private let dataBaseRepository: DataBaseRepositoryProtocol?
     public init(dependencies: Dependencies) {
         self.dataBaseRepository = dependencies.dataBaseRepository
@@ -89,6 +90,7 @@ fileprivate extension ___Template___ViewModel {}
 #if canImport(SwiftUI) && DEBUG
 #Preview {
     ___Template___ViewCoordinator(presentationStyle: .fullScreenCover, haveNavigationStack: false, model: .init(message: "Hi"))
-        .environmentObject(ConfigurationViewModel.defaultForPreviews)
+        .environment(ConfigurationViewModel.defaultForPreviews)
+        .environmentObject(RouterViewModel())
 }
 #endif

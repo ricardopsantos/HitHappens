@@ -22,14 +22,8 @@ public struct LoaderView: View {
             .padding()
             .padding()
 
-            Group {
-                if #available(iOS 15.0, *) {
-                    view
-                        .background(.background)
-                } else {
-                    view
-                }
-            }
+            view
+                .background(.background)
             .cornerRadius(10)
             .frame(maxWidth: .infinity, maxHeight: .infinity)
             .background(

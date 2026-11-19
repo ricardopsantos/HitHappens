@@ -1,19 +1,20 @@
 <p align="center">
    <img src="https://img.shields.io/badge/status-active-brightgreen">
-<img src="https://img.shields.io/badge/Swift-6.2.4-orange.svg?style=flat">
+<img src="https://img.shields.io/badge/Swift-6.4-orange.svg?style=flat">
 
-<img src="https://img.shields.io/badge/Xcode-26.3-blue.svg">
+<img src="https://img.shields.io/badge/Xcode-27.2-blue.svg">
+<img src="https://img.shields.io/badge/version-2.0.0-blueviolet.svg">
 </p>
 
 
 # Index
 
-* __About__: _Intro_ | _Features_
+* __About__: _Intro_ | _Features_ | _What's new in 2.0.0_
 * __Architecture I__: _Overview_ | _Additional Modules_ | _Dependencies Manager_ 
 * __Architecture II__: _Application_ | _Domain_ | _Core_ | _Common_ | _DesignSystem_ | _DevTools_
 * __Tests__: _UI Tests_ | _Unit Tests_
 * __Architecture Evaluation__
-* __Misc__: _Design Language_ | _XcodeGen_ | _SwiftLint and SwiftFormat_  | _Profiling_ | _CI/CD (Bitrise)_ | _Install_
+* __Misc__: _Design Language_ | _XcodeGen_ | _SwiftLint and SwiftFormat_  | _Profiling_ | _CI/CD_ | _Install_
 	
 # About 
 
@@ -51,6 +52,15 @@ The navigation was inspired by [Modular Navigation in SwiftUI: A Comprehensive G
 | **Light / Dark mode** | Full support for the system appearance |
 | **App version check** | Settings screen alerts you when a new version is available on the App Store |
 
+## What's new in 2.0.0
+
+- **Reworked navigation**: a new router (`Router` + `RouteView`) drives every tab, with a typed navigation path. This fixes the bug where an opened screen (e.g. a Tracker's details) appeared and then immediately bounced back.
+- **iCloud-aware persistence**: if the iCloud-backed store cannot be loaded, the app falls back to a local-only store instead of failing.
+- **Design system updates** across the tabs, onboarding, splash and settings screens.
+- **Stability**: Core Data shares one model per model file and merges batch deletes into the context; thread-safe locks and dispatch queues were hardened.
+- **Security**: certificate public-key pinning now supports RSA 2048/4096 and ECDSA P-256/P-384.
+- **Tests**: flaky UI and unit tests fixed; the Common package tests build and pass; the Nimble dependency was removed.
+
 ## Architecture I
 
 
@@ -76,7 +86,7 @@ The app is built using _Clean Architecture_ principles and separation of concern
 
 There are 2 other modules not displayed for simplicity. 
 
-* __Common:__ A utility toolbox containing helper extensions, property wrappers, and other utilities. It has its own unit tests and can be used in any project as it has no dependencies. More info at [https://github.com/ricardopsantos/Common](https://github.com/ricardopsantos/Common)
+* __Common:__ A utility toolbox containing helper extensions, property wrappers, and other utilities. It has its own unit tests and can be used in any project as it has no external package dependencies (the few third-party helpers it uses are embedded as source). More info at [https://github.com/ricardopsantos/Common](https://github.com/ricardopsantos/Common)
  
 * __DevTools:__ Manages essentially app logs; it is a module known across all other modules to facilitate logging.
 
@@ -84,13 +94,15 @@ This modular structure ensures each component is focused on a specific responsib
 
 ### Dependencies Manager 
 
-As package dependencies manager was choosen [__Swift Package Manager__](https://www.swift.org/documentation/package-manager/), as it simplifies dependency management and project organization for Swift developers. Also, enables you to easily add, update, and manage third-party libraries and frameworks. Integrated seamlessly with Xcode, Swift Package Manager promotes modularity, improves build performance, and ensures that your dependencies are up-to-date, making it an essential tool for modern Swift development.
+As package dependencies manager was chosen [__Swift Package Manager__](https://www.swift.org/documentation/package-manager/), as it simplifies dependency management and project organization for Swift developers. Also, enables you to easily add, update, and manage third-party libraries and frameworks. Integrated seamlessly with Xcode, Swift Package Manager promotes modularity, improves build performance, and ensures that your dependencies are up-to-date, making it an essential tool for modern Swift development.
 
-The app philosophy emphasizes avoiding the addition of large dependencies for simple tasks (e.g., using Alamofire for a basic REST GET method). Instead, we carefully selected only three essential dependencies to handle complex or time-consuming (to implement) tasks:
+The app philosophy emphasizes avoiding the addition of large dependencies for simple tasks (e.g., using Alamofire for a basic REST GET method). Instead, we carefully selected only a few dependencies to handle complex or time-consuming (to implement) tasks:
 
 * [__KeychainAccess__](https://github.com/kishikawakatsumi/KeychainAccess): _"KeychainAccess is a simple Swift wrapper for Keychain that works on iOS and macOS. Makes using Keychain APIs extremely easy and much more palatable to use in Swift."_
 * [__TinyConstraints__](https://github.com/roberthein/TinyConstraints): _"TinyConstraints is the syntactic sugar that makes Auto Layout sweeter for human use."_
-* [__Nimble__](https://github.com/Quick/Nimble): _"A matcher framework that enables writing expressive and readable tests."_
+* [__CloudKitSyncMonitor__](https://github.com/ggruen/CloudKitSyncMonitor): observes the state of the Core Data + CloudKit sync, used to show the iCloud sync status.
+
+_KeychainAccess_ and _TinyConstraints_ are embedded as source code inside _Common_ (`Common/Sources/3Party`), so _CloudKitSyncMonitor_ is the only package fetched by Swift Package Manager.
 
 # Architecture II
 
@@ -110,7 +122,7 @@ It's the main application target. Contains the `Views` (scenes), `ViewModels` (g
 <img src=Source/_Documents/images/Domain.png width=800/>
 </center>
 
-This target encapsulates the interface functionality of the application. Providing the _Models_ and _Protocols_ it define what the app can do and the data structures to do it.
+This target encapsulates the interface functionality of the application. By providing the _Models_ and _Protocols_, it defines what the app can do and the data structures to do it.
 
 - __Repositories__: Local data storage protocols.
 - __Services__: Bridge between _ViewModels_ and _Network_, where additional logic can be applied (e.g. caching)
@@ -135,7 +147,7 @@ Notably, `Services`, `Repositories` and `Network` are defined and implemented vi
 <img src=Source/_Documents/images/Common.png width=800/>
 </center>
 
-A shared framework that includes extensions and utility functions used across multiple targets, promoting code reuse and modularity. Should not depend on any target, and should seamless work on any project. 
+A shared framework that includes extensions and utility functions used across multiple targets, promoting code reuse and modularity. Should not depend on any other target, and should work seamlessly on any project. 
 
 ## DesignSystem
 
@@ -166,8 +178,6 @@ Includes various development tools and utilities such as logging, facilitating s
 
 The app includes comprehensive testing coverage with both UI Tests and Unit Tests. These tests are designed to cover a wide range of daily development scenarios, ensuring the app's reliability and performance. Additionally, we have incorporated measure/performance tests to monitor and optimize the app's efficiency.
 
-This revision aims to clearly communicate the purpose and scope of the tests while emphasizing their importance in maintaining app quality and performance.
-
 <img src=Source/_Documents/images/UnitTests_2.png width=800/> 
 
 ### UITesting
@@ -179,11 +189,11 @@ The app includes UI Tests for views and routing logic
     
 ### Unit Testing (ViewModels & Services)
 
-The app _ViewModels_ are built on a way that can be tested.
+The app _ViewModels_ are built in a way that they can be tested.
 
 <img src=Source/_Documents/images/UnitTestsVM.png width=800/>
 
-The app _Services_ are built on a way that can be tested.
+The app _Services_ are built in a way that they can be tested.
 
 <img src=Source/_Documents/images/UnitTestsServices.png width=800/>
 
@@ -254,9 +264,11 @@ The app maintains a minimal memory footprint, consistently staying around 50-60 
 
 <img src=Source/_Documents/images/MemoryPrint.jpg width=800/>
 
-## CI/CD (Bitrise)
+## CI/CD
 
-Bitrise, a mobile-focused CI/CD platform, automates build, test, and deployment workflows to streamline development and accelerate quality app delivery—making it the chosen platform for this project.
+A [GitHub Actions](.github/workflows/workflow.yml) workflow builds the app on every push to `main` and `dev*` branches and on pull requests to `main` (via `Source/Scripts/github_workflow_v1.sh`). Tests are run locally for now.
+
+[Bitrise](https://bitrise.io), a mobile-focused CI/CD platform, was used to automate build, test and deployment workflows:
 
 <center>
 <img src=Source/_Documents/images/Bitrise_1.png width=800/>
@@ -268,10 +280,14 @@ Bitrise, a mobile-focused CI/CD platform, automates build, test, and deployment 
 
 ## Install 
 
-No need to install anything, as all app dependencies are managed via [Swift Package Manager](https://www.swift.org/documentation/package-manager/).
+__Requirements__: Xcode 27 (Swift 6.4 toolchain, code compiled in Swift 5 language mode), iOS 18.0+ deployment target. Optionally [XcodeGen](https://github.com/yonaskolb/XcodeGen) (via Homebrew) if you want to regenerate the project.
 
-However, the project can be fully rebuilt with `./makefile.sh` (for a total cleanup and conflict fixing) using [XcodeGen](https://github.com/yonaskolb/XcodeGen). If you are not familiar with XcodeGen, please check [Avoiding merge conflicts with XcodeGen](https://medium.com/@ricardojpsantos/avoiding-merge-conflicts-with-xcodegen-a0e2a1647bcb).
+No need to install anything else, as all app dependencies are managed via [Swift Package Manager](https://www.swift.org/documentation/package-manager/).
 
-The scripts can be found at `Source/XcodeGen`
+However, the project can be fully rebuilt with `Source/makeProject.sh` (for a total cleanup and conflict fixing) using [XcodeGen](https://github.com/yonaskolb/XcodeGen). If you are not familiar with XcodeGen, please check [Avoiding merge conflicts with XcodeGen](https://medium.com/@ricardojpsantos/avoiding-merge-conflicts-with-xcodegen-a0e2a1647bcb).
+
+The XcodeGen project specs live in `Source/Xcodegen`, and the helper scripts (project generation, linting, archiving) in `Source/Scripts`.
+
+To run the tests, use the `HitHappens Dev` scheme (unit and UI tests) and the `Common` scheme (Common package tests), both on an iOS Simulator. `swift test` does not work for _Common_: it builds for macOS and the package depends on UIKit.
 
 <img src=Source/_Documents/images/Install.png width=800/>

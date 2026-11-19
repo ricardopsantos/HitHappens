@@ -11,7 +11,6 @@
 
 import XCTest
 import Combine
-import Nimble
 //
 import Common
 import DevTools
@@ -58,8 +57,6 @@ final class Tab2Tests: BaseUITests {
 
         editEntity(newName: newName, newInfo: newInfo, newCategory: newCategory, newSoundEffect: newSoundEffect)
         tap(button: Accessibility.confirmButton.identifier, on: app)
-
-        tap(button: "Yes", on: app) // Confirmation alert
 
         tap(button: Accessibility.backButton.identifier, on: app) // Close details
         exists(staticText: Constants.Entities.Book.alternativeListItem, on: app) // New name on favorits screen
@@ -119,9 +116,8 @@ final class Tab2Tests: BaseUITests {
         exists(staticText: "\(Constants.entityNameSingle) details", on: app)
 
         editEntity(newName: newName, newInfo: newInfo, newCategory: newCategory, newSoundEffect: newSoundEffect)
-        tap(button: Accessibility.confirmButton.identifier, on: app)
-
-        tap(button: "No", on: app) // Confirmation alert
+        // While editing, the edit button acts as "Cancel" and discards changes
+        tap(button: Accessibility.editButton.identifier, on: app)
 
         app.swipeDown()
 

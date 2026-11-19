@@ -48,11 +48,12 @@ extension OnboardingViewModel {
     }
 }
 
+@Observable
 class OnboardingViewModel: BaseViewModel {
     // MARK: - Usage/Auxiliar Attributes
-    @Published private(set) var onboardingModel: [OnboardingModel] = []
-    @Published private(set) var pages: Int = -1
-    @Published private(set) var loaded: Bool = false
+    private(set) var onboardingModel: [OnboardingModel] = []
+    private(set) var pages: Int = -1
+    private(set) var loaded: Bool = false
     private let appConfigService: AppConfigServiceProtocol?
     public init(dependencies: Dependencies) {
         self.appConfigService = dependencies.appConfigService
@@ -152,6 +153,7 @@ fileprivate extension OnboardingViewModel {
 #if canImport(SwiftUI) && DEBUG
 #Preview {
     OnboardingViewCoordinator(presentationStyle: .notApplied, haveNavigationStack: true, model: .init(), onCompletion: { _ in })
-        .environmentObject(ConfigurationViewModel.defaultForPreviews)
+        .environment(ConfigurationViewModel.defaultForPreviews)
+        .environmentObject(RouterViewModel())
 }
 #endif

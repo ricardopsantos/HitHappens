@@ -38,12 +38,8 @@ public struct ToggleWithBinding: View {
                     isOn.toggle()
                 }
         }.accessibilityIdentifier(accessibility.identifier)
-        if #available(iOS 16.0, *) {
-            view
-                .tint(ColorSemantic.primary.color)
-        } else {
-            view
-        }
+        view
+            .tint(ColorSemantic.primary.color)
     }
 }
 
@@ -65,12 +61,8 @@ public struct ToggleWithState: View {
             Text(title)
                 .applyStyle(titleStyle)
         }
-        if #available(iOS 16.0, *) {
-            view
-                .tint(ColorSemantic.primary.color)
-        } else {
-            view
-        }
+        view
+            .tint(ColorSemantic.primary.color)
     }
 }
 

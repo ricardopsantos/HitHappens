@@ -44,13 +44,8 @@ public extension View {
     var asViewController: UIViewController {
         // https://stackoverflow.com/questions/58399123/uihostingcontroller-should-expand-to-fit-contents
         let hostingViewController = UIHostingController(rootView: self)
-        if #available(iOS 16.0, *) {
-            hostingViewController.sizingOptions = [.intrinsicContentSize]
-            return hostingViewController
-        } else {
-            // Fallback on earlier versions
-            return SelfSizingHostingController(rootView: self)
-        }
+        hostingViewController.sizingOptions = [.intrinsicContentSize]
+        return hostingViewController
     }
 
     //// SwiftUI View -> UIView

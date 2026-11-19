@@ -44,18 +44,11 @@ struct WebView: View {
     }
 
     var body: some View {
-        BaseView.withLoading(
-            sender: "\(Self.self)",
-            appScreen: .na,
-            navigationViewModel: .disabled,
-            ignoresSafeArea: false,
-            background: .defaultBackground,
-            loadingModel: nil,
-            alertModel: nil,
-            networkStatus: nil
-        ) {
-            content
-        }.onAppear {
+        content
+            .baseScreen(
+                sender: "\(Self.self)",
+                appScreen: .na,
+                viewModel: nil).onAppear {
             // viewModel.send(action: .didAppear)
         }.onDisappear {
             // viewModel.send(action: .didDisappear)

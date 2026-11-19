@@ -16,7 +16,7 @@ import DevTools
 //
 struct SplashViewCoordinator: View, ViewCoordinatorProtocol {
     // MARK: - ViewCoordinatorProtocol
-    @EnvironmentObject var configuration: ConfigurationViewModel
+    @Environment(ConfigurationViewModel.self) var configuration
     @EnvironmentObject var parentCoordinator: RouterViewModel
     @StateObject var coordinator = RouterViewModel()
     var presentationStyle: ViewPresentationStyle
@@ -54,10 +54,10 @@ struct SplashViewCoordinator: View, ViewCoordinatorProtocol {
 struct SplashView: View, ViewProtocol {
     // MARK: - ViewProtocol
     @Environment(\.colorScheme) var colorScheme
-    @StateObject var viewModel: SplashViewModel
+    @State var viewModel: SplashViewModel
     public init(dependencies: SplashViewModel.Dependencies) {
         DevTools.Log.debug(.viewInit("\(Self.self)"), .view)
-        _viewModel = StateObject(wrappedValue: .init(dependencies: dependencies))
+        _viewModel = State(initialValue: .init(dependencies: dependencies))
         self.onCompletion = dependencies.onCompletion
     }
 
@@ -67,18 +67,13 @@ struct SplashView: View, ViewProtocol {
     let onCompletion: () -> Void
 
     var body: some View {
-        BaseView.withLoading(
-            sender: "\(Self.self)",
-            appScreen: .splash,
-            navigationViewModel: .disabled,
-            ignoresSafeArea: true,
-            background: .uiColor(UIColor.colorFromRGBString("239,239,235")),
-            loadingModel: nil,
-            alertModel: nil,
-            networkStatus: nil
-        ) {
-            content
-        }
+        content
+            .baseScreen(
+                sender: "\(Self.self)",
+                appScreen: .splash,
+                viewModel: nil,
+                ignoresSafeArea: true,
+                background: .uiColor(UIColor.colorFromRGBString("239,239,235")))
         .onAppear {
             viewModel.send(action: .didAppear)
         }.onDisappear {
@@ -126,6 +121,7 @@ fileprivate extension SplashView {}
 #if canImport(SwiftUI) && DEBUG
 #Preview {
     SplashViewCoordinator(presentationStyle: .notApplied, onCompletion: {})
-        .environmentObject(ConfigurationViewModel.defaultForPreviews)
+        .environment(ConfigurationViewModel.defaultForPreviews)
+        .environmentObject(RouterViewModel())
 }
 #endif

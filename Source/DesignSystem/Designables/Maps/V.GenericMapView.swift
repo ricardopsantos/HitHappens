@@ -87,13 +87,13 @@ public struct GenericMapView: View {
             }.onDisappear {
                 locationViewModel.stop(sender: "\(Self.self)")
             }
-            .onChange(of: shouldDisplayUserLocation) { _ in
+            .onChange(of: shouldDisplayUserLocation) { _, _ in
                 updateRegionToFitCoordinates()
             }
-            .onChange(of: shouldDisplayEventsLocation) { _ in
+            .onChange(of: shouldDisplayEventsLocation) { _, _ in
                 updateRegionToFitCoordinates()
             }
-            .onChange(of: items) { _ in
+            .onChange(of: items) { _, _ in
                 if shouldDisplayEventsLocation, items.isEmpty {
                     // No items, so no need on this being on
                     shouldDisplayEventsLocation = false
@@ -101,7 +101,7 @@ public struct GenericMapView: View {
                     updateRegionToFitCoordinates()
                 }
             }
-            .onChange(of: region) { new in
+            .onChange(of: region) { _, new in
                 // Ignore fast changes (swiping, etc)
                 let operationId = "\(Self.self).region.changed"
                 Common.ExecutionControlManager.dropFirst(n: 2, operationId: operationId, block: {
@@ -176,7 +176,7 @@ fileprivate extension GenericMapView {
                     $0.background(ColorSemantic.backgroundTertiary.color.opacity(0.66))
                 })
                 .clipShape(Circle())
-                .foregroundColor(.white)
+                .foregroundStyle(.white)
                 .shadow(radius: SizeNames.shadowRadiusRegular)
         }
         .userInteractionEnabled(!items.isEmpty)
@@ -195,7 +195,7 @@ fileprivate extension GenericMapView {
                     $0.background(ColorSemantic.backgroundTertiary.color.opacity(0.66))
                 })
                 .clipShape(Circle())
-                .foregroundColor(.white)
+                .foregroundStyle(.white)
                 .shadow(radius: SizeNames.shadowRadiusRegular)
         }
         .userInteractionEnabled(locationViewModel.locationIsAuthorized)
@@ -271,7 +271,7 @@ fileprivate extension GenericMapView {
                     Spacer()
                     Circle()
                         .stroke(.white, lineWidth: 2)
-                        .background(Circle().foregroundColor(color.opacity(0.5)))
+                        .background(Circle().foregroundStyle(color.opacity(0.5)))
                         .frame(min(gridSpacingY, gridSpacingX) * 0.5)
                     Spacer()
                 }

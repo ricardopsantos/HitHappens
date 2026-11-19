@@ -30,7 +30,7 @@ public struct CategoryPickerView: View {
             title: "Category".localizedMissing,
             options: HitHappensEventCategory.allCases.map(\.localized),
             selectedOption: $selectedOption)
-            .onChange(of: selectedOption) { newValue in
+            .onChange(of: selectedOption) { _, newValue in
                 if let value = HitHappensEventCategory.allCases.filter({
                     $0.localized == newValue
                 }).first {
@@ -58,7 +58,7 @@ public struct SoundPickerView: View {
             title: "Sound effect".localizedMissing,
             options: SoundEffect.allCases.map(\.localized),
             selectedOption: $selectedOption)
-            .onChange(of: selectedOption) { newValue in
+            .onChange(of: selectedOption) { _, newValue in
                 if let value = SoundEffect.allCases.filter({
                     $0.localized == newValue
                 }).first {
@@ -94,12 +94,12 @@ public struct AppearancePickerView: View {
                 Text("Dark".localizedMissing).tag(Common.InterfaceStyle.dark.rawValue)
             }
             .pickerStyle(SegmentedPickerStyle())
-            .onChange(of: selected) { value in
+            .onChange(of: selected) { _, value in
                 DevTools.Log.debug(.valueChanged("\(Self.self)", "selectedOption", "\(value)"), .view)
                 InterfaceStyleManager.selectedByUser = .init(rawValue: value)
             }
         }
-        .foregroundColor(.labelPrimary)
+        .foregroundStyle(Color.labelPrimary)
     }
 }
 

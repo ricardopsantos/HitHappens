@@ -36,30 +36,20 @@ public struct CustomTextField: View {
         ZStack(alignment: .leading) {
             if inputText.isEmpty {
                 Text(placeholder)
-                    .foregroundColor(.secondary)
+                    .foregroundStyle(.secondary)
                     .padding(.horizontal, SizeNames.defaultMarginSmall)
             }
             Group {
                 if isSecured {
-                    let view = SecureField("", text: $inputText)
+                    SecureField("", text: $inputText)
                         .accessibilityIdentifier(accessibility.identifier)
                         .autocorrectionDisabled()
-                    if #available(iOS 15.0, *) {
-                        view
-                            .textInputAutocapitalization(.never)
-                    } else {
-                        view
-                    }
+                        .textInputAutocapitalization(.never)
                 } else {
-                    let view = TextField("", text: $inputText)
+                    TextField("", text: $inputText)
                         .accessibilityIdentifier(accessibility.identifier)
                         .autocorrectionDisabled()
-                    if #available(iOS 15.0, *) {
-                        view
-                            .textInputAutocapitalization(.never)
-                    } else {
-                        view
-                    }
+                        .textInputAutocapitalization(.never)
                 }
             }
             .padding(.horizontal, SizeNames.defaultMarginSmall)

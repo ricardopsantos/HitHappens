@@ -74,7 +74,7 @@ public struct CustomTitleAndCustomTextFieldWithBinding: View {
         VStack(alignment: .leading) {
             Text(title)
                 .fontSemantic(.bodyBold)
-                .foregroundColor(.labelPrimary)
+                .foregroundStyle(Color.labelPrimary)
             CustomTextField(
                 inputText: $inputText,
                 placeholder: placeholder,
@@ -83,7 +83,7 @@ public struct CustomTitleAndCustomTextFieldWithBinding: View {
                 isSecured: isSecured,
                 accessibility: accessibility
             )
-        }.onChange(of: inputText) { newValue in
+        }.onChange(of: inputText) { _, newValue in
             Common.ExecutionControlManager.debounce(1, operationId: "\(Self.self)\(#function)") {
                 onTextChange(newValue)
             }

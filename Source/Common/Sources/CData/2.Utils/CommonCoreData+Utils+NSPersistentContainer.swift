@@ -16,6 +16,16 @@ public extension CommonCoreData.Utils {
         case memory(iCloudEnabled: Bool)
         case directory(value: FileManager.SearchPathDirectory)
         case appGroup(identifier: String)
+
+        /// Local-only version of a CloudKit-backed persistence, used as fallback when
+        /// the CloudKit store fails to load (no iCloud account, missing entitlements, ...).
+        var withICloudDisabled: Persistence? {
+            switch self {
+            case .default(iCloudEnabled: true): return .default(iCloudEnabled: false)
+            case .memory(iCloudEnabled: true): return .memory(iCloudEnabled: false)
+            default: return nil
+            }
+        }
     }
 }
 
@@ -25,6 +35,58 @@ public extension CommonCoreData.Utils {
         managedObjectModel: NSManagedObjectModel,
         persistence: Persistence
     ) -> NSPersistentContainer? {
+        let container = makeContainer(
+            dbName: dbName,
+            managedObjectModel: managedObjectModel,
+            persistence: persistence
+        )
+        var loadError: Error?
+        container.loadPersistentStores { _, error in
+            loadError = error
+        }
+        if let loadError {
+            Common_Logs.error("Unresolved error \(loadError), \(loadError.localizedDescription)")
+            // A CloudKit-backed store can fail to load when iCloud is unavailable.
+            // Retry with the equivalent local-only persistence so the app keeps
+            // working (records are stored locally and CloudKit picks them up on a
+            // future launch where iCloud is available again).
+            if let localPersistence = persistence.withICloudDisabled {
+                Common_Logs.debug("Retrying \(dbName) with iCloud disabled (local store only)")
+                let fallback = makeContainer(
+                    dbName: dbName,
+                    managedObjectModel: managedObjectModel,
+                    persistence: localPersistence
+                )
+                var fallbackError: Error?
+                fallback.loadPersistentStores { _, error in
+                    fallbackError = error
+                }
+                if let fallbackError {
+                    Common_Logs.error("Unresolved error \(fallbackError), \(fallbackError.localizedDescription)")
+                } else {
+                    CommonCoreData.Utils.printDBReport(
+                        dbName: dbName,
+                        container: fallback,
+                        managedObjectModel: managedObjectModel
+                    )
+                }
+                return fallback
+            }
+        } else {
+            CommonCoreData.Utils.printDBReport(
+                dbName: dbName,
+                container: container,
+                managedObjectModel: managedObjectModel
+            )
+        }
+        return container
+    }
+
+    private static func makeContainer(
+        dbName: String,
+        managedObjectModel: NSManagedObjectModel,
+        persistence: Persistence
+    ) -> NSPersistentContainer {
         var container: NSPersistentContainer!
         switch persistence {
         case .default(iCloudEnabled: let iCloudEnabled):
@@ -35,6 +97,16 @@ public extension CommonCoreData.Utils {
                 )
             } else {
                 container = NSPersistentContainer(name: dbName, managedObjectModel: managedObjectModel)
+            }
+            if let description = container.persistentStoreDescriptions.first {
+                // NSPersistentCloudKitContainer turns on persistent history tracking, and once a
+                // store file has it the file can't be reopened without it. Keep it always on so
+                // the same store works whether iCloud is enabled or not (user signs in/out).
+                description.setOption(true as NSNumber, forKey: NSPersistentHistoryTrackingKey)
+                description.setOption(true as NSNumber, forKey: NSPersistentStoreRemoteChangeNotificationPostOptionKey)
+                if !iCloudEnabled {
+                    description.cloudKitContainerOptions = nil
+                }
             }
         case .memory(iCloudEnabled: let iCloudEnabled):
             if iCloudEnabled {
@@ -66,18 +138,6 @@ public extension CommonCoreData.Utils {
                 container.persistentStoreDescriptions = [description]
             } else {
                 Common_Logs.error("Fail to access appGroupIdentifier: \(String(describing: identifier))")
-            }
-        }
-
-        container.loadPersistentStores { _, error in
-            if let error {
-                Common_Logs.error("Unresolved error \(error), \(error.localizedDescription)")
-            } else {
-                CommonCoreData.Utils.printDBReport(
-                    dbName: dbName,
-                    container: container,
-                    managedObjectModel: managedObjectModel
-                )
             }
         }
         return container

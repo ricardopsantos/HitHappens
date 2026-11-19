@@ -6,13 +6,15 @@
 //
 
 import Foundation
+import Observation
 //
 import Domain
 import Core
 
-// ConfigurationViewModel is `ObservableObject` so that we can inject it on the view hierarchy
+// ConfigurationViewModel is `@Observable` so that we can inject it on the view hierarchy
 @MainActor
-class ConfigurationViewModel: ObservableObject {
+@Observable
+class ConfigurationViewModel {
     // MARK: - Dependency Attributes
 
     // Services

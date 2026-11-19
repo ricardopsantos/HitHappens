@@ -5,7 +5,6 @@
 import XCTest
 import Foundation
 import Combine
-import Nimble
 @testable import Common
 
 class CommonCoreData_SongsTests: XCTestCase {
@@ -211,6 +210,7 @@ extension CommonCoreData_SongsTests {
                         didChangedContent += 1
                     case .databaseDidUpdatedContentOn: ()
                     case .databaseDidDeletedContentOn: ()
+                    case .databaseReloaded: ()
                     case .databaseDidFinishChangeContentItemsOn:
                         didFinishChangeContent += 1
                     }
@@ -222,21 +222,13 @@ extension CommonCoreData_SongsTests {
         }
 
         // Verify that the event is emitted
-        expect(didFinishChangeContent == 1).toEventually(
-            beTrue(),
-            timeout: .seconds(TestsGlobal.timeout)
-        )
-        expect(didInsertedContent.value).toEventually(
-            beTrue(),
-            timeout: .seconds(TestsGlobal.timeout)
-        )
-        expect(didInsertedContent.id == toStore.id).toEventually(
-            beTrue(),
-            timeout: .seconds(TestsGlobal.timeout)
-        )
-        expect(didChangedContent == 1).toEventually(
-            beTrue(),
-            timeout: .seconds(TestsGlobal.timeout)
-        )
+        waitUntil(TimeInterval(TestsGlobal.timeout)) { didFinishChangeContent == 1 }
+        XCTAssertEqual(didFinishChangeContent, 1)
+        waitUntil(TimeInterval(TestsGlobal.timeout)) { didInsertedContent.value }
+        XCTAssertTrue(didInsertedContent.value)
+        waitUntil(TimeInterval(TestsGlobal.timeout)) { didInsertedContent.id == toStore.id }
+        XCTAssertEqual(didInsertedContent.id, toStore.id)
+        waitUntil(TimeInterval(TestsGlobal.timeout)) { didChangedContent == 1 }
+        XCTAssertEqual(didChangedContent, 1)
     }
 }

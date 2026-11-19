@@ -14,24 +14,22 @@ import Common
 class ErrorsManager {
     private init() {}
     static let shared = ErrorsManager()
-    fileprivate(set) static var configured: Bool = false
-    fileprivate static var enabled: Bool { Common_Utils.onSimulator && Common_Utils.onRelease }
+
+    /// Remote crash reporting only makes sense on real devices running release
+    /// builds; local logging always happens so errors are visible in development.
+    fileprivate static var remoteReportingEnabled: Bool { !Common_Utils.onSimulator && Common_Utils.onRelease }
 
     static func handleError(message: String, error: Error?) {
-        guard enabled else { return }
-        #if FIREBASE_ENABLED
-        Crashlytics.crashlytics().log(message)
         if let error = error {
-            Crashlytics.crashlytics().record(error: error as NSError)
             DevTools.Log.error(message + " | " + error.localizedDescription, .generic)
         } else {
             DevTools.Log.error(message, .generic)
         }
-        #else
+        #if FIREBASE_ENABLED
+        guard remoteReportingEnabled, FirebaseApp.configIsValidAndAvailable else { return }
+        Crashlytics.crashlytics().log(message)
         if let error = error {
-            DevTools.Log.error(message + " | " + error.localizedDescription, .generic)
-        } else {
-            DevTools.Log.error(message, .generic)
+            Crashlytics.crashlytics().record(error: error as NSError)
         }
         #endif
     }

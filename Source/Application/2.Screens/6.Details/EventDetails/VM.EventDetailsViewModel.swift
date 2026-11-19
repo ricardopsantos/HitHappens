@@ -41,9 +41,10 @@ public struct EventDetailsModel: Equatable, Hashable, Sendable {
 //
 
 extension EventDetailsViewModel {
+    // Confirmation is reserved for destructive actions; saving is
+    // non-destructive (re-editable) and applies immediately.
     enum ConfirmationSheet {
         case delete
-        case save
         case resetOccurrences
         var title: String {
             "Alert".localizedMissing
@@ -54,8 +55,6 @@ extension EventDetailsViewModel {
             case .delete:
                 "Are you sure you want to delete this \(AppConstants.entityNameSingle.lowercased())? All the \(AppConstants.entityOccurrenceNamePlural1.lowercased()) associated to it will be deleted!"
                     .localizedMissing
-            case .save:
-                "Are you sure you want to save  \(AppConstants.entityNameSingle.lowercased())?".localizedMissing
             case .resetOccurrences:
                 "Are you sure you want to reset the counter?".localizedMissing
             }
@@ -74,7 +73,7 @@ extension EventDetailsViewModel {
         case addNewLog
         case resetAllOccurrences(confirmed: Bool)
         case deleteEvent(confirmed: Bool)
-        case saveEvent(confirmed: Bool)
+        case saveEvent
     }
 
     struct Dependencies {
@@ -89,18 +88,19 @@ extension EventDetailsViewModel {
 //
 // MARK: - ViewModel
 //
+@Observable
 class EventDetailsViewModel: BaseViewModel {
     // MARK: - Usage/Auxiliar Attributes
-    @Published var trackedEntity: Model.TrackedEntity?
-    @Published var isNewEvent: Bool = false
-    @Published var trackedEntityUpdated: Date?
-    @Published private(set) var logs: [CascadeEventListItem]?
-    @Published var id: String = ""
+    var trackedEntity: Model.TrackedEntity?
+    var isNewEvent: Bool = false
+    var trackedEntityUpdated: Date?
+    private(set) var logs: [CascadeEventListItem]?
+    var id: String = ""
     private let cancelBag = CancelBag()
     private let dataBaseRepository: DataBaseRepositoryProtocol?
     private let onPerformRouteBack: () -> Void
     private let onShouldDisplayTrackedLog: (Model.TrackedLog) -> Void
-    @Published var confirmationSheetType: ConfirmationSheet?
+    var confirmationSheetType: ConfirmationSheet?
     private let screenID = UUID().uuidString // Because several equal screens can be loaded at same time
     public init(dependencies: Dependencies) {
         self.dataBaseRepository = dependencies.dataBaseRepository
@@ -186,8 +186,6 @@ class EventDetailsViewModel: BaseViewModel {
             switch confirmationSheetType {
             case .delete:
                 send(.deleteEvent(confirmed: true))
-            case .save:
-                send(.saveEvent(confirmed: true))
             case .resetOccurrences:
                 send(.resetAllOccurrences(confirmed: true))
             case nil:
@@ -199,6 +197,7 @@ class EventDetailsViewModel: BaseViewModel {
         case .deleteEvent(confirmed: let confirmed):
             displayTip("")
             if !confirmed {
+                HapticFeedback.notify(.warning)
                 confirmationSheetType = .delete
             } else {
                 Task { [weak self] in
@@ -206,22 +205,19 @@ class EventDetailsViewModel: BaseViewModel {
                     dataBaseRepository?.trackedEntityDelete(trackedEntity: trackedEntity)
                 }
             }
-        case .saveEvent(confirmed: let confirmed):
-            if !confirmed {
-                confirmationSheetType = .save
-            } else {
-                Task { [weak self] in
-                    guard let self = self, var trackedEntity = trackedEntity else { return }
-                    trackedEntity.cascadeEvents = nil // So it does not update cascade events
-                    if let trackedEntityId = dataBaseRepository?.trackedEntityInsertOrUpdate(trackedEntity: trackedEntity) {
-                        self.isNewEvent = false
-                        self.confirmationSheetType = nil
-                        self.trackedEntity = dataBaseRepository?.trackedEntityGet(trackedEntityId: trackedEntityId, cascade: true)
-                    }
+        case .saveEvent:
+            Task { [weak self] in
+                guard let self = self, var trackedEntity = trackedEntity else { return }
+                trackedEntity.cascadeEvents = nil // So it does not update cascade events
+                if let trackedEntityId = dataBaseRepository?.trackedEntityInsertOrUpdate(trackedEntity: trackedEntity) {
+                    self.isNewEvent = false
+                    self.trackedEntity = dataBaseRepository?.trackedEntityGet(trackedEntityId: trackedEntityId, cascade: true)
+                    HapticFeedback.notify(.success)
                 }
             }
         case .resetAllOccurrences(confirmed: let confirmed):
             if !confirmed {
+                HapticFeedback.notify(.warning)
                 confirmationSheetType = .resetOccurrences
             } else {
                 Task { [weak self] in
@@ -244,9 +240,9 @@ class EventDetailsViewModel: BaseViewModel {
 fileprivate extension EventDetailsViewModel {
     func updateUI(event model: Model.TrackedEntity) {
         Common.ExecutionControlManager.debounce(operationId: "\(Self.self)|\(#function).\(screenID)") { [weak self] in
-            self?.trackedEntityUpdated = Date()
+            guard let self = self else { return }
             let count = model.cascadeEvents?.count ?? 0
-            self?.logs = model.cascadeEvents?
+            let newLogs: [CascadeEventListItem]? = model.cascadeEvents?
                 .sorted(by: { $0.recordDate > $1.recordDate })
                 .enumerated()
                 .map { index, event in
@@ -255,7 +251,17 @@ fileprivate extension EventDetailsViewModel {
                         title: "\(count - index). \(event.localizedListItemTitleV1)",
                         value: event.localizedListItemValueV1)
                 }
-            self?.trackedEntity = model
+            // Equality guards: only touch observed state (and the updated
+            // timestamp that drives the view's state-copy sync) on real change.
+            let changed = newLogs != self.logs || model != self.trackedEntity
+            guard changed else { return }
+            if newLogs != self.logs {
+                self.logs = newLogs
+            }
+            if model != self.trackedEntity {
+                self.trackedEntity = model
+            }
+            self.trackedEntityUpdated = Date()
         }
     }
 
@@ -310,6 +316,7 @@ fileprivate extension EventDetailsViewModel {
 #Preview {
     EventDetailsViewCoordinator(
         presentationStyle: .fullScreenCover, model: .init(event: .random(cascadeEvents: [.random])))
-        .environmentObject(ConfigurationViewModel.defaultForPreviews)
+        .environment(ConfigurationViewModel.defaultForPreviews)
+        .environmentObject(RouterViewModel())
 }
 #endif

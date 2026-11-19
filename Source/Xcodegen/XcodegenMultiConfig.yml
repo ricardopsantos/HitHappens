@@ -7,7 +7,7 @@ name: HitHappens
 options:
   bundleIdPrefix: hit.happens.app.id
   xcodeVersion: '15.0.1'
-  deploymentTarget: '16.0'
+  deploymentTarget: '18.0'
   groupSortPosition: top
   generateEmptyDirectories: true
   findCarthageFrameworks: false
@@ -18,11 +18,6 @@ options:
 ####################### PACKAGES #######################
 
 packages:
-        
- # Use Nimble to express the expected outcomes of Swift or Objective-C expressions
-  Nimble:
-    url: https://github.com/Quick/Nimble
-    branch: main
         
   CloudKitSyncMonitor:
     url: https://github.com/ggruen/CloudKitSyncMonitor.git
@@ -69,7 +64,7 @@ include:
 settings:
 
   base:
-    IPHONEOS_DEPLOYMENT_TARGET: 16.0
+    IPHONEOS_DEPLOYMENT_TARGET: 18.0
     #MARKETING_VERSION: 1.0.1 # Defined at "product-version.xcconfig"
     SWIFT_VERSION: 5.10
     CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED: YES
@@ -94,6 +89,7 @@ targets:
         TARGETED_DEVICE_FAMILY: 1
         ENABLE_USER_SCRIPT_SANDBOXING: YES
         ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES: YES
+        INFOPLIST_FILE: Application/Info.plist
         #OTHER_SWIFT_FLAGS: "-DSMART_SDK_ENABLED"
 
         
@@ -133,12 +129,9 @@ targets:
            - "*.md"
            - "*.png"
            - "GoogleService*"
-
-    # files ########################
-    files:
-      - path: ../Application/Info.plist
-        excludeFromTargets:
-          - HitHappens # Exclude this file from the HitHappens target
+           # Referenced via INFOPLIST_FILE; must not land in Copy Bundle Resources
+           # ("Multiple commands produce Info.plist" build error otherwise).
+           - "Info.plist"
 
     # dependencies: ########################
     
@@ -278,9 +271,6 @@ targets:
         link: false
       - target: Core
         link: false
-      - package: Nimble
-        product: Nimble
-        link: true
         
   UITests:
     templates:
@@ -295,6 +285,3 @@ targets:
       - target: Common
         link: false
               
-      - package: Nimble
-        product: Nimble
-        link: true

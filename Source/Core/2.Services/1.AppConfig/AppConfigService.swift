@@ -43,7 +43,7 @@ extension AppConfigService: AppConfigServiceProtocol {
 
         if Common.UserDefaultsManager.numberOfLogins == 1 {
             // First Login! Store default events
-            if dataBaseRepository.trackedEntityGetAll(favorite: nil, archived: nil, cascade: false).isEmpty {
+            if dataBaseRepository.trackedEntityCount(favorite: nil, archived: nil) == 0 {
                 result.hitHappens.defaultEvents.forEach { some in
                     var entity = some
                     var cascadeEvents: [Model.TrackedLog] = []

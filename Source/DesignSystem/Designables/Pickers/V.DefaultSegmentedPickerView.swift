@@ -37,7 +37,7 @@ public struct DefaultSegmentedPickerView: View {
         VStack(alignment: .leading) {
             Text(title)
                 .fontSemantic(.body)
-                .foregroundColor(ColorSemantic.labelPrimary.color)
+                .foregroundStyle(ColorSemantic.labelPrimary.color)
             Picker("", selection: $selected) {
                 ForEach(options) { option in
                     Text(option.value).tag(option.tag)

@@ -84,6 +84,9 @@ public extension Common {
     final class UnfairLockThreadingManagerWithKey {
         // Dictionary to hold locks associated with their keys
         private var locks: [String: UnsafeMutablePointer<os_unfair_lock>] = [:]
+        // Guards `locks` itself: the dictionary is read and mutated from every thread that asks
+        // for a lock, and unsynchronized concurrent access to a Dictionary crashes.
+        private let locksGuard = NSLock()
 
         // Initializes the UnfairLockManagerWithKey
         public init() {}
@@ -98,6 +101,7 @@ public extension Common {
 
         // Retrieves or creates a lock for the given key
         private func lockPointer(for key: String) -> UnsafeMutablePointer<os_unfair_lock> {
+            locksGuard.lock(); defer { locksGuard.unlock() }
             if let lock = locks[key] {
                 return lock
             } else {

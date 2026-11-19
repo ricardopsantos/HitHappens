@@ -30,6 +30,7 @@ extension SplashViewModel {
     }
 }
 
+@Observable
 class SplashViewModel: BaseViewModel {
     // MARK: - Usage/Auxiliar Attributes
     public init(dependencies: Dependencies) {}
@@ -57,6 +58,7 @@ fileprivate extension RootViewModel {}
 #if canImport(SwiftUI) && DEBUG
 #Preview {
     SplashViewCoordinator(presentationStyle: .notApplied, onCompletion: {})
-        .environmentObject(ConfigurationViewModel.defaultForPreviews)
+        .environment(ConfigurationViewModel.defaultForPreviews)
+        .environmentObject(RouterViewModel())
 }
 #endif

@@ -9,7 +9,6 @@
 
 import XCTest
 import Combine
-import Nimble
 //
 import Common
 import Domain
@@ -50,7 +49,7 @@ extension ___Template___ViewModelTests {
             return
         }
         _ = await MainActor.run {
-            expect(self.viewModel).notTo(beNil()) // Assert that the template view model is not nil
+            XCTAssertNotNil(self.viewModel) // Assert that the template view model is not nil
         }
     }
 
@@ -61,15 +60,15 @@ extension ___Template___ViewModelTests {
             return
         }
         // Assert initial counter value is 0
-        expect(self.viewModel?.counter == 0).toEventually(beTrue(), timeout: .seconds(timeout))
+        assertEventually(timeout: timeout) { self.viewModel?.counter == 0 }
 
         // Send increment action
         viewModel?.send(.increment)
 
         // Assert counter value is incremented to 1
-        expect(self.viewModel?.counter == 1).toEventually(beTrue(), timeout: .seconds(timeout))
+        assertEventually(timeout: timeout) { self.viewModel?.counter == 1 }
 
         // Assert message reflects the incremented counter value
-        expect(self.viewModel?.message == "Counter: 1").toEventually(beTrue(), timeout: .seconds(timeout))
+        assertEventually(timeout: timeout) { self.viewModel?.message == "Counter: 1" }
     }
 }

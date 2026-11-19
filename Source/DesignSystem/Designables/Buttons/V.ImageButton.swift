@@ -107,8 +107,8 @@ public struct ImageButton: View {
             imageView
                 .frame(innerImageSize)
                 .padding(imageSize - innerImageSize)
-                .cornerRadius(innerImageSize)
-                .foregroundColor(ColorSemantic.labelPrimaryInverted.color)
+                .clipShape(RoundedRectangle(cornerRadius: innerImageSize))
+                .foregroundStyle(ColorSemantic.labelPrimaryInverted.color)
                 .background(
                     Circle()
                         .fill(Color(imageColor.uiColor))
@@ -119,8 +119,8 @@ public struct ImageButton: View {
             imageView
                 .frame(innerImageSize)
                 .padding(imageSize - innerImageSize)
-                .cornerRadius(innerImageSize)
-                .foregroundColor(Color(imageColor.uiColor))
+                .clipShape(RoundedRectangle(cornerRadius: innerImageSize))
+                .foregroundStyle(Color(imageColor.uiColor))
                 .overlay(
                     RoundedRectangle(cornerRadius: imageSize)
                         .inset(by: 1)
@@ -130,7 +130,7 @@ public struct ImageButton: View {
                 .contentShape(Rectangle())
         case .tertiary:
             imageView
-                .foregroundColor(Color(imageColor.uiColor))
+                .foregroundStyle(Color(imageColor.uiColor))
                 .frame(imageSize)
         }
     }

@@ -111,17 +111,41 @@ public extension DataBaseRepository {
         typealias DBEntity = CDataTrackedEntity
         let context = viewContext
         do {
-            var results = try context.fetch(DBEntity.fetchRequest())
-            if let favorite = favorite {
-                results = results.filter { $0.favorite == favorite }
+            let request = DBEntity.fetchRequestWith(favorite: favorite, archived: archived)
+            if cascade {
+                request.relationshipKeyPathsForPrefetching = ["events"]
             }
-            if let archived = archived {
-                results = results.filter { $0.archived == archived }
-            }
+            let results = try context.fetch(request)
             return results.map { $0.mapToModel(cascade: cascade) }
         } catch {
             return []
         }
+    }
+
+    /// Runs on a background context so the fetch + model mapping (which scales
+    /// with the log history when `cascade == true`) never blocks the main thread.
+    func trackedEntityGetAll(favorite: Bool? = nil, archived: Bool? = nil, cascade: Bool) async -> [Model.TrackedEntity] {
+        typealias DBEntity = CDataTrackedEntity
+        let context = backgroundContext
+        return await context.perform {
+            do {
+                let request = DBEntity.fetchRequestWith(favorite: favorite, archived: archived)
+                if cascade {
+                    request.relationshipKeyPathsForPrefetching = ["events"]
+                }
+                let results = try context.fetch(request)
+                return results.map { $0.mapToModel(cascade: cascade) }
+            } catch {
+                return []
+            }
+        }
+    }
+
+    func trackedEntityCount(favorite: Bool? = nil, archived: Bool? = nil) -> Int {
+        typealias DBEntity = CDataTrackedEntity
+        let context = viewContext
+        let request = DBEntity.fetchRequestWith(favorite: favorite, archived: archived)
+        return (try? context.count(for: request)) ?? 0
     }
 
     //

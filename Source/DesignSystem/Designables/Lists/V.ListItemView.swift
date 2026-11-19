@@ -40,8 +40,10 @@ public struct ListItemView: View {
         }
         .padding(SizeNames.defaultMarginSmall)
         .background(backgroundColor)
-        .cornerRadius(cornerRadius)
-        .shadow(color: backgroundColor.opacity(0.5), radius: shadowRadius)
+        .clipShape(RoundedRectangle(cornerRadius: cornerRadius))
+        // Depth comes from a black-based shadow; the previous version used the
+        // card's own background color, which produced an invisible halo.
+        .shadow(color: Color.black.opacity(0.1), radius: shadowRadius, y: 1)
         .scaleEffect(isPressed ? 0.985 : 1.0)
         .opacity(isPressed ? 0.8 : 1.0)
         .animation(.spring(response: 0.3, dampingFraction: 0.5, blendDuration: 0.5), value: isPressed)
@@ -73,7 +75,7 @@ public struct ListItemView: View {
     var titleView: some View {
         Text(title)
             .fontSemantic(.body)
-            .foregroundColor(.labelPrimary)
+            .foregroundStyle(Color.labelPrimary)
             .frame(maxWidth: .infinity, alignment: .leading)
     }
 
@@ -81,7 +83,7 @@ public struct ListItemView: View {
         Text(subTitle)
             .fontSemantic(.callout)
             .frame(maxWidth: .infinity, alignment: .leading)
-            .foregroundColor(.labelSecondary)
+            .foregroundStyle(Color.labelSecondary)
             .multilineTextAlignment(.leading)
     }
 
@@ -98,7 +100,7 @@ public struct ListItemView: View {
                 /*
                  ZStack {
                      Circle()
-                         .foregroundColor(systemImage.color.opacity(0.1))
+                         .foregroundStyle(systemImage.color.opacity(0.1))
                          .frame(
                              width: SizeNames.defaultMargin + margin,
                              height: SizeNames.defaultMargin + margin
@@ -116,7 +118,7 @@ public struct ListItemView: View {
                              maxWidth: SizeNames.defaultMargin - (margin / 2),
                              maxHeight: SizeNames.defaultMargin - (margin / 2)
                          )
-                         .foregroundColor(systemImage.color.opacity(0.75))
+                         .foregroundStyle(systemImage.color.opacity(0.75))
                  }*/
             } else {
                 EmptyView()
@@ -137,7 +139,7 @@ public extension ListItemView {
     ) -> some View {
         ZStack {
             Circle()
-                .foregroundColor(imageColor.opacity(0.1))
+                .foregroundStyle(imageColor.opacity(0.1))
                 .frame(
                     width: SizeNames.defaultMargin + margin,
                     height: SizeNames.defaultMargin + margin
@@ -155,7 +157,7 @@ public extension ListItemView {
                     maxWidth: SizeNames.defaultMargin - (margin / 2),
                     maxHeight: SizeNames.defaultMargin - (margin / 2)
                 )
-                .foregroundColor(imageColor.opacity(0.75))
+                .foregroundStyle(imageColor.opacity(0.75))
         }
     }
 }

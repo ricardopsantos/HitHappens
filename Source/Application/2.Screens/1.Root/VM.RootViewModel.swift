@@ -36,11 +36,13 @@ extension RootViewModel {
 }
 
 @MainActor
-class RootViewModel: ObservableObject {
+@Observable
+class RootViewModel {
     // MARK: - Usage/Auxiliar Attributes
-    @Published private(set) var alertModel: Model.AlertModel?
-    @Published private(set) var isAppStartCompleted: Bool = false
-    @Published private(set) var isOnboardingCompleted: Bool = false
+    private(set) var alertModel: Model.AlertModel?
+    private(set) var isAppStartCompleted: Bool = false
+    private(set) var isOnboardingCompleted: Bool = false
+    private let instanceID = UUID().uuidString // Unique debounce ids per instance (see BaseViewModel)
     private var cancelBag = CancelBag()
     private var nonSecureAppPreferences: NonSecureAppPreferencesProtocol?
     private var dataBaseRepository: DataBaseRepositoryProtocol
@@ -76,13 +78,14 @@ class RootViewModel: ObservableObject {
 
 fileprivate extension RootViewModel {
     func startListening() {
+        let instanceID = instanceID
         nonSecureAppPreferences?.output([]).sinkToReceiveValue { [weak self] some in
             guard let self = self else { return }
             switch some {
             case .success(let some):
                 switch some {
                 case .deletedAll, .changedKey:
-                    let operationId = "\(Self.self)|\(#function)"
+                    let operationId = "\(Self.self)|\(#function)|\(instanceID)"
                     Common.ExecutionControlManager.debounce(operationId: operationId) { [weak self] in
                         Common_Utils.delay { [weak self] in
                             guard let self = self else { return }
@@ -102,6 +105,7 @@ fileprivate extension RootViewModel {
 #if canImport(SwiftUI) && DEBUG
 #Preview {
     RootViewCoordinator(presentationStyle: .fullScreenCover)
-        .environmentObject(ConfigurationViewModel.defaultForPreviews)
+        .environment(ConfigurationViewModel.defaultForPreviews)
+        .environmentObject(RouterViewModel())
 }
 #endif

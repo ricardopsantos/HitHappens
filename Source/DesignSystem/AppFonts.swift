@@ -74,47 +74,49 @@ public enum FontSemantic: CaseIterable {
     }
 
     public var rawValue: UIFont {
-        let trait = UIView().traitCollection.preferredContentSizeCategory
-        var multiplier: CGFloat = 1
-        if Common_Utils.false {
-            // Disabled for now
-            let incSize: CGFloat = 0.15
-            switch trait {
-            case .unspecified: multiplier = 1
-            case .extraSmall: multiplier = 1
-            case .small: multiplier = 1
-            case .accessibilityMedium, .medium: multiplier = 1
-            case .accessibilityLarge, .large: multiplier = 1 + (incSize * 1)
-            case .accessibilityExtraLarge, .extraLarge: multiplier = 1 + (incSize * 2)
-            case .accessibilityExtraExtraLarge, .extraExtraExtraLarge: multiplier = 1 + (incSize * 3)
-            case .accessibilityExtraExtraExtraLarge: multiplier = 1 + (incSize * 3)
-            default:
-                if "\(trait)".contains("UICTContentSizeCategoryXXL") {
-                    multiplier = 1 + (incSize * 3)
-                } else {
-                    multiplier = 1
-                }
-            }
-
-            Common.ExecutionControlManager.executeOnce(token: "\(Self.self)_\(#function)") {
-                Common_Logs.debug("TextSizeCategory: \(trait) -> \(multiplier)")
-            }
-        }
-
         let bodyFontSize: CGFloat = 15
-        return switch self {
-        case .largeTitle: UIFont(name: FontsName.regular.name, size: bodyFontSize * 2.5)!
-        case .title1: UIFont(name: FontsName.bold.name, size: bodyFontSize * 2)!
-        case .title2: UIFont(name: FontsName.regular.name, size: bodyFontSize * 1.6)!
-        case .headline: UIFont(name: FontsName.regular.name, size: bodyFontSize * 1.2)!
-        case .headlineBold: UIFont(name: FontsName.bold.name, size: bodyFontSize * 1.2)!
-        case .body: UIFont(name: FontsName.regular.name, size: bodyFontSize)!
-        case .bodyBold: UIFont(name: FontsName.bold.name, size: bodyFontSize)!
-        case .callout: UIFont(name: FontsName.regular.name, size: bodyFontSize * 0.9)!
-        case .calloutBold: UIFont(name: FontsName.regular.name, size: bodyFontSize * 0.8)!
-        case .footnote: UIFont(name: FontsName.regular.name, size: bodyFontSize * 0.7)!
-        case .caption: UIFont(name: FontsName.regular.name, size: bodyFontSize * 0.6)!
+        let base: UIFont
+        let textStyle: UIFont.TextStyle
+        switch self {
+        case .largeTitle:
+            base = UIFont(name: FontsName.regular.name, size: bodyFontSize * 2.5)!
+            textStyle = .largeTitle
+        case .title1:
+            base = UIFont(name: FontsName.bold.name, size: bodyFontSize * 2)!
+            textStyle = .title1
+        case .title2:
+            // SemiBold so screen headers anchor by weight, not just size
+            base = UIFont(name: FontsName.semibold.name, size: bodyFontSize * 1.6)!
+            textStyle = .title2
+        case .headline:
+            base = UIFont(name: FontsName.regular.name, size: bodyFontSize * 1.2)!
+            textStyle = .headline
+        case .headlineBold:
+            base = UIFont(name: FontsName.bold.name, size: bodyFontSize * 1.2)!
+            textStyle = .headline
+        case .body:
+            base = UIFont(name: FontsName.regular.name, size: bodyFontSize)!
+            textStyle = .body
+        case .bodyBold:
+            base = UIFont(name: FontsName.bold.name, size: bodyFontSize)!
+            textStyle = .body
+        case .callout:
+            base = UIFont(name: FontsName.regular.name, size: bodyFontSize * 0.9)!
+            textStyle = .callout
+        case .calloutBold:
+            // Same size as callout, actually emphasised (was regular face at 0.8×)
+            base = UIFont(name: FontsName.semibold.name, size: bodyFontSize * 0.9)!
+            textStyle = .callout
+        case .footnote:
+            // 12/11pt floors — the previous 10.5/9pt were below comfortable minimums
+            base = UIFont(name: FontsName.regular.name, size: 12)!
+            textStyle = .footnote
+        case .caption:
+            base = UIFont(name: FontsName.regular.name, size: 11)!
+            textStyle = .caption1
         }
+        // Scales with the user's Dynamic Type setting
+        return UIFontMetrics(forTextStyle: textStyle).scaledFont(for: base)
     }
 }
 

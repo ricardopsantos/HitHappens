@@ -49,7 +49,7 @@ public struct DigitTransitionView: View {
                 minHeight: CounterView.minHeight,
                 maxHeight: CounterView.maxHeight
             )
-            .onChange(of: digit) { _ in
+            .onChange(of: digit) { _, _ in
                 if animated {
                     imageName = "\(digit - 1)00"
                     startAnimation()
@@ -103,6 +103,7 @@ public struct NumberTransitionView: View {
 
     private func handleTapGesture() {
         Common.ExecutionControlManager.throttle(1, operationId: "\(Self.self).\(#function)") {
+            HapticFeedback.impact()
             onDigitTapGesture()
         }
     }
@@ -110,7 +111,7 @@ public struct NumberTransitionView: View {
     public var body: some View {
         HStack(spacing: 0) {
             if digitIndex0 > 0 {
-                DigitTransitionView(digit: $digitIndex0, onDigitTapGesture: onDigitTapGesture)
+                DigitTransitionView(digit: $digitIndex0, onDigitTapGesture: handleTapGesture)
             }
             DigitTransitionView(digit: $digitIndex1, onDigitTapGesture: handleTapGesture)
             DigitTransitionView(digit: $digitIndex2, onDigitTapGesture: handleTapGesture)
@@ -177,7 +178,7 @@ public struct CounterView: View {
                 digitIndex3: $digitIndex3,
                 onDigitTapGesture: onDigitTapGesture
             )
-            .onChange(of: number) { _ in
+            .onChange(of: number) { _, _ in
                 digitIndex0 = Self.digitsArray(number: number)[0]
                 digitIndex1 = Self.digitsArray(number: number)[1]
                 digitIndex2 = Self.digitsArray(number: number)[2]

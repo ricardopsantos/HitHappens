@@ -53,7 +53,7 @@ public struct Header: View {
                     alignment: .center
                 )
                 .font(Header.defaultTitleFont)
-                .foregroundColor(Color(Header.defaultColor))
+                .foregroundStyle(Color(Header.defaultColor))
             if hasCloseButton {
                 HStack {
                     Spacer()

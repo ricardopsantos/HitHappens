@@ -9,7 +9,6 @@ import Foundation
 
 import XCTest
 import Combine
-import Nimble
 import Common
 
 internal class CommonBundleFinder {}
@@ -29,6 +28,12 @@ public enum TestsGlobal {
     static var bundleIdentifier: String {
         Bundle(for: CommonBundleFinder.self).bundleIdentifier ?? ""
     }
+}
+
+func waitUntil(_ timeout: TimeInterval = 5, condition: @escaping () -> Bool) {
+    let predicate = NSPredicate { _, _ in condition() }
+    let expectation = XCTNSPredicateExpectation(predicate: predicate, object: nil)
+    _ = XCTWaiter().wait(for: [expectation], timeout: timeout)
 }
 
 func averageOperationTime(

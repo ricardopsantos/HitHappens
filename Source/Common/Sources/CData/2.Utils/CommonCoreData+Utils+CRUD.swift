@@ -18,8 +18,16 @@ public extension CommonCoreData.Utils {
     ) -> Bool {
         do {
             let deleteRequest = NSBatchDeleteRequest(fetchRequest: request)
-            deleteRequest.resultType = .resultTypeCount
-            try context.execute(deleteRequest)
+            // A batch delete runs on the store and bypasses the context, so the deleted objects
+            // must be merged back or the context keeps serving the stale (deleted) rows.
+            deleteRequest.resultType = .resultTypeObjectIDs
+            let result = try context.execute(deleteRequest) as? NSBatchDeleteResult
+            if let deletedIDs = result?.result as? [NSManagedObjectID], !deletedIDs.isEmpty {
+                NSManagedObjectContext.mergeChanges(
+                    fromRemoteContextSave: [NSDeletedObjectsKey: deletedIDs],
+                    into: [context]
+                )
+            }
             try context.save()
             try context.parent?.save()
             return true
