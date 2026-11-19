@@ -17,6 +17,6 @@ jobs:
     steps:
     - uses: actions/checkout@v4
     - name: Build
-      run: ./Source/Scripts/github_workflow_v1.sh
+      run: bash ./Source/Scripts/github_workflow_v1.sh
     #- name: Run tests
     #  run: ./Source/build.sh test
